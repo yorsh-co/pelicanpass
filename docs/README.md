@@ -73,6 +73,7 @@ Conventions for changing the code and the copy.
 | [`admin-export-plan.md`](./development/admin-export-plan.md)           | Result exports in `/admin/exports`: shared CSV building, anonymous and pseudonymous variants, download audit |
 | [`admin-import-plan.md`](./development/admin-import-plan.md)           | Roster and volunteer-permission CSV import in `/admin/import`: preview then commit, the web and CLI write paths |
 | [`qr-scanner-speed-plan.md`](./development/qr-scanner-speed-plan.md)   | Faster QR scanning: where the time goes, the native detector with a WebAssembly fallback, focus |
+| [`static-demo-plan.md`](./development/static-demo-plan.md)             | Public demo on Cloudflare Pages: rendered fixtures, an in-browser mock API, read-only admin |
 
 ## Design
 
