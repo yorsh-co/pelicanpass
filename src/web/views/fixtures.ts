@@ -42,6 +42,8 @@ export type Locals = Record<string, unknown>;
 /** What a fixture may read from the response it is rendered on. */
 export interface Context {
   locale: Locale;
+  /** Release id shown on the status page. */
+  release: string;
   chrome: MessagesOf['chrome'];
   /** The administrator catalogs, as `adminMessages` builds them in the router. */
   m: {
@@ -572,7 +574,7 @@ export const CASES: ViewCase[] = [
       timezone: env.landing.timezone,
       snapshot: {
         generatedAt: new Date(NOW).toISOString(),
-        release: RELEASE,
+        release: ctx.release,
         uptimeSeconds: 3600,
         windows: [
           {
@@ -628,7 +630,7 @@ export const CASES: ViewCase[] = [
       timezone: env.landing.timezone,
       snapshot: {
         generatedAt: new Date(NOW).toISOString(),
-        release: RELEASE,
+        release: ctx.release,
         uptimeSeconds: 7200,
         windows: [
           {
@@ -1029,6 +1031,27 @@ export const CASES: ViewCase[] = [
         },
       ],
       labelMaxLength: 40,
+    }),
+  },
+];
+
+/**
+ * Cases only the demo build renders; the snapshot suite does not assert them.
+ *
+ * `not-found` is the 404 with plain copy, where `error-with-action` carries an
+ * escaping test string.
+ */
+export const DEMO_CASES: ViewCase[] = [
+  {
+    name: 'not-found',
+    view: 'pages/error',
+    locals: () => ({
+      layout: 'layouts/plain',
+      title: 'Página não encontrada',
+      heading: '404',
+      subtitle: 'Página não encontrada',
+      message: 'O endereço pode ter mudado ou nunca ter existido.',
+      action: ERROR_ACTION,
     }),
   },
 ];

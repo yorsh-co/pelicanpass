@@ -82,6 +82,7 @@
     "dev:permissions": "dotenv -- node scripts/db/set-volunteer-permissions.ts",
     "build": "node scripts/build-client.ts --prod",
     "build:static": "npm run build && node scripts/static/build.ts",
+    "build:demo": "npm run build && node scripts/demo/build.ts",
     "typecheck": "npm run typecheck:backend && npm run typecheck:frontend && npm run typecheck:frontend-tests && npm run typecheck:loadtest && npm run typecheck:report",
     "typecheck:backend": "tsc -p tsconfig.json",
     "typecheck:frontend": "tsc -p src/web/client/tsconfig.json",

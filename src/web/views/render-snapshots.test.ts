@@ -1,23 +1,12 @@
 import assert from 'node:assert/strict';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { after, before, describe, it, mock } from 'node:test';
-import { fileURLToPath } from 'node:url';
 
-import cookieParser from 'cookie-parser';
-import express from 'express';
-import expressLayouts from 'express-ejs-layouts';
-
-import { ADMIN_NAV } from '../../constants/admin-nav.ts';
-import { COPY_DEFAULTS } from '../../constants/copy-defaults.ts';
-import { localeMiddleware } from '../../i18n/server.ts';
-
-import { CASES, NOW, RELEASE, adminMessages } from './fixtures.ts';
+import { CASES, NOW, RELEASE } from './fixtures.ts';
+import { createViewApp } from './render-app.ts';
 
 import type { Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
-import type { Response } from 'express';
-
-import type { Context } from './fixtures.ts';
 
 /**
  * Renders every top-level view through the real Express view engine and the
@@ -42,7 +31,6 @@ import type { Context } from './fixtures.ts';
  */
 
 const SNAPSHOTS = new URL('./__snapshots__/', import.meta.url);
-const VIEWS = fileURLToPath(new URL('.', import.meta.url));
 const UPDATE = process.env.UPDATE_VIEW_SNAPSHOTS === '1';
 
 const NONCE = 'dGVzdC1ub25jZS0wMDAwMDA=';
@@ -59,76 +47,11 @@ before(async () => {
   process.env.TZ = 'UTC';
   mock.timers.enable({ apis: ['Date'], now: NOW });
 
-  const app = express();
-
-  app.set('view engine', 'ejs');
-  app.set('views', VIEWS);
-  app.use(expressLayouts);
-  app.set('layout', 'layouts/main');
-
-  app.use(cookieParser());
-  app.use((_req, res, next) => {
-    res.locals.cspNonce = NONCE;
-    res.locals.releaseId = RELEASE;
-    res.locals.copyDefaults = COPY_DEFAULTS;
-    next();
+  const app = createViewApp({
+    cases: CASES,
+    nonce: () => NONCE,
+    releaseId: RELEASE,
   });
-  app.use(localeMiddleware);
-
-  app.get('/:name', (req, res, next) => {
-    const found = CASES.find((entry) => entry.name === req.params.name);
-
-    if (!found) {
-      next(new Error(`No case named ${req.params.name}`));
-      return;
-    }
-
-    const { locale } = res.locals;
-    const ctx: Context = {
-      locale,
-      chrome: res.locals.chrome,
-      m: adminMessages(locale),
-    };
-
-    if (found.admin) {
-      const shell = ctx.m.shell;
-
-      res.locals.shell = shell;
-      res.locals.adminUsername = 'operadora';
-      res.locals.adminScopes = ADMIN_NAV.map((item) => item.scope);
-      res.locals.adminNav = ADMIN_NAV.map((item) => ({
-        ...item,
-        label: item.key,
-      }));
-    }
-
-    res.render(
-      found.view,
-      found.locals(ctx),
-      (err: Error | null, html?: string) => {
-        if (err) {
-          next(err);
-          return;
-        }
-
-        (res as Response).type('html').send(html);
-      },
-    );
-  });
-
-  app.use(
-    (
-      err: Error,
-      _req: express.Request,
-      res: express.Response,
-      _next: express.NextFunction,
-    ) => {
-      res
-        .status(500)
-        .type('text')
-        .send(err.stack ?? err.message);
-    },
-  );
 
   server = await new Promise<Server>((resolve) => {
     const listening = app.listen(0, '127.0.0.1', () => {

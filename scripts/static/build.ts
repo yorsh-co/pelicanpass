@@ -254,9 +254,17 @@ export const hashPolicy = (
  * Builds the Cloudflare Pages `_headers` file.
  *
  * @param policy - `Content-Security-Policy` value to send on every route.
+ * @param extra - Further headers to send on every route, by name.
  */
-export const headersFile = (policy: string): string =>
-  `/*
+export const headersFile = (
+  policy: string,
+  extra: Readonly<Record<string, string>> = {},
+): string => {
+  const added = Object.entries(extra)
+    .map(([name, value]) => `  ${name}: ${value}\n`)
+    .join('');
+
+  return `/*
   Content-Security-Policy: ${policy}
   Permissions-Policy: ${PERMISSIONS_POLICY}
   Referrer-Policy: no-referrer
@@ -264,9 +272,10 @@ export const headersFile = (policy: string): string =>
   X-Frame-Options: SAMEORIGIN
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
-/site.webmanifest
+${added}/site.webmanifest
   Content-Type: application/manifest+json
 `;
+};
 
 /**
  * Copies the files under `src/web/public` that `seeds` reference, following

@@ -1,0 +1,35 @@
+/* Demo-only banner, copied to /css/demo.css by scripts/demo/build.ts. */
+
+.demo-banner {
+  box-sizing: border-box;
+  padding: 0.5rem max(1rem, env(safe-area-inset-right)) 0.5rem
+    max(1rem, env(safe-area-inset-left));
+  border-bottom: 1px solid var(--border-strong);
+  background: var(--accent-soft);
+  color: var(--text);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.demo-banner p {
+  margin: 0;
+}
+
+.demo-banner p + p {
+  margin-top: 0.25rem;
+  color: var(--text-muted);
+}
+
+.demo-banner code {
+  padding: 0 0.25rem;
+  border-radius: 0.25rem;
+  background: var(--surface);
+  color: var(--text);
+  font-family: ui-monospace, monospace;
+  letter-spacing: 0.05em;
+}
+
+.demo-banner a {
+  color: var(--accent);
+  font-weight: 600;
+}
