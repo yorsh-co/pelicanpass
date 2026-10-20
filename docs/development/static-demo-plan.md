@@ -206,7 +206,7 @@ bundles it to `js/demo/mock-api.js` and injects it as the first `<script>` of ev
 
 ## Phase 5 — Deploy and document
 
-- Add `docs/operations/demo-site.md`, written as a runbook in the style of `static-site.md`:
+- Add `demo-site.md` to `docs/operations/`, written as a runbook in the style of `static-site.md`:
   - The build.
   - Direct Upload to the `pelicanpass-demo` Pages project.
   - The custom domain `pelicanpass.demos.yorsh.co`.
