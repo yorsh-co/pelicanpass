@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="pt-BR" data-release="test-release">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Gerador de números | PelicanPass</title>
+
+  <!-- keeps the browser chrome on the same palette as the page -->
+  <meta name="theme-color" content="#fafafc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0a11" media="(prefers-color-scheme: dark)" />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/images/icon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icon/favicon-32x32.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/images/icon/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest" crossorigin="use-credentials">
+
+    <link
+    rel="preload"
+    as="image"
+    href="/assets/images/bg/bg.webp"
+    type="image/webp"
+    fetchpriority="high"
+  />
+
+  <!-- global styles -->
+  <link rel="stylesheet" href="/css/dist/main.css" />
+
+  <!-- stored theme, applied before first paint -->
+  
+<script nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+  // Safari in private browsing has historically thrown on localStorage rather
+  // than returning null, which would abort head parsing.
+  try {
+    const theme = localStorage.getItem('theme');
+
+    if (theme === 'light' || theme === 'dark') {
+      document.documentElement.dataset.theme = theme;
+    }
+  } catch {}
+</script>
+
+
+  <!-- preload -->
+  <link rel="preconnect" href="https://challenges.cloudflare.com" />
+
+  <!-- page-specific styles -->
+  <link rel="stylesheet" href="/css/dist/pages/attendee/raffle.css" />
+
+</head>
+<body data-step data-page data-nodeenv="test" data-audience="volunteer">
+
+  <!-- no JS warning -->
+  <noscript>
+    <style nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+      main { display: none; }
+    </style>
+    <div class="no-js-warning">
+      <p>Esta aplicação precisa de JavaScript para funcionar corretamente. Por favor, ative o JavaScript no seu navegador.</p>
+    </div>
+  </noscript>
+
+  <!-- boot screen -->
+  <div id="app-boot" data-main="boot-screen" class="app-boot show">
+  <div class="boot-content">
+    <div id="boot-motif-right">
+      <img
+        class="motif"
+        src="/assets/images/motifs/star-sm.svg"
+        alt=""
+      />
+    </div>
+    <div id="boot-motif-left">
+      <img
+        class="motif"
+        src="/assets/images/motifs/star-sm.svg"
+        alt=""
+      />
+    </div>
+    <div id="boot-motif-centre">
+      <img
+        class="motif"
+        src="/assets/images/motifs/star-with-discs.svg"
+        alt=""
+      />
+    </div>
+    <div class="logo">
+      <img
+        class="boot-wordmark"
+        src="/assets/images/logo/wordmark-primary.svg"
+        alt="PelicanPass"
+      />
+    </div>
+  </div>
+</div>
+
+
+  <!-- main injection -->
+  <div class="main-wrapper">
+    
+<script type="application/json" data-i18n="raffle" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"raffle.counters":[{"type":6,"value":"drawn","options":{"other":{"value":[{"type":7},{"type":0,"value":" gerados · "},{"type":6,"value":"remaining","options":{"other":{"value":[{"type":7},{"type":0,"value":" restantes"}]}},"offset":0,"pluralType":"cardinal"}]}},"offset":0,"pluralType":"cardinal"}],"raffle.drawButton":[{"type":0,"value":"Gerar número"}],"raffle.drawnEmpty":[{"type":0,"value":"Nenhum número gerado ainda"}],"raffle.drawnHeading":[{"type":0,"value":"Gerados"}],"raffle.emptyPool":[{"type":0,"value":"Ninguém fez check-in ainda"}],"raffle.exhausted":[{"type":0,"value":"Todos os números já foram gerados"}],"raffle.idle":[{"type":0,"value":"Toca em \"gerar número\" para começar"}],"raffle.repeatsLabel":[{"type":0,"value":"Permitir números repetidos"}],"raffle.resetFailed":[{"type":0,"value":"Esse número já tinha sido devolvido"}],"raffle.resetLabel":[{"type":0,"value":"Devolver #"},{"type":2,"value":"checkinNumber","style":{"type":0,"tokens":[{"stem":"group-off","options":[]}],"parsedOptions":{"useGrouping":false}}},{"type":0,"value":" aos restantes"}],"raffle.serverError":[{"type":0,"value":"Algo deu errado. Tente novamente"}],"raffle.stillWorking":[{"type":0,"value":"Ainda processando. Tente novamente em instantes"}]}</script>
+
+
+<main data-raffle="main-container" class="main-container raffle-container">
+  <div class="raffle-head">
+    <header>
+  <span class="wordmark" role="img" aria-label="PelicanPass"></span>
+</header>
+
+
+    <!--
+      The way back, shaped like the staff surface's own: a link rather than a
+      button, so it works without JavaScript and long-pressing it opens the pass
+      in a second tab. Whoever is running the draw is holding their own pass too.
+    -->
+    <a data-raffle="passLink" class="raffle-pass-link" href="/pass">
+      <span class="material-symbols-outlined" aria-hidden="true">
+        confirmation_number
+      </span>
+      <span data-raffle="copy-passLink">Meu ingresso</span>
+    </a>
+  </div>
+
+  <!--
+    The stage. One number, as large as the type scale goes.
+
+    `aria-hidden` on the number itself and a separate live region beside it:
+    while it rolls, this element changes sixty times a second, and a live region
+    announcing that would be unusable. The winner is written into
+    `data-raffle="announce"` once, after the roll settles.
+  -->
+  <section class="raffle-stage">
+    <p
+      data-raffle="number"
+      class="raffle-number"
+      aria-hidden="true"
+    >&nbsp;</p>
+
+    <p data-raffle="copy-idle" class="raffle-idle-hint">Toca em &#34;gerar número&#34; para começar</p>
+
+    <p
+      data-raffle="announce"
+      class="visually-hidden"
+      aria-live="polite"
+    ></p>
+  </section>
+
+  <div class="step-controls">
+    <button data-raffle="drawButton" class="raffle-draw-btn" type="button">
+      <span data-raffle="copy-drawButton" class="btn-label">Gerar número</span>
+      <span class="btn-spinner"></span>
+    </button>
+
+    <!--
+      A real checkbox with a real label. The state is read when the button is
+      tapped and sent with the request — the server is what enforces it, and
+      this is the control that says so.
+
+      Deliberately not persisted: a reload comes back with repeats off, which is
+      the reading of an ambiguous state that cannot call a number twice.
+    -->
+    <div class="raffle-toggle">
+      <input id="raffle-repeats" data-raffle="repeats" type="checkbox" />
+      <label
+        for="raffle-repeats"
+        data-raffle="copy-repeatsLabel"
+      >Permitir números repetidos</label>
+    </div>
+
+    <div data-raffle="hint" class="hint-div" aria-live="polite"></div>
+  </div>
+
+  <!--
+    What has been called, and the counters that say how much is left.
+
+    Numbers only, never names: the draw needs no more than a number to do its
+    job, and this is a screen that gets pointed at a projector.
+  -->
+  <section class="raffle-drawn">
+    <div class="raffle-drawn-head">
+      <h2 data-raffle="copy-drawnHeading" class="raffle-drawn-heading">Gerados</h2>
+      <p data-raffle="counters" class="raffle-counters"></p>
+    </div>
+
+    <ul data-raffle="drawn" class="raffle-drawn-list"></ul>
+
+    <p data-raffle="copy-drawnEmpty" class="raffle-drawn-empty" hidden>Nenhum número gerado ainda</p>
+  </section>
+
+  <footer>
+  <div class="footer-top small-print">
+    <span>© 2026 PelicanPass</span>
+    <span class="dot">•</span>
+    <span class="credit">
+      por
+      <a href="https://github.com/yorsh-co/pelicanpass" target="_blank">PelicanPass</a>
+    </span>
+  </div>
+
+  <div class="footer-links small-print">
+    <a href="/privacy">Privacidade</a>
+    <span class="dot">•</span>
+    <a href="/terms">Termos</a>
+    
+    
+    <span class="footer-logout-wrap">
+      <span class="dot">•</span>
+      <button class="footer-logout" data-footer="logout" type="button">
+        Sair
+      </button>
+    </span>
+    
+    <span class="dot">•</span>
+    <!--
+      The icon and the label name the theme the tap will switch *to*, not the
+      one in effect. `client/theme/theme.ts` rewrites both on load from the
+      two data labels, so the aria-label here is only what a light-themed first
+      paint happens to need.
+    -->
+    <button
+      class="theme-toggle"
+      data-theme-toggle
+      type="button"
+      aria-label="Ativar tema escuro"
+      data-label-dark="Ativar tema escuro"
+      data-label-light="Ativar tema claro"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+    </button>
+        
+    
+    <span class="footer-locales-wrap">
+      <span class="dot">•</span>
+      <details class="footer-locales" aria-label="Idiomas">
+        <summary lang="pt-BR">
+          BR<span class="visually-hidden"> português (Brasil)</span>
+          <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span>
+        </summary>
+        <ul class="footer-locales-menu">
+          
+          <li>
+            <a
+              href="/raffle-draw?lang=pt-BR"
+              hreflang="pt-BR"
+              lang="pt-BR"
+              aria-current="true"
+            >
+              <span class="footer-locales-code">BR</span>
+              <span class="footer-locales-name">português (Brasil)</span>
+              
+              <span class="material-symbols-outlined" aria-hidden="true">check</span>
+              
+            </a>
+          </li>
+          
+          <li>
+            <a
+              href="/raffle-draw?lang=en-XA"
+              hreflang="en-XA"
+              lang="en-XA"
+              
+            >
+              <span class="footer-locales-code">XA</span>
+              <span class="footer-locales-name">English (Pseudo-Accents)</span>
+              
+            </a>
+          </li>
+          
+        </ul>
+      </details>
+    </span>
+    
+  </div>
+</footer>
+
+</main>
+
+  </div>
+
+  <!-- toast -->
+  <div data-main="toast" role="status" aria-live="polite" aria-atomic="true">
+  <span data-toast="icon" class="material-symbols-outlined" aria-hidden="true"></span>
+  <div data-toast="msg-container"><span data-toast="msg"></span></div>
+</div>
+
+
+  <!-- edge-challenge recovery -->
+  <!--
+  Raised by modules/ui/challenge-gate.ts when Cloudflare challenges a fetch.
+
+  Both messages ship rendered and hidden and the script reveals one. The
+  strings come from the shared chrome catalog, except the blocked one: that
+  message names who to ask for help, and on the administrator screens the
+  reader is the volunteer the attendee copy tells them to call. Callers that
+  need the other wording pass `challengeBlocked`.
+
+  `warning` is used rather than a lock or a clock because the icon subset is
+  frozen at 21 glyphs (docs/infrastructure/asset-delivery.md) — an icon outside it renders as
+  its own name, silently.
+-->
+
+<div
+  id="app-challenge"
+  data-main="challenge"
+  class="app-challenge"
+  role="alertdialog"
+  aria-labelledby="challenge-title"
+  aria-modal="true"
+  hidden
+>
+  <div class="challenge-content">
+    <span class="material-symbols-outlined" aria-hidden="true">warning</span>
+
+    <!--
+      The label wraps both variants rather than sitting on either. A `hidden`
+      element contributes nothing to the accessible name, so this resolves to
+      whichever message the script revealed.
+    -->
+    <div id="challenge-title">
+      <p data-challenge="expired" hidden>Verificação de segurança expirada</p>
+
+      <p data-challenge="blocked" hidden>Não foi possível completar a verificação. Dirija-se à mesa de suporte</p>
+
+            <p data-challenge="expired-access" hidden>
+        Sessão expirada. Entre novamente para continuar
+      </p>
+    </div>
+
+    <button
+      type="button"
+      data-challenge="continue"
+      data-label-expired="Continuar"
+      data-label-blocked="Tentar novamente"
+      data-label-reauth="Entrar novamente"
+    ></button>
+  </div>
+</div>
+
+
+  <!-- global scripts -->
+  <script type="module" src="/js/theme/theme.js"></script>
+    <script type="module" src="/js/telemetry/index.js"></script>
+
+  <!-- page-specific scripts -->
+  <script type="module" src="/js/pages/attendee/raffle/index.js"></script>
+
+</body>
+</html>

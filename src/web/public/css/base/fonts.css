@@ -1,0 +1,108 @@
+/*
+ * Self-hosted fonts.
+ *
+ * These came from `fonts.googleapis.com` and `fonts.gstatic.com`, which cost
+ * two extra DNS lookups and two TLS handshakes on a cold mobile connection
+ * before a single glyph could paint — on the most congested network this app
+ * will ever run on — and made check-in depend on Google being reachable at the
+ * moment someone is trying to get through the door.
+ *
+ * It also handed every attendee's IP to Google, an undeclared international
+ * transfer under §12 of the privacy policy. The check-in page now makes exactly
+ * one external request: the Cloudflare anti-bot widget, which the privacy deck
+ * already discloses.
+ *
+ * All three files are subsets, generated from Google's own subsetting endpoint
+ * and committed:
+ *
+ *   Libre Franklin  29,292 bytes — variable 300..700, latin only. The latin
+ *                    range covers U+0000-00FF, which is every diacritic pt-BR
+ *                    uses (ã ç õ é â). latin-ext buys nothing here.
+ *
+ *   Material Symbols  the glyphs this app renders, down from 320,052 bytes for
+ *                    the full ~2,500-icon face. The count and the current size
+ *                    live in `docs/infrastructure/asset-delivery.md` and only there — repeated
+ *                    here, they went four revisions stale without anyone
+ *                    noticing.
+ *
+ *   Red Hat Mono    10,768 bytes — variable 400..700, cut to A-Z, a-z and
+ *                    0-9 (62 characters). Ticket codes only: its slashed zero
+ *                    tells 0 from O, which no other face here does.
+ *
+ * The text face is Libre Franklin because it is also the face of the plain-text
+ * PelicanPass wordmark, so the wordmark and the text under it read as one
+ * brand. It is an OFL revival of Franklin Gothic, which is ITC/Monotype and
+ * cannot be served as a webfont.
+ *
+ * The `unicode-range` below is unchanged from Inter's: Google emits the
+ * identical latin range for both families.
+ *
+ * `font-display: swap` matches the `&display=swap` the old Google URL carried:
+ * text paints immediately in the fallback rather than blocking on the download.
+ *
+ * `font-weight: 300 700` is a range because this is a variable font. Libre
+ * Franklin's `wght` axis spans 100..900 and its *default instance is 100* —
+ * Thin. Narrowing the range here is what keeps unstyled text at a readable
+ * weight rather than hairline.
+ *
+ * THE TRAP: the icon font is a fixed subset. An icon outside it renders as its
+ * *ligature text* — the literal word `qr_code_scanner` in the UI — silently,
+ * and only visible in a browser. Adding one means regenerating this subset,
+ * and validating the name against Google's metadata first: an unrecognised
+ * name is dropped without an error and still changes the built file, so the
+ * build itself cannot tell you. The set and the recipe are in
+ * `docs/infrastructure/asset-delivery.md`.
+ */
+
+@font-face {
+  font-family: 'Libre Franklin';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/assets/fonts/libre-franklin-latin.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Red Hat Mono';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/assets/fonts/red-hat-mono-ticket.woff2') format('woff2');
+  unicode-range: U+0030-0039, U+0041-005A, U+0061-007A;
+}
+
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('/assets/fonts/material-symbols-subset.woff2') format('woff2');
+}
+
+/*
+ * Copied from Google's own stylesheet. `liga` is what turns the ligature text
+ * into a glyph, and `font-display: block` above is deliberate here rather than
+ * the `swap` the text face uses: an un-swapped icon shows the word `logout` in
+ * the top bar, which is worse than a brief blank.
+ */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+
+  display: inline-block;
+  direction: ltr;
+  white-space: nowrap;
+  word-wrap: normal;
+  letter-spacing: normal;
+  text-transform: none;
+
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}

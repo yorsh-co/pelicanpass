@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="pt-BR" data-release="test-release">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>PelicanPass</title>
+
+  <!-- keeps the browser chrome on the same palette as the page -->
+  <meta name="theme-color" content="#fafafc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0a11" media="(prefers-color-scheme: dark)" />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/images/icon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icon/favicon-32x32.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/images/icon/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest" crossorigin="use-credentials">
+
+    <link
+    rel="preload"
+    as="image"
+    href="/assets/images/bg/bg.webp"
+    type="image/webp"
+    fetchpriority="high"
+  />
+
+  <!-- global styles -->
+  <link rel="stylesheet" href="/css/dist/main.css" />
+
+  <!-- stored theme, applied before first paint -->
+  
+<script nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+  // Safari in private browsing has historically thrown on localStorage rather
+  // than returning null, which would abort head parsing.
+  try {
+    const theme = localStorage.getItem('theme');
+
+    if (theme === 'light' || theme === 'dark') {
+      document.documentElement.dataset.theme = theme;
+    }
+  } catch {}
+</script>
+
+
+  <!-- preload -->
+  <link rel="preconnect" href="https://challenges.cloudflare.com" />
+
+  <!-- page-specific styles -->
+  <link rel="stylesheet" href="/css/dist/pages/attendee/pass.css" />
+
+</head>
+<body data-step data-page data-nodeenv="test" data-audience="volunteer">
+
+  <!-- no JS warning -->
+  <noscript>
+    <style nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+      main { display: none; }
+    </style>
+    <div class="no-js-warning">
+      <p>Esta aplicação precisa de JavaScript para funcionar corretamente. Por favor, ative o JavaScript no seu navegador.</p>
+    </div>
+  </noscript>
+
+  <!-- boot screen -->
+  <div id="app-boot" data-main="boot-screen" class="app-boot show">
+  <div class="boot-content">
+    <div id="boot-motif-right">
+      <img
+        class="motif"
+        src="/assets/images/motifs/star-sm.svg"
+        alt=""
+      />
+    </div>
+    <div id="boot-motif-left">
+      <img
+        class="motif"
+        src="/assets/images/motifs/star-sm.svg"
+        alt=""
+      />
+    </div>
+    <div id="boot-motif-centre">
+      <img
+        class="motif"
+        src="/assets/images/motifs/star-with-discs.svg"
+        alt=""
+      />
+    </div>
+    <div class="logo">
+      <img
+        class="boot-wordmark"
+        src="/assets/images/logo/wordmark-primary.svg"
+        alt="PelicanPass"
+      />
+    </div>
+  </div>
+</div>
+
+
+  <!-- main injection -->
+  <div class="main-wrapper">
+    <script id="attendee-data" type="application/json" nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+  {"data":{"profile":{"attendeeRole":"volunteer","name":"Ana Souza","nickname":"Aninha","ticketCode":"EV26-0001","checkinNumber":42,"team":"Recepção","teamRole":"Líder"},"pass":{"welcome":"arrival","qr":"data:image/png;base64,AAAA","band":null,"survey":{"open":false,"completed":false}}}}
+</script>
+<script type="application/json" data-i18n="pass" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"pass.accessBadge":[{"type":5,"value":"tier","options":{"edit":{"value":[{"type":0,"value":"Cadastro"}]},"raffle":{"value":[{"type":0,"value":"Gerador de N°"}]},"lookup":{"value":[{"type":0,"value":"Consulta"}]},"tshirt":{"value":[{"type":0,"value":"Camisetas"}]},"redeem":{"value":[{"type":0,"value":"Retiradas"}]},"other":{"value":[{"type":0,"value":"Voluntário"}]}}}],"pass.actionsClose":[{"type":0,"value":"Voltar"}],"pass.actionsTitle":[{"type":0,"value":"Suas funções"}],"pass.adminLink":[{"type":0,"value":"Painel admin"}],"pass.backHint":[{"type":0,"value":"Mostre esta tela para retiradas"}],"pass.band.label":[{"type":0,"value":"palavra chave"}],"pass.band.retry":[{"type":0,"value":"Atualizar"}],"pass.chip.ariaLabel":[{"type":1,"value":"name"},{"type":0,"value":", retirar — mostre seu ingresso para retirar itens"}],"pass.chip.name":[{"type":1,"value":"item"},{"type":0,"value":" · "},{"type":1,"value":"value"}],"pass.chip.pending":[{"type":0,"value":"retirar"}],"pass.chip.redeemed":[{"type":0,"value":"retirado"}],"pass.frontTab":[{"type":0,"value":"Voltar ao ingresso"}],"pass.hideQr":[{"type":0,"value":"Voltar"}],"pass.init.rateLimited":[{"type":0,"value":"Muitas tentativas. Espere um pouco antes de tentar novamente"}],"pass.init.recoverableError":[{"type":0,"value":"Algo deu errado. Tente recarregar a página"}],"pass.init.unknownError":[{"type":0,"value":"Algo deu errado. Tente novamente"}],"pass.map.alt":[{"type":0,"value":"Mapa de exemplo do local do evento. Na entrada, embaixo: check-in. Seguindo pela passarela central, para cima: o auditório, no topo, com o palco ao fundo. No caminho, à esquerda: a praça de alimentação. À direita: os banheiros, mais acima, e o balcão de informações e apoio, mais abaixo."}],"pass.map.close":[{"type":0,"value":"Fechar mapa"}],"pass.map.help":[{"type":0,"value":"Se precisar de ajuda para se localizar, fale com um dos nossos voluntários"}],"pass.map.link":[{"type":0,"value":"Mapa"}],"pass.map.title":[{"type":0,"value":"Mapa do local"}],"pass.nickname.cancel":[{"type":0,"value":"Cancelar"}],"pass.nickname.cleared":[{"type":0,"value":"Voltamos para o seu primeiro nome"}],"pass.nickname.editLabel":[{"type":0,"value":"Personalize como seu nome aparece no app"}],"pass.nickname.failed":[{"type":0,"value":"Algo de errado. Tente novamente"}],"pass.nickname.hint":[{"type":0,"value":"Personalize como seu nome aparece no app"}],"pass.nickname.inputLabel":[{"type":0,"value":"Como seu nome aparece na sua tela"}],"pass.nickname.inputTitle":[{"type":0,"value":"Letras, números, espaço, apóstrofo e hífen, de "},{"type":2,"value":"min","style":null},{"type":0,"value":" a "},{"type":2,"value":"max","style":null},{"type":0,"value":" caracteres."}],"pass.nickname.invalid":[{"type":0,"value":"Use letras, números, espaço, apóstrofo ou hífen"}],"pass.nickname.save":[{"type":0,"value":"Salvar"}],"pass.nickname.saved":[{"type":0,"value":"Salvo"}],"pass.number.detail1":[{"type":0,"value":"chapelaria"}],"pass.number.detail2":[{"type":0,"value":"interações"}],"pass.number.label":[{"type":0,"value":"seu número é"}],"pass.raffleLink":[{"type":0,"value":"Gerador de números"}],"pass.staffLink":[{"type":0,"value":"Retiradas"}],"pass.surveyLink":[{"type":0,"value":"Deixe seu feedback"}],"pass.ticketLabel":[{"type":0,"value":"ingresso"}],"pass.welcome":[{"type":5,"value":"phase","options":{"arrival":{"value":[{"type":0,"value":"que bom que você chegou!"}]},"default":{"value":[{"type":0,"value":"bem-vindo!"}]},"survey":{"value":[{"type":0,"value":"conte para a gente como foi sua experiência"}]},"thanks":{"value":[{"type":0,"value":"obrigado por ter participado!"}]},"other":{"value":[{"type":0,"value":"bem-vindo!"}]}}}]}</script>
+<script type="application/json" data-i18n="chrome" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"chrome.challenge.blocked":[{"type":0,"value":"Não foi possível completar a verificação. Dirija-se à mesa de suporte"}],"chrome.challenge.blockedAdmin":[{"type":0,"value":"Não foi possível completar a verificação. Dirija-se à mesa de suporte"}],"chrome.challenge.continue":[{"type":0,"value":"Continuar"}],"chrome.challenge.expired":[{"type":0,"value":"Verificação de segurança expirada"}],"chrome.challenge.expiredAccess":[{"type":0,"value":"Sessão expirada. Entre novamente para continuar"}],"chrome.challenge.reauth":[{"type":0,"value":"Entrar novamente"}],"chrome.challenge.retry":[{"type":0,"value":"Tentar novamente"}],"chrome.cookieBanner.link":[{"type":0,"value":"como cuidamos dos seus dados"}],"chrome.cookieBanner.text":[{"type":0,"value":"Usamos cookies necessários para o funcionamento do aplicativo. Veja"}],"chrome.footer.copyright":[{"type":0,"value":"© "},{"type":2,"value":"year","style":{"type":0,"tokens":[{"stem":"group-off","options":[]}],"parsedOptions":{"useGrouping":false}}},{"type":0,"value":" "},{"type":1,"value":"eventName"}],"chrome.footer.creditPrefix":[{"type":0,"value":"por"}],"chrome.footer.languages":[{"type":0,"value":"Idiomas"}],"chrome.footer.logout":[{"type":0,"value":"Sair"}],"chrome.footer.privacy":[{"type":0,"value":"Privacidade"}],"chrome.footer.terms":[{"type":0,"value":"Termos"}],"chrome.footer.themeToDark":[{"type":0,"value":"Ativar tema escuro"}],"chrome.footer.themeToLight":[{"type":0,"value":"Ativar tema claro"}],"chrome.item.drink":[{"type":0,"value":"Bebida"}],"chrome.item.lunch":[{"type":0,"value":"Almoço"}],"chrome.item.meal":[{"type":0,"value":"Lanche"}],"chrome.item.tshirt":[{"type":0,"value":"Camiseta"}],"chrome.item.tshirtVolunteer":[{"type":0,"value":"Camiseta voluntário"}],"chrome.noscript":[{"type":0,"value":"Esta aplicação precisa de JavaScript para funcionar corretamente. Por favor, ative o JavaScript no seu navegador."}],"chrome.passLink":[{"type":0,"value":"Meu ingresso"}],"chrome.role.volunteer":[{"type":0,"value":"Voluntário"}],"chrome.title.checkin":[{"type":0,"value":"Check-in | "},{"type":1,"value":"appTitle"}],"chrome.title.privacy":[{"type":0,"value":"Privacidade — "},{"type":1,"value":"appTitle"}],"chrome.title.raffle":[{"type":0,"value":"Gerador de números | "},{"type":1,"value":"appTitle"}],"chrome.title.staff":[{"type":0,"value":"Retiradas | "},{"type":1,"value":"appTitle"}],"chrome.title.terms":[{"type":0,"value":"Termos de Uso — "},{"type":1,"value":"appTitle"}],"chrome.wordmarkAlt":[{"type":0,"value":"PelicanPass"}]}</script>
+<script type="application/json" data-i18n="survey" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"survey.anonymity.participant":[{"type":0,"value":"Suas respostas são anônimas."}],"survey.anonymity.volunteer":[{"type":0,"value":"Suas respostas são anônimas."}],"survey.close":[{"type":0,"value":"Fechar"}],"survey.counter":[{"type":2,"value":"count","style":null},{"type":0,"value":" de "},{"type":2,"value":"max","style":null},{"type":0,"value":" caracteres"}],"survey.error.answered":[{"type":0,"value":"Você já respondeu a este questionário."}],"survey.error.closed":[{"type":0,"value":"O questionário está fechado."}],"survey.error.generic":[{"type":0,"value":"Não foi possível enviar agora. Tente novamente."}],"survey.error.stale":[{"type":0,"value":"O questionário foi atualizado. Confira as perguntas e envie de novo."}],"survey.error.unavailable":[{"type":0,"value":"Este questionário não está disponível."}],"survey.heading":[{"type":0,"value":"Feedback "},{"type":1,"value":"eventName"}],"survey.no":[{"type":0,"value":"Não"}],"survey.optional":[{"type":0,"value":"Opcional"}],"survey.rating.input":[{"type":0,"value":"Digite uma nota de 1 a 10"}],"survey.rating.unset":[{"type":0,"value":"Sem resposta"}],"survey.required":[{"type":0,"value":"Obrigatória"}],"survey.submit":[{"type":0,"value":"Enviar"}],"survey.thanks":[{"type":0,"value":"Obrigado! Suas respostas foram enviadas."}],"survey.yes":[{"type":0,"value":"Sim"}]}</script>
+
+
+<main data-pass="main-container" class="main-container pass-container">
+  
+
+
+
+
+
+<!--
+  The attendee pass. Shared by the participant and volunteer pass pages, which
+  the route picks by role — everything that differs between them is data, so
+  there is nothing left to fork a template over.
+
+  Three faces, switched by `ui/face.ts`: the front, the QR back, and a
+  volunteer's actions. The head sits outside all of them, so the card reads as
+  one object rather than as separate screens.
+
+  The head is also a pair of tabs. The wordmark is the front's tab, active on
+  the front and the back; on the actions face it is the inactive one, and the
+  `frontTab` button laid over it returns to the front. The access tab at the
+  right, in the volunteer's tier colour, opens the actions and is active there.
+-->
+<div data-pass="pass" class="pass skeleton" data-face="front">
+  <div class="pass-head">
+    <header>
+  <span class="wordmark" role="img" aria-label="PelicanPass"></span>
+</header>
+
+
+    
+    <button
+      type="button"
+      data-pass="frontTab"
+      class="pass-front-tab"
+      aria-label="Voltar ao ingresso"
+      hidden
+    ></button>
+
+    
+    <span
+      data-pass="roleBadge"
+      class="role-badge"
+      hidden
+    ></span>
+
+    <button
+      type="button"
+      data-pass="accessTab"
+      class="pass-tab"
+      aria-controls="pass-face-actions"
+      aria-expanded="false"
+      hidden
+    >
+      <span data-pass="accessChip" class="role-badge"></span>
+    </button>
+  </div>
+
+  <div data-pass="faceFront" class="pass-face pass-front">
+    <!--
+      That welcome and the number label below are rendered into their `copy-`
+      slots from the pass catalog.
+    -->
+    <div class="pass-name" data-pass="nickname">
+      <div class="pass-name-line" data-pass="nicknameLine">
+        <p
+          data-pass="displayName"
+          class="pass-name-value"
+          data-skeleton="value"
+        >
+          &nbsp;
+        </p>
+
+        <button
+          type="button"
+          class="pass-name-edit"
+          data-pass="nicknameTrigger"
+          aria-label="Personalize como seu nome aparece no app"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+        </button>
+      </div>
+
+      <form class="pass-name-form" data-pass="nicknameForm" hidden>
+        <label class="visually-hidden" for="pass-nickname-input">
+          Como seu nome aparece na sua tela
+        </label>
+
+        <div class="pass-name-controls">
+          <input
+            id="pass-nickname-input"
+            data-pass="nicknameInput"
+            type="text"
+            inputmode="text"
+            autocomplete="off"
+            autocapitalize="words"
+            enterkeyhint="done"
+            maxlength="24"
+            pattern="[\p{L}\p{M}\p{N} &#39;\-]{2,24}"
+            title="Letras, números, espaço, apóstrofo e hífen, de 2 a 24 caracteres."
+          />
+
+          <button
+            type="submit"
+            class="pass-name-action"
+            data-pass="nicknameSave"
+            aria-label="Salvar"
+          >
+            <span class="material-symbols-outlined" aria-hidden="true">check</span>
+          </button>
+
+          <button
+            type="button"
+            class="pass-name-action"
+            data-pass="nicknameCancel"
+            aria-label="Cancelar"
+          >
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          </button>
+        </div>
+
+        <div
+          data-pass="nicknameHint"
+          class="hint-div"
+          aria-live="polite"
+        ></div>
+      </form>
+    </div>
+
+    <!--
+      One line under the name: a volunteer's team and role once they have been
+      assigned one, the welcome otherwise. A role without a team gets the
+      welcome: on its own it does not say where to find them. The separator is
+      drawn by CSS, so the line holds only the two values. Hidden as a whole
+      while the nickname editor is open.
+    -->
+    <div data-pass="tagline">
+      
+        <p class="pass-welcome">Recepção<span class="pass-team-role">Líder</span></p>
+      
+    </div>
+
+    <div data-pass="checkinNumberBlock" class="pass-number-block">
+      <p data-pass="copy-numberLabel" class="pass-number-label">seu número é</p>
+
+      <div class="pass-number-row">
+        <p
+          data-pass="checkinNumber"
+          class="pass-number"
+          data-skeleton="value"
+        >
+          &nbsp;
+        </p>
+
+        <ul class="pass-number-details">
+          <li data-pass="copy-numberDetail1">chapelaria</li>
+          <li data-pass="copy-numberDetail2">interações</li>
+        </ul>
+      </div>
+    </div>
+
+    <!--
+      Each chip is a button that turns the pass over to its QR. `ui/pass.ts`
+      builds them and `ui/face.ts` listens on this list.
+    -->
+    <ul data-pass="chips" class="pass-chips"></ul>
+
+    <!--
+      The way in to the questionnaire, on a line of its own: the row below
+      splits into equal halves, and a button that comes and goes with the
+      survey's window would squeeze the ones that are always there.
+
+      First of the links and filled with the accent, because it is the only one
+      with a deadline: someone opening the pass while it is open should see it
+      before anything else they could tap.
+
+      Rendered only for an audience with a questionnaire, and shown only while it
+      is open and not yet answered. `ui/survey.ts` follows the pass poll from
+      there.
+    -->
+    
+
+    <!--
+      A participant's pass has no staff links, so the venue map takes this row.
+      A volunteer's staff links are on the actions face, behind the access tab,
+      and their map is the icon in the foot; the row is then empty and takes no
+      space.
+    -->
+    <div class="pass-staff-links">
+      <button type="button" data-pass="mapChip" class="pass-staff-link" hidden>
+        <span class="material-symbols-outlined" aria-hidden="true">map</span>
+        <span data-pass="copy-mapLink">Mapa</span>
+      </button>
+    </div>
+
+    <!--
+      The foot carries two things now, so they are grouped rather than left as
+      three children of a `space-between` row: a third item lands adrift in the
+      middle of it, reading as an unrelated thing rather than as a stamp on the
+      check-in line.
+
+      The clock is this face's only sign of life, and only that. A volunteer
+      glancing at the phone sees the seconds move, which a screenshot cannot do
+      — a screen recording and a reimplemented front end both defeat it, and
+      the checks that have to hold are on the back, where the band rotates
+      against the volunteer's own and the code is signed.
+
+      Last in its group on purpose. Libre Franklin ships no `tnum` and its
+      digits are proportional, so `HH:MM:SS` changes width every second and no
+      `font-variant-numeric` will fix that here; being last means the only edge
+      that moves is its own, and the button across the row never feels it.
+
+      `&nbsp;` as below: an empty paragraph is zero tall, so the foot would
+      grow a line the moment the first tick landed.
+
+      `aria-hidden`, and not merely the band clock's silence on `aria-live`.
+      This value is not addressed to the person holding the phone — it is a
+      check someone across the counter makes by eye — and read aloud after the
+      date it claims they checked in at a second-precise time they did not.
+    -->
+    <div class="pass-foot">
+      <div class="pass-foot-meta">
+        <p data-pass="checkinAt" class="pass-date"></p>
+
+        <p
+          data-pass="frontClock"
+          class="pass-date pass-front-clock"
+          aria-hidden="true"
+        >
+          &nbsp;
+        </p>
+      </div>
+
+      <div class="pass-foot-actions">
+        <button
+          type="button"
+          data-pass="mapIcon"
+          class="pass-verify-btn"
+          aria-label="Mapa"
+          title="Mapa"
+          hidden
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">map</span>
+        </button>
+
+        <button type="button" data-pass="showQr" class="pass-verify-btn">
+          <span class="material-symbols-outlined" aria-hidden="true">info</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--
+    The back: the QR a volunteer scans, and the band and clock they compare by
+    eye when a camera will not open.
+
+    `aria-live="polite"` on the band, not on the clock: a screen reader
+    announcing every second would be unusable.
+  -->
+  <div data-pass="faceBack" class="pass-face pass-back" hidden>
+    <div data-pass="passLive" class="pass-live band-block">
+      <!--
+        No `src` attribute and no skeleton.
+
+        `alt=""` because there is nothing to say — a screen reader cannot scan a
+        QR, and the band and ticket code beside it carry the same identity in text.
+      -->
+      <img data-pass="passQr" class="pass-qr" alt="" />
+
+      <div class="pass-live-meta">
+        
+        <p data-pass="copy-bandLabel" class="pass-live-label">palavra chave</p>
+        
+
+        <!--
+          How much of the window is left, draining to empty as the word expires.
+          The word and the clock sit inside the arc: one panel to hold out
+          rather than three lines to read down.
+
+          `aria-hidden` on the graphic only. It sits on the whole block for as
+          long as that block was a bar; here it would silence the band's own
+          `aria-live` along with the drawing.
+        -->
+        <div data-pass="passWindow" class="pass-window window-ring">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <circle class="window-ring-track" cx="50" cy="50" r="46" pathLength="1" />
+            <circle class="window-ring-arc" cx="50" cy="50" r="46" pathLength="1" />
+          </svg>
+
+          <div class="window-ring-face">
+            
+            
+            <div class="band-slot">
+              <p
+                data-pass="passBand"
+                class="band"
+                aria-live="polite"
+              >
+                &nbsp;
+              </p>
+            </div>
+            
+
+            <p data-pass="passClock" class="band-clock">&nbsp;</p>
+          </div>
+        </div>
+      </div>
+
+      <!--
+        Covers the whole block — QR included — once the band has been stale long
+        enough to mean it. Everything behind it is hidden rather than painted
+        over: the card is a gradient and the code is a white plate, so no tint
+        that reads correctly here would have covered them.
+
+        No `hidden` attribute: the stylesheet shows this from the block's state
+        class, and `hidden` would beat it through the reset's `!important`.
+      -->
+      <button data-pass="passRetry" class="band-retry" type="button">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+        <span data-pass="copy-retry">Atualizar</span>
+      </button>
+    </div>
+
+    <!--
+      Who the volunteer is serving, in the words their own review uses: a
+      check-in number for a participant, a first name for a volunteer, and the
+      ticket code they type when a camera will not open.
+    -->
+    <p class="pass-identity">
+      <span data-pass="identityValue" class="pass-identity-value"></span>
+
+      <span class="pass-identity-ticket">
+        <span data-pass="copy-ticketLabel">ingresso</span>
+        <span data-pass="ticketCode" class="pass-ticket-value"></span>
+      </span>
+    </p>
+
+    <p data-pass="copy-backHint" class="pass-back-hint">Mostre esta tela para retiradas</p>
+
+    <button type="button" data-pass="hideQr" class="pass-back-btn">
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      <span data-pass="copy-hideQr">Voltar</span>
+    </button>
+  </div>
+
+  <!--
+    A volunteer's actions, behind the access tab: the links to the staff
+    surfaces their access covers, and nothing else. Which of them show is
+    decided from the profile by `ui/pass.ts`; the tab only appears when at
+    least one does. On this face the body takes the tier colour (see `pass.css`).
+
+    `/admin` opens in a new tab and asks for its own login: this pass's session
+    is no part of it, and the link grants nothing.
+  -->
+  <div data-pass="faceActions" id="pass-face-actions" class="pass-face pass-actions" hidden>
+    <h2 class="pass-actions-title">Suas funções</h2>
+
+    <div class="pass-actions-links">
+      <a data-pass="staffLink" class="pass-staff-link" href="/staff" hidden>
+        <span class="material-symbols-outlined" aria-hidden="true">qr_code_scanner</span>
+        <span data-pass="copy-staffLink">Retiradas</span>
+      </a>
+
+      <a data-pass="raffleLink" class="pass-staff-link" href="/raffle" hidden>
+        <span class="material-symbols-outlined" aria-hidden="true">casino</span>
+        <span data-pass="copy-raffleLink">Gerador de números</span>
+      </a>
+
+      <a data-pass="adminLink" class="pass-staff-link" href="/admin" target="_blank" hidden>
+        <span class="material-symbols-outlined" aria-hidden="true">admin_panel_settings</span>
+        <span data-pass="copy-adminLink">Painel admin</span>
+      </a>
+    </div>
+
+    <button type="button" data-pass="hideActions" class="pass-back-btn">
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      <span data-pass="copy-actionsClose">Voltar</span>
+    </button>
+  </div>
+
+  <!--
+    The venue map, over whichever face is up. A modal dialog rather than a third
+    face: the browser supplies the focus trap, Escape and the return of focus to
+    the button that opened it, and the face underneath keeps its scroll.
+
+    The image has its `src` at render, and is not lazy, so it is already cached
+    by the time anyone taps the button.
+  -->
+  <dialog
+    data-pass="mapDialog"
+    class="pass-map"
+    aria-labelledby="pass-map-title"
+  >
+    <div class="pass-map-head">
+      <h2 id="pass-map-title" data-pass="copy-mapTitle" class="pass-map-title">Mapa do local</h2>
+
+      <button
+        type="button"
+        data-pass="hideMap"
+        class="pass-map-close"
+        aria-label="Fechar mapa"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      </button>
+    </div>
+
+    <div data-pass="mapBody" class="pass-map-body">
+      <img
+        data-pass="mapImage"
+        class="pass-map-image"
+        src="/assets/images/map/venue-map.svg"
+        alt="Mapa de exemplo do local do evento. Na entrada, embaixo: check-in. Seguindo pela passarela central, para cima: o auditório, no topo, com o palco ao fundo. No caminho, à esquerda: a praça de alimentação. À direita: os banheiros, mais acima, e o balcão de informações e apoio, mais abaixo."
+        decoding="async"
+        draggable="false"
+      />
+    </div>
+
+    
+  </dialog>
+</div>
+
+
+  
+
+
+
+
+  <div class="privacy-notice small-print">
+  Usamos cookies necessários para o funcionamento do aplicativo. Veja
+  <a href="/privacy">como cuidamos dos seus dados</a>
+</div>
+
+
+  <footer>
+  <div class="footer-top small-print">
+    <span>© 2026 PelicanPass</span>
+    <span class="dot">•</span>
+    <span class="credit">
+      por
+      <a href="https://github.com/yorsh-co/pelicanpass" target="_blank">PelicanPass</a>
+    </span>
+  </div>
+
+  <div class="footer-links small-print">
+    <a href="/privacy">Privacidade</a>
+    <span class="dot">•</span>
+    <a href="/terms">Termos</a>
+    
+    
+    <span class="footer-logout-wrap">
+      <span class="dot">•</span>
+      <button class="footer-logout" data-footer="logout" type="button">
+        Sair
+      </button>
+    </span>
+    
+    <span class="dot">•</span>
+    <!--
+      The icon and the label name the theme the tap will switch *to*, not the
+      one in effect. `client/theme/theme.ts` rewrites both on load from the
+      two data labels, so the aria-label here is only what a light-themed first
+      paint happens to need.
+    -->
+    <button
+      class="theme-toggle"
+      data-theme-toggle
+      type="button"
+      aria-label="Ativar tema escuro"
+      data-label-dark="Ativar tema escuro"
+      data-label-light="Ativar tema claro"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+    </button>
+        
+    
+    <span class="footer-locales-wrap">
+      <span class="dot">•</span>
+      <details class="footer-locales" aria-label="Idiomas">
+        <summary lang="pt-BR">
+          BR<span class="visually-hidden"> português (Brasil)</span>
+          <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span>
+        </summary>
+        <ul class="footer-locales-menu">
+          
+          <li>
+            <a
+              href="/pass-volunteer?lang=pt-BR"
+              hreflang="pt-BR"
+              lang="pt-BR"
+              aria-current="true"
+            >
+              <span class="footer-locales-code">BR</span>
+              <span class="footer-locales-name">português (Brasil)</span>
+              
+              <span class="material-symbols-outlined" aria-hidden="true">check</span>
+              
+            </a>
+          </li>
+          
+          <li>
+            <a
+              href="/pass-volunteer?lang=en-XA"
+              hreflang="en-XA"
+              lang="en-XA"
+              
+            >
+              <span class="footer-locales-code">XA</span>
+              <span class="footer-locales-name">English (Pseudo-Accents)</span>
+              
+            </a>
+          </li>
+          
+        </ul>
+      </details>
+    </span>
+    
+  </div>
+</footer>
+
+</main>
+
+  </div>
+
+  <!-- toast -->
+  <div data-main="toast" role="status" aria-live="polite" aria-atomic="true">
+  <span data-toast="icon" class="material-symbols-outlined" aria-hidden="true"></span>
+  <div data-toast="msg-container"><span data-toast="msg"></span></div>
+</div>
+
+
+  <!-- edge-challenge recovery -->
+  <!--
+  Raised by modules/ui/challenge-gate.ts when Cloudflare challenges a fetch.
+
+  Both messages ship rendered and hidden and the script reveals one. The
+  strings come from the shared chrome catalog, except the blocked one: that
+  message names who to ask for help, and on the administrator screens the
+  reader is the volunteer the attendee copy tells them to call. Callers that
+  need the other wording pass `challengeBlocked`.
+
+  `warning` is used rather than a lock or a clock because the icon subset is
+  frozen at 21 glyphs (docs/infrastructure/asset-delivery.md) — an icon outside it renders as
+  its own name, silently.
+-->
+
+<div
+  id="app-challenge"
+  data-main="challenge"
+  class="app-challenge"
+  role="alertdialog"
+  aria-labelledby="challenge-title"
+  aria-modal="true"
+  hidden
+>
+  <div class="challenge-content">
+    <span class="material-symbols-outlined" aria-hidden="true">warning</span>
+
+    <!--
+      The label wraps both variants rather than sitting on either. A `hidden`
+      element contributes nothing to the accessible name, so this resolves to
+      whichever message the script revealed.
+    -->
+    <div id="challenge-title">
+      <p data-challenge="expired" hidden>Verificação de segurança expirada</p>
+
+      <p data-challenge="blocked" hidden>Não foi possível completar a verificação. Dirija-se à mesa de suporte</p>
+
+            <p data-challenge="expired-access" hidden>
+        Sessão expirada. Entre novamente para continuar
+      </p>
+    </div>
+
+    <button
+      type="button"
+      data-challenge="continue"
+      data-label-expired="Continuar"
+      data-label-blocked="Tentar novamente"
+      data-label-reauth="Entrar novamente"
+    ></button>
+  </div>
+</div>
+
+
+  <!-- global scripts -->
+  <script type="module" src="/js/theme/theme.js"></script>
+    <script type="module" src="/js/telemetry/index.js"></script>
+
+  <!-- page-specific scripts -->
+  <script type="module" src="/js/pages/attendee/pass/index.js"></script>
+
+</body>
+</html>

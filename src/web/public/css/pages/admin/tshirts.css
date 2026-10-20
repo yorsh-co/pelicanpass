@@ -1,0 +1,29 @@
+/*
+ * The t-shirt desk.
+ *
+ * Linked after pages/admin/lookup.css, whose cards, segments, pager and record
+ * layout both documents reuse; this sheet adds only the size and the
+ * collection state.
+ */
+
+/* The size is what the desk hands over, so it is the largest thing on the
+   record. */
+.tshirt-record__size {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+}
+
+.tshirt-size {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.tshirt-state {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.tshirt-state--redeemed {
+  color: var(--text);
+  font-weight: var(--weight-medium);
+}

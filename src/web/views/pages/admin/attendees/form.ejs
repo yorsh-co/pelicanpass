@@ -1,0 +1,386 @@
+<%# i18n: admin-attendees %>
+<%
+/*
+ * One attendee's record, in both modes: `attendee` is null when creating.
+ *
+ * One template rather than two, because the two differ in four places and agree
+ * everywhere else — two files would be one edit made twice from here on.
+ *
+ * Every value off the record uses the escaping output tag and never the raw
+ * one. `attendee_nickname` is the one attendee-controlled string on this page.
+ *
+ * (Do not name EJS's delimiters literally in this comment. The scanner is
+ * lexical and does not know it is inside a JavaScript comment, which cost the
+ * roster template a compile error the first time it rendered.)
+ */
+const attendee = locals.attendee || null;
+const canWrite = locals.canWrite || false;
+const canMark = locals.canMark || false;
+const creating = attendee === null;
+
+// A role cannot change once somebody has checked in: they hold a
+// sequence-assigned number and sit in the raffle pool. The service refuses it;
+// this is what stops the form offering it in the first place.
+const roleLocked = !creating && attendee.checkedIn;
+
+// What a volunteer-only item (volunteer t-shirt, lunch) is rendered against. A new record starts
+// as a participant, as the role dropdown does.
+const isVolunteer = !creating && attendee.role === 'volunteer';
+
+const items = creating
+  ? [
+      { name: 'tshirtVolunteerSize', item: 'tshirt_volunteer', label: chrome.itemTshirtVolunteer(), value: null, redeemed: false, volunteerOnly: true },
+      { name: 'lunchOption', item: 'lunch', label: chrome.itemLunch(), value: null, redeemed: false, volunteerOnly: true },
+      { name: 'tshirtSize', item: 'tshirt', label: chrome.itemTshirt(), value: null, redeemed: false },
+      { name: 'mealOption', item: 'meal', label: chrome.itemMeal(), value: null, redeemed: false },
+      { name: 'drinkOption', item: 'drink', label: chrome.itemDrink(), value: null, redeemed: false },
+    ]
+  : attendee.items;
+
+// The role the page is rendered for; the role dropdown defaults to participant.
+const renderedRole = creating ? 'participant' : attendee.role;
+
+// The approved list of an item under a role. A volunteer-only item is always
+// the volunteer's list: it is disabled for a participant, and the list is what
+// shows once the role becomes volunteer.
+const optionsOf = (item, role) => locals.itemOptions[item.volunteerOnly ? 'volunteer' : role][item.item];
+%>
+<%- include('../../../partials/i18n-catalogs') %>
+
+<div class="admin-form">
+  <header class="admin-form__head">
+    <div class="admin-form__headline">
+      <h1 class="admin-form__title">
+        <%= creating ? copy.newAttendee() : attendee.name %>
+      </h1>
+      <%# The name is what the operator came here to read, so it gets the first
+          line. Leaving is chrome and sits beside it.
+
+          `aria-hidden` on the ligature is load-bearing: without it a screen
+          reader announces the literal word "close". -%>
+      <a class="admin-form__close" href="/admin/attendees">
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        <span class="visually-hidden"><%= copy.formClose() %></span>
+      </a>
+    </div>
+    <% if (!creating && attendee.archived) { %>
+    <p class="admin-form__flag"><%= copy.formArchivedFlag() %></p>
+    <% } %>
+  </header>
+
+  <%# The ticket limit, for editors when it is on. On the blank form it is the
+      meter the next walk-in is counted against; on an archived record it is
+      what restoring would be counted against, and is absent elsewhere.
+      `data-limit-overview` is the contract with form/limit-banner.ts, which
+      repaints the meter and, on the blank form, disables the submit button
+      while the hard limit would refuse this save; on an archived record
+      `data-limit-role` and the code field tell it whether restoring counts. The server decides again at
+      save time, so none of this is enforcement. -%>
+  <% if (locals.limit) { const limit = locals.limit; const limitBlocked = locals.limitBlocked || false; %>
+  <section class="admin-form__limit" data-limit-banner data-limit-overview="<%= JSON.stringify(limit) %>"<% if (!creating) { %> data-limit-role="<%= attendee.role %>"<% } %>>
+    <%- include('../../../partials/ticket-limit-meter', { limit, copy }) %>
+    <p class="admin-form__limit-blocked" id="limit-blocked" data-limit-blocked <%= limitBlocked ? '' : 'hidden' %>>
+      <%= creating ? copy.limitFormBlocked() : copy.limitFormRestoreBlocked() %>
+    </p>
+  </section>
+  <% } %>
+
+  <%# `method="post"` is not decoration and must not be removed. Without it the
+      Enter key submits as GET, and `maskUrlSecrets` redacts `password`,
+      `token`, `code` and `t` — not `name` and not `phone`. Both the request
+      serialiser and the rate limiter log the URL, so a stray keypress would
+      write an attendee's name and phone number into the request log, which
+      docs/security/data-retention.md says never carries either. The sign-in form was
+      fixed for exactly this. The phase 9 handler cancels the native submit;
+      with JavaScript off this 404s, which is honest and is not a leak. -%>
+  <form
+    class="admin-form__form"
+    data-attendee-form
+    method="post"
+    autocomplete="off"
+    novalidate
+    <% if (!creating) { %>data-attendee-id="<%= attendee.attendeeId %>"<% } %>
+  >
+    <div class="admin-form__field">
+      <label class="admin-form__label" for="name"><%= copy.formName() %></label>
+      <input id="name" name="name" type="text" value="<%= creating ? '' : attendee.name %>" maxlength="120" required />
+    </div>
+
+    <div class="admin-form__field">
+      <label class="admin-form__label" for="phone"><%= copy.formPhone() %></label>
+      <%# The whole number, unlike the roster. The last four digits are the
+          verification code, so this is the screen where a typo actually gets
+          fixed — and a number you cannot read is a number you cannot correct. -%>
+      <input id="phone" name="phone" type="tel" value="<%= creating ? '' : attendee.phone %>" required />
+      <p class="admin-form__hint"><%= copy.formPhoneHint() %></p>
+    </div>
+
+    <div class="admin-form__field">
+      <label class="admin-form__label" for="ticketCode"><%= shell.ticketCode() %></label>
+      <% if (creating) { %>
+      <%# Disabled until the pencil is pressed, so a code is typed on purpose —
+          one from the external sign-up system — rather than by accident. A
+          disabled control is left out of the submission, which is what makes
+          the server generate one. -%>
+      <div class="admin-form__lock">
+        <input id="ticketCode" class="ticket-code" name="ticketCode" type="text" placeholder="<%= copy.formTicketCodePlaceholder() %>" disabled />
+        <button
+          class="ghost admin-form__unlock"
+          type="button"
+          data-attendee-unlock
+          aria-controls="ticketCode"
+          aria-label="<%= copy.formTicketCodeEdit() %>"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+        </button>
+      </div>
+      <p class="admin-form__hint"><%= copy.formTicketCodeHintBefore() %> <code>DXXXXX</code> <%= copy.formTicketCodeHintBetween() %> <code>VXXXXX</code> <%= copy.formTicketCodeHintAfter() %></p>
+      <% } else { %>
+      <input id="ticketCode" class="ticket-code" type="text" value="<%= attendee.ticketCode %>" readonly />
+      <p class="admin-form__hint"><%= copy.formTicketCodeLocked() %></p>
+      <% } %>
+    </div>
+
+    <div class="admin-form__field">
+      <label class="admin-form__label" for="role"><%= copy.roleLabel() %></label>
+      <% if (roleLocked) { %>
+      <%# Text plus a hidden input, never a disabled <select>: a disabled
+          control submits nothing, so the save would arrive with no role at all
+          and be refused as invalid instead of doing what was asked. -%>
+      <p class="admin-form__static"><%= shell.role({ role: attendee.role }) %></p>
+      <input type="hidden" name="role" value="<%= attendee.role %>" />
+      <p class="admin-form__hint"><%= copy.formRoleLocked() %></p>
+      <% } else { %>
+      <select id="role" name="role">
+        <option value="participant" <%= creating || attendee.role === 'participant' ? 'selected' : '' %>><%= shell.role({ role: 'participant' }) %></option>
+        <option value="volunteer" <%= !creating && attendee.role === 'volunteer' ? 'selected' : '' %>><%= shell.role({ role: 'volunteer' }) %></option>
+      </select>
+      <% } %>
+    </div>
+
+    <fieldset class="admin-form__group">
+      <legend class="admin-form__legend"><%= copy.formItems() %></legend>
+      <p class="admin-form__hint"><%= copy.formItemsHint() %></p>
+
+      <% for (const item of items) { %>
+      <% const blocked = item.volunteerOnly === true && !isVolunteer; %>
+      <% const reserved = item.name === 'tshirtSize'; %>
+      <% const roleScoped = !item.volunteerOnly; %>
+      <% const options = optionsOf(item, renderedRole); %>
+      <div class="admin-form__field">
+        <label class="admin-form__label" for="<%= item.name %>">
+          <%= item.label %>
+          <% if (item.redeemed) { %><span class="admin-form__tag"><%= copy.formRedeemed() %></span><% } %>
+        </label>
+        <%# Editable even when collected. The rules allow correcting a value
+            after the fact — `redemptions` records the item, not the size — and
+            refuse only clearing it, so a collected item disables its blank
+            option. The server still answers a clear with a 409.
+
+            A stored value missing from the approved list, usually from the
+            imported roster, stays selected and saves unchanged; the service
+            accepts it because it is the value already stored.
+
+            A shared item (not volunteer-only) is rendered with its own role's
+            list and carries both roles' lists in `data-role-options`, with the
+            stored value in `data-stored-value`, so the script can rebuild the
+            options when the role changes. The off-list option below is only for
+            a stored value outside the list rendered here.
+
+            A volunteer-only item is disabled while the record is not a
+            volunteer. A disabled control submits nothing, which the server
+            reads as "not entitled"; the script toggles it with the role. Its blank
+            option reads "unavailable" while it is blocked, else "none".
+
+            The participant t-shirt is reserved in advance by the attendee, so
+            it starts locked until the pencil is pressed. A disabled select
+            submits nothing, which the server reads as no t-shirt, so the
+            hidden stand-in carries the stored value until the pencil hands
+            its name over to the select. -%>
+        <% if (reserved) { %><div class="admin-form__lock"><% } %>
+        <select
+          id="<%= item.name %>"
+          <% if (!reserved) { %>name="<%= item.name %>"<% } %>
+          <% if (item.volunteerOnly) { %>data-volunteer-only aria-describedby="<%= item.name %>-hint"<% } %>
+          <% if (reserved) { %>aria-describedby="<%= item.name %>-reserved-hint"<% } %>
+          <% if (roleScoped) { %>data-role-options="<%= JSON.stringify({ participant: optionsOf(item, 'participant'), volunteer: optionsOf(item, 'volunteer') }) %>" data-stored-value="<%= item.value ?? '' %>"<% } %>
+          <%= blocked || reserved ? 'disabled' : '' %>
+        >
+          <option value="" <%= item.value === null ? 'selected' : '' %> <%= item.redeemed ? 'disabled' : '' %>><%= blocked ? copy.formItemUnavailable() : copy.formItemNone() %></option>
+          <% for (const option of options) { %>
+          <option value="<%= option %>" <%= option === item.value ? 'selected' : '' %>><%= option %></option>
+          <% } %>
+          <% if (item.value !== null && !options.includes(item.value)) { %>
+          <option value="<%= item.value %>" selected><%= copy.formItemOffList({ value: item.value }) %></option>
+          <% } %>
+        </select>
+        <% if (reserved) { %>
+          <button
+            class="ghost admin-form__unlock"
+            type="button"
+            data-attendee-unlock
+            aria-controls="<%= item.name %>"
+            aria-label="<%= copy.formTshirtEdit() %>"
+          >
+            <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+          </button>
+        </div>
+        <input type="hidden" name="<%= item.name %>" data-unlock-stand-in="<%= item.name %>" value="<%= item.value ?? '' %>" />
+        <p class="admin-form__hint" id="<%= item.name %>-reserved-hint"><%= copy.formTshirtReservedHint() %></p>
+        <% } %>
+        <% if (item.volunteerOnly) { %>
+        <p class="admin-form__hint" id="<%= item.name %>-hint" data-volunteer-only-hint <%= blocked ? '' : 'hidden' %>><%= copy.formVolunteersOnly() %></p>
+        <% } %>
+      </div>
+      <% } %>
+    </fieldset>
+
+    <%# The door message. Absent when `.env` locks it off, where it is not a
+        choice anybody at this screen can make, and on an archived record, which
+        has no entry to send; disabled, with the reason, when the switch or the
+        budget stops it. A disabled box is left out of the submission, which the
+        server reads as "do not send". The server checks every one of these
+        again at save time.
+
+        Ticked on a blank form. Unticked on a record, where it is for a
+        corrected number: the script ticks it when the phone field moves away
+        from `data-original-phone` and unticks it when it moves back. -%>
+    <% if (canWrite && locals.door && !(locals.door.available === false && locals.door.reason === 'lockedByEnv')) { %>
+    <div class="admin-form__field">
+      <div class="admin-form__toggle">
+        <input
+          id="sendWhatsapp"
+          name="sendWhatsapp"
+          type="checkbox"
+          data-attendee-whatsapp
+          <% if (!creating) { %>data-original-phone="<%= attendee.phone %>"<% } %>
+          <%= !locals.door.available ? 'disabled' : creating ? 'checked' : '' %>
+        />
+        <label for="sendWhatsapp"><%= copy.formWhatsapp() %></label>
+      </div>
+      <p class="admin-form__hint">
+        <%= !locals.door.available ? copy.formWhatsappUnavailable({ reason: locals.door.reason }) : creating ? copy.formWhatsappHint() : copy.formWhatsappEditHint() %>
+      </p>
+    </div>
+    <% } %>
+
+    <p class="admin-form__error" data-attendee-error role="alert"></p>
+
+    <div class="admin-form__actions">
+      <% if (canWrite) { %>
+      <button
+        type="submit"
+        data-attendee-submit
+        <% if (creating && locals.limitBlocked) { %>disabled aria-describedby="limit-blocked"<% } %>
+      >
+        <span class="btn-label"><%= creating ? copy.formCreate() : copy.formSave() %></span>
+      </button>
+      <% } else { %>
+      <p class="admin-form__hint"><%= copy.formReadOnly() %></p>
+      <% } %>
+      <a class="admin-form__cancel" href="/admin/attendees"><%= copy.formCancel() %></a>
+    </div>
+  </form>
+
+  <% if (!creating) { %>
+  <%# A volunteer holds no arrival number, so a checked-in record without one
+      reads as plain presence, as it does on the lookup screen.
+
+      The button is the lookup screen's fallback for an attendee who cannot scan
+      the QR. It is absent once somebody is present, since marking again is a
+      no-op, and on an archived record, which cannot check in. -%>
+  <section class="admin-form__aside" data-attendee-checkin>
+    <h2 class="admin-form__subtitle"><%= copy.checkinHeading() %></h2>
+    <% if (attendee.checkedIn) { %>
+    <p class="admin-form__static"><%= attendee.checkinNumber === null ? shell.present() : copy.checkinNumber({ number: attendee.checkinNumber }) %></p>
+    <% if (attendee.checkinAt) { %>
+    <p class="admin-form__static"><%= copy.checkinAt({ time: attendee.checkinAt }) %></p>
+    <% } %>
+    <% } else { %>
+    <p class="admin-form__hint"><%= copy.checkinAbsent() %></p>
+    <% if (!attendee.archived && canMark) { %>
+    <button class="ghost" type="button" data-attendee-checkin-mark="<%= attendee.attendeeId %>">
+      <span class="material-symbols-outlined" aria-hidden="true">how_to_reg</span>
+      <span class="btn-label"><%= copy.checkinMark() %></span>
+    </button>
+    <p class="admin-form__error" data-attendee-checkin-error role="alert"></p>
+    <p class="admin-form__hint"><%= copy.checkinMarkHint() %></p>
+    <% } else if (!attendee.archived) { %>
+    <p class="admin-form__hint"><%= copy.checkinReadOnly() %></p>
+    <% } %>
+    <% } %>
+  </section>
+
+  <section class="admin-form__aside">
+    <h2 class="admin-form__subtitle"><%= copy.nicknameHeading() %></h2>
+    <% if (attendee.nickname) { %>
+    <p class="admin-form__static"><%= attendee.nickname %></p>
+    <% if (canWrite) { %>
+    <button class="ghost" type="button" data-attendee-nickname="<%= attendee.attendeeId %>">
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      <span class="btn-label"><%= copy.nicknameRemove() %></span>
+    </button>
+    <% } %>
+    <p class="admin-form__hint"><%= copy.nicknameHint() %></p>
+    <% } else { %>
+    <p class="admin-form__hint"><%= copy.nicknameNone() %></p>
+    <% } %>
+  </section>
+
+  <section class="admin-form__aside">
+    <h2 class="admin-form__subtitle"><%= copy.permsHeading() %></h2>
+    <ul class="admin-form__perms">
+      <li><%= attendee.canRedeem ? copy.permsRedeems() : copy.permsNoRedeems() %></li>
+      <li>
+        <% if (attendee.canRedeem && attendee.redeemScopes.length > 0) { %>
+        <%= copy.permsStations({ stations: attendee.redeemScopes.join(', ') }) %>
+        <% } else { %>
+        <%= copy.permsNoStations() %>
+        <% } %>
+      </li>
+      <li><%= attendee.canDraw ? copy.permsDraws() : copy.permsNoDraws() %></li>
+    </ul>
+    <%# No link to db-cheatsheet.md here: it is a file in the repository, not a
+        page this deployment serves, so an operator on the tailnet cannot open
+        it. Saying where the change is actually made is what helps them. -%>
+    <p class="admin-form__hint"><%= copy.permsHint() %></p>
+  </section>
+
+  <%# Archiving used to be a control in the roster's row, one pixel from edit.
+      It is not a row-level convenience: it takes the check-in, the pass and the
+      raffle entry away from a person. It belongs on the screen where the
+      operator is already looking at the one record they mean to act on.
+
+      The ligature is picked here and never swapped by the bundle:
+      docs/infrastructure/asset-delivery.md calls the icon set "closed and statically
+      provable", and a script that wrote one would cost that claim. -%>
+  <% if (canWrite) { %>
+  <section class="admin-form__aside admin-form__aside--danger">
+    <h2 class="admin-form__subtitle"><%= copy.dangerHeading() %></h2>
+    <p class="admin-form__hint">
+      <% if (attendee.archived) { %>
+      <%= copy.dangerRestoreHint() %>
+      <% } else { %>
+      <%= copy.dangerArchiveHint() %>
+      <% } %>
+    </p>
+    <button
+      class="ghost admin-form__archive"
+      type="button"
+      data-attendee-archive="<%= attendee.attendeeId %>"
+      data-archived="<%= attendee.archived ? 'true' : 'false' %>"
+      <% if (attendee.archived && locals.limitBlocked) { %>disabled aria-describedby="limit-blocked"<% } %>
+    >
+      <span class="material-symbols-outlined" aria-hidden="true"><%= attendee.archived ? 'unarchive' : 'archive' %></span>
+      <span class="btn-label"><%= attendee.archived ? copy.dangerRestore() : copy.dangerArchive() %></span>
+    </button>
+  </section>
+  <% } %>
+  <% } %>
+</div>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/admin/attendees.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/admin/attendees/form/index.js"></script>

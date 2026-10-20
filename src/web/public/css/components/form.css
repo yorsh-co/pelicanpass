@@ -1,0 +1,157 @@
+label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+}
+
+input {
+  width: 100%;
+  padding: var(--space-4);
+
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+
+  background: var(--surface-sunken);
+  color: var(--text);
+
+  /* 1rem exactly: anything smaller makes iOS Safari zoom the viewport on
+     focus, and the zoom does not reverse on blur. */
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+
+  -webkit-text-fill-color: var(--text);
+
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+input.error {
+  border-color: var(--error);
+  animation: shake var(--duration-slow);
+}
+
+/*
+ * Scoped to `:required` so an empty field cannot match. Both check-in inputs
+ * carry a `pattern`, and without `required` an empty value satisfies it — which
+ * put a "looks good" ring on a field nobody had typed in yet.
+ */
+input:required:valid:not(.error) {
+  border-color: var(--success);
+}
+
+input::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+.input-wrapper {
+  position: relative;
+  border-radius: var(--cell-border);
+  padding: var(--cell-border);
+}
+
+/*
+ * Segmented code entry. The input is still the control — it is stretched over
+ * the cells and made invisible, so every native behaviour (paste, one-time-code
+ * autofill, the keyboard's send key) is untouched while the cells do the
+ * showing.
+ *
+ * It keeps `--text-base`: a font smaller than 16px makes iOS Safari zoom the
+ * viewport on focus and never zoom back, and that applies to invisible text
+ * just the same.
+ */
+.code-input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  width: 100%;
+  height: 100%;
+
+  padding: 0;
+  border: none;
+  background: transparent;
+  opacity: 0;
+  font-size: var(--text-base);
+}
+
+.code-cells {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.code-cell {
+  flex: 1;
+  aspect-ratio: 3 / 4;
+  max-height: 4.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--surface-sunken);
+  border: var(--cell-border) solid var(--border-strong);
+  border-radius: var(--radius-md);
+
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
+}
+
+/* The cell the next character will land in. */
+.code-cell.current {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 var(--cell-border) var(--accent);
+}
+
+/*
+ * Driven from the input's own classes through a sibling combinator, so the
+ * cells follow the same `error` and `:valid` states the plain input had.
+ */
+.code-input.error ~ .code-cells .code-cell {
+  border-color: var(--error);
+}
+
+.code-input.error ~ .code-cells {
+  animation: shake var(--duration-slow);
+}
+
+.code-input:required:valid:not(.error) ~ .code-cells .code-cell.filled {
+  border-color: var(--success);
+}
+
+.input-spinner {
+  position: absolute;
+  right: var(--space-4);
+  top: calc(50% - 0.5rem);
+
+  width: 1rem;
+  height: 1rem;
+
+  border: 2px solid transparent;
+  border-top-color: currentcolor;
+  border-radius: var(--radius-full);
+
+  animation: spin 0.7s linear infinite;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+
+.input-wrapper.loading .input-spinner {
+  opacity: 1;
+}

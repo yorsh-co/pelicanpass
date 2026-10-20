@@ -1,0 +1,57 @@
+<!--
+  Raised by modules/ui/challenge-gate.ts when Cloudflare challenges a fetch.
+
+  Both messages ship rendered and hidden and the script reveals one. The
+  strings come from the shared chrome catalog, except the blocked one: that
+  message names who to ask for help, and on the administrator screens the
+  reader is the volunteer the attendee copy tells them to call. Callers that
+  need the other wording pass `challengeBlocked`.
+
+  `warning` is used rather than a lock or a clock because the icon subset is
+  frozen at 21 glyphs (docs/infrastructure/asset-delivery.md) — an icon outside it renders as
+  its own name, silently.
+-->
+<%
+  // `locals.` on the read: layouts/main includes this partial without the
+  // override, and EJS throws on an undeclared name.
+  const challengeBlocked = locals.challengeBlocked || chrome.challengeBlocked();
+%>
+<div
+  id="app-challenge"
+  data-main="challenge"
+  class="app-challenge"
+  role="alertdialog"
+  aria-labelledby="challenge-title"
+  aria-modal="true"
+  hidden
+>
+  <div class="challenge-content">
+    <span class="material-symbols-outlined" aria-hidden="true">warning</span>
+
+    <!--
+      The label wraps both variants rather than sitting on either. A `hidden`
+      element contributes nothing to the accessible name, so this resolves to
+      whichever message the script revealed.
+    -->
+    <div id="challenge-title">
+      <p data-challenge="expired" hidden><%= chrome.challengeExpired() %></p>
+
+      <p data-challenge="blocked" hidden><%= challengeBlocked %></p>
+
+      <%# Raised when a Cloudflare Access session lapsed rather than a challenge:
+          the request never reached the origin at all. Only the administrator
+          surface can meet it, and only that surface's XHR raises it. -%>
+      <p data-challenge="expired-access" hidden>
+        <%= chrome.challengeExpiredAccess() %>
+      </p>
+    </div>
+
+    <button
+      type="button"
+      data-challenge="continue"
+      data-label-expired="<%= chrome.challengeContinue() %>"
+      data-label-blocked="<%= chrome.challengeRetry() %>"
+      data-label-reauth="<%= chrome.challengeReauth() %>"
+    ></button>
+  </div>
+</div>

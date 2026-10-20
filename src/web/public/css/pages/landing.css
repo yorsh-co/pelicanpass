@@ -1,0 +1,418 @@
+/*
+ * The pre-event curtain, served through layouts/plain.ejs.
+ *
+ * Carries `--brand-backdrop`, which until now sat on exactly three surfaces —
+ * the boot screen, the check-in success card and the pass — and the scarcity is
+ * deliberate. This joins them rather than diluting them: it is the entry before
+ * the entry, the first thing anyone opening the link sees for days, and it
+ * hands straight over to the boot screen on the same backdrop with a wordmark
+ * in the same place — the secondary here, the primary there. Everything between
+ * that pair and the pass is still neutral canvas, which is what lets the pass
+ * read as the reward.
+ *
+ * The layout deliberately mirrors components/boot-screen.css: one centred
+ * column, wordmark on top, on-brand ink. A visitor who watches the countdown
+ * run out should see the page they were already looking at continue, not a
+ * second design.
+ */
+
+/*
+ * Full-bleed, and stated on `body` rather than on a fixed overlay of its own.
+ *
+ * base/body.css paints `--canvas` here; this sheet is linked after main.css and
+ * only on this page, so the override lands at equal specificity and reaches
+ * nothing else. Painting the body is also what covers the overscroll area — a
+ * gradient on an inner element leaves `--canvas` showing above the fold on a
+ * rubber-band scroll, which on iOS is most of them.
+ *
+ * The gradient is theme-independent by nature, the same exemption
+ * base/variables.css grants it, so there is no `light-dark()` pair below.
+ */
+body {
+  background: var(--brand-backdrop);
+  color: var(--text-on-brand);
+}
+
+.landing {
+  /* .plain-wrapper is the flex column; this claims its free height so the
+     column sits in the optical centre rather than at the top. */
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/*
+ * The counterpart of `.boot-content`: one centred column on the gradient, no
+ * card. The card this replaced painted `--surface` and a shadow, which on the
+ * gradient read as a panel floating over the brand rather than as the brand.
+ */
+.landing-content {
+  width: 100%;
+  max-width: 22rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+
+  animation: fadeIn var(--duration-slow) var(--ease-out) forwards;
+}
+
+/*
+ * The wordmark takes on-brand ink here because the surface under it is the
+ * brand backdrop rather than canvas — sizing stays in partials/header.css,
+ * which styles `.wordmark` wherever it appears.
+ *
+ * `pop` is the boot screen's entrance, reused so the two surfaces open the same
+ * way. Both are one-shot and `forwards`, so the reduced-motion cap in
+ * base/reset.css lands them on their final frame rather than parking them
+ * mid-flight.
+ */
+.landing .logo {
+  animation: pop var(--duration-slow) var(--ease-spring) forwards;
+
+  margin-bottom: var(--space-6);
+}
+
+.landing-title {
+  /* typography.css gives every h1 a bottom margin tuned for the check-in card,
+     which is a denser stack than this one. */
+  margin: 0;
+
+  font-size: clamp(var(--text-xl), 6vw, var(--text-2xl));
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+
+.landing-lede {
+  margin: var(--space-3) 0 0;
+
+  color: var(--text-on-brand-muted);
+  font-size: var(--text-base);
+  /* Prose leading, looser than --leading-normal: two sentences read once, the
+     same call pages/error.css makes for its message. */
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/*
+ * The sentence that carries the page.
+ *
+ * Full on-brand ink while the countdown above it is muted, because this is the
+ * line that still works when the clock is frozen — and the only one a screen
+ * reader is given. The clock is decoration and is `aria-hidden` for that
+ * reason.
+ */
+.landing-opens {
+  margin: var(--space-6) 0 0;
+
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  text-wrap: pretty;
+}
+
+.landing-opens strong {
+  font-weight: var(--weight-semibold);
+  /* Intl hands back a lowercase pt-BR weekday. */
+  text-transform: capitalize;
+}
+
+/*
+ * The countdown.
+ *
+ * This carried `font-variant-numeric: tabular-nums` and a `'tnum'` feature
+ * setting to stop the line reflowing as digits turned over. **Both did
+ * nothing.** Libre Franklin ships no `tnum` and its digits are proportional —
+ * `.pass-number` in pages/attendee/pass.css records dropping the identical
+ * pair for the identical reason. The width is held by the reel geometry below
+ * instead, which needs no font feature to work.
+ */
+.landing-countdown {
+  margin: var(--space-5) 0 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/*
+ * The day pill.
+ *
+ * Its own row rather than a fourth tile: days are a different granularity from
+ * a ticking clock, and it is hidden outright inside the last twenty-four hours
+ * rather than sitting at `00`. The display tightening as the event approaches
+ * is the escalation, and it costs nothing to get.
+ *
+ * Plain text, not a reel. It changes once a day; a machine nobody will see move
+ * is machinery for its own sake.
+ */
+.landing-days {
+  margin: 0;
+  padding: var(--space-2) var(--space-4);
+
+  border-radius: var(--radius-full);
+  background: var(--camera-control-bg);
+
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.landing-units {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-2);
+}
+
+/*
+ * One unit's tile.
+ *
+ * `--camera-control-bg` is the on-gradient control surface the rest of the app
+ * already reaches for — `.pass-chip`, `.pass-name-edit` and `.landing-action`
+ * all sit on it, because `--surface` and `--border` are `light-dark()` values
+ * that wash out against `--brand-backdrop`.
+ *
+ * `11vw` on the digits, capped: three tiles of two digits plus their gaps is
+ * what has to survive a 320px viewport, and it is the binding constraint on
+ * this whole block.
+ */
+.landing-unit {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+
+  padding: var(--space-3) var(--space-2);
+
+  border-radius: var(--radius-md);
+  background: var(--camera-control-bg);
+}
+
+.landing-digits {
+  display: flex;
+
+  font-size: clamp(2rem, 11vw, 3rem);
+  font-weight: var(--weight-bold);
+  line-height: 1;
+  /* `-0.02em`, matching `.pass-number`: the `-0.04em` that suited Inter closes
+     Libre Franklin's wider digits to a collision at this size. */
+  letter-spacing: -0.02em;
+}
+
+/*
+ * Same size, colour and tracking as `.pass-number-label`, so the tiles read as
+ * the same family as the pass hero — a relationship worth having, since this
+ * page is the entry and that one is the exit.
+ */
+.landing-unit-label {
+  color: var(--text-on-brand-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/*
+ * One digit's window. The strip behind it is twenty `em` tall and everything
+ * outside this box is clipped — the `.raffle-reel` geometry, which this borrows
+ * along with the reel itself.
+ */
+.landing-digit {
+  overflow: hidden;
+  height: 1em;
+}
+
+/*
+ * The strip holds all ten glyphs, so its intrinsic width is the widest digit —
+ * identical for every reel, with no font feature and no magic `em` constant.
+ * That is what actually stops the tiles resizing as the numbers change, and it
+ * is why `.raffle-reel` needs no width either.
+ */
+.landing-digit-strip {
+  display: flex;
+  flex-direction: column;
+}
+
+.landing-digit-strip > span {
+  height: 1em;
+  line-height: 1;
+  text-align: center;
+}
+
+/*
+ * Promoted only while a reel is actually moving. Six permanently promoted
+ * layers is not a reasonable resting state for a page that sits idle for days,
+ * which is the same call `.raffle-reel` makes for three.
+ */
+.landing-digit-strip.is-rolling {
+  will-change: transform;
+}
+
+/*
+ * The last minute.
+ *
+ * Hours and minutes have nothing left to say, so they go and the seconds take
+ * `--text-hero` — the size the pass gives its arrival number. A state change
+ * rather than a loop: there is nothing here for the reduced-motion cap in
+ * base/reset.css to park.
+ *
+ * The switch is instant. A `font-size` transition would reflow every frame and
+ * fight the reel strips, which are sized in `em` off this very value.
+ */
+.landing-countdown.is-final-minute .landing-unit:not(:last-child) {
+  display: none;
+}
+
+.landing-countdown.is-final-minute .landing-units {
+  width: 100%;
+}
+
+.landing-countdown.is-final-minute .landing-digits {
+  font-size: var(--text-hero);
+}
+
+/*
+ * The takeover, given one beat of its own.
+ *
+ * Its own keyframe rather than the shared `pop`, for the reason `raffle-land`
+ * records: `pop` starts from zero opacity, which is right for a number
+ * appearing out of nothing and wrong for one already on screen that must not
+ * blink out to arrive. Capped to 0.01ms under reduced motion, which reveals the
+ * new layout rather than parking it — the correct outcome.
+ */
+.landing-countdown.is-final-minute .landing-unit:last-child {
+  animation: landing-takeover var(--duration-slow) var(--ease-spring);
+}
+
+@keyframes landing-takeover {
+  0% {
+    transform: scale(0.82);
+  }
+  60% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/*
+ * The standalone fallback's stand-in for the countdown once it reaches zero.
+ * Full on-brand ink, like `.landing-opens`: it is the only information left on
+ * the page.
+ */
+.landing-reopening {
+  margin: var(--space-6) 0 0;
+
+  font-size: var(--text-base);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/*
+ * Revealed by pages/landing/index.ts the moment the window opens.
+ *
+ * Overrides components/button.css the way `.pass-chip` and `.pass-name-edit` do
+ * on the same gradient, and for the same reason those record: that rule is a
+ * full-width `--accent` block, and accent purple on brand purple reads as a
+ * second, competing surface rather than as an action.
+ *
+ * The outline is what separates this from those two. They are secondary
+ * controls on a surface with other content; this is the single action on the
+ * page, revealed at the one moment anyone is looking at it, and a bare
+ * translucent chip is too quiet to be found. Kept theme-independent — the same
+ * exemption the gradient itself takes — because a token that resolves darker in
+ * one theme would be doing so against a background that never changes.
+ */
+.landing-action {
+  margin-top: var(--space-6);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 3.25rem;
+  padding: var(--space-3) var(--space-6);
+
+  border: 1px solid var(--text-on-brand);
+  border-radius: var(--radius-md);
+
+  background: var(--camera-control-bg);
+  color: var(--text-on-brand);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+
+  transition: transform var(--duration-fast) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/*
+ * The check-in continue page uses the same control as a `<button>`, which
+ * brings the UA's own font and cursor.
+ */
+button.landing-action {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/*
+ * `[hidden]` is a `display: none` from the UA sheet, and the rule above sets
+ * `display: inline-flex` at equal specificity but later in the cascade — which
+ * would show the button while it is still hidden. Stated rather than left to
+ * source order between two stylesheets.
+ */
+.landing-action[hidden] {
+  display: none;
+}
+
+/*
+ * Movement only, no colour change. Raising the fill on hover means naming a
+ * second translucent white, and the one device this page is read on does not
+ * hover — the press state below is the one that will actually be felt.
+ */
+.landing-action:hover {
+  transform: translateY(-3px);
+}
+
+.landing-action:active {
+  transform: scale(0.97);
+}
+
+/*
+ * The footer, on the gradient.
+ *
+ * partials/footer.css and the `.small-print` rules in base/typography.css both
+ * pitch it at `--text-muted`, which is tuned for canvas and drops to roughly
+ * 2:1 here. These re-point it at the on-brand pair, which base/variables.css
+ * records as measured against this gradient.
+ *
+ * Scoped to nothing, because this sheet is only ever linked by this page.
+ */
+footer,
+footer .small-print,
+footer .small-print a {
+  color: var(--text-on-brand-muted);
+}
+
+footer .small-print a:hover {
+  color: var(--text-on-brand);
+}
+
+.theme-toggle {
+  color: var(--text-on-brand-muted);
+}
+
+.theme-toggle:hover {
+  background: var(--camera-control-bg);
+  color: var(--text-on-brand);
+}

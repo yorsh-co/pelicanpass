@@ -1,0 +1,194 @@
+/*
+ * The rotating word, on both screens that show one.
+ *
+ * Shared for the same reason `window-ring.css` is: the attendee's band and the
+ * volunteer's band are held side by side and read against each other, so type
+ * that drifted between two copies would make a live pass look like someone
+ * else's screenshot.
+ *
+ * **The palette is deliberately not shared.** Each surface paints these eight
+ * names its own way — light on the pass's gradient, dark on the volunteer's
+ * white card — because the hue has to be legible against what it sits on. The
+ * names are the contract; the values belong to the page, which sets
+ * `--band-<name>` on a container above the word.
+ */
+
+/* Holds the word and whatever replaces it, sized to the taller of the two so
+   swapping one for the other moves nothing below. */
+.band-slot {
+  min-height: 2.75rem;
+
+  /*
+   * A full-width grid stack rather than a shrink-to-fit flex row: the pending
+   * placeholder sits in the same cell as the word, and a percentage width for
+   * it would otherwise track whatever word happened to be on screen.
+   */
+  width: 100%;
+
+  display: grid;
+  place-items: center;
+}
+
+.band-slot > *,
+.band-slot::after {
+  grid-area: 1 / 1;
+}
+
+/*
+ * Read across a counter at arm's length, and read *aloud* when the two screens
+ * cannot be put next to each other. That is why the word carries the identity
+ * and the colour is only ever decoration.
+ */
+.band {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: 0.02em;
+
+  /* The backstop inside the ring: the longest word wraps rather than spilling
+     over the arc. */
+  overflow-wrap: anywhere;
+}
+
+.band[data-colour='vermelho'] {
+  color: var(--band-vermelho);
+}
+.band[data-colour='laranja'] {
+  color: var(--band-laranja);
+}
+.band[data-colour='amarelo'] {
+  color: var(--band-amarelo);
+}
+.band[data-colour='verde'] {
+  color: var(--band-verde);
+}
+.band[data-colour='azul'] {
+  color: var(--band-azul);
+}
+.band[data-colour='roxo'] {
+  color: var(--band-roxo);
+}
+.band[data-colour='rosa'] {
+  color: var(--band-rosa);
+}
+.band[data-colour='marrom'] {
+  color: var(--band-marrom);
+}
+
+/*
+ * The block the word lives in, on either screen.
+ *
+ * Only the positioning context and the stale state are shared: the pass holds
+ * its band in a centred column under the QR and the volunteer holds it in a
+ * bordered card, so the layout around the word stays with each page. What is
+ * here is the part where a drift between two copies would be a bug rather than
+ * a blemish.
+ */
+.band-block {
+  /* The refresh overlay is positioned against this. */
+  position: relative;
+}
+
+/*
+ * Pending: the window has turned over and the replacement is in flight.
+ *
+ * The word on screen is the previous window's. It is not wrong — a token
+ * verifies for two windows, so the code beside it still scans — but the two
+ * screens refresh independently, and one can still be holding the old word
+ * while the other already has the new one. A *readable* word during that gap is
+ * how a legitimate pass gets refused, so it is covered rather than dimmed.
+ *
+ * Not the app's skeleton, which this borrowed until now. That shimmer means "no
+ * data yet" rather than "a moment old", it animates forever — `skeleton.css`
+ * calls its own animation the worst case for motion sensitivity and carries a
+ * second rule to flatten it — and its `::before` is sized to the word's own box,
+ * which inside the ring draws a word-shaped rectangle that reads as a redaction.
+ * Nothing here animates at all.
+ *
+ * `opacity` rather than `visibility`: the band is an `aria-live` region, and
+ * taking it out of the accessibility tree twice a minute risks a screen reader
+ * announcing the churn instead of the word.
+ */
+.band-block.is-pending .band {
+  opacity: 0;
+}
+
+.band-block.is-pending .band-slot::after {
+  content: '';
+
+  width: 55%;
+  height: 0.5rem;
+
+  border-radius: var(--radius-full);
+  background: var(--band-pending-bg);
+}
+
+/*
+ * Stale. The whole block goes behind the overlay — the word, the clock, the
+ * ring, and on the pass the code as well — because none of it can be trusted
+ * and a dimmed version of any of it is still readable.
+ *
+ * `visibility` rather than `display`: every box keeps its place, so the block
+ * does not change height when the state flips and nothing below it moves. It
+ * also has to hide rather than cover, because no tint works on the pass — the
+ * card is a gradient and the code is a white plate, so the app's one
+ * translucent token (16% white) would let both straight through.
+ */
+.band-block.is-stale > *:not(.band-retry) {
+  visibility: hidden;
+}
+
+.band-block.is-stale .band-retry {
+  display: inline-flex;
+}
+
+/*
+ * The button that takes the block's place when the band stops rotating.
+ *
+ * Covers the whole thing rather than sitting in it: everything behind it is
+ * untrustworthy together, and one surface with one action leaves nothing to
+ * interpret. Exempt from the `visibility` rule above for the obvious reason —
+ * the state it reports is why it is on screen.
+ *
+ * The border is declared with a transparent fallback rather than left to the
+ * page: the pass has none and the volunteer's card has a `--warn` one, and a
+ * transparent 1px costs the pass nothing under the global `border-box`.
+ */
+.band-retry {
+  display: none;
+
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  width: 100%;
+  gap: var(--space-2);
+
+  border: 1px solid var(--band-retry-border, transparent);
+  border-radius: var(--radius-md);
+
+  background: var(--band-retry-bg);
+  color: var(--band-retry-fg);
+
+  font-size: var(--text-sm);
+}
+
+/* Both fall back to the resting value: the pass repaints neither on hover. */
+.band-retry:hover {
+  background: var(--band-retry-bg-hover, var(--band-retry-bg));
+  color: var(--band-retry-fg-hover, var(--band-retry-fg));
+}
+
+.band-retry .material-symbols-outlined {
+  font-size: 20px;
+}
+
+/*
+ * The clock beside the word. Its job is to be visibly moving — a screenshot's
+ * is frozen — which is why it is the volunteer's own device time rather than
+ * anything the server sent.
+ */
+.band-clock {
+  font-size: var(--text-sm);
+  color: var(--band-clock-fg);
+}

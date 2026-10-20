@@ -1,0 +1,183 @@
+# The edge network's addresses, named once and read in three places: the
+# network's ipam, the Tailscale sidecar's pinned address, and the Caddyfile's
+# trusted_proxies and remote_ip gates via the `proxy` environment. Keeping them
+# on one anchor is what stops those from disagreeing.
+#
+# Not the production range. Development takes 172.31 and its own bridge names
+# so it can run on the same host as compose.prod.yml, which keeps 172.30.
+#
+# Overridable from .env only because a host may already hold the range; see the
+# Network section of .env.example for the constraints an override must meet.
+x-edge-subnet: &edge-subnet ${EDGE_SUBNET:-172.31.0.0/24}
+x-vpn-ip: &vpn-ip ${VPN_IP:-172.31.0.250}
+
+services:
+  app:
+    build:
+      context: .
+      target: dev
+    # Runs the client bundler in watch mode alongside the server; the browser
+    # bundle under src/web/public/js is a build artifact and is not committed.
+    command: npm run dev
+    # Overrides the image's USER node. The bundler writes into the bind mount,
+    # and under rootless Docker the host user maps to container root — uid 1000
+    # inside the container owns nothing on the host, so the build fails with
+    # EACCES on src/web/public/js. Files created here land owned by the host
+    # user. On a rootful daemon this is real root and artifacts come out
+    # root-owned instead.
+    user: root
+    env_file:
+      - .env
+    volumes:
+      - ./:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    networks:
+      - web
+      - data
+    depends_on:
+      - db
+      - cache
+
+  cache:
+    image: redis:8.10.2@sha256:c94085d298b738be22c9ccdc0ac3761fa6649df7dd82ad1d42367f3cb9714935
+    command: redis-server --requirepass ${REDIS_PASSWORD:?the Redis password - see .env.example}
+    volumes:
+      - cache:/data
+    networks:
+      - data
+
+  db:
+    image: postgres:16.15-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+    # Named explicitly rather than env_file: the database has no business
+    # holding the tunnel token, the Turnstile secret or the Redis password.
+    #
+    # POSTGRES_USER here is the image's *bootstrap superuser*, which is a
+    # different job from the role the application connects as. Pointing it at
+    # pelicanpass_app would create pelicanpass_app as a superuser and defeat the
+    # entire point, so the two are separate variables.
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_SUPERUSER}
+      POSTGRES_PASSWORD: ${POSTGRES_SUPERUSER_PASSWORD}
+      # Read only by 01-roles.sh below, which creates the least-privilege roles.
+      APP_ROLE: ${POSTGRES_USER}
+      APP_ROLE_PASSWORD: ${POSTGRES_PASSWORD}
+      MIGRATOR_ROLE: ${POSTGRES_MIGRATOR_USER}
+      MIGRATOR_ROLE_PASSWORD: ${POSTGRES_MIGRATOR_PASSWORD}
+      READONLY_ROLE: ${POSTGRES_READONLY_USER}
+      READONLY_ROLE_PASSWORD: ${POSTGRES_READONLY_PASSWORD}
+    command: >
+      postgres
+      -c shared_buffers=2GB
+      -c effective_cache_size=6GB
+      -c work_mem=32MB
+      -c max_connections=100
+    shm_size: 1g
+    volumes:
+      - data:/var/lib/postgresql/data
+      # Runs once on a freshly initialised data directory. An existing volume
+      # never triggers it — see the header of the script for the manual command.
+      - ./scripts/db/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - data
+
+  tunnel:
+    image: cloudflare/cloudflared:2026.10.2@sha256:0e56c13c7058fcef9c4f0e7d83372f82330548dbf8f8b366f3d8b506526d93b2
+    command: tunnel --loglevel ${TUNNEL_LOGLEVEL} --no-autoupdate run
+    # Read from the environment rather than passed on the command line, which
+    # would put a credential into the process argv.
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
+    networks:
+      - edge
+
+  proxy:
+    image: caddy:2.11.7@sha256:f2a1290d0463aad60660d4ec134943f183ee2a5f6c3eb7bf32dd984f2f020772
+    # The public vhost's site address in the Caddyfile. Named explicitly rather
+    # than env_file: the proxy has no business holding the tunnel token, the
+    # Tailscale auth key, the Turnstile secret or any database credential.
+    #
+    # `:?` and not a bare ${SITE_HOST}, because Caddy will not catch this. An
+    # empty value leaves the site address as `http://`, which adapts cleanly to
+    # a catch-all on :80 — the public vhost would answer any Host header rather
+    # than refuse to start. Compose stops first, on unset *or* empty.
+    environment:
+      SITE_HOST: ${SITE_HOST:?the public hostname, bare - see .env.example}
+      EDGE_SUBNET: *edge-subnet
+      VPN_IP: *vpn-ip
+      SERVER_NAME: ${SERVER_NAME:-unnamed}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    networks:
+      - edge
+      - web
+
+  vpn:
+    image: tailscale/tailscale:v1.104.1@sha256:87c55d6be56ad85b3d8bceca5f87f73de288c609131460dd1be1874c250cc41d
+    hostname: ${TS_HOSTNAME}
+    environment:
+      TS_AUTHKEY: ${TS_AUTHKEY}
+      TS_STATE_DIR: /var/lib/tailscale
+      TS_SERVE_CONFIG: /config/serve.json
+      # Not a typo for 1. tailscaled documents "0 is default, 1 or higher are
+      # increasingly verbose" and says nothing about going lower, but -1 is
+      # honoured and cuts a boot from ~55 log lines to ~8. containerboot's own
+      # `boot:` lines are unaffected, and so are real errors.
+      #
+      # It also silences the ipn state transitions and health warnings, so drop
+      # this first when the node will not come up. Undocumented, so an image
+      # upgrade could stop honouring it.
+      TS_TAILSCALED_EXTRA_ARGS: --verbose=-1
+    volumes:
+      - vpn:/var/lib/tailscale
+      - ./tailscale:/config:ro
+    networks:
+      edge:
+        # Pinned so the Caddy admin listener can name the only peer allowed to
+        # reach it. High in the range because Docker's dynamic allocator starts
+        # at the bottom, so this cannot collide with proxy or tunnel.
+        ipv4_address: *vpn-ip
+
+# Every service names its networks, which is what removes the implicit default
+# network — leaving it on even one service puts everything back on a shared
+# bridge and undoes the segmentation.
+#
+# Membership is bidirectional: these isolate groups, not directions. tunnel
+# reaches only proxy; proxy bridges edge/web; app bridges web/data. Postgres and
+# Redis are reachable from app alone, which is what removes cloudflared's route
+# to the database — the point of the exercise, since a tunnel is configured
+# server-side and anyone holding TUNNEL_TOKEN could otherwise route straight at
+# Postgres.
+networks:
+  # Pinned rather than left to Docker's default pool: the Caddyfile names this
+  # subnet in `trusted_proxies` and in the 403 gate, and that only works if the
+  # value is a fact rather than whatever the pool happened to hand out. It comes
+  # from the x-edge-subnet anchor at the top of this file, which the Caddyfile
+  # also reads, so there is nothing else to keep in step.
+  edge:
+    driver_opts:
+      com.docker.network.bridge.name: br-ppdev-edge
+    ipam:
+      config:
+        - subnet: *edge-subnet
+  web:
+    driver_opts:
+      com.docker.network.bridge.name: br-ppdev-web
+  # Removes egress for db and cache entirely. app keeps internet access through
+  # `web`, which it needs for two outbound calls: TurnstileValidator reaches
+  # challenges.cloudflare.com, and the Access gate fetches the team's signing keys
+  # from <team>.cloudflareaccess.com. Marking `web` internal breaks captcha
+  # verification and locks every administrator out of the public path.
+  #
+  # Side effect: `db` is no longer reachable from the host, so run migrations in
+  # the container — docker compose run --rm app npm run dev:migrate.
+  data:
+    internal: true
+    driver_opts:
+      com.docker.network.bridge.name: br-ppdev-data
+
+volumes:
+  node_modules:
+  cache:
+  data:
+  vpn:

@@ -1,0 +1,87 @@
+/*
+ * Note there is no companion `:not(.skeleton) { opacity: 1 }` rule. There was,
+ * and it was a landmine: an unscoped selector that matched every element in the
+ * document without the class, at (0,1,0) specificity, forcing them all opaque.
+ *
+ * It beat `.app-boot { opacity: 0 }` on source order and `section { opacity: 0 }`
+ * on specificity outright, so the boot overlay never faded and any step not
+ * carrying `.skeleton` — the success step never does — sat visible on top of
+ * whichever step was active. `top-bar.css` had grown a
+ * `.top-bar:not(.skeleton)` rule purely to outrank it.
+ *
+ * It was also unnecessary: `opacity: 1` is the initial value, so removing
+ * `.skeleton` restores it without being told.
+ */
+.show.skeleton {
+  opacity: 0.6;
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+
+.skeleton button,
+.skeleton input,
+.skeleton .hint-div,
+.skeleton [data-skeleton='value'],
+[data-skeleton='div'].skeleton {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+  cursor: default;
+  box-shadow: none !important;
+}
+
+.skeleton button {
+  background: transparent;
+}
+
+.skeleton button::before,
+.skeleton .input-wrapper::before,
+.skeleton .hint-div::before,
+.skeleton [data-skeleton='value']::before,
+[data-skeleton='div'].skeleton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  border-radius: inherit;
+
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-base) 25%,
+    var(--skeleton-sheen) 37%,
+    var(--skeleton-base) 63%
+  );
+
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.2s ease-in-out infinite;
+
+  z-index: 2;
+}
+
+.skeleton .input-wrapper::before {
+  height: 100%;
+}
+
+.skeleton .hint-div {
+  color: transparent;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton [data-skeleton='value'] {
+  border-radius: var(--radius-sm);
+}
+
+/*
+ * A shimmer that never stops is the worst offender for anyone sensitive to
+ * motion, and the reset only shortens animations rather than removing the
+ * paint. Hold a flat placeholder instead.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton button::before,
+  .skeleton .input-wrapper::before,
+  .skeleton .hint-div::before,
+  .skeleton [data-skeleton='value']::before,
+  [data-skeleton='div'].skeleton::before {
+    background: var(--skeleton-base);
+    animation: none;
+  }
+}

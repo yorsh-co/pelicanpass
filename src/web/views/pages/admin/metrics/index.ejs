@@ -1,0 +1,497 @@
+<%# i18n: admin-metrics %>
+<%
+/*
+ * The live panel.
+ *
+ * Every number here is rendered server-side and then replaced in place by the
+ * bundle every five seconds. Read with JavaScript off it is a snapshot with an
+ * honest timestamp rather than a broken dashboard, which is the whole reason
+ * the first paint carries data.
+ *
+ * `data-metrics` attributes are the contract with `pages/admin/metrics/index.ts`.
+ * Markup carries no numbers the client cannot recompute from the snapshot.
+ *
+ * `labels` names the snapshot's limiter and latency codes (see
+ * modules/metrics/metrics.labels.ts); the script never rewrites those cells.
+ */
+const s = locals.snapshot || {};
+const labels = locals.labels || { keyedOn: {}, protects: {}, latency: {} };
+const series = s.series || {};
+const sum = (name, n) => (series[name] || []).slice(-n).reduce((a, b) => a + b, 0);
+const last = (name) => (series[name] || []).slice(-1)[0] || 0;
+
+const checkins = s.checkins || [];
+const checkinPrefixes = s.checkinPrefixes || [];
+const totalIn = checkins.reduce((a, r) => a + r.checkedIn, 0);
+const totalExpected = checkins.reduce((a, r) => a + r.expected, 0);
+
+// `null` when the read failed. The partial still needs an overview to render
+// its hidden markup, so a failed read draws as a limit that is off.
+const ticketLimit = s.ticketLimit || null;
+const limitShown = ticketLimit !== null && ticketLimit.status !== 'off';
+const LIMIT_OFF = { scope: 'off', cap: null, mode: 'hard', used: 0, remaining: null, status: 'off' };
+
+// The questionnaire card is drawn only for an administrator who may see its
+// counts. `surveyCoverage` is `null` when the read failed: the card then renders
+// hidden, like the ticket limit, and the poll reveals it once a read succeeds.
+const coverage = locals.surveyCoverage || null;
+const survey = s.survey || null;
+const surveyRows = coverage ? coverage.rows : [];
+const surveyWhen = new Intl.DateTimeFormat(locale, { dateStyle: 'short', timeStyle: 'short', timeZone: locals.timezone || undefined });
+const surveyClosesAt = survey && survey.state.open && survey.closesAt !== null ? surveyWhen.format(survey.closesAt) : '';
+
+const ITEM_LABELS = { tshirt_volunteer: chrome.itemTshirtVolunteer(), lunch: chrome.itemLunch(), tshirt: chrome.itemTshirt(), meal: chrome.itemMeal(), drink: chrome.itemDrink() };
+const windowState = (w) => (w.opensAt === null ? 'none' : w.open ? 'open' : 'closed');
+
+/* A sparkline as a polyline over a 0..100 x 0..30 box. The viewBox does the
+   scaling, so the stylesheet owns the size and this owns only the shape. */
+const spark = (values) => {
+  const v = (values || []).slice(-60);
+  if (v.length === 0) return '';
+  const max = Math.max(...v, 1);
+  const step = v.length > 1 ? 100 / (v.length - 1) : 0;
+  return v.map((n, i) => `${(i * step).toFixed(2)},${(30 - (n / max) * 30).toFixed(2)}`).join(' ');
+};
+
+const redemptions = s.redemptions || [];
+const redeemedFor = (item, outcome) =>
+  redemptions.filter((r) => r.item === item && r.outcome === outcome)
+             .reduce((a, r) => a + r.total, 0);
+
+const health = s.health || {};
+
+// Three states, matching pages/admin/metrics/index.ts: a probe that is absent
+// is unknown, not down. Without this the first paint asserts an outage that
+// the script corrects a poll later, and with JavaScript off it never does.
+const depState = (probe) => (!probe ? 'unknown' : probe.ok ? 'ok' : 'down');
+const depLabel = (probe) =>
+  !probe
+    ? copy.healthDepUnknown()
+    : probe.ok
+      ? copy.healthDuration({ ms: probe.durationMs })
+      : copy.healthDepDown();
+
+const healthKnown = Boolean(health.redis && health.postgres);
+const healthy = healthKnown && health.redis.ok && health.postgres.ok;
+const healthState = !healthKnown ? 'unknown' : healthy ? 'ok' : 'down';
+%>
+<%- include('../../../partials/i18n-catalogs') %>
+
+<%# `data-state` lives on the root, not on the status line. The grid is a
+    sibling of <header>, not of the status paragraph, so a rule written against
+    the paragraph could never reach it — which is how a dead "the numbers are
+    stale" signal shipped looking correct. From the root it reaches everything. -%>
+<div class="metrics" data-metrics="root" data-state="live">
+  <header class="metrics__head">
+    <div>
+      <h1 class="metrics__title"><%= copy.title() %></h1>
+
+      <p class="metrics__meta">
+        <span class="metrics__release"><%= copy.release({ release: s.release || 'dev' }) %></span>
+        <span class="metrics__sep" aria-hidden="true">·</span>
+        <span data-metrics="generated"><%= new Date(s.generatedAt).toLocaleString(locale) || '' %></span>
+      </p>
+    </div>
+
+    <%# Liveness, and the one control.
+        The arc drains over the poll interval and refills when a snapshot lands,
+        stepped once a second by the loop's own clock rather than by a CSS
+        animation — `base/reset.css` caps animations to 0.01ms under
+        prefers-reduced-motion, which would leave this silently dead for the
+        people least likely to report it.
+        The countdown proves two things at once: the page's clock is running,
+        and refreshes are landing. Frozen shows a stuck number; failing polls
+        show it reach zero and stay.
+        The refresh is an <a>, not a <button>: with JavaScript off a button here
+        would be a dead control, while a link genuinely reloads. The bundle
+        intercepts the click and refreshes in place instead. -%>
+    <p class="metrics__state" data-metrics="state">
+      <span class="metrics__state-text" data-metrics="countdown"></span>
+
+      <span class="metrics__pulse" aria-hidden="true">
+      </span>
+
+      <a class="metrics__refresh" data-metrics="refresh" href="/admin/metrics"
+         aria-label="<%= copy.refresh() %>" title="<%= copy.refresh() %>">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+      </a>
+    </p>
+  </header>
+
+  <div class="metrics__grid">
+    <%# ---------------------------------------------------------------- Porta -%>
+    <section class="panel" aria-labelledby="panel-porta">
+      <h2 class="panel__title" id="panel-porta">
+        <%= copy.doorTitle() %>
+        <span class="tip" tabindex="0" aria-describedby="tip-panel-porta">
+          <span class="material-symbols-outlined tip__icon" aria-hidden="true">info</span>
+          <span class="tip__bubble" role="tooltip" id="tip-panel-porta"><%= copy.doorTipBefore() %> <em><%= copy.doorTipEmphasis() %></em><%= copy.doorTipAfter() %></span>
+        </span>
+      </h2>
+
+      <p class="panel__figure">
+        <span class="panel__figure-value" data-metrics="checkin-total"><%= totalIn %></span>
+        <span class="panel__figure-unit"><%= copy.doorOf() %> <span data-metrics="checkin-expected"><%= totalExpected %></span></span>
+      </p>
+
+      <p class="panel__rate">
+        <span data-metrics="checkin-rate"><%= sum('checkin.complete', 1) %></span> <%= copy.perMinute() %>
+      </p>
+
+      <svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none" role="img"
+           aria-label="<%= copy.doorSparkLabel() %>">
+        <polyline class="spark__line" data-metrics="spark-checkin"
+                  points="<%= spark(series['checkin.complete']) %>" />
+      </svg>
+
+      <dl class="panel__rows" data-metrics="checkin-roles">
+        <% for (const row of checkins) { %>
+        <div class="panel__row" data-role="<%= row.attendeeRole %>">
+          <dt><%= copy.role({ role: row.attendeeRole }) %></dt>
+          <dd data-cell="count"><%= row.checkedIn %> / <%= row.expected %></dd>
+          <%# Participants by ticket prefix, nested in their row and collapsed by
+              default. The script rebuilds only the inner list, since a new
+              prefix can appear mid-event, so `open` on the <details> survives
+              every poll. -%>
+          <% if (row.attendeeRole === 'participant') { %>
+          <dd class="panel__sub">
+            <details>
+              <summary><%= copy.doorPrefixToggle() %></summary>
+              <dl class="panel__rows panel__rows--sub" data-metrics="checkin-prefixes">
+                <% for (const p of checkinPrefixes) { %>
+                <div class="panel__row">
+                  <dt><%= labels.checkinPrefix(p.prefix) %></dt>
+                  <dd><%= p.checkedIn %> / <%= p.expected %></dd>
+                </div>
+                <% } %>
+              </dl>
+            </details>
+          </dd>
+          <% } %>
+        </div>
+        <% } %>
+      </dl>
+
+      <%# The ticket limit, so the door can be watched without opening the
+          roster. Rendered hidden while the limit is off or unreadable, rather
+          than omitted: the poll reveals it if somebody switches the limit on
+          mid-event. The `limit-meter` markup and its fill are shared with the
+          roster (see partials/ticket-limit-meter.ejs and
+          admin/shared/limit-meter.ts); `data-limit-overview` lets the script
+          paint the fill on load. -%>
+      <div class="panel__limit" data-metrics="ticket-limit" data-limit-overview="<%= ticketLimit ? JSON.stringify(ticketLimit) : '' %>" <%= limitShown ? '' : 'hidden' %>>
+        <p class="panel__limit-head">
+          <span class="panel__limit-title"><%= limitCopy.limitHeading() %></span>
+          <span class="panel__note" data-cell="setting"><%= limitShown ? `${limitCopy.limitScopeOption({ scope: ticketLimit.scope })} · ${limitCopy.limitMode({ mode: ticketLimit.mode })}` : '' %></span>
+        </p>
+        <%- include('../../../partials/ticket-limit-meter', { limit: ticketLimit || LIMIT_OFF, copy: limitCopy }) %>
+      </div>
+
+      <ul class="panel__notes" data-metrics="windows">
+        <% for (const w of (s.windows || [])) { %>
+        <li class="panel__note panel__note--<%= w.open ? 'open' : 'shut' %>" data-window="<%= w.role %>">
+          <%= copy.role({ role: w.role }) %>:
+          <span data-cell="state"><%= copy.windowState({ state: windowState(w) }) %></span>
+        </li>
+        <% } %>
+      </ul>
+    </section>
+
+    <%# ------------------------------------------------------------ Retiradas -%>
+    <section class="panel" aria-labelledby="panel-retiradas">
+      <h2 class="panel__title" id="panel-retiradas">
+        <%= copy.redemptionsTitle() %>
+        <span class="tip" tabindex="0" aria-describedby="tip-panel-retiradas">
+          <span class="material-symbols-outlined tip__icon" aria-hidden="true">info</span>
+          <span class="tip__bubble" role="tooltip" id="tip-panel-retiradas"><%= copy.redemptionsTipLead() %> <strong><%= copy.redemptionsTipDuplicate() %></strong> <%= copy.redemptionsTipDuplicateMeans() %> <strong><%= copy.redemptionsTipNotEntitled() %></strong> <%= copy.redemptionsTipNotEntitledMeans() %></span>
+        </span>
+      </h2>
+
+      <table class="panel__table">
+        <thead>
+          <tr>
+            <th scope="col"><%= copy.redemptionsItem() %></th>
+            <th scope="col"><%= copy.redemptionsRedeemed() %></th>
+            <th scope="col"><%= copy.redemptionsDuplicate() %></th>
+            <th scope="col"><%= copy.redemptionsNotEntitled() %></th>
+          </tr>
+        </thead>
+        <tbody data-metrics="redemptions">
+          <% for (const item of ['tshirt_volunteer', 'lunch', 'tshirt', 'meal', 'drink']) { %>
+          <tr data-item="<%= item %>">
+            <th scope="row"><%= ITEM_LABELS[item] %></th>
+            <td data-cell="redeemed"><%= redeemedFor(item, 'redeemed') %></td>
+            <td data-cell="duplicate" class="<%= redeemedFor(item, 'duplicate') > 0 ? 'is-warn' : '' %>"><%= redeemedFor(item, 'duplicate') %></td>
+            <td data-cell="not_entitled" class="<%= redeemedFor(item, 'not_entitled') > 0 ? 'is-warn' : '' %>"><%= redeemedFor(item, 'not_entitled') %></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+
+      <p class="panel__rate">
+        <span data-metrics="redeem-rate"><%= sum('redeem.redeemed', 1) %></span> <%= copy.perMinute() %>
+      </p>
+    </section>
+
+    <%# -------------------------------------------------------- Questionário -%>
+    <%# Totals only, by design: the survey stores a date and no time so answers
+        stay anonymous, and a rate or series would undo that. Absent for an
+        administrator without `export:read`; hidden, not absent, when the
+        counts cannot be read or there is nothing to show. -%>
+    <% if (locals.canSeeSurvey) { %>
+    <section class="panel" aria-labelledby="panel-questionario" data-metrics="survey" data-timezone="<%= locals.timezone || '' %>" <%= coverage && coverage.visible ? '' : 'hidden' %>>
+      <h2 class="panel__title" id="panel-questionario">
+        <%= copy.surveyTitle() %>
+        <span class="tip" tabindex="0" aria-describedby="tip-panel-questionario">
+          <span class="material-symbols-outlined tip__icon" aria-hidden="true">info</span>
+          <span class="tip__bubble" role="tooltip" id="tip-panel-questionario"><%= copy.surveyTip() %></span>
+        </span>
+      </h2>
+
+      <p class="panel__figure">
+        <span class="panel__figure-value" data-cell="total"><%= coverage ? coverage.total : 0 %></span>
+        <span class="panel__figure-unit" data-cell="unit"><%= copy.surveyUnit({ count: coverage ? coverage.total : 0 }) %></span>
+      </p>
+
+      <p class="panel__note">
+        <span data-cell="status"><%= survey ? copy.surveyStatus({ state: survey.state.open ? 'open' : 'closed', reason: survey.state.reason }) : '' %></span>
+        <span data-cell="closes" <%= surveyClosesAt ? '' : 'hidden' %>><%= surveyClosesAt ? `· ${copy.surveyCloses({ at: surveyClosesAt })}` : '' %></span>
+      </p>
+
+      <dl class="panel__rows">
+        <% for (const audience of ['participant', 'volunteer']) {
+             const row = surveyRows.find((r) => r.audience === audience); %>
+        <div class="panel__row" data-audience="<%= audience %>" <%= row ? '' : 'hidden' %>>
+          <dt><%= copy.role({ role: audience }) %></dt>
+          <dd data-cell="count"><%= row ? (row.off ? (row.answered > 0 ? `${row.answered} · ${copy.surveyOff()}` : copy.surveyOff()) : `${row.answered} / ${row.checkedIn}`) : '' %></dd>
+        </div>
+        <% } %>
+      </dl>
+
+      <p class="panel__note"><a href="/admin/survey"><%= copy.surveyLink() %></a></p>
+    </section>
+    <% } %>
+
+    <%# --------------------------------------------------------------- Saúde -%>
+    <section class="panel" aria-labelledby="panel-saude">
+      <h2 class="panel__title" id="panel-saude">
+        <%= copy.healthTitle() %>
+        <span class="tip" tabindex="0" aria-describedby="tip-panel-saude">
+          <span class="material-symbols-outlined tip__icon" aria-hidden="true">info</span>
+          <span class="tip__bubble" role="tooltip" id="tip-panel-saude"><%= copy.healthTipBefore() %> <em><%= copy.healthTipEmphasis() %></em><%= copy.healthTipAfter() %></span>
+        </span>
+      </h2>
+
+      <p class="panel__status panel__status--<%= healthState %>" data-metrics="health-overall">
+        <span class="material-symbols-outlined" aria-hidden="true"><%= healthKnown ? (healthy ? 'check' : 'error') : 'info' %></span>
+        <%= healthKnown ? (healthy ? copy.healthOk() : copy.healthDown()) : copy.healthUnknown() %>
+      </p>
+
+      <dl class="panel__rows" data-metrics="health-rows">
+        <div class="panel__row" data-dep="redis">
+          <dt>Redis</dt>
+          <dd data-cell="state" class="is-<%= depState(health.redis) %>">
+            <%= depLabel(health.redis) %>
+          </dd>
+        </div>
+        <div class="panel__row" data-dep="postgres">
+          <dt>Postgres</dt>
+          <dd data-cell="state" class="is-<%= depState(health.postgres) %>">
+            <%= depLabel(health.postgres) %>
+          </dd>
+        </div>
+        <div class="panel__row">
+          <dt><%= copy.healthUptime() %></dt>
+          <dd data-metrics="uptime"><%= copy.healthUptimeValue({ minutes: Math.floor((s.uptimeSeconds || 0) / 60) }) %></dd>
+        </div>
+      </dl>
+
+      <p class="panel__note" data-metrics="last-alert">
+        <% if (s.lastAlert) { %>
+        <%= copy.healthLastAlert({ title: s.lastAlert.title }) %>
+        <% } else { %>
+        <%= copy.healthNoAlerts() %>
+        <% } %>
+      </p>
+    </section>
+
+    <%# --------------------------------------------------------------- Erros -%>
+    <section class="panel" aria-labelledby="panel-erros">
+      <h2 class="panel__title" id="panel-erros">
+        <%= copy.errorsTitle() %>
+        <span class="tip" tabindex="0" aria-describedby="tip-panel-erros">
+          <span class="material-symbols-outlined tip__icon" aria-hidden="true">info</span>
+          <span class="tip__bubble" role="tooltip" id="tip-panel-erros"><%= copy.errorsTipBefore() %> <strong><%= copy.errorsTipEmphasis() %></strong> <%= copy.errorsTipAfter() %></span>
+        </span>
+      </h2>
+
+      <p class="panel__figure">
+        <span class="panel__figure-value" data-metrics="error-rate"><%= sum('severity.error', 1) %></span>
+        <span class="panel__figure-unit"><%= copy.perMinute() %></span>
+      </p>
+
+      <svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none" role="img"
+           aria-label="<%= copy.errorsSparkLabel() %>">
+        <polyline class="spark__line spark__line--warn" data-metrics="spark-error"
+                  points="<%= spark(series['severity.error']) %>" />
+      </svg>
+
+      <ul class="panel__list" data-metrics="top-errors">
+        <% for (const e of (s.topErrors || [])) { %>
+        <li class="panel__list-item">
+          <%# The one region whose rows genuinely come and go, so it is rebuilt
+              on each poll. `data-disclosure` is what lets the rebuild carry an
+              open expander across, keyed by the signature it belongs to. -%>
+          <details data-disclosure="<%= e.fingerprint %>">
+            <summary>
+              <span class="panel__count"><%= copy.errorsCount({ count: e.occurrences }) %></span>
+              <code><%= e.code || 'UNKNOWN' %></code>
+              <span class="panel__route"><%= e.route || '—' %></span>
+            </summary>
+            <p class="panel__detail"><%= e.message %></p>
+            <p class="panel__detail panel__detail--dim"><%= copy.errorsSignature({ fingerprint: e.fingerprint }) %></p>
+          </details>
+        </li>
+        <% } %>
+        <% if ((s.topErrors || []).length === 0) { %>
+        <li class="panel__empty"><%= copy.errorsNone() %></li>
+        <% } %>
+      </ul>
+    </section>
+
+    <%# ------------------------------------------------------------ Latência -%>
+    <section class="panel" aria-labelledby="panel-latencia">
+      <h2 class="panel__title" id="panel-latencia">
+        <%= copy.latencyTitle() %>
+        <span class="tip" tabindex="0" aria-describedby="tip-panel-latencia">
+          <span class="material-symbols-outlined tip__icon" aria-hidden="true">info</span>
+          <span class="tip__bubble" role="tooltip" id="tip-panel-latencia"><%= copy.latencyTipBefore() %> <strong><%= copy.latencyTipEmphasis() %></strong><%= copy.latencyTipAfter() %></span>
+        </span>
+      </h2>
+
+      <table class="panel__table">
+        <thead>
+          <tr>
+            <th scope="col"><%= copy.latencySurface() %></th>
+            <th scope="col">p50</th>
+            <th scope="col">p95</th>
+            <th scope="col">n</th>
+          </tr>
+        </thead>
+        <tbody data-metrics="latency">
+          <% for (const [route, l] of Object.entries(s.latency || {})) { %>
+          <tr data-route="<%= route %>">
+            <th scope="row"><%= labels.latency[route] || route %></th>
+            <%# Bucket edges, not interpolated values. "≤ 250 ms" is what a
+                bucketed histogram can honestly claim; a bare number would be
+                precision the data does not have. -%>
+            <td data-cell="p50"><%= l.p50 === null ? '—' : copy.latencyBucket({ ms: l.p50 }) %></td>
+            <td data-cell="p95"><%= l.p95 === null ? '—' : copy.latencyBucket({ ms: l.p95 }) %></td>
+            <td data-cell="count"><%= l.count %></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </section>
+
+    <%# ------------------------------------------------------------- Limites -%>
+    <section class="panel panel--wide" aria-labelledby="panel-limites">
+      <h2 class="panel__title" id="panel-limites">
+        <%= copy.limitsTitle() %>
+        <span class="tip" tabindex="0" aria-describedby="tip-panel-limites">
+          <span class="material-symbols-outlined tip__icon" aria-hidden="true">info</span>
+          <span class="tip__bubble" role="tooltip" id="tip-panel-limites"><%= copy.limitsTipLead() %> <strong><%= copy.limitsTipEmphasis() %></strong> <%= copy.limitsTipAfter() %></span>
+        </span>
+      </h2>
+
+      <table class="panel__table limiters">
+        <thead>
+          <tr>
+            <th scope="col"><%= copy.limitsLimiter() %></th>
+            <th scope="col"><%= copy.limitsPeak() %></th>
+            <th scope="col"><%= copy.limitsRefused() %></th>
+            <th scope="col"><%= copy.limitsKeys() %></th>
+          </tr>
+        </thead>
+        <tbody data-metrics="limiters">
+          <% (s.limiters || []).forEach(function (l, i) {
+               const pct = l.ceiling ? Math.min(100, Math.round((l.peak / l.ceiling) * 100)) : 0;
+               const level = l.refused > 0 ? 'red' : pct >= 80 ? 'amber' : 'ok';
+               const fanoutFor = (key) => (s.fanout || []).find((f) => f.ip === key);
+          %>
+          <%# `data-limiter` is the row's identity: the poll looks the row up and
+              writes into it rather than rebuilding the table, so an open key list
+              is never destroyed mid-read. The header cell below never changes at
+              all — name, tier and tooltip all come from the boot-time registry. -%>
+          <tr class="limiters__row limiters__row--<%= level %>" data-limiter="<%= l.name %>">
+            <th scope="row">
+              <%# The prefix alone does not explain the row — `rl:session:checkin`
+                  and `rl:session:checkin_session_id` are different things and
+                  read as duplicates. Same <details> pattern as the panel
+                  headings: no new mechanism, works on touch and with JS off. -%>
+              <span class="limiters__what">
+                <code><%= l.name %></code>
+                <%# The badge answers "what does one bucket cover?", which is the
+                    question that changes how a refusal reads. `strict` and
+                    `trusted` imply an IP limiter; every other basis names itself,
+                    including the untiered IP one, which would otherwise show
+                    nothing at all. -%>
+                <% const badge = l.tier || l.basis; %>
+                <% if (badge) { %><span class="limiters__tier limiters__tier--<%= badge %>"><%= copy.limitsBadge({ badge }) %></span><% } %>
+                <span class="tip" tabindex="0" aria-describedby="tip-lim-<%= i %>">
+                  <span class="material-symbols-outlined tip__icon" aria-hidden="true">info</span>
+                  <span class="tip__bubble" role="tooltip" id="tip-lim-<%= i %>">
+                    <strong><%= copy.limitsKeyedOnLabel() %></strong> <%= labels.keyedOn[l.keyedOn] || copy.limitsUndescribed() %><br />
+                    <strong><%= copy.limitsQuotaLabel() %></strong> <%= copy.limitsQuota({ points: l.ceiling === null ? '?' : String(l.ceiling), seconds: l.duration === null ? '?' : String(l.duration) }) %><br />
+                    <strong><%= copy.limitsProtectsLabel() %></strong> <%= labels.protects[l.protects] || copy.limitsUndescribed() %>
+                    <% if (l.tier === 'strict') { %><br /><em><%= copy.limitsStrictNote() %></em><% } %>
+                    <% if (l.tier === 'trusted') { %><br /><em><%= copy.limitsTrustedNote() %></em><% } %>
+                  </span>
+                </span>
+              </span>
+            </th>
+            <td class="limiters__gauge">
+              <span class="limiters__bar" data-cell="bar" data-fill="<%= pct %>"></span>
+              <span class="limiters__value" data-cell="peak"><%= l.peak %> / <%= l.ceiling === null ? '?' : l.ceiling %></span>
+            </td>
+            <td data-cell="refused"><%= l.refused %></td>
+            <td>
+              <%# Both branches are always rendered and toggled with `hidden`,
+                  rather than one replacing the other. That is what keeps the
+                  <details> element alive across every poll — `open` lives on it,
+                  so a list being read stays open with no state to carry over. -%>
+              <span data-cell="no-keys"<% if (l.topKeys.length) { %> hidden<% } %>>—</span>
+              <details data-cell="keys"<% if (!l.topKeys.length) { %> hidden<% } %>>
+                <summary data-cell="keys-summary"><%= copy.limitsKeyCount({ count: l.topKeys.length }) %></summary>
+                <ul class="limiters__keys" data-cell="keys-list">
+                  <% for (const k of l.topKeys) { const f = fanoutFor(k.key); %>
+                  <li>
+                    <code><%= k.key %></code>
+                    <span class="limiters__points"><%= copy.limitsPoints({ points: k.points }) %></span>
+                    <% if (f) { %>
+                    <%# Fan-out is the CGNAT discriminator: many sessions behind
+                        one address is a carrier NAT, one session hammering is
+                        not. Volume alone cannot tell them apart. -%>
+                    <span class="limiters__fanout"><%= copy.limitsSessions({ sessions: f.sessions }) %></span>
+                    <% } %>
+                  </li>
+                  <% } %>
+                </ul>
+              </details>
+            </td>
+          </tr>
+          <% }); %>
+          <% if ((s.limiters || []).length === 0) { %>
+          <tr><td class="panel__empty" colspan="4"><%= copy.limitsNone() %></td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</div>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/admin/metrics.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/admin/metrics/index.js"></script>

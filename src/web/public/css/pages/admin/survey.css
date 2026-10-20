@@ -1,0 +1,176 @@
+/*
+ * The questionnaire's control room.
+ *
+ * One sheet for one document, as `pages/admin/whatsapp.css` is, and built the
+ * same way: a single column of panels, with no media query of its own.
+ */
+
+.survey-admin {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+
+  max-width: var(--admin-content-max);
+}
+
+.survey-admin__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: 0;
+}
+
+.survey-admin__title {
+  margin: 0;
+
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+.survey-admin__lead,
+.survey-admin__hint,
+.survey-admin__muted {
+  margin: 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.survey-admin__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+
+  padding: var(--space-4);
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.survey-admin__subtitle {
+  margin: 0;
+
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+/* ------------------------------------------------------------------- state */
+
+.survey-admin__state {
+  margin: 0;
+
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+}
+
+.survey-admin__state.is-open {
+  color: var(--success);
+}
+
+.survey-admin__state.is-closed {
+  color: var(--text-muted);
+}
+
+.survey-admin__schedule {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  font-size: var(--text-sm);
+}
+
+/* --------------------------------------------------------------- audiences */
+
+/* The table's narrow-screen behaviour, as `.admin-list__scroll` is the
+   roster's: it scrolls sideways inside the panel rather than being clipped. */
+.survey-admin__scroll {
+  overflow-x: auto;
+}
+
+.survey-admin__table {
+  width: 100%;
+  border-collapse: collapse;
+
+  font-size: var(--text-sm);
+}
+
+.survey-admin__table th,
+.survey-admin__table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border);
+
+  text-align: left;
+}
+
+.survey-admin__table thead th {
+  color: var(--text-muted);
+  font-weight: var(--weight-medium);
+}
+
+.survey-admin__download {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* A limit the operator has to carry away with the volunteer file, so it sits
+   beside the download rather than in a tooltip. */
+.survey-admin__note {
+  margin: 0;
+  padding: var(--space-3);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+/* ---------------------------------------------------------------- override */
+
+.survey-admin__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.survey-admin__choices {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.survey-admin__choice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  margin: 0;
+
+  color: var(--text);
+  font-size: var(--text-base);
+}
+
+.survey-admin__choice input {
+  width: auto;
+}
+
+.survey-admin__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.survey-admin__error {
+  margin: 0;
+
+  color: var(--error);
+  font-size: var(--text-sm);
+}

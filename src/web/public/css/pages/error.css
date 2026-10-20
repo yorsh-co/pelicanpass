@@ -1,0 +1,125 @@
+/*
+ * Error pages served through layouts/plain.ejs. A single centred card on the
+ * app gradient, readable with JavaScript disabled — which is the point, since a
+ * 500 can come from the same asset pipeline layouts/main.ejs depends on.
+ */
+
+.error-page {
+  /* .plain-wrapper is the flex column; this claims its free height so the card
+     sits in the optical centre rather than at the top. */
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+/*
+ * Deliberately not .main-container, whose look this borrows.
+ *
+ * That class carries `min-width: 360px`, which overflows a 320px viewport, and
+ * an `animation-delay: 0.4s` timed to the boot screen — a screen this layout
+ * never renders, so the card would sit invisible for the delay and then appear.
+ */
+.error-card {
+  width: 100%;
+  max-width: 400px;
+
+  padding: clamp(28px, 7vw, 40px) clamp(20px, 6vw, 30px);
+
+  text-align: center;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/*
+ * The status glyph. A <p> rather than a heading: "404" names nothing, so the
+ * <h1> below it carries the actual page title for assistive tech and the
+ * document outline.
+ */
+.error-heading {
+  margin: 0;
+
+  /* The floor is a scale step; the 4rem ceiling is a viewport cap, not a step. */
+  font-size: clamp(var(--text-3xl), 14vw, 4rem);
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.error-subtitle {
+  /* typography.css gives every h1 a 25px bottom margin, which is tuned for the
+     check-in card, not for a heading stacked under a display glyph. */
+  margin: 12px 0 0;
+
+  font-size: clamp(var(--text-lg), 4.5vw, var(--text-xl));
+  font-weight: var(--weight-semibold);
+  /* Between --leading-tight and --leading-normal; a heading of one or two lines
+     wants neither, and a third token for one use would be scale for its own
+     sake. */
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.error-message {
+  margin: 12px 0 0;
+
+  font-size: var(--text-base);
+  /* Prose leading, looser than --leading-normal on purpose: this paragraph is
+     read once, cold, by someone who has just hit an error. */
+  line-height: 1.6;
+  /* Softened from --text rather than set to --muted: that grey is tuned for
+     small print on the dark gradient and loses contrast on the light palette. */
+  opacity: 0.85;
+  text-wrap: pretty;
+}
+
+/*
+ * components/button.css styles the bare <button> element, so an anchor gets
+ * none of it. These values track that rule — they had drifted onto raw pixels
+ * and, more to the point, had lost the `min-height` that makes it a reliable
+ * tap target. At `padding: 14px` this resolved to about 41px, under the 44px
+ * floor the rest of the app holds to, on the one screen an attendee reaches
+ * when something has already gone wrong.
+ *
+ * It stays `inline-flex` rather than the full-width `button`: this is one
+ * action on an otherwise empty page, not a form control at the thumb line.
+ */
+.error-action {
+  margin-top: var(--space-5);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 3.25rem;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.error-action:hover {
+  transform: translateY(-3px);
+}
+
+.error-action:active {
+  transform: scale(0.97);
+}

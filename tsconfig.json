@@ -1,0 +1,34 @@
+{
+  // Backend: everything Node runs. Browser code lives in src/web/client and is
+  // checked by its own config (different lib, no Node globals).
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "types": ["node"],
+    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.backend.tsbuildinfo",
+
+    // eslint.config.js is the only JavaScript left in the repo — see
+    // docs/development/typescript-conventions.md §4 for why it stays that way. These two
+    // flags exist for it alone, which is also what makes its "// @ts-check"
+    // pragma mean something: before this, the file was in no project at all.
+    "allowJs": true,
+    "checkJs": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "migrations/**/*.ts",
+    "scripts/**/*.ts",
+    // The harness's pure modules are tested under Node; the k6 scripts
+    // themselves are checked by loadtest/tsconfig.json.
+    "loadtest/**/*.test.ts",
+    "eslint.config.js"
+  ],
+  // src/web/client is the frontend project; src/web/public holds its build
+  // output plus static assets.
+  "exclude": [
+    "node_modules",
+    "src/web/client",
+    "src/web/public",
+    "scripts/report/page"
+  ]
+}

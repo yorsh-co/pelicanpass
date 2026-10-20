@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="<%= locale %>" data-release="<%= locals.releaseId || 'dev' %>">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title><%= title %></title>
+
+  <!-- keeps the browser chrome on the same palette as the page -->
+  <meta name="theme-color" content="#fafafc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0a11" media="(prefers-color-scheme: dark)" />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/images/icon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icon/favicon-32x32.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/images/icon/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest" crossorigin="use-credentials">
+
+  <%#
+    The brand backdrop, fetched during HTML parse rather than after layout.
+
+    It is a CSS background, so the preload scanner cannot see it: without this
+    the chain is main.css down and parsed, then CSSOM, then layout, and only
+    then does the image start. That is a whole stylesheet round trip of dead
+    time on the boot screen, which every page in this layout paints.
+
+    `fetchpriority` is not redundant — a preloaded image does not default to a
+    high priority the way a stylesheet does.
+  -%>
+  <link
+    rel="preload"
+    as="image"
+    href="/assets/images/bg/bg.webp"
+    type="image/webp"
+    fetchpriority="high"
+  />
+
+  <!-- global styles -->
+  <link rel="stylesheet" href="/css/dist/main.css" />
+
+  <!-- stored theme, applied before first paint -->
+  <%- include('../partials/theme-boot') %>
+
+  <!-- preload -->
+  <link rel="preconnect" href="https://challenges.cloudflare.com" />
+
+  <!-- page-specific styles -->
+  <%- defineContent('styles') %>
+</head>
+<body data-step data-page data-nodeenv="<%= nodeEnv %>" data-audience="<%= audience %>">
+
+  <!-- no JS warning -->
+  <noscript>
+    <style nonce="<%= cspNonce %>">
+      main { display: none; }
+    </style>
+    <div class="no-js-warning">
+      <p><%= chrome.noscript() %></p>
+    </div>
+  </noscript>
+
+  <!-- boot screen -->
+  <%- include('../components/boot-screen') %>
+
+  <!-- main injection -->
+  <div class="main-wrapper">
+    <%- body %>
+  </div>
+
+  <!-- toast -->
+  <%- include('../components/toast') %>
+
+  <!-- edge-challenge recovery -->
+  <%- include('../components/challenge-gate') %>
+
+  <!-- global scripts -->
+  <script type="module" src="/js/theme/theme.js"></script>
+  <%# Installs window.onerror and unhandledrejection. Loaded on every page
+      of both surfaces rather than imported by one, which is why it is its
+      own bundle entry — see ENTRY_PATTERNS in scripts/build-client.ts. -%>
+  <script type="module" src="/js/telemetry/index.js"></script>
+
+  <!-- page-specific scripts -->
+  <%- defineContent('scripts') %>
+</body>
+</html>

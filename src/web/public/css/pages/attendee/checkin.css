@@ -1,0 +1,466 @@
+.checkin-head {
+  flex-shrink: 0;
+}
+
+/*
+ * Three segments, filled as the attendee advances.
+ *
+ * Driven entirely off `body[data-step]`, which `ui/navigation.ts` already sets
+ * on every transition — no second source of truth to keep in step.
+ */
+.progress {
+  list-style: none;
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.progress-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.progress-step::before {
+  content: '';
+  display: block;
+  height: 3px;
+  border-radius: var(--radius-full);
+  background: var(--border);
+  transition: background-color var(--duration-slow) var(--ease-out);
+}
+
+.progress-label {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+/* Reached or passed. The ticket segment fills as soon as the flow starts. */
+body[data-step] [data-progress='ticket']::before,
+body[data-step='verification'] [data-progress='verification']::before,
+body[data-step='qr'] [data-progress='verification']::before,
+body[data-step='qr'] [data-progress='qr']::before,
+body[data-step='success'] .progress-step::before {
+  background: var(--accent);
+}
+
+/* The step being worked on right now. */
+body[data-step='ticket'] [data-progress='ticket'] .progress-label,
+body[data-step='verification'] [data-progress='verification'] .progress-label,
+body[data-step='qr'] [data-progress='qr'] .progress-label {
+  color: var(--text);
+  font-weight: var(--weight-semibold);
+}
+
+/*
+ * The step's own two zones: what to read, then what to do. `step-body` takes
+ * the slack so `step-controls` stays against the bottom inset, which keeps the
+ * tap target in the same place on every step instead of moving with the length
+ * of the copy above it.
+ */
+.step-body {
+  flex-shrink: 0;
+  padding-top: var(--space-6);
+}
+
+.checkin-container .step-question {
+  margin-bottom: var(--space-4);
+}
+
+/*
+ * Keyboard open — the controls float over the body.
+ *
+ * With the keyboard up there is roughly a third of the screen left, and the two
+ * things worth keeping are where you are (`.checkin-head`) and what you type
+ * into (`.step-controls`). Rather than squeeze the body between them, the
+ * controls sit *over* it: the header stays put, the question and preview table
+ * scroll underneath, and the cells hold their place just above the keyboard.
+ *
+ * None of it applies with the keyboard closed.
+ */
+
+/*
+ * A definite height, not a minimum.
+ *
+ * `body` is otherwise `min-height: 100dvh`, and a flex container
+ * with a minimum whose content is taller simply resolves to the content height.
+ * Nothing overflows, so nothing is ever forced to shrink — the `min-height: 0`
+ * below is permission to shrink, not a reason to. The page grows past the
+ * viewport, the browser scrolls the focused input into view, and the whole shell
+ * shifts up.
+ *
+ * That is why only verification showed it: the ticket step's content is shorter
+ * than the visible area, so `body` never exceeded its minimum and the
+ * distinction never surfaced. The preview table pushes verification past it.
+ *
+ * `overflow: hidden` alongside, so the page cannot scroll and `.content-wrapper`
+ * is the only thing that does.
+ *
+ * `min-height: 0` releases the base `100dvh` floor from `base/body.css`. The
+ * layout viewport does not shrink for a keyboard, and a minimum beats a height,
+ * so without it the shell would stay full height behind the keyboard.
+ */
+body[data-keyboard='open'] {
+  height: var(--viewport-height, 100dvh);
+  min-height: 0;
+  overflow: hidden;
+}
+
+/*
+ * Each of these is a flex item whose default `min-height: auto` refuses to
+ * shrink below its content, so every one has to be released for the definite
+ * height above to reach the step. Miss a single link and it absorbs the
+ * overflow itself and nothing below it is pinned.
+ *
+ * Scoped to the keyboard case. Applying it always would let content overflow the
+ * shell instead of growing the page, which changes every other step.
+ */
+body[data-keyboard='open'] .main-wrapper,
+body[data-keyboard='open'] .main-container,
+body[data-keyboard='open'] .content-wrapper {
+  min-height: 0;
+}
+
+body[data-keyboard='open'] .content-wrapper {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+body[data-keyboard='open'] section:not(.show) {
+  overflow: hidden;
+}
+
+body[data-keyboard='open'] .step-body {
+  padding-top: var(--space-4);
+}
+
+body[data-keyboard='open'] .step-controls {
+  position: sticky;
+  bottom: 0;
+
+  padding-top: var(--space-4);
+  background: var(--canvas);
+}
+
+/* Fades the body out as it passes under, so it reads as layered, not cut off. */
+body[data-keyboard='open'] .step-controls::before {
+  content: '';
+  position: absolute;
+  inset: auto 0 100%;
+  height: var(--space-5);
+
+  background: linear-gradient(to top, var(--canvas), transparent);
+  pointer-events: none;
+}
+
+/*
+ * The first things to give up their space, and the least missed.
+ *
+ * "Voltar" goes with the footer rather than riding along in the floating bar:
+ * it belongs to the step, not to what is being typed, and it is back the moment
+ * the keyboard is dismissed. `display: none` also takes it out of the tab order
+ * while it is gone.
+ *
+ * The ticket help line is for attendees without a code, who have nothing to
+ * type; it returns with the keyboard dismissed.
+ */
+body[data-keyboard='open'] footer,
+body[data-keyboard='open'] .back-btn,
+body[data-keyboard='open'] .ticket-help {
+  display: none;
+}
+
+/* ticket step */
+.ticket-help {
+  margin-top: var(--space-3);
+  text-align: center;
+}
+
+/* preview table */
+.checkin-container .table-wrapper {
+  margin-top: var(--space-4);
+  padding: var(--space-2) var(--space-3);
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.checkin-container table {
+  width: 100%;
+}
+
+.checkin-container th,
+.checkin-container td {
+  padding: var(--space-2) 0;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.checkin-container th {
+  text-align: left;
+  color: var(--text-muted);
+}
+
+.checkin-container th div {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.checkin-container td {
+  text-align: right;
+}
+
+/* table toggle */
+.checkin-container .table-wrapper.collapsed tr:not(:first-child) {
+  display: none;
+}
+
+.verification-step .table-wrapper .table-toggle {
+  display: none;
+}
+
+/*
+ * A real tap target. This was a 20px-tall button, well under the 44px anyone
+ * can reliably hit — and it is the only way to see your own details on the QR
+ * step.
+ */
+.checkin-container .table-toggle {
+  width: 100%;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: 0;
+}
+
+/* qr step */
+.qr-start-btn {
+  display: none;
+}
+
+.qr-start-btn.show {
+  display: inline-flex;
+}
+
+/*
+ * success
+ *
+ * The first frame of the reward surface. It carries `--brand-backdrop` and
+ * repeats the pass's own layout — wordmark, greeting, hero number — because the
+ * pass is where it hands off to: the attendee should read the two screens as
+ * one object gaining detail, not as a white page cut to a coloured one.
+ *
+ * The progress bar has done its job by this point, so the head is dropped and
+ * the card takes the screen, at the same size the pass will occupy.
+ */
+body[data-step='success'] .checkin-head {
+  display: none;
+}
+
+/*
+ * `--space-4` rather than the `--space-6` every other step's body uses: it
+ * matches `.pass`'s own `margin-top`, so the card does not shift by a rem when
+ * the attendee moves on to the pass.
+ */
+.success-body {
+  flex: 1;
+  display: flex;
+  padding-top: var(--space-4);
+}
+
+.success-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+
+  background: var(--brand-backdrop);
+  color: var(--text-on-brand);
+  box-shadow: var(--shadow-lg);
+}
+
+/*
+ * Matches `.pass-container` in `pass.css`: tall phones wider than any
+ * iPhone drop the `--content-max` cap so this card fills the screen as the pass
+ * will. The whole shell widens, not just this step, so the width does not jump
+ * mid cross-fade when the step changes.
+ */
+@media (min-width: 27rem) and (max-aspect-ratio: 3 / 5) {
+  .checkin-container {
+    max-width: none;
+  }
+}
+
+.success-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.success-card header {
+  margin-bottom: 0;
+  justify-content: flex-start;
+}
+
+/* The wordmark mask takes its colour from here rather than from `--text`. */
+.success-card .wordmark {
+  color: var(--text-on-brand);
+}
+
+/*
+ * Translucent rather than `--success`: a green disc fights the gradient it sits
+ * on, and the confirmation is already carried by the copy and the number. Same
+ * fill as the pass's badge and chips.
+ */
+.success-mark {
+  flex-shrink: 0;
+
+  width: 2.75rem;
+  height: 2.75rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: var(--radius-full);
+  background: var(--camera-control-bg);
+}
+
+.success-step.show .success-mark {
+  animation: pop var(--duration-slow) var(--ease-spring);
+}
+
+.success-greeting {
+  margin-top: var(--space-6);
+  margin-bottom: 0;
+  text-wrap: balance;
+}
+
+/* The hero, matching the pass so the number does not move or resize on hand-off. */
+.success-number-block {
+  margin-top: auto;
+  padding-block: var(--space-5);
+}
+
+.success-number-label {
+  font-size: var(--text-xs);
+  color: var(--text-on-brand-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.success-number {
+  font-size: var(--text-hero);
+  font-weight: var(--weight-bold);
+  line-height: 1;
+
+  /*
+   * `-0.02em`, not the `-0.04em` this carried under Inter: Libre Franklin's
+   * digits are ~7% wider and more tightly fitted, so the old value closed the
+   * gaps to a collision at 6rem.
+   *
+   * There was a `font-variant-numeric: tabular-nums` here as well. Libre
+   * Franklin ships no `tnum` feature and its digits are proportional, so it did
+   * nothing — and nothing is lost: an attendee only ever sees their own number,
+   * so there is no second number for it to line up with.
+   *
+   * Duplicated by `.pass-number` in `pass.css`, deliberately, so the hero
+   * does not move on hand-off. Change both or neither.
+   */
+  letter-spacing: -0.02em;
+}
+
+.success-step.show .success-number {
+  animation: pop var(--duration-slow) var(--ease-spring);
+}
+
+/*
+ * The number block is what pushes the card's foot down, so when there is no
+ * number to show the message has to take that job over — otherwise it rides up
+ * under the greeting and leaves the card bottom-heavy with dead space.
+ */
+.success-number-block[hidden] + .success-message {
+  margin-top: auto;
+}
+
+.success-message {
+  min-height: 1.5rem;
+  font-size: var(--text-sm);
+  color: var(--text-on-brand-muted);
+
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
+}
+
+.success-message.changing {
+  opacity: 0;
+  transform: translateY(0.25rem);
+}
+
+/*
+ * The way on to the pass, revealed a couple of seconds in — after the number
+ * has been read, and currently the only way forward, since the hand-off in
+ * `success.step.ts` is still commented out.
+ *
+ * It sits below the card on the canvas, so it is styled as an ordinary link
+ * rather than against the gradient.
+ *
+ * `visibility` alongside `opacity`: an opacity-0 link is still focusable, so
+ * without it the link sits in the tab order while invisible. Transitioning
+ * both keeps the fade.
+ */
+.success-step .hint-div {
+  text-align: center;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    visibility var(--duration-slow) var(--ease-out);
+}
+
+.success-step .hint-div.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.success-step a {
+  color: var(--accent);
+  font-weight: var(--weight-semibold);
+}
+
+/*
+ * Footer logout.
+ *
+ * Only the two steps in the middle of the flow: `ticket` has nothing to leave
+ * yet, and `success` has nothing left to abandon — the check-in is already
+ * recorded and the step hands off to the pass.
+ */
+body[data-step='verification'] .footer-logout-wrap,
+body[data-step='qr'] .footer-logout-wrap {
+  display: inline-flex;
+}
+
+/*
+ * Both code-entry steps share the ticket-code face so the boxes read the same
+ * from step to step, and a slashed zero tells 0 from O. Red Hat Mono's figures
+ * and capitals sit smaller than Libre Franklin's at the same size, so the
+ * boxes step up one size.
+ */
+.code-cell,
+[data-checkin='verification-ticketCode'],
+[data-checkin='qr-ticketCode'] {
+  font-family: var(--font-ticket);
+}
+
+.code-cell {
+  font-size: var(--text-2xl);
+}

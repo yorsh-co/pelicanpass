@@ -1,0 +1,139 @@
+<%# i18n: admin-tshirts %>
+<%
+/*
+ * One attendee at the t-shirt desk.
+ *
+ * Like the lookup record, this renders a verification code, so it shows one
+ * person at a time and keeps the code behind a closed `details` element until
+ * somebody asks for it. The person at the desk checks it against what the
+ * attendee says before handing the shirt over.
+ *
+ * The hand-over control is absent for a shirt already collected and for an
+ * archived attendee: the API answers the first as a duplicate and refuses the
+ * second outright, and offering a control that cannot succeed invites a press. The
+ * collection time is the confirmation, rendered here so it survives a reload.
+ *
+ * The button is driven by the page bundle. The bundle reads the `data-tshirt-*`
+ * attributes below and submits the hidden form after a hand-over, which
+ * renders the record again from the server rather than reloading, so the
+ * browser raises no resubmission prompt.
+ *
+ * **Every value off the record uses the escaping output tag, never the raw
+ * one.** `attendee_nickname` is the one attendee-controlled string here.
+ *
+ * (Do not name EJS's delimiters literally in this comment. The scanner is
+ * lexical and does not know it is inside a JavaScript comment, which cost the
+ * roster template a compile error the first time it rendered.)
+ */
+const attendee = locals.attendee || null;
+%>
+<%- include('../../../partials/i18n-catalogs') %>
+
+<div class="lookup-record">
+  <header class="lookup-record__head">
+    <div class="lookup-record__headline">
+      <h1 class="lookup-record__title"><%= attendee.name %></h1>
+      <%# Back to an empty search box: the term was submitted rather than put in
+          a URL, so there is nothing to return to. `aria-hidden` on the
+          ligature is load-bearing, or a screen reader announces "close". -%>
+      <a class="lookup-record__close" href="/admin/tshirts">
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        <span class="visually-hidden"><%= copy.recordClose() %></span>
+      </a>
+    </div>
+    <% if (attendee.nickname) { %>
+    <p class="lookup-record__nickname"><%= attendee.nickname %></p>
+    <% } %>
+    <p class="lookup-record__role">
+      <span class="role-badge role-badge--<%= attendee.role %>">
+        <%= shell.role({ role: attendee.role }) %>
+      </span>
+    </p>
+  </header>
+
+  <% if (attendee.archived) { %>
+  <p class="lookup-record__flag">
+    <%= copy.recordArchived() %>
+  </p>
+  <% } %>
+
+  <dl class="lookup-record__fields">
+    <div>
+      <dt><%= copy.recordSize() %></dt>
+      <dd><span class="tshirt-record__size"><%= attendee.size %></span></dd>
+    </div>
+
+    <div>
+      <dt><%= copy.recordStatus() %></dt>
+      <dd data-tshirt-status>
+        <% if (attendee.redeemedAt) { %>
+        <span class="tshirt-state tshirt-state--redeemed">
+          <%= copy.recordRedeemedAt({ time: attendee.redeemedAtText }) %>
+        </span>
+        <% } else { %>
+        <span class="tshirt-state"><%= copy.recordPending() %></span>
+        <% } %>
+      </dd>
+    </div>
+
+    <div>
+      <dt><%= shell.ticketCode() %></dt>
+      <dd><code class="lookup-record__code ticket-code"><%= attendee.ticketCode %></code></dd>
+    </div>
+
+    <div>
+      <dt><%= shell.presence() %></dt>
+      <dd>
+        <% if (attendee.checkedIn) { %>
+        <span class="lookup-record__present">
+          <%= attendee.checkinNumber === null ? shell.present() : copy.recordPresentNumber({ number: attendee.checkinNumber }) %>
+        </span>
+        <% } else { %>
+        <span class="lookup-record__absent"><%= copy.recordAbsent() %></span>
+        <% } %>
+      </dd>
+    </div>
+  </dl>
+
+  <%# A `details` element rather than a scripted toggle, for the lookup's
+      reasons: closed by default, reachable from a keyboard, and independent of
+      the page bundle. -%>
+  <details class="lookup-code">
+    <summary>
+      <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
+      <%= copy.recordShowCode() %>
+    </summary>
+    <p class="lookup-code__value"><%= attendee.verificationCode %></p>
+    <p class="lookup-code__hint">
+      <%= copy.recordCodeHint() %>
+    </p>
+  </details>
+
+  <p class="lookup-record__error" data-tshirt-error role="alert"></p>
+
+  <% if (!attendee.redeemedAt && !attendee.archived) { %>
+  <div class="lookup-record__actions">
+    <button type="button" data-tshirt-redeem="<%= attendee.attendeeId %>">
+      <span class="material-symbols-outlined" aria-hidden="true">checkroom</span>
+      <span class="btn-label"><%= copy.recordRedeem({ size: attendee.size }) %></span>
+    </button>
+    <p class="lookup-record__hint">
+      <%= copy.recordRedeemHint() %>
+    </p>
+  </div>
+  <% } %>
+
+  <%# Submitted by the page bundle after a hand-over, to render the record
+      again from the server. `hidden` rather than CSS: it carries no control a
+      person is meant to reach. -%>
+  <form id="record" method="post" action="/admin/tshirts/record" hidden>
+    <input type="hidden" name="attendeeId" value="<%= attendee.attendeeId %>" />
+  </form>
+</div>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/admin/lookup.css" />
+<link rel="stylesheet" href="/css/dist/pages/admin/tshirts.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/admin/tshirts/detail/index.js"></script>

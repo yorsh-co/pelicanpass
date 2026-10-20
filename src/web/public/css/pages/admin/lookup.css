@@ -1,0 +1,516 @@
+/*
+ * The volunteer quick lookup.
+ *
+ * One sheet for both of the section's documents, the way
+ * `pages/admin/attendees.css` covers the editor and
+ * `pages/attendee/checkin.css` covers one flow.
+ *
+ * **No media query.** The shell's `min-width: 60rem` in `pages/admin.css` is
+ * the only one in this codebase and its own comment says so. This screen is
+ * designed for a phone held at a door and widens by doing nothing: the cards
+ * are a single column that simply gets roomier, and there is no table to
+ * scroll.
+ */
+
+.lookup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+
+  max-width: var(--admin-content-max);
+}
+
+/* ------------------------------------------------------------------ header */
+
+.lookup__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: 0;
+}
+
+.lookup__title {
+  margin: 0;
+
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+.lookup__lead {
+  margin: 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* ------------------------------------------------------------------ search */
+
+.lookup__search {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.lookup__label {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.lookup__field {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  gap: var(--space-2);
+}
+
+@media (max-width: 500px) {
+  .lookup__field {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*
+ * The scope segments.
+ *
+ * Radios, so the value rides on every submission of the search form -- the
+ * pager included -- and the page still needs no script. The input itself is
+ * hidden and the label is the control, which is why the checked and focused
+ * states are both read off the input with `:has()` rather than painted on it.
+ *
+ * Not `display: none` on the input: that would take it out of the tab order
+ * and off the accessibility tree, and the group would stop being reachable by
+ * keyboard at all.
+ */
+.lookup__roles {
+  /* A fieldset carries a border, padding and a margin by default. */
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/*
+ * Wraps rather than scrolls, and that is what stands in for a breakpoint here:
+ * the three labels sit in a row where they fit and stack where they do not.
+ */
+.lookup__segments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+
+  margin-top: var(--space-2);
+}
+
+.lookup__role {
+  flex: 1 1 auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.lookup__role input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.lookup__role:has(:checked) {
+  border-color: var(--text);
+  background: var(--surface-hover);
+
+  color: var(--text);
+  font-weight: var(--weight-medium);
+}
+
+/* The ring has to be drawn here: the input that receives focus is invisible. */
+.lookup__role:has(:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------ states */
+
+.lookup__count {
+  margin: 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.lookup__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+
+  margin: 0;
+  padding: var(--space-7) var(--space-4);
+
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.lookup__empty .material-symbols-outlined {
+  font-size: 2rem;
+  opacity: 0.6;
+}
+
+.lookup__hint {
+  font-size: var(--text-xs);
+}
+
+/* The out-of-range state's way back to page one, which is a form submission
+   rather than a link for the same reason the pager is. */
+.lookup__empty button {
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+
+  color: var(--text);
+  text-decoration: underline;
+}
+
+/* ------------------------------------------------------------------- cards */
+
+.lookup__results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+/*
+ * The whole card submits. On a phone the tap target should be the row, not a
+ * word inside it.
+ *
+ * A button rather than an anchor: opening a record posts its ID, because a URL
+ * carrying one is written to the phone's browser history. `align-items` and
+ * `text-align` are the two a button does not inherit and an anchor never
+ * needed.
+ */
+.lookup-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: none;
+  font: inherit;
+  cursor: pointer;
+
+  color: inherit;
+  text-align: left;
+  text-decoration: none;
+}
+
+/* `color` as well as `background`, and it is not redundant. The base button
+   hover in components/button.css sits at (0,1,1) by design so a page can
+   outrank it — but only for the properties the page actually re-declares.
+   Leaving `color` out let `--accent-text` land on the name and the code, which
+   is white on light and near-black on dark. */
+.lookup-card:hover {
+  background: var(--surface-hover);
+  color: inherit;
+}
+
+.lookup-card__name {
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+}
+
+.lookup-card__nickname {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.lookup-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+
+  margin-top: var(--space-1);
+}
+
+.lookup-card__code {
+  font-family: var(--font-mono, monospace);
+  font-size: var(--text-sm);
+}
+
+.lookup-card__present {
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.lookup-card__absent {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* ------------------------------------------------------------------- pager */
+
+/*
+ * Its own block rather than the editor's `.admin-pager`, which lives in
+ * `pages/admin/attendees.css` and is not loaded here.
+ *
+ * The right home for a pager is the shell sheet the layout links on every admin
+ * page, and that is where the third screen to want one should hoist it. Two
+ * screens is not three: `web.routes.ts` carried a "do not extract an
+ * `adminPage()` factory yet" note for exactly this reason and waiting was
+ * right. Noted in the checklist so it is a decision rather than an oversight.
+ */
+.lookup-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* Buttons, not links: a pager link would carry the search term in its URL. */
+.lookup-pager button {
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+
+  color: var(--text);
+  text-decoration: underline;
+}
+
+/* ------------------------------------------------------------------ record */
+
+.lookup-record {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+
+  max-width: var(--admin-content-max);
+}
+
+.lookup-record__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: 0;
+}
+
+/* See `.admin-form__headline`: `flex-start` keeps the close control level with
+   the first line of a name that wraps. */
+.lookup-record__headline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.lookup-record__title {
+  /* Lets a long unbroken name shrink rather than shove the icon off the edge. */
+  min-width: 0;
+
+  margin: 0;
+
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+/* A wider target than the attendees form's, and deliberately so: this is the
+   screen a volunteer works one-handed on a phone. */
+.lookup-record__close {
+  flex: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2.75rem;
+  height: 2.75rem;
+
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.lookup-record__close:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.lookup-record__nickname,
+.lookup-record__role {
+  margin: 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.lookup-record__flag {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+
+  border: 1px solid var(--error);
+  border-radius: var(--radius-md);
+
+  color: var(--error);
+  font-size: var(--text-sm);
+}
+
+.lookup-record__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  margin: 0;
+  padding: var(--space-4);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.lookup-record__fields dt {
+  margin-bottom: var(--space-1);
+
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.lookup-record__fields dd {
+  margin: 0;
+}
+
+.lookup-record__code {
+  font-family: var(--font-mono, monospace);
+  font-size: var(--text-lg);
+}
+
+.lookup-record__present {
+  font-weight: var(--weight-medium);
+}
+
+.lookup-record__absent {
+  color: var(--text-muted);
+}
+
+/* -------------------------------------------------------- the reveal */
+
+.lookup-code {
+  padding: var(--space-3) var(--space-4);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.lookup-code summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  cursor: pointer;
+
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.lookup-code__value {
+  margin: var(--space-3) 0 0;
+
+  font-family: var(--font-mono, monospace);
+  font-size: var(--text-2xl);
+  letter-spacing: 0.15em;
+}
+
+.lookup-code__hint {
+  margin: var(--space-2) 0 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+/* ----------------------------------------------------------------- actions */
+
+.lookup-record__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.lookup-record__hint,
+.lookup-record__note {
+  margin: 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.lookup-record__note {
+  padding: var(--space-3) var(--space-4);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+/*
+ * Holds its line so showing an error does not shift the button out from under
+ * the pointer mid-click. The same reasoning as `.admin-form__error`.
+ */
+.lookup-record__error {
+  min-height: 1.25rem;
+  margin: 0;
+
+  color: var(--error);
+  font-size: var(--text-sm);
+}
+
+.lookup-record__error:empty {
+  min-height: 0;
+}
+
+/*
+ * The armed half of the two-step confirm.
+ *
+ * The same treatment as the record's archive control, and for the same reason:
+ * a single primary control on a phone, for an action that cannot be undone from
+ * this screen, should say it is armed in more than one way.
+ */
+.lookup-record__actions button.is-armed {
+  border-color: var(--error);
+  background: var(--error);
+  color: var(--accent-text);
+}

@@ -1,0 +1,768 @@
+/*
+ * The live panel.
+ *
+ * Semantic tokens only — no colour literal appears below. The panel is read on
+ * a laptop across a room and on a phone in a corridor, so the grid is dense
+ * where there is width and single-column where there is not.
+ *
+ * The two graphics are hand-rolled: a polyline sparkline scaled by its viewBox,
+ * and a bar driven by a `--fill` custom property. Same approach as
+ * `components/window-ring.css` — the value rides on a property and the geometry
+ * stays here rather than in a script.
+ */
+
+@import '../../components/limit-meter.css';
+
+.metrics {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.metrics__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: 0;
+}
+
+.metrics__title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.metrics__meta,
+.metrics__state {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.metrics__state {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-inline-start: auto;
+}
+
+/*
+ * The three states the poll loop reports. `live` says nothing — a dashboard
+ * that is working is the default and does not need decorating. The other two
+ * are the whole point: numbers that have stopped tracking must not read as
+ * current, which is the failure this styling exists to prevent.
+ */
+/*
+ * Selectors hang off the root, not off the status line.
+ *
+ * They used to target `.metrics__state ~ .metrics__grid`, which cannot match:
+ * the status paragraph is inside `<header>` and the grid is a sibling of the
+ * header, not of the paragraph. The rule was valid CSS, shipped, and never once
+ * applied — so the loudest "these numbers are stale" signal was dead while the
+ * quiet one (amber text) carried the whole message. Anchoring on the root means
+ * a later markup change cannot break it the same way.
+ */
+.metrics[data-state='pending'] .metrics__pulse {
+  --pulse-color: var(--warn);
+}
+
+.metrics[data-state='stale'] .metrics__pulse {
+  --pulse-color: var(--error);
+}
+
+/*
+ * Dimmed and desaturated, not hidden. What is on screen is still the last thing
+ * the server actually said, and an operator may well need to read it — but it
+ * must not look current. Greyscale is the part that survives a glance from
+ * across a room, where a 45 % opacity change on its own does not.
+ */
+.metrics[data-state='stale'] .metrics__grid {
+  opacity: 0.5;
+  filter: grayscale(0.8);
+}
+
+/*
+ * Reflows on its own, the way `.admin-home__grid` does in pages/admin.css. The
+ * two `min-width` queries this replaces measured the viewport while the panels
+ * lived in a narrower box — the rail and both gutters come off first — so three
+ * columns arrived a good 4rem of container width before there was room for them.
+ */
+.metrics__grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  transition: opacity 150ms ease;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+}
+
+/* The limiter table needs the full width wherever there is more than one
+   column; it is a table with an expandable list inside a cell. */
+.panel--wide {
+  grid-column: 1 / -1;
+}
+
+.panel__title {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+
+  display: flex;
+  gap: var(--space-1);
+}
+
+/*
+ * The shared tooltip: a bubble on hover, and on focus.
+ *
+ * `:focus-within` is not decoration — it is what keeps this usable without a
+ * mouse. A hover-only tooltip is invisible to a keyboard and unreachable on a
+ * touchscreen, and this dashboard is explicitly a laptop screen that also has
+ * to work on a phone. The trigger carries `tabindex="0"` so a tap or a Tab
+ * opens the same bubble a hover does.
+ *
+ * Pure CSS, so it works with JavaScript off like the rest of this surface.
+ */
+.tip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: help;
+  color: var(--text-muted);
+}
+
+.tip__icon {
+  font-size: 1rem;
+  opacity: 0.55;
+  transition: opacity 120ms ease;
+}
+
+.tip:hover .tip__icon,
+.tip:focus-within .tip__icon {
+  opacity: 1;
+  color: var(--accent);
+}
+
+.tip__bubble {
+  position: absolute;
+  z-index: var(--z-overlay);
+  top: calc(100% + var(--space-2));
+  inset-inline-start: 0;
+
+  /* Wide enough to read a sentence, bounded so it never spans the viewport. */
+  inline-size: max-content;
+  max-inline-size: min(26rem, 70vw);
+
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-transform: none;
+  text-align: start;
+  white-space: normal;
+
+  /* `visibility` rather than `display`, so the bubble keeps a box for assistive
+     technology to find through `aria-describedby`. */
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity 120ms ease,
+    visibility 120ms ease;
+}
+
+.tip:hover .tip__bubble,
+.tip:focus-within .tip__bubble {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Near the right edge the bubble would overflow the panel; anchor it to the
+   trigger's right instead. */
+.panel--wide .limiters__what .tip__bubble {
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+}
+
+/*
+ * A title tip anchors to its panel, not to its icon.
+ *
+ * The bubble is 26rem of `max-content` hung off a 1rem icon, and <main> clips
+ * its horizontal axis — so in the right-hand column of the grid it was cut off
+ * at exactly the edge it needed to cross. Dropping the trigger's containing
+ * block promotes `.panel__title`, which spans the panel: `top` still reads as
+ * "below the title", `inset-inline-start` as "the panel's inner edge", and the
+ * bubble can now be told to stop at the panel's width.
+ *
+ * Scoped to the title so the limiters cells keep the flip above and the inline
+ * reflow at the bottom of this sheet.
+ */
+.panel__title {
+  position: relative;
+}
+
+.panel__title .tip {
+  position: static;
+}
+
+.panel__title .tip__bubble {
+  max-inline-size: min(26rem, 100%);
+}
+
+/*
+ * Liveness: a ring that drains over the poll interval and refills when a
+ * snapshot lands.
+ *
+ * `pathLength="1"` normalises the circumference to 1, so `--poll-remaining`
+ * drops straight into `stroke-dasharray` with no circumference constant to keep
+ * in step with the radius. Same technique as `components/window-ring.css`, which
+ * is mirrored rather than imported: that component is shared between the pass
+ * and the volunteer band precisely so the two cannot drift, and a third consumer
+ * with different semantics is what would make it.
+ *
+ * **No transition and no keyframes.** A transition would sweep backwards around
+ * the whole ring each time the value jumps from empty to full, and an animation
+ * would be capped to `0.01ms` with a single iteration by the reduced-motion
+ * block in `base/reset.css` — parking this silently for the users least able to
+ * afford a dashboard that lies about being live. It steps once a second from the
+ * loop's own clock.
+ */
+.metrics__pulse {
+  display: inline-flex;
+  width: 0.5rem;
+  height: 0.5rem;
+  flex-shrink: 0;
+
+  margin: 1rem;
+
+  border-radius: 50%;
+
+  --pulse-color: var(--success);
+  background: var(--pulse-color);
+
+  animation: pulse 5s cubic-bezier(0, 0.1, 0.35, 1) infinite;
+}
+
+/*.metrics__pulse svg {
+  width: 100%;
+  height: 100%;
+}
+
+.metrics__pulse circle {
+  fill: none;
+  stroke-width: 4;
+}
+
+.metrics__pulse-track {
+  stroke: var(--border);
+}
+
+.metrics__pulse-arc {
+  stroke: var(--accent);
+  stroke-dasharray: var(--poll-remaining, 1) 1;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}*/
+
+/*
+ * Icon-only refresh, always on screen.
+ *
+ * An `<a>` rather than a `<button>`: with JavaScript off a button here would be
+ * a dead control on a surface whose whole rule is that it works without one,
+ * while a link genuinely reloads the page. The bundle intercepts the click and
+ * refreshes in place instead, which keeps scroll position and open disclosures.
+ *
+ * Sized and shaped after `.theme-toggle` in `main.css`, the other icon-only
+ * control on this surface.
+ */
+.metrics__refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+  text-decoration: none;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.metrics__refresh:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.metrics__refresh .material-symbols-outlined {
+  font-size: 1.25rem;
+}
+
+.metrics__refresh[aria-disabled='true'] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.panel__figure {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.panel__figure-value {
+  font-size: 2rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.panel__figure-unit,
+.panel__rate {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.panel__rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+}
+
+.panel__rows[data-metrics='checkin-roles'] {
+  margin-bottom: var(--space-2);
+}
+
+.panel__row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: 0.875rem;
+}
+
+.panel__row dt {
+  color: var(--text-muted);
+}
+
+.panel__row dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.panel__row:has(.panel__sub) {
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-bottom: var(--space-1);
+}
+
+.panel__sub {
+  flex-basis: 100%;
+}
+
+.panel__sub summary {
+  cursor: pointer;
+  width: fit-content;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.panel__rows--sub {
+  margin-block-start: var(--space-1);
+  padding-inline-start: var(--space-3);
+}
+
+/* On the row, not the list: `.panel__row` sets its own size. */
+.panel__rows--sub .panel__row {
+  font-size: 0.8125rem;
+}
+
+.panel__status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-weight: 600;
+}
+
+.panel__status--ok {
+  color: var(--success);
+}
+
+.panel__status--down {
+  color: var(--error);
+}
+
+/* The readiness check could not be read, so neither verdict applies. Muted
+   rather than coloured: this is an absence of information, not a fault. */
+.panel__status--unknown {
+  color: var(--text-muted);
+}
+
+.is-ok {
+  color: var(--success);
+}
+
+.is-down {
+  color: var(--error);
+  font-weight: 600;
+}
+
+.is-unknown {
+  color: var(--text-muted);
+}
+
+.is-warn {
+  color: var(--warn);
+  font-weight: 600;
+}
+
+.panel__notes,
+.panel__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.panel__note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.panel__note--open {
+  color: var(--success);
+}
+
+.panel__limit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.panel__limit[hidden] {
+  display: none;
+}
+
+.panel[hidden],
+.panel__row[hidden] {
+  display: none;
+}
+
+.panel__limit-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.panel__limit-title {
+  color: var(--text-muted);
+}
+
+.panel__empty {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-style: italic;
+}
+
+.panel__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.panel__table th,
+.panel__table td {
+  padding: var(--space-2) var(--space-1);
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel__table thead th {
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+.panel__table th:first-child,
+.panel__table td:first-child,
+.panel__table tbody th {
+  text-align: start;
+  font-weight: 500;
+}
+
+.panel__table.limiters th:first-child {
+  width: 35%;
+  min-width: 15rem;
+}
+.panel__table.limiters th:last-child {
+  width: 30%;
+  min-width: 15rem;
+  text-align: start;
+}
+.panel__table.limiters td:last-child {
+  text-align: start;
+}
+.panel__table.limiters [data-cell='refused'] {
+  text-align: center;
+}
+
+.panel__table code {
+  font-size: 0.8125rem;
+  word-break: break-all;
+}
+
+.panel__count {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.panel__route {
+  color: var(--text-muted);
+  word-break: break-all;
+}
+
+.panel__detail {
+  margin: var(--space-1) 0 0;
+  font-size: 0.8125rem;
+  word-break: break-word;
+}
+
+.panel__detail--dim {
+  color: var(--text-muted);
+}
+
+.panel__list-item summary {
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: baseline;
+  font-size: 0.875rem;
+}
+
+/*
+ * The sparkline. `preserveAspectRatio="none"` in the markup lets the viewBox
+ * stretch to whatever width the panel has, so the shape carries the trend and
+ * the absolute geometry carries nothing — which is the honest reading of a line
+ * with no y-axis on it.
+ */
+.spark {
+  width: 100%;
+  height: 2.5rem;
+  overflow: visible;
+}
+
+.spark__line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.spark__line--warn {
+  stroke: var(--warn);
+}
+
+.limiters__what {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/*
+ * The tier badge. Trusted and untrusted are now separate rows with separate
+ * ceilings — before this they shared one, and the ceiling flipped between their
+ * two quotas depending on which had most recently answered. The badge is what
+ * stops the two rows reading as a duplicated limiter.
+ */
+.limiters__tier {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/*
+ * Two badges carry weight, the rest are neutral facts.
+ *
+ * `trusted` means a widened quota and `global` means one bucket for everybody,
+ * so a refusal on either reads differently from a refusal on a per-session
+ * limiter — one says an allow-listed address went over, the other says every
+ * attendee is now sharing the consequence. The remaining five state what the
+ * key is and should not compete for attention while doing it.
+ */
+.limiters__tier--strict,
+.limiters__tier--ip,
+.limiters__tier--session,
+.limiters__tier--cookie,
+.limiters__tier--username,
+.limiters__tier--attendee,
+.limiters__tier--volunteer {
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+}
+
+.limiters__tier--trusted {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.limiters__tier--global {
+  background: var(--accent-warn);
+  color: var(--canvas);
+}
+
+.limiters__gauge {
+  position: relative;
+  min-width: 8rem;
+}
+
+/*
+ * The bar sits behind the number rather than beside it. At a glance the fill is
+ * the reading; the digits are for when the glance turns into a decision.
+ */
+.limiters__bar {
+  position: absolute;
+  inset-block: 15%;
+  inset-inline-start: 0;
+  inline-size: var(--fill, 0%);
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  z-index: 0;
+}
+
+.limiters__value {
+  position: relative;
+  z-index: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.limiters__row--amber .limiters__bar {
+  background: var(--accent-warn);
+}
+
+.limiters__row--amber .limiters__value {
+  color: var(--warn);
+  font-weight: 600;
+}
+
+.limiters__row--red .limiters__bar {
+  background: var(--error-soft);
+}
+
+.limiters__row--red .limiters__value,
+.limiters__row--red td {
+  color: var(--error);
+  font-weight: 600;
+}
+
+.limiters__keys {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: start;
+}
+
+.limiters__keys li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: end;
+  align-items: baseline;
+  font-size: 0.8125rem;
+}
+
+.limiters__points {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * Fan-out is the CGNAT discriminator and deserves to be readable at a glance:
+ * many sessions behind one address is a venue on carrier NAT, one session
+ * repeating is not. Volume alone cannot tell those apart, which is why this
+ * number sits next to the points rather than being derived from them.
+ */
+.limiters__fanout {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * The limiter table is the one that cannot reflow: a key is an address and does
+ * not wrap usefully. Scroll it inside the panel rather than the page.
+ *
+ * 64rem rather than a phone width because the column floors below add up to
+ * roughly 45rem, and past the shell's 60rem breakpoint the rail and gutters come
+ * off the viewport before the panel sees any of it. Under that the table has to
+ * have this container: <main> clips its horizontal axis, so an unwrapped table
+ * would be cut off rather than scrolled.
+ */
+@media (max-width: 64rem) {
+  .panel--wide {
+    overflow-x: auto;
+  }
+
+  .limiters {
+    min-width: 34rem;
+  }
+
+  /*
+   * `overflow-x: auto` above establishes a clipping context, so an absolutely
+   * positioned bubble would be cut off exactly where the table is already
+   * scrolling. In flow it pushes the row open instead, which is uglier and
+   * legible — and legible wins on the surface somebody reads standing up.
+   */
+  .limiters__what .tip__bubble {
+    position: static;
+    inline-size: auto;
+    max-inline-size: none;
+    box-shadow: none;
+    margin-block-start: var(--space-2);
+  }
+
+  .limiters__what .tip:not(:hover):not(:focus-within) .tip__bubble {
+    display: none;
+  }
+}

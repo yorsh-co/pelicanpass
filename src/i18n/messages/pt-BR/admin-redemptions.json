@@ -1,0 +1,258 @@
+{
+  "admin-redemptions.action.confirm": {
+    "defaultMessage": "Confirmar?",
+    "description": "Label of an armed correction button: a second press saves. Reverts after a few seconds."
+  },
+  "admin-redemptions.action.failed": {
+    "defaultMessage": "Não foi possível salvar. Tente novamente.",
+    "description": "Error line when a correction failed for a reason the server did not explain."
+  },
+  "admin-redemptions.action.forbidden": {
+    "defaultMessage": "Você não tem mais permissão para corrigir retiradas.",
+    "description": "Toast when the operator's redemptions:write permission was withdrawn while the record was open."
+  },
+  "admin-redemptions.action.mark": {
+    "defaultMessage": "Marcar como retirado",
+    "description": "Records by hand that the item was handed over. The first press arms it and admin-redemptions.action.confirm replaces this label."
+  },
+  "admin-redemptions.action.reason": {
+    "defaultMessage": "Motivo",
+    "description": "Label of the reason choice beside a correction button."
+  },
+  "admin-redemptions.action.reasonMissing": {
+    "defaultMessage": "Escolha um motivo antes de confirmar.",
+    "description": "Error line when a correction is attempted without a reason."
+  },
+  "admin-redemptions.action.reasonPlaceholder": {
+    "defaultMessage": "Escolha o motivo",
+    "description": "Empty first option of the reason choice."
+  },
+  "admin-redemptions.action.resyncing": {
+    "defaultMessage": "A resposta do servidor demorou. Carregando…",
+    "description": "Error line while the record reloads after a correction's answer timed out. The correction may or may not have been saved; the reloaded record shows which."
+  },
+  "admin-redemptions.action.revert": {
+    "defaultMessage": "Cancelar retirada",
+    "description": "Undoes a recorded collection, so the item shows as still to collect. The first press arms it and admin-redemptions.action.confirm replaces this label."
+  },
+  "admin-redemptions.filter.item": {
+    "defaultMessage": "Item",
+    "description": "Label of the item filter above the list."
+  },
+  "admin-redemptions.filter.status": {
+    "defaultMessage": "Situação",
+    "description": "Label of the status filter above the list."
+  },
+  "admin-redemptions.filter.status.all": {
+    "defaultMessage": "Todos",
+    "description": "Status filter value: everybody entitled to the item, collected or not."
+  },
+  "admin-redemptions.filter.status.pending": {
+    "defaultMessage": "Não-retirado",
+    "description": "Status filter value: entitled and not yet collected. The default."
+  },
+  "admin-redemptions.filter.status.redeemed": {
+    "defaultMessage": "Retirado",
+    "description": "Status filter value: collected."
+  },
+  "admin-redemptions.history.actorKind": {
+    "defaultMessage": "{kind, select, admin {admin} volunteer {voluntário} other {}}",
+    "description": "Small tag after the name in the history's Por column. Lowercase. other is only a fallback."
+  },
+  "admin-redemptions.history.by": {
+    "defaultMessage": "Por",
+    "description": "History column head: the volunteer or administrator who recorded it."
+  },
+  "admin-redemptions.history.empty": {
+    "defaultMessage": "Sem histórico.",
+    "description": "The attendee's history is empty."
+  },
+  "admin-redemptions.history.heading": {
+    "defaultMessage": "Histórico",
+    "description": "Heading of the attendee's redemption history."
+  },
+  "admin-redemptions.history.item": {
+    "defaultMessage": "Item",
+    "description": "History column head: which item."
+  },
+  "admin-redemptions.history.outcome": {
+    "defaultMessage": "Ação",
+    "description": "History column head: what happened."
+  },
+  "admin-redemptions.history.outcomeLabel": {
+    "defaultMessage": "{outcome, select, redeemed {Retirado} duplicate {Tentativa repetida} not_entitled {Sem direito} marked {Marcado pela administração} reverted {Desfeito pela administração} other {Registro}}",
+    "description": "What one history row records. redeemed: handed over at the counter or the T-shirt desk; duplicate: a second attempt at something already collected; not_entitled: an attempt at something the attendee never had; marked and reverted: an administrator's corrections. other is only a fallback."
+  },
+  "admin-redemptions.history.reason": {
+    "defaultMessage": "Motivo",
+    "description": "History column head: the reason given for a correction. Empty for a volunteer's own records and the T-shirt desk's."
+  },
+  "admin-redemptions.history.truncated": {
+    "defaultMessage": "Mostrando os {count, number, ::group-off} registros mais recentes.",
+    "description": "Under the history when it was cut at its limit. {count} is the limit."
+  },
+  "admin-redemptions.history.unknownActor": {
+    "defaultMessage": "{kind, select, admin {administrador removido} volunteer {voluntário removido} other {removido}}",
+    "description": "Stands in for the name of a volunteer or administrator whose record no longer exists. other is only a fallback."
+  },
+  "admin-redemptions.history.when": {
+    "defaultMessage": "Quando",
+    "description": "History column head: date and time."
+  },
+  "admin-redemptions.list.clear": {
+    "defaultMessage": "Limpar",
+    "description": "Resets every filter and the search."
+  },
+  "admin-redemptions.list.code": {
+    "defaultMessage": "Ingresso",
+    "description": "Column head: the attendee's ticket code."
+  },
+  "admin-redemptions.list.count": {
+    "defaultMessage": "{total, plural, =1 {{total, number, ::group-off} pessoa} other {{total, number, ::group-off} pessoas}}",
+    "description": "Number of attendees matching the filters, above the list."
+  },
+  "admin-redemptions.list.empty": {
+    "defaultMessage": "Nenhum registro corresponde aos filtros selecionados.",
+    "description": "The list is empty for the chosen filters."
+  },
+  "admin-redemptions.list.heading": {
+    "defaultMessage": "Retirados por participante",
+    "description": "Heading of the per-attendee list under the filters."
+  },
+  "admin-redemptions.list.name": {
+    "defaultMessage": "Nome",
+    "description": "Column head: the attendee's name."
+  },
+  "admin-redemptions.list.option": {
+    "defaultMessage": "Opção",
+    "description": "Column head: the size or choice the attendee registered for."
+  },
+  "admin-redemptions.list.pending": {
+    "defaultMessage": "a retirar",
+    "description": "Status cell of an attendee who has not collected the item. Lowercase, as the pass chip reads."
+  },
+  "admin-redemptions.list.redeemedAt": {
+    "defaultMessage": "retirado às {time}",
+    "description": "Status cell of an attendee who collected the item. {time} is the local date and time, already formatted."
+  },
+  "admin-redemptions.list.status": {
+    "defaultMessage": "Situação",
+    "description": "Column head: collected, with the time, or still to collect."
+  },
+  "admin-redemptions.page.lede": {
+    "defaultMessage": "Situação das retiradas de itens.",
+    "description": "Line under the redemptions heading."
+  },
+  "admin-redemptions.page.title": {
+    "defaultMessage": "Retiradas",
+    "description": "Heading of the admin redemptions screen: what has been handed out, and to whom."
+  },
+  "admin-redemptions.reason.misTap": {
+    "defaultMessage": "Registrado por engano",
+    "description": "Correction reason: the volunteer tapped the wrong item or tapped twice."
+  },
+  "admin-redemptions.reason.offline": {
+    "defaultMessage": "Entregue sem o sistema",
+    "description": "Correction reason: the item was handed over while the scanner or the connection was down."
+  },
+  "admin-redemptions.reason.other": {
+    "defaultMessage": "Outro motivo",
+    "description": "Correction reason: anything else."
+  },
+  "admin-redemptions.reason.wrongAttendee": {
+    "defaultMessage": "Participante errada",
+    "description": "Correction reason: the item was recorded against somebody other than who received it."
+  },
+  "admin-redemptions.record.archived": {
+    "defaultMessage": "Este participante está arquivado. As retiradas podem ser consultadas, mas não corrigidas.",
+    "description": "Banner on an archived attendee's record."
+  },
+  "admin-redemptions.record.close": {
+    "defaultMessage": "Voltar para as retiradas",
+    "description": "Accessible name of the record's close button."
+  },
+  "admin-redemptions.record.edit": {
+    "defaultMessage": "Editar cadastro",
+    "description": "Opens the attendee's record form, where a size or choice can be changed."
+  },
+  "admin-redemptions.record.items": {
+    "defaultMessage": "Itens",
+    "description": "Heading of the record's per-item list."
+  },
+  "admin-redemptions.record.noItems": {
+    "defaultMessage": "Este participante não tem itens a retirar.",
+    "description": "The attendee is entitled to nothing."
+  },
+  "admin-redemptions.record.pending": {
+    "defaultMessage": "A retirar",
+    "description": "Status of an item the attendee has not collected."
+  },
+  "admin-redemptions.record.readOnly": {
+    "defaultMessage": "Você pode consultar as retiradas, mas não corrigi-las.",
+    "description": "Replaces the correction controls for an operator without the redemptions:write permission."
+  },
+  "admin-redemptions.record.redeemedAt": {
+    "defaultMessage": "Retirado em {time}",
+    "description": "Status of a collected item. {time} is the local date and time, already formatted."
+  },
+  "admin-redemptions.state.stale": {
+    "defaultMessage": "Sem conexão: os números podem estar desatualizados.",
+    "description": "Liveness line when refreshes have stopped landing."
+  },
+  "admin-redemptions.state.updated": {
+    "defaultMessage": "Atualizado às {time}",
+    "description": "Liveness line of the totals. {time} is the local time of the last refresh, already formatted."
+  },
+  "admin-redemptions.summary.expected": {
+    "defaultMessage": "Previstos",
+    "description": "Column or figure label: how many active attendees are entitled to the item."
+  },
+  "admin-redemptions.summary.heading": {
+    "defaultMessage": "Situação por item",
+    "description": "Heading of the per-item totals panel."
+  },
+  "admin-redemptions.summary.item": {
+    "defaultMessage": "Item",
+    "description": "Column head of the per-option breakdown: which item the option belongs to."
+  },
+  "admin-redemptions.summary.none": {
+    "defaultMessage": "Nenhum participante tem direito a este item.",
+    "description": "Shown in an item's card when no active attendee is entitled to it."
+  },
+  "admin-redemptions.summary.option": {
+    "defaultMessage": "Opção",
+    "description": "Column head of the per-option breakdown: the size or choice."
+  },
+  "admin-redemptions.summary.options": {
+    "defaultMessage": "Situação das retiradas por opção",
+    "description": "Heading of the per-option breakdown (t-shirt sizes, meal choices…), used to check stock at the counter."
+  },
+  "admin-redemptions.summary.pendingAbsent": {
+    "defaultMessage": "A retirar, check-in pendente",
+    "description": "Column or figure label: entitled, not collected, and not checked in."
+  },
+  "admin-redemptions.summary.pendingPresent": {
+    "defaultMessage": "A retirar, check-in realizado",
+    "description": "Column or figure label: entitled, not collected, and checked in — the people who can still come to the counter now."
+  },
+  "admin-redemptions.summary.progress": {
+    "defaultMessage": "{share, number, ::percent} retirado",
+    "description": "Share of the entitled attendees who collected the item. {share} is a fraction between 0 and 1, formatted as a percentage."
+  },
+  "admin-redemptions.summary.redeemed": {
+    "defaultMessage": "Retirado",
+    "description": "Column or figure label: how many have collected the item."
+  },
+  "admin-redemptions.summary.scope": {
+    "defaultMessage": "Participantes arquivados não são contabilizados.",
+    "description": "Footnote under the totals: archived attendees are excluded from every figure."
+  },
+  "admin-redemptions.toast.marked": {
+    "defaultMessage": "Retirada registrada.",
+    "description": "Toast after an administrator marked an item as collected."
+  },
+  "admin-redemptions.toast.reverted": {
+    "defaultMessage": "Retirada cancelada.",
+    "description": "Toast after an administrator undid a collection."
+  }
+}

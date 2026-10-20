@@ -1,0 +1,573 @@
+/*
+ * The administrator surface: the sign-in gate, and the shell every screen
+ * behind it mounts into. The gate is served through layouts/plain.ejs, the
+ * shell through layouts/admin.ejs.
+ *
+ * Deliberately plainer than the attendee pages. Those are read once, in a
+ * queue, on a phone held at arm's length, and are styled to carry an event.
+ * This is a desk tool reached over the tailnet — it wants legibility and
+ * nothing that moves.
+ */
+
+.admin-gate {
+  width: 100%;
+  max-width: 26rem;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+
+  padding: clamp(var(--space-6), 8vh, var(--space-8)) 0;
+}
+
+/* ---------------------------------------------------------------- sign-in */
+
+.admin-gate__title {
+  margin: 0;
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+.admin-gate__lede {
+  margin: calc(var(--space-2) * -1) 0 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.admin-gate__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.admin-gate__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.admin-gate__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+}
+
+.admin-gate__field input {
+  width: 100%;
+  min-height: 3rem;
+  padding: var(--space-3) var(--space-4);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+
+  background: var(--surface);
+  color: var(--text);
+
+  font-size: var(--text-base);
+
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.admin-gate__field input:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* The password input with its show/hide toggle sitting inside its end edge. */
+.admin-gate__secret {
+  position: relative;
+}
+
+.admin-gate__secret input {
+  padding-inline-end: 3.5rem;
+}
+
+/* Edge draws its own reveal control; one eye per field. */
+.admin-gate__secret input::-ms-reveal {
+  display: none;
+}
+
+/*
+ * Centred by insets rather than a transform: `button:active` owns `transform`
+ * for its press scale and would knock a translate-centred toggle off its line.
+ */
+.admin-gate__reveal {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: var(--space-1);
+  margin-block: auto;
+
+  width: 2.75rem;
+  min-height: 0;
+  height: 2.75rem;
+  padding: 0;
+}
+
+/* Drawn inside so the ring is not lost against the input's own border. */
+.admin-gate__reveal:focus-visible {
+  outline-offset: -2px;
+  border-radius: var(--radius-md);
+}
+
+/*
+ * Holds its line whether or not it carries a message, so that showing an error
+ * does not push the submit button down under the reader's thumb mid-tap.
+ */
+.admin-gate__error {
+  margin: 0;
+  min-height: 1.25rem;
+
+  color: var(--error);
+  font-size: var(--text-sm);
+}
+
+/* ------------------------------------------------------------------ shell */
+
+/*
+ * Admin-only tokens, declared here rather than in base/variables.css so they
+ * cannot reach the attendee surface. The designer's token contract is what the
+ * rest of this app is built on; the shell borrows from it and adds nothing to
+ * it.
+ */
+.admin-page {
+  --admin-rail-width: 16rem;
+  --admin-content-max: 64rem;
+  --admin-gutter: clamp(var(--space-4), 4vw, var(--space-6));
+
+  /*
+   * main.css lays the body out as a centred flex column, sized for a 26rem
+   * phone screen. A shell with a rail beside its content cannot live inside
+   * `align-items: center`, so this replaces the whole thing — the rail and
+   * <main> become grid children directly, with no wrapper between them.
+   */
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: start;
+
+  /*
+   * base/body.css reserves a stable gutter so the attendee flow does not shift
+   * when a step grows past the fold. That propagates to the viewport, and on
+   * desktop this shell is exactly `100dvh` with its own scroller inside <main>
+   * — so the page never scrolls and the reserved strip is dead space beside a
+   * real scrollbar.
+   */
+  scrollbar-gutter: auto;
+}
+
+/*
+ * The codebase's first skip link. It sits outside the flow until focused,
+ * rather than being visually-hidden, so that tabbing into the page offers it
+ * before eleven navigation items.
+ */
+.admin-skip {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: var(--z-toast);
+
+  padding: var(--space-2) var(--space-4);
+
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+
+  transform: translateY(calc(-100% - var(--space-4)));
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.admin-skip:focus-visible {
+  transform: none;
+}
+
+/* -------------------------------------------------------------------- rail */
+
+.admin-rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+
+  padding: var(--admin-gutter);
+
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-rail__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.admin-rail__title {
+  color: var(--text);
+}
+.admin-rail__title:hover {
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+/*
+ * Hidden until a script claims the drawer. Without JavaScript the panel below
+ * is always open, so a toggle would be a control that does nothing.
+ */
+.admin-rail__menu {
+  display: none;
+}
+
+.admin-rail__panel {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.admin-rail__nav {
+  flex: 1;
+}
+
+.admin-rail__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.admin-rail__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+
+  padding: var(--space-3);
+
+  border-radius: var(--radius-sm);
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.admin-rail__link .material-symbols-outlined {
+  font-size: 20px;
+}
+
+a.admin-rail__link:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.admin-rail__link[aria-current='page'] {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* A section with no screen behind it yet. Not a disabled link — there is
+   nothing to navigate to, so there is no link. */
+.admin-rail__link--planned {
+  cursor: default;
+  opacity: 0.65;
+}
+
+.admin-rail__label {
+  flex: 1;
+}
+
+.admin-rail__soon {
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.admin-rail__foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+/* A username can be 64 characters and the rail is 16rem wide. */
+.admin-rail__user {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+}
+
+.admin-rail__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Sized to its label rather than the full-width default every button takes. */
+.admin-rail__logout {
+  width: auto;
+  padding: var(--space-2) var(--space-4);
+}
+
+.admin-rail__logout .material-symbols-outlined {
+  font-size: 20px;
+}
+
+/* ------------------------------------------------------------------ drawer */
+
+/*
+ * Every rule here is gated on `data-admin-drawer`, which only
+ * pages/admin/shell/index.ts sets. CSS cannot tell whether a script ran, so
+ * collapsing the panel unconditionally would hide the navigation from a reader
+ * whose JavaScript failed — with no way to bring it back. Gated, the no-script
+ * outcome is the stacked list above the content that the layout is built for.
+ *
+ * A disclosure panel rather than an off-canvas rail: the toggle lives inside
+ * the rail, so sliding the rail away would take the toggle with it. This is
+ * also what `aria-expanded` and `aria-controls` already describe.
+ */
+body[data-admin-drawer] .admin-rail {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-chrome);
+
+  gap: 0;
+}
+
+body[data-admin-drawer] .admin-rail__menu {
+  display: inline-flex;
+  width: 2.75rem;
+  height: 2.75rem;
+  min-height: 0;
+  padding: 0;
+
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-muted);
+}
+
+body[data-admin-drawer] .admin-rail__menu:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+body[data-admin-drawer] .admin-rail__panel {
+  display: none;
+}
+
+body[data-admin-drawer='open'] .admin-rail__panel {
+  display: flex;
+  padding-top: var(--space-5);
+}
+
+/* ------------------------------------------------------------------- main */
+
+/*
+ * No `max-width`. The shell hands each screen the whole track and lets it
+ * choose its own measure: `pages/admin/lookup.css` takes `--admin-content-max`
+ * for its reading column, the attendee form caps itself at 40rem, and the
+ * tables want every pixel there is.
+ */
+.admin-main {
+  width: 100%;
+
+  /* A grid item's automatic minimum is its content, so one overwide table would
+     otherwise push the `1fr` track past the viewport. */
+  min-width: 0;
+
+  /*
+   * Clips what reaches past the content box sideways — including boxes nobody
+   * can see: a `visibility: hidden` tooltip still contributes scrollable
+   * overflow. `clip` rather than `hidden`, because `hidden` would compute
+   * `overflow-y` to `auto` and make <main> a scroll container nested inside the
+   * scrolling page. Touch browsers latch each gesture to one scroller, so the
+   * page stopped short of the top and bottom until the finger was lifted.
+   */
+  overflow-x: clip;
+
+  padding: var(--admin-gutter);
+}
+
+/* ------------------------------------------------------------- ticket code */
+
+/*
+ * Display only: codes are stored lowercase and the server lowercases typed
+ * input.
+ *
+ * The element selectors out-rank `.admin-table__code`, `.lookup-card__code` and
+ * `.lookup-record__code`, which set a generic monospace and load after this
+ * file.
+ */
+code.ticket-code,
+input.ticket-code {
+  font-family: var(--font-ticket);
+  text-transform: uppercase;
+}
+
+/* The placeholder is a word, not a code: it keeps the interface font. */
+input.ticket-code::placeholder {
+  font-family:
+    'Libre Franklin',
+    system-ui,
+    -apple-system,
+    sans-serif;
+  text-transform: none;
+}
+
+/* --------------------------------------------------------------- arrival */
+
+.admin-home {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.admin-home__title {
+  margin: 0;
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+.admin-home__empty {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/*
+ * Reflows on its own, so the shell's one breakpoint stays about the rail. A
+ * fixed column count would need a second.
+ */
+.admin-home__grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: var(--space-4);
+}
+
+.admin-home__card {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  padding: var(--space-5);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+
+  color: var(--text);
+  text-decoration: none;
+
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+.admin-home__card .material-symbols-outlined {
+  font-size: 28px;
+  color: var(--accent);
+}
+
+a.admin-home__card:hover {
+  border-color: var(--accent);
+  background: var(--surface-hover);
+}
+
+.admin-home__card--planned {
+  color: var(--text-muted);
+  cursor: default;
+}
+
+.admin-home__card--planned .material-symbols-outlined {
+  color: var(--text-muted);
+}
+
+.admin-home__label {
+  font-weight: var(--weight-semibold);
+}
+
+.admin-home__soon {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------- desktop */
+
+/*
+ * THE ONE BREAKPOINT, and the first `min-width` media query in this codebase.
+ *
+ * A deliberate exception, scoped to the admin layout. `/admin` is listed Out in
+ * the design brief (`git show d0aa585:docs/ui-design-brief-plan.md`, in the
+ * private archive repository) — it is a desk tool reached over a tailnet, not
+ * the phone-only attendee surface the design system is built around. No
+ * attendee token, rule or component changes for it, and the tokens above are
+ * declared on `.admin-page` so they cannot leak.
+ *
+ * Without this note the next reader would be right to treat it as a violation.
+ * Do not take it as licence for a second one.
+ */
+@media (min-width: 60rem) {
+  .admin-page {
+    grid-template-columns: var(--admin-rail-width) 1fr;
+  }
+
+  /* Full height and sticky, so the navigation stays put while a long table
+     scrolls beside it. */
+  .admin-rail,
+  body[data-admin-drawer] .admin-rail {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    gap: var(--space-5);
+    overflow-y: auto;
+
+    border-bottom: none;
+    border-right: 1px solid var(--border);
+  }
+
+  /*
+   * Its own scroller only here, where the rail sits beside it rather than
+   * above it, so the page itself never scrolls and there is one scroller per
+   * gesture. `overflow-y: scroll` computes `clip` to `hidden` regardless;
+   * naming it keeps the pairing explicit.
+   */
+  .admin-main {
+    max-height: 100dvh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  /* The drawer does not exist at this width: the panel is always open and the
+     toggle has nothing to do. */
+  body[data-admin-drawer] .admin-rail__menu {
+    display: none;
+  }
+
+  body[data-admin-drawer] .admin-rail__panel,
+  body[data-admin-drawer='open'] .admin-rail__panel {
+    display: flex;
+    padding-top: 0;
+  }
+}

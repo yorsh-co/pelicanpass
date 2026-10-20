@@ -1,0 +1,186 @@
+<%# i18n: admin-volunteers %>
+<%
+/*
+ * The volunteer permissions screen: every volunteer of the event, with the
+ * access their pass shows and the team they belong to. A collapsed legend above
+ * the filters names every access, highest first, with what it lets a volunteer
+ * do and what grants it; it renders whether or not there are rows.
+ *
+ * Server-rendered in full. The filters are the bundle's: they hide rows by
+ * `data-*` attributes and write nothing to the URL, so with JavaScript off the
+ * controls stay hidden and the whole roster reads as it was rendered.
+ *
+ * **Nothing here builds a URL out of an attendee**, for the reason the roster
+ * gives. A record opens by posting its ID from the name button, and the bundle
+ * lets the rest of the row press it.
+ *
+ * `data-volunteers` attributes are the contract with
+ * `pages/admin/volunteers/index.ts`. `data-search` holds the text the search
+ * box matches, unnormalised: the bundle folds case and accents itself.
+ *
+ * `locals.` on every read, and the escaping output tag on every value off a
+ * row, for the reasons the roster template gives.
+ */
+const rows = locals.rows || [];
+const legend = locals.legend || [];
+const tiers = locals.tiers || [];
+const teams = locals.teams || [];
+const hasUnteamed = locals.hasUnteamed || false;
+%>
+<%- include('../../../partials/i18n-catalogs') %>
+
+<div class="admin-list volunteers" data-volunteers="root">
+  <header class="admin-list__head">
+    <div>
+      <h1 class="admin-list__title"><%= copy.pageTitle() %></h1>
+      <p class="redemptions__lede"><%= copy.pageLede() %></p>
+    </div>
+  </header>
+
+  <%# A `details` element, closed by default: the legend is a reference, and
+      the list is what the screen is for. -%>
+  <details class="volunteers__legend">
+    <summary class="volunteers__legend-title"><%= copy.legendHeading() %></summary>
+    <p class="volunteers__legend-lede"><%= copy.legendLede() %></p>
+
+    <dl class="volunteers__legend-list">
+      <% for (const entry of legend) { %>
+      <div class="volunteers__legend-item">
+        <dt>
+          <span class="access-chip"<% if (entry.value !== 'none') { %> data-access="<%= entry.value %>"<% } %>><%= entry.label %></span>
+        </dt>
+        <dd>
+          <%= entry.access %>
+          <span class="volunteers__legend-grant"><%= entry.grant %></span>
+        </dd>
+      </div>
+      <% } %>
+    </dl>
+  </details>
+
+  <% if (rows.length === 0) { %>
+  <p class="admin-list__empty"><%= copy.listEmpty() %></p>
+  <% } else { %>
+
+  <%# Hidden until the bundle that makes them work has run. -%>
+  <div class="admin-list__filters" data-volunteers="filters" hidden>
+    <div class="admin-list__field">
+      <span class="admin-list__label" id="volunteers-tier-label"><%= copy.filterTierLabel() %></span>
+      <div class="volunteers__chips" role="group" aria-labelledby="volunteers-tier-label">
+        <button type="button" class="ghost volunteers__chip" data-volunteers="tier" data-tier="" aria-pressed="true">
+          <%= copy.filterTierChip({ label: copy.filterTierAll(), count: rows.length }) %>
+        </button>
+        <% for (const tier of tiers) { %>
+        <button type="button" class="ghost volunteers__chip" data-volunteers="tier" data-tier="<%= tier.value %>" aria-pressed="false">
+          <%= copy.filterTierChip({ label: tier.label, count: tier.count }) %>
+        </button>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="admin-list__fields--container">
+      <div class="admin-list__field">
+        <label class="admin-list__label" for="volunteers-team"><%= copy.filterTeam() %></label>
+        <select id="volunteers-team" data-volunteers="team">
+          <option value=""><%= copy.filterTeamAll() %></option>
+          <% for (const team of teams) { %>
+          <option value="team:<%= team %>"><%= team %></option>
+          <% } %>
+          <% if (hasUnteamed) { %>
+          <option value="none"><%= copy.filterTeamNone() %></option>
+          <% } %>
+        </select>
+      </div>
+
+      <div class="admin-list__field">
+        <label class="admin-list__label" for="volunteers-search"><%= copy.filterSearch() %></label>
+        <input
+          id="volunteers-search"
+          type="search"
+          placeholder="<%= copy.filterSearchPlaceholder() %>"
+          autocomplete="off"
+          data-volunteers="search"
+        />
+      </div>
+    </div>
+  </div>
+
+  <section aria-labelledby="volunteers-list">
+    <h2 class="visually-hidden" id="volunteers-list"><%= copy.listHeading() %></h2>
+
+    <p class="admin-list__count" data-volunteers="count" role="status">
+      <%= copy.listCount({ count: rows.length }) %>
+    </p>
+
+    <%# How a row opens. Empty: the ID rides on the button that submits it. -%>
+    <form id="record" method="post" action="/admin/volunteers/record"></form>
+
+    <ul class="volunteers__list" data-volunteers="list">
+      <% for (const row of rows) { %>
+      <li
+        class="volunteers__row"
+        data-tier="<%= row.tier %>"
+        data-team="<%= row.team || '' %>"
+        data-search="<%= [row.name, row.nickname, row.ticketCode].filter(Boolean).join(' ') %>"
+      >
+        <div class="volunteers__cell volunteers__cell--name">
+          <button
+            class="admin-table__open"
+            type="submit"
+            form="record"
+            name="attendeeId"
+            value="<%= row.attendeeId %>"
+          >
+            <span class="admin-table__name"><%= row.name %></span>
+            <% if (row.nickname) { %>
+            <span class="admin-table__nickname"><%= row.nickname %></span>
+            <% } %>
+          </button>
+          <code class="admin-table__code ticket-code"><%= row.ticketCode %></code>
+        </div>
+
+        <div class="volunteers__cell volunteers__cell--tier">
+          <span class="access-chip"<% if (row.tier !== 'none') { %> data-access="<%= row.tier %>"<% } %>><%= row.tierLabel %></span>
+        </div>
+
+        <div class="volunteers__cell">
+          <% if (row.team) { %>
+          <span><%= row.team %><% if (row.teamRole) { %> · <%= row.teamRole %><% } %></span>
+          <% } else { %>
+          <span class="admin-table__muted"><%= copy.listNoTeam() %></span>
+          <% } %>
+        </div>
+
+        <div class="volunteers__cell">
+          <% if (row.stations.length > 0) { %>
+          <span class="visually-hidden"><%= copy.listStations() %>:</span>
+          <% for (const station of row.stations) { %>
+          <span class="admin-table__flag"><%= station %></span>
+          <% } %>
+          <% } %>
+          <% if (row.canDraw) { %>
+          <span class="admin-table__flag"><%= copy.listRaffle() %></span>
+          <% } %>
+          <% if (row.showAdminLink) { %>
+          <span class="admin-table__flag"><%= copy.listAdminLink() %></span>
+          <% } %>
+        </div>
+      </li>
+      <% } %>
+    </ul>
+
+    <p class="admin-list__empty" data-volunteers="empty" hidden>
+      <%= copy.listNoMatches() %>
+      <button type="button" data-volunteers="clear"><%= copy.listClear() %></button>
+    </p>
+  </section>
+  <% } %>
+</div>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/admin/attendees.css" />
+<link rel="stylesheet" href="/css/dist/pages/admin/redemptions.css" />
+<link rel="stylesheet" href="/css/dist/pages/admin/volunteers.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/admin/volunteers/index.js"></script>

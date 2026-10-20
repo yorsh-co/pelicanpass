@@ -1,0 +1,19 @@
+# Allow-list: nothing enters the build context unless it is named here, so a new
+# local file (secrets, logs, tooling state) cannot reach a `COPY` step by default.
+# `npm run check:docker-context` fails if that stops being true.
+*
+
+# Sources, schema migrations and the scripts the build and `dev` stage run.
+!src
+!migrations
+!scripts
+!package*.json
+!tsconfig*.json
+
+# The client bundles are built by the `build` stage, never taken from the host.
+src/web/public/js
+src/web/public/css/dist
+
+# Nested leftovers inside the allowed directories.
+**/node_modules
+**/.env*

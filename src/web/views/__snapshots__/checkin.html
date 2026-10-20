@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="pt-BR" data-release="test-release">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Check-in | PelicanPass</title>
+
+  <!-- keeps the browser chrome on the same palette as the page -->
+  <meta name="theme-color" content="#fafafc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0a11" media="(prefers-color-scheme: dark)" />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/images/icon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icon/favicon-32x32.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/images/icon/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest" crossorigin="use-credentials">
+
+    <link
+    rel="preload"
+    as="image"
+    href="/assets/images/bg/bg.webp"
+    type="image/webp"
+    fetchpriority="high"
+  />
+
+  <!-- global styles -->
+  <link rel="stylesheet" href="/css/dist/main.css" />
+
+  <!-- stored theme, applied before first paint -->
+  
+<script nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+  // Safari in private browsing has historically thrown on localStorage rather
+  // than returning null, which would abort head parsing.
+  try {
+    const theme = localStorage.getItem('theme');
+
+    if (theme === 'light' || theme === 'dark') {
+      document.documentElement.dataset.theme = theme;
+    }
+  } catch {}
+</script>
+
+
+  <!-- preload -->
+  <link rel="preconnect" href="https://challenges.cloudflare.com" />
+
+  <!-- page-specific styles -->
+  <link rel="stylesheet" href="/css/dist/pages/attendee/checkin.css" />
+<link
+  rel="preload"
+  as="font"
+  href="/assets/fonts/red-hat-mono-ticket.woff2"
+  type="font/woff2"
+  crossorigin
+/>
+
+<!-- page-specific scripts -->
+</head>
+<body data-step data-page data-nodeenv="test" data-audience="participant">
+
+  <!-- no JS warning -->
+  <noscript>
+    <style nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+      main { display: none; }
+    </style>
+    <div class="no-js-warning">
+      <p>Esta aplicação precisa de JavaScript para funcionar corretamente. Por favor, ative o JavaScript no seu navegador.</p>
+    </div>
+  </noscript>
+
+  <!-- boot screen -->
+  <div id="app-boot" data-main="boot-screen" class="app-boot show">
+  <div class="boot-content">
+    <div id="boot-motif-right">
+      <img
+        class="motif"
+        src="/assets/images/motifs/star-sm.svg"
+        alt=""
+      />
+    </div>
+    <div id="boot-motif-left">
+      <img
+        class="motif"
+        src="/assets/images/motifs/star-sm.svg"
+        alt=""
+      />
+    </div>
+    <div id="boot-motif-centre">
+      <img
+        class="motif"
+        src="/assets/images/motifs/star-with-discs.svg"
+        alt=""
+      />
+    </div>
+    <div class="logo">
+      <img
+        class="boot-wordmark"
+        src="/assets/images/logo/wordmark-primary.svg"
+        alt="PelicanPass"
+      />
+    </div>
+  </div>
+</div>
+
+
+  <!-- main injection -->
+  <div class="main-wrapper">
+    
+
+<script id="checkin-data" type="application/json" nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+  {"success":true,"data":{"session":{"step":"ticket"}}}
+</script>
+<script type="application/json" data-i18n="checkin" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"checkin.captcha.expired":[{"type":0,"value":"Refaça a verificação"}],"checkin.captcha.missing":[{"type":0,"value":"Complete a verificação antes de continuar"}],"checkin.continue.action":[{"type":0,"value":"Continuar"}],"checkin.continue.body":[{"type":0,"value":"Você abriu um link de check-in vindo de outro site. Toque em continuar para seguir com o seu check-in."}],"checkin.continue.title":[{"type":0,"value":"Continuar para o check-in"}],"checkin.flow.error":[{"type":0,"value":"Erro"}],"checkin.flow.processing":[{"type":0,"value":"Processando..."}],"checkin.flow.slowResponse":[{"type":0,"value":"A resposta do servidor está demorando mais do que esperado. Tente novamente em alguns instantes"}],"checkin.init.error.notFound":[{"type":0,"value":"Usuário não encontrado. Faça seu check-in novamente"}],"checkin.init.error.rateLimited":[{"type":0,"value":"Muitas tentativas. Espere um pouco antes de tentar novamente"}],"checkin.init.error.unauthorized":[{"type":0,"value":"Sua sessão expirou. Faça seu check-in novamente"}],"checkin.init.error.validation":[{"type":5,"value":"audience","options":{"participant":{"value":[{"type":0,"value":"Código de ingresso ou QR Code inválido. Digite o código do seu ingresso abaixo"}]},"volunteer":{"value":[{"type":0,"value":"Código de checkin ou QR Code inválido. Digite seu código de checkin abaixo"}]},"other":{"value":[{"type":0,"value":"Código de ingresso ou QR Code inválido. Digite o código do seu ingresso abaixo"}]}}}],"checkin.init.recoverableError":[{"type":0,"value":"Algo deu errado. Recarregue a página"}],"checkin.init.unknownError":[{"type":0,"value":"Algo deu errado. Tente novamente"}],"checkin.lockout.rateLimit":[{"type":0,"value":"Muitas tentativas. Reinicie o check-in e complete a verificação"}],"checkin.preview.toggle":[{"type":0,"value":"Mostrar ou esconder seus dados"}],"checkin.progress.arrival":[{"type":0,"value":"Presença"}],"checkin.progress.label":[{"type":0,"value":"Progresso do check-in"}],"checkin.progress.ticket":[{"type":0,"value":"Ingresso"}],"checkin.progress.verification":[{"type":0,"value":"Identidade"}],"checkin.scanner.cameraAccessRequest":[{"type":0,"value":"Libere o acesso à câmera pra continuar"}],"checkin.scanner.defaultHint":[{"type":0,"value":"Escaneie o QR Code na entrada para confirmar que você chegou"}],"checkin.scanner.error.captchaRequired":[{"type":0,"value":"Complete a verificação antes de continuar"}],"checkin.scanner.error.notFound":[{"type":0,"value":"Não deu pra ler esse QR Code. Tente novamente ou use outro"}],"checkin.scanner.error.rateLimited":[{"type":0,"value":"Muitas tentativas. Espere um pouco antes de tentar novamente"}],"checkin.scanner.error.validation":[{"type":0,"value":"Não deu pra ler esse QR Code. Tente novamente ou use outro"}],"checkin.scanner.header":[{"type":0,"value":"Confirme que você chegou"}],"checkin.scanner.help":[{"type":0,"value":"Se não funcionar, chame um voluntário"}],"checkin.scanner.presence.button":[{"type":0,"value":"Já fez check-in com um voluntário? Clique para continuar"}],"checkin.scanner.presence.error":[{"type":0,"value":"Algo deu errado. Tente novamente"}],"checkin.scanner.presence.notYet":[{"type":0,"value":"Seu check-in ainda não foi confirmado. Confirme sua presença pelo QR Code"}],"checkin.scanner.processing":[{"type":0,"value":"Lendo o QR Code..."}],"checkin.scanner.success":[{"type":0,"value":"Sua presença foi confirmada!"}],"checkin.scanner.unknownError":[{"type":0,"value":"Não deu pra ler esse QR Code. Tente novamente ou use outro"}],"checkin.success.greeting":[{"type":1,"value":"name"},{"type":0,"value":", seu check-in foi confirmado!"}],"checkin.success.greetingFallback":[{"type":0,"value":"Seu check-in foi confirmado!"}],"checkin.success.heading":[{"type":0,"value":"Você chegou!"}],"checkin.success.help":[{"type":0,"value":"Clique aqui para acessar o app"}],"checkin.success.numberLabel":[{"type":0,"value":"seu número de check-in e chapelaria"}],"checkin.success.redirect":[{"type":0,"value":"Indo pro app..."}],"checkin.success.success":[{"type":0,"value":"Check-in concluído!"}],"checkin.ticket.defaultHint":[{"type":0,"value":"Digite o código recebido por WhatsApp"}],"checkin.ticket.empty":[{"type":0,"value":"Digite o código recebido por WhatsApp"}],"checkin.ticket.error.captchaRequired":[{"type":0,"value":"Código inválido. Tente novamente"}],"checkin.ticket.error.checkinNotOpen":[{"type":0,"value":"O check-in ainda não abriu"}],"checkin.ticket.error.notFound":[{"type":0,"value":"Código inválido. Tente novamente"}],"checkin.ticket.error.rateLimited":[{"type":0,"value":"Muitas tentativas. Espere um pouco antes de tentar novamente"}],"checkin.ticket.error.validation":[{"type":0,"value":"Código inválido. Tente novamente"}],"checkin.ticket.header":[{"type":0,"value":"Faça seu check-in"}],"checkin.ticket.help":[{"type":0,"value":"Se você não recebeu um código, dirija-se à mesa de suporte"}],"checkin.ticket.inputLabel":[{"type":0,"value":"Código do ingresso"}],"checkin.ticket.invalidCode":[{"type":0,"value":"Código inválido"}],"checkin.ticket.invalidFormat":[{"type":0,"value":"O código precisa ter 6 caracteres"}],"checkin.ticket.processing":[{"type":5,"value":"audience","options":{"participant":{"value":[{"type":0,"value":"Buscando seu ingresso..."}]},"volunteer":{"value":[{"type":0,"value":"Buscando seu cadastro..."}]},"other":{"value":[{"type":0,"value":"Buscando seu ingresso..."}]}}}],"checkin.ticket.success":[{"type":5,"value":"audience","options":{"participant":{"value":[{"type":0,"value":"Seu ingresso foi encontrado!"}]},"volunteer":{"value":[{"type":0,"value":"Seu cadastro foi encontrado!"}]},"other":{"value":[{"type":0,"value":"Seu ingresso foi encontrado!"}]}}}],"checkin.ticket.unknownError":[{"type":0,"value":"Algo deu errado. Tente novamente"}],"checkin.userPreview.nameLabel":[{"type":0,"value":"Nome"}],"checkin.userPreview.phoneLabel":[{"type":0,"value":"Celular"}],"checkin.userPreview.ticketLabel":[{"type":0,"value":"Ingresso"}],"checkin.verification.backButton":[{"type":0,"value":"Voltar"}],"checkin.verification.defaultHint":[{"type":0,"value":"Digite os 4 últimos dígitos do seu celular"}],"checkin.verification.error.captchaRequired":[{"type":0,"value":"Complete a verificação antes"}],"checkin.verification.error.notFound":[{"type":0,"value":"Telefone inválido. Tente novamente"}],"checkin.verification.error.rateLimited":[{"type":0,"value":"Muitas tentativas. Espere um pouco antes de tentar novamente"}],"checkin.verification.error.validation":[{"type":0,"value":"Telefone inválido. Tente novamente"}],"checkin.verification.header":[{"type":5,"value":"audience","options":{"participant":{"value":[{"type":0,"value":"Confirme sua identidade"}]},"volunteer":{"value":[{"type":0,"value":"Confirme sua identidade"}]},"other":{"value":[{"type":0,"value":"Confirme sua identidade"}]}}}],"checkin.verification.inputLabel":[{"type":0,"value":"Últimos 4 dígitos do seu celular"}],"checkin.verification.processing":[{"type":0,"value":"Confirmando sua identidade..."}],"checkin.verification.success":[{"type":0,"value":"Sua identidade foi confirmada!"}],"checkin.verification.unknownError":[{"type":0,"value":"Algo deu errado. Tente novamente. Se o erro persistir, dirija-se à mesa de suporte"}]}</script>
+<script type="application/json" data-i18n="qr" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"qr.cameraButton":[{"type":0,"value":"Ativar câmera"}],"qr.closeButton":[{"type":0,"value":"Fechar câmera"}],"qr.switchCameraButton":[{"type":0,"value":"Trocar câmera"}],"qr.torchButton":[{"type":0,"value":"Lanterna"}]}</script>
+
+
+<main data-checkin="main-container" class="main-container checkin-container">
+  <div class="checkin-head">
+    <header>
+  <span class="wordmark" role="img" aria-label="PelicanPass"></span>
+</header>
+
+
+    <ol
+      class="progress"
+      data-checkin="progress"
+      aria-label="Progresso do check-in"
+    >
+      <li class="progress-step" data-progress="ticket">
+        <span class="progress-label">Ingresso</span>
+      </li>
+      <li class="progress-step" data-progress="verification">
+        <span class="progress-label">Identidade</span>
+      </li>
+      <li class="progress-step" data-progress="qr">
+        <span class="progress-label">Presença</span>
+      </li>
+    </ol>
+  </div>
+
+  <div class="content-wrapper">
+    <!-- ticket step -->
+    <section data-checkin="ticket-step" class="ticket-step skeleton" inert>
+      <div class="step-body">
+        <h1 class="step-question" tabindex="-1" data-checkin="ticket-copy-header">
+          Faça seu check-in
+        </h1>
+      </div>
+
+      <div class="step-controls">
+        <label class="visually-hidden" for="checkin-ticket-code-input">
+          Código do ingresso
+        </label>
+
+        <div data-checkin="ticket-input-wrapper" class="input-wrapper">
+          <input
+            id="checkin-ticket-code-input"
+            data-checkin="ticket-code-input"
+            type="text"
+            inputmode="text"
+            pattern="[a-z0-9]{6}"
+            autocomplete="one-time-code"
+            enterkeyhint="send"
+            required
+            disabled
+          />
+        </div>
+
+        <div
+          data-checkin="ticket-hint-div"
+          class="hint-div"
+          aria-live="polite"
+        ></div>
+
+        <p class="ticket-help small-print" data-checkin="ticket-copy-help">
+          Se você não recebeu um código, dirija-se à mesa de suporte
+        </p>
+
+        <div class="privacy-notice small-print">
+  Usamos cookies necessários para o funcionamento do aplicativo. Veja
+  <a href="/privacy">como cuidamos dos seus dados</a>
+</div>
+
+
+        <div
+          id="ticket-captcha-div"
+          data-checkin="ticket-captcha-div"
+          data-sitekey="test-site-key"
+          class="captcha-container"
+        ></div>
+      </div>
+    </section>
+
+    <!-- ticket verification -->
+    <section
+      data-checkin="verification-step"
+      class="verification-step skeleton"
+      inert
+    >
+      <div class="step-body">
+        <h1 class="step-question" tabindex="-1" data-checkin="verification-copy-header">
+          Confirme sua identidade
+        </h1>
+
+        <div data-checkin="verification-table-wrapper" class="table-wrapper">
+          <table>
+            <tr>
+              <th>
+                <div>
+                  <span class="material-symbols-outlined" aria-hidden="true">
+                    confirmation_number
+                  </span>
+                  <span data-checkin="verification-copy-ticketLabel"
+                    >Ingresso</span
+                  >
+                </div>
+              </th>
+              <td>
+                <span
+                  data-checkin="verification-ticketCode"
+                  data-skeleton="value"
+                  >•••••</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <div>
+                  <span class="material-symbols-outlined" aria-hidden="true">
+                    id_card
+                  </span>
+                  <span data-checkin="verification-copy-nameLabel">Nome</span>
+                </div>
+              </th>
+              <td>
+                <span data-checkin="verification-name" data-skeleton="value"
+                  >••••• ••••••••</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <div>
+                  <span class="material-symbols-outlined" aria-hidden="true">
+                    call
+                  </span>
+                  <span data-checkin="verification-copy-phoneLabel"
+                    >Celular</span
+                  >
+                </div>
+              </th>
+              <td>
+                <span
+                  data-checkin="verification-phoneStart"
+                  data-checkin-value=""
+                  data-skeleton="value"
+                  >(••) •••••-••••</span
+                >
+              </td>
+            </tr>
+          </table>
+
+          <button
+            data-checkin="verification-table-toggle"
+            class="ghost table-toggle"
+            type="button"
+            aria-expanded="true"
+            disabled
+          >
+            <span
+              data-checkin="verification-table-toggle-label"
+              class="material-symbols-outlined"
+              aria-hidden="true"
+              >keyboard_arrow_up</span
+            >
+            <span class="visually-hidden">Mostrar ou esconder seus dados</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="step-controls">
+        <label class="visually-hidden" for="checkin-verification-code-input">
+          Últimos 4 dígitos do seu celular
+        </label>
+
+        <div data-checkin="verification-input-wrapper" class="input-wrapper">
+          <input
+            id="checkin-verification-code-input"
+            data-checkin="verification-code-input"
+            class="tel-input txt-center"
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]{4}"
+            autocomplete="one-time-code"
+            enterkeyhint="send"
+            required
+            disabled
+          />
+        </div>
+
+        <div
+          data-checkin="verification-hint-div"
+          class="hint-div"
+          aria-live="polite"
+        ></div>
+
+        <button
+          data-checkin="verification-back-btn"
+          class="ghost back-btn"
+          type="button"
+          disabled
+        >
+          <span data-checkin="verification-copy-backButton" class="btn-label"
+            >Voltar</span
+          >
+        </button>
+      </div>
+    </section>
+
+    <!-- qr step -->
+    <section data-checkin="qr-step" class="qr-step skeleton" inert>
+      <div class="step-body">
+        <h1 class="step-question" tabindex="-1" data-checkin="qr-copy-header">
+          Confirme que você chegou
+        </h1>
+
+        <div data-checkin="qr-table-wrapper" class="table-wrapper collapsed">
+          <table>
+            <tr>
+              <th>
+                <div>
+                  <span class="material-symbols-outlined" aria-hidden="true">
+                    confirmation_number
+                  </span>
+                  <span data-checkin="qr-copy-ticketLabel">Ingresso</span>
+                </div>
+              </th>
+              <td>
+                <span data-checkin="qr-ticketCode" data-skeleton="value"
+                  >•••••</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <div>
+                  <span class="material-symbols-outlined" aria-hidden="true">
+                    id_card
+                  </span>
+                  <span data-checkin="qr-copy-nameLabel">Nome</span>
+                </div>
+              </th>
+              <td>
+                <span data-checkin="qr-name" data-skeleton="value"
+                  >••••• ••••••••</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <div>
+                  <span class="material-symbols-outlined" aria-hidden="true">
+                    call
+                  </span>
+                  <span data-checkin="qr-copy-phoneLabel">Celular</span>
+                </div>
+              </th>
+              <td>
+                <span
+                  data-checkin="qr-phoneStart"
+                  data-checkin-value=""
+                  data-skeleton="value"
+                  >(••) •••••-••••</span
+                >
+              </td>
+            </tr>
+          </table>
+
+          <button
+            data-checkin="qr-table-toggle"
+            class="ghost table-toggle"
+            type="button"
+            aria-expanded="false"
+            disabled
+          >
+            <span
+              data-checkin="qr-table-toggle-label"
+              class="material-symbols-outlined"
+              aria-hidden="true"
+              >keyboard_arrow_down</span
+            >
+            <span class="visually-hidden">Mostrar ou esconder seus dados</span>
+          </button>
+        </div>
+
+        <div
+          data-checkin="qr-reader-wrapper"
+          data-skeleton="div"
+          class="qr-reader-wrapper skeleton"
+        >
+          <div
+            id="checkin-qr-reader"
+            data-checkin="qr-reader-div"
+            class="qr-reader skeleton"
+          ></div>
+          <div class="qr-reader-icon" aria-hidden="true">
+            <span class="material-symbols-outlined on-skeleton">
+              no_photography
+            </span>
+            <span class="material-symbols-outlined on-processing">
+              qr_code_scanner
+            </span>
+          </div>
+          <div class="qr-viewfinder" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+
+          <button data-checkin="qr-close-btn" class="ghost qr-close" type="button">
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+            <span data-checkin="qr-copy-closeButton" class="visually-hidden"
+              >Fechar câmera</span
+            >
+          </button>
+
+          <!--
+            The way out of a camera that will not focus, will not open, or is
+            covered by a case. Hidden until the running feed proves there is a
+            second camera to reach; `modules/qr.ts` reveals it.
+          -->
+          <button
+            data-checkin="qr-switch-btn"
+            class="ghost qr-switch"
+            type="button"
+            hidden
+          >
+            <span class="material-symbols-outlined" aria-hidden="true"
+              >cameraswitch</span
+            >
+            <span
+              data-checkin="qr-copy-switchCameraButton"
+              class="visually-hidden"
+              >Trocar câmera</span
+            >
+          </button>
+        </div>
+      </div>
+
+      <div class="step-controls">
+        <button
+          data-checkin="start-camera-btn"
+          class="qr-start-btn show"
+          type="button"
+          disabled
+        >
+          <span class="material-symbols-outlined btn-label" aria-hidden="true">
+            qr_code_scanner
+          </span>
+          <span data-checkin="qr-copy-cameraButton" class="btn-label"
+            >Ativar câmera</span
+          >
+          <span class="btn-spinner"></span>
+        </button>
+
+        <button
+          data-checkin="qr-torch-btn"
+          class="ghost qr-torch"
+          type="button"
+          aria-pressed="false"
+          hidden
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">
+            flashlight_on
+          </span>
+          <span data-checkin="qr-copy-torchButton">Lanterna</span>
+        </button>
+
+        <div
+          data-checkin="qr-hint-div"
+          class="hint-div"
+          aria-live="polite"
+        ></div>
+
+        <p class="qr-help small-print" data-checkin="qr-copy-help">
+          Se não funcionar, chame um voluntário
+        </p>
+
+        <button
+          data-checkin="qr-presence-btn"
+          class="ghost qr-presence"
+          type="button"
+          disabled
+        >
+          <span data-checkin="qr-copy-presenceButton" class="btn-label"
+            >Já fez check-in com um voluntário? Clique para continuar</span
+          >
+          <span class="btn-spinner"></span>
+        </button>
+
+        <div class="privacy-notice small-print">
+  Usamos cookies necessários para o funcionamento do aplicativo. Veja
+  <a href="/privacy">como cuidamos dos seus dados</a>
+</div>
+
+      </div>
+    </section>
+
+    <!-- success step -->
+    <section data-checkin="success-step" class="success-step" inert>
+      <div class="step-body success-body">
+        <div class="success-card">
+          <div class="success-card-head">
+            <header>
+  <span class="wordmark" role="img" aria-label="PelicanPass"></span>
+</header>
+
+
+            <span class="success-mark" aria-hidden="true">
+              <span class="material-symbols-outlined">check</span>
+            </span>
+          </div>
+
+          <h1
+            class="step-question success-greeting"
+            tabindex="-1"
+            data-checkin="success-greeting"
+          >
+            Você chegou!
+          </h1>
+
+          <div
+            class="success-number-block"
+            data-checkin="success-number-block"
+            hidden
+          >
+            <p
+              class="success-number-label"
+              data-checkin="success-copy-numberLabel"
+            >
+              seu número de check-in e chapelaria
+            </p>
+            <p
+              class="success-number"
+              data-checkin="success-checkinNumber"
+            ></p>
+          </div>
+
+          <div
+            data-checkin="success-message"
+            class="success-message"
+            aria-live="polite"
+          ></div>
+        </div>
+      </div>
+
+      <div class="step-controls">
+        <div data-checkin="success-hint-div" class="hint-div">
+          <a href="/" data-checkin="success-copy-help">Clique aqui para acessar o app</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+  <div class="footer-top small-print">
+    <span>© 2026 PelicanPass</span>
+    <span class="dot">•</span>
+    <span class="credit">
+      por
+      <a href="https://github.com/yorsh-co/pelicanpass" target="_blank">PelicanPass</a>
+    </span>
+  </div>
+
+  <div class="footer-links small-print">
+    <a href="/privacy">Privacidade</a>
+    <span class="dot">•</span>
+    <a href="/terms">Termos</a>
+    
+    
+    <span class="footer-logout-wrap">
+      <span class="dot">•</span>
+      <button class="footer-logout" data-footer="logout" type="button">
+        Sair
+      </button>
+    </span>
+    
+    <span class="dot">•</span>
+    <!--
+      The icon and the label name the theme the tap will switch *to*, not the
+      one in effect. `client/theme/theme.ts` rewrites both on load from the
+      two data labels, so the aria-label here is only what a light-themed first
+      paint happens to need.
+    -->
+    <button
+      class="theme-toggle"
+      data-theme-toggle
+      type="button"
+      aria-label="Ativar tema escuro"
+      data-label-dark="Ativar tema escuro"
+      data-label-light="Ativar tema claro"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+    </button>
+        
+    
+    <span class="footer-locales-wrap">
+      <span class="dot">•</span>
+      <details class="footer-locales" aria-label="Idiomas">
+        <summary lang="pt-BR">
+          BR<span class="visually-hidden"> português (Brasil)</span>
+          <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span>
+        </summary>
+        <ul class="footer-locales-menu">
+          
+          <li>
+            <a
+              href="/checkin?lang=pt-BR"
+              hreflang="pt-BR"
+              lang="pt-BR"
+              aria-current="true"
+            >
+              <span class="footer-locales-code">BR</span>
+              <span class="footer-locales-name">português (Brasil)</span>
+              
+              <span class="material-symbols-outlined" aria-hidden="true">check</span>
+              
+            </a>
+          </li>
+          
+          <li>
+            <a
+              href="/checkin?lang=en-XA"
+              hreflang="en-XA"
+              lang="en-XA"
+              
+            >
+              <span class="footer-locales-code">XA</span>
+              <span class="footer-locales-name">English (Pseudo-Accents)</span>
+              
+            </a>
+          </li>
+          
+        </ul>
+      </details>
+    </span>
+    
+  </div>
+</footer>
+
+</main>
+
+<!-- page-specific styles -->
+  </div>
+
+  <!-- toast -->
+  <div data-main="toast" role="status" aria-live="polite" aria-atomic="true">
+  <span data-toast="icon" class="material-symbols-outlined" aria-hidden="true"></span>
+  <div data-toast="msg-container"><span data-toast="msg"></span></div>
+</div>
+
+
+  <!-- edge-challenge recovery -->
+  <!--
+  Raised by modules/ui/challenge-gate.ts when Cloudflare challenges a fetch.
+
+  Both messages ship rendered and hidden and the script reveals one. The
+  strings come from the shared chrome catalog, except the blocked one: that
+  message names who to ask for help, and on the administrator screens the
+  reader is the volunteer the attendee copy tells them to call. Callers that
+  need the other wording pass `challengeBlocked`.
+
+  `warning` is used rather than a lock or a clock because the icon subset is
+  frozen at 21 glyphs (docs/infrastructure/asset-delivery.md) — an icon outside it renders as
+  its own name, silently.
+-->
+
+<div
+  id="app-challenge"
+  data-main="challenge"
+  class="app-challenge"
+  role="alertdialog"
+  aria-labelledby="challenge-title"
+  aria-modal="true"
+  hidden
+>
+  <div class="challenge-content">
+    <span class="material-symbols-outlined" aria-hidden="true">warning</span>
+
+    <!--
+      The label wraps both variants rather than sitting on either. A `hidden`
+      element contributes nothing to the accessible name, so this resolves to
+      whichever message the script revealed.
+    -->
+    <div id="challenge-title">
+      <p data-challenge="expired" hidden>Verificação de segurança expirada</p>
+
+      <p data-challenge="blocked" hidden>Não foi possível completar a verificação. Dirija-se à mesa de suporte</p>
+
+            <p data-challenge="expired-access" hidden>
+        Sessão expirada. Entre novamente para continuar
+      </p>
+    </div>
+
+    <button
+      type="button"
+      data-challenge="continue"
+      data-label-expired="Continuar"
+      data-label-blocked="Tentar novamente"
+      data-label-reauth="Entrar novamente"
+    ></button>
+  </div>
+</div>
+
+
+  <!-- global scripts -->
+  <script type="module" src="/js/theme/theme.js"></script>
+    <script type="module" src="/js/telemetry/index.js"></script>
+
+  <!-- page-specific scripts -->
+  <!-- cloudflare turnstile captcha -->
+<script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+  defer
+></script>
+
+<!-- static files -->
+<script type="module" src="/js/pages/attendee/checkin/index.js"></script>
+
+</body>
+</html>

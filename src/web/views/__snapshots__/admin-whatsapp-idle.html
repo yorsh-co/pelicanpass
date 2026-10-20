@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="pt-BR" data-release="test-release">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Mensagens | PelicanPass</title>
+
+  <!-- keeps the browser chrome on the same palette as the page -->
+  <meta name="theme-color" content="#fafafc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0a11" media="(prefers-color-scheme: dark)" />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/images/icon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icon/favicon-32x32.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/images/icon/apple-touch-icon.png">
+  
+    <!-- global styles -->
+  <link rel="stylesheet" href="/css/dist/main.css" />
+
+  <!-- stored theme, applied before first paint. The toggle lives in the rail
+       rather than the public footer, but the stored choice is the same one. -->
+  
+<script nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+  // Safari in private browsing has historically thrown on localStorage rather
+  // than returning null, which would abort head parsing.
+  try {
+    const theme = localStorage.getItem('theme');
+
+    if (theme === 'light' || theme === 'dark') {
+      document.documentElement.dataset.theme = theme;
+    }
+  } catch {}
+</script>
+
+
+  <!-- the shell's own styles, linked once here so each screen adds only its own -->
+  <link rel="stylesheet" href="/css/dist/pages/admin.css" />
+
+  <!-- page-specific styles -->
+  <link rel="stylesheet" href="/css/dist/pages/admin/whatsapp.css" />
+
+</head>
+<body class="admin-page" data-nodeenv="test">
+
+  <a class="admin-skip" href="#conteudo">Pular para o conteúdo</a>
+
+    
+<div class="admin-rail" data-admin-shell="rail">
+  <div class="admin-rail__head">
+    <a class="wordmark admin-rail__title" role="img" aria-label="PelicanPass" href="/admin"></a>
+    <!--<a class="admin-rail__title" href="/admin">Administração</a>-->
+
+        <button
+      class="admin-rail__menu"
+      data-admin-shell="menu"
+      type="button"
+      aria-expanded="false"
+      aria-controls="admin-rail-panel"
+      aria-label="Abrir menu"
+      data-label-open="Abrir menu"
+      data-label-close="Fechar menu"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+    </button>
+  </div>
+
+    <div class="admin-rail__panel" id="admin-rail-panel">
+  <nav class="admin-rail__nav" id="admin-rail-nav" aria-label="Ferramentas">
+    <ul class="admin-rail__list">
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/metrics"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">monitoring</span>
+          <span class="admin-rail__label">metrics</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/volunteers"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">how_to_reg</span>
+          <span class="admin-rail__label">volunteers</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/attendees"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">group</span>
+          <span class="admin-rail__label">attendees</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/redemptions"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">redeem</span>
+          <span class="admin-rail__label">redemptions</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/lookup"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">person_search</span>
+          <span class="admin-rail__label">lookup</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/tshirts"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">checkroom</span>
+          <span class="admin-rail__label">tshirts</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/survey"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+          <span class="admin-rail__label">survey</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/pass"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">id_card</span>
+          <span class="admin-rail__label">pass</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/whatsapp"
+          aria-current="page"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">send</span>
+          <span class="admin-rail__label">whatsapp</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+                <span class="admin-rail__link admin-rail__link--planned">
+          <span class="material-symbols-outlined" aria-hidden="true">download</span>
+          <span class="admin-rail__label">exports</span>
+          <span class="admin-rail__soon">em breve</span>
+        </span>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+                <span class="admin-rail__link admin-rail__link--planned">
+          <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
+          <span class="admin-rail__label">import</span>
+          <span class="admin-rail__soon">em breve</span>
+        </span>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+                <span class="admin-rail__link admin-rail__link--planned">
+          <span class="material-symbols-outlined" aria-hidden="true">admin_panel_settings</span>
+          <span class="admin-rail__label">admins</span>
+          <span class="admin-rail__soon">em breve</span>
+        </span>
+        
+      </li>
+      
+    </ul>
+  </nav>
+
+  <div class="admin-rail__foot">
+    <p class="admin-rail__user">operadora</p>
+
+    <div class="admin-rail__actions">
+            <button class="ghost admin-rail__logout" data-admin-shell="logout" type="button">
+        <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+        <span class="btn-label">Sair</span>
+      </button>
+
+      <!--
+        The icon and the label name the theme the tap will switch *to*, not the
+        one in effect. `client/theme/theme.ts` rewrites both on load, so the
+        values here are only what a light-themed first paint happens to need.
+      -->
+      <button
+        class="theme-toggle"
+        data-theme-toggle
+        type="button"
+        aria-label="Ativar tema escuro"
+        data-label-dark="Ativar tema escuro"
+        data-label-light="Ativar tema claro"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+      </button>
+
+            
+      
+      <details class="footer-locales small-print" aria-label="Idiomas">
+        <summary lang="pt-BR">
+          BR<span class="visually-hidden"> português (Brasil)</span>
+          <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span>
+        </summary>
+        <ul class="footer-locales-menu">
+          
+          <li>
+            <a
+              href="/admin-whatsapp-idle?lang=pt-BR"
+              hreflang="pt-BR"
+              lang="pt-BR"
+              aria-current="true"
+            >
+              <span class="footer-locales-code">BR</span>
+              <span class="footer-locales-name">português (Brasil)</span>
+              
+              <span class="material-symbols-outlined" aria-hidden="true">check</span>
+              
+            </a>
+          </li>
+          
+          <li>
+            <a
+              href="/admin-whatsapp-idle?lang=en-XA"
+              hreflang="en-XA"
+              lang="en-XA"
+              
+            >
+              <span class="footer-locales-code">XA</span>
+              <span class="footer-locales-name">English (Pseudo-Accents)</span>
+              
+            </a>
+          </li>
+          
+        </ul>
+      </details>
+      
+    </div>
+  </div>
+  </div>
+</div>
+
+
+  <main class="admin-main" id="conteudo">
+    
+
+<script type="application/json" data-i18n="admin-whatsapp" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"admin-whatsapp.audience":[{"type":0,"value":"Público"}],"admin-whatsapp.audience.participant":[{"type":0,"value":"Participantes"}],"admin-whatsapp.audience.volunteer":[{"type":0,"value":"Voluntários"}],"admin-whatsapp.disabled.after":[{"type":0,"value":"seja ligado."}],"admin-whatsapp.disabled.before":[{"type":0,"value":"A prévia e os controles de um envio existente funcionam; iniciar, retomar e testar são recusados até que"}],"admin-whatsapp.disabled.lead":[{"type":0,"value":"O envio está desativado neste servidor."}],"admin-whatsapp.failure.alreadySent":[{"type":0,"value":"Já tinha recebido este modelo"}],"admin-whatsapp.failure.interrupted":[{"type":0,"value":"Interrompido"}],"admin-whatsapp.failure.invalidPhone":[{"type":5,"value":"reason","options":{"empty":{"value":[{"type":0,"value":"Sem telefone"}]},"length":{"value":[{"type":0,"value":"Telefone com tamanho inválido"}]},"unqualified":{"value":[{"type":0,"value":"Telefone de outro país sem + e código do país"}]},"ddd":{"value":[{"type":0,"value":"DDD inválido"}]},"other":{"value":[{"type":0,"value":"Telefone inválido"}]}}}],"admin-whatsapp.failure.meta":[{"type":0,"value":"Recusado pela Meta (código "},{"type":1,"value":"code"},{"type":0,"value":")"}],"admin-whatsapp.failure.noResponse":[{"type":0,"value":"Sem resposta da Meta"}],"admin-whatsapp.failures.count":[{"type":0,"value":"Quantidade"}],"admin-whatsapp.failures.heading":[{"type":0,"value":"Falhas por motivo"}],"admin-whatsapp.failures.none":[{"type":0,"value":"Nenhuma falha registrada."}],"admin-whatsapp.failures.reason":[{"type":0,"value":"Motivo"}],"admin-whatsapp.lede":[{"type":0,"value":"Envia o modelo aprovado pela Meta para participantes ou voluntários, um por vez."}],"admin-whatsapp.note.read.lead":[{"type":0,"value":"“Lidos” sempre mostra menos do que a realidade"}],"admin-whatsapp.note.read.rest":[{"type":0,"value":": a confirmação de leitura só chega de quem a mantém ativada no aparelho. E um envio concluído continua recebendo confirmações por minutos ou horas, então esses dois números ainda se movem depois que a tela diz “concluído”."}],"admin-whatsapp.note.sent.lead":[{"type":0,"value":"“Enviado” significa que a Meta aceitou a mensagem"}],"admin-whatsapp.note.sent.rest":[{"type":0,"value":", não que alguém a recebeu. “Entregues” e “lidos” chegam depois, por confirmação da Meta."}],"admin-whatsapp.preview.confirm":[{"type":0,"value":"Enviar"}],"admin-whatsapp.preview.confirmTo":[{"type":0,"value":"Enviar \""},{"type":1,"value":"template"},{"type":0,"value":"\" para "},{"type":2,"value":"count","style":{"type":0,"tokens":[{"stem":"group-off","options":[]}],"parsedOptions":{"useGrouping":false}}},{"type":0,"value":" destinatários"}],"admin-whatsapp.preview.cost":[{"type":0,"value":"Custo estimado: até "},{"type":2,"value":"cost","style":{"type":0,"tokens":[{"stem":"currency","options":["USD"]},{"stem":".00##","options":[]}],"parsedOptions":{"style":"currency","currency":"USD","minimumFractionDigits":2,"maximumFractionDigits":4}}}],"admin-whatsapp.preview.counts":[{"type":2,"value":"newRecipients","style":{"type":0,"tokens":[{"stem":"group-off","options":[]}],"parsedOptions":{"useGrouping":false}}},{"type":0,"value":" novos destinatários · "},{"type":2,"value":"alreadySent","style":{"type":0,"tokens":[{"stem":"group-off","options":[]}],"parsedOptions":{"useGrouping":false}}},{"type":0,"value":" já receberam · "},{"type":2,"value":"invalidPhone","style":{"type":0,"tokens":[{"stem":"group-off","options":[]}],"parsedOptions":{"useGrouping":false}}},{"type":0,"value":" sem número válido"}],"admin-whatsapp.preview.failed":[{"type":0,"value":"Não foi possível gerar a prévia."}],"admin-whatsapp.preview.heading":[{"type":0,"value":"1 · Prévia"}],"admin-whatsapp.preview.more":[{"type":0,"value":"Mostrando "},{"type":2,"value":"shown","style":{"type":0,"tokens":[{"stem":"group-off","options":[]}],"parsedOptions":{"useGrouping":false}}},{"type":0,"value":" de "},{"type":2,"value":"total","style":{"type":0,"tokens":[{"stem":"group-off","options":[]}],"parsedOptions":{"useGrouping":false}}},{"type":0,"value":"."}],"admin-whatsapp.preview.submit":[{"type":0,"value":"Pré-visualizar"}],"admin-whatsapp.run.cancel":[{"type":0,"value":"Cancelar envio"}],"admin-whatsapp.run.count.deferred":[{"type":0,"value":"Adiados"}],"admin-whatsapp.run.count.delivered":[{"type":0,"value":"Entregues"}],"admin-whatsapp.run.count.failed":[{"type":0,"value":"Falhas"}],"admin-whatsapp.run.count.interrupted":[{"type":0,"value":"Interrompidos"}],"admin-whatsapp.run.count.pending":[{"type":0,"value":"Na fila"}],"admin-whatsapp.run.count.read":[{"type":0,"value":"Lidos"}],"admin-whatsapp.run.count.sent":[{"type":0,"value":"Enviados"}],"admin-whatsapp.run.count.skipped":[{"type":0,"value":"Ignorados"}],"admin-whatsapp.run.done":[{"type":0,"value":"Envio concluído."}],"admin-whatsapp.run.failed":[{"type":0,"value":"Não foi possível concluir. Tente de novo."}],"admin-whatsapp.run.forbidden":[{"type":0,"value":"Você não tem mais permissão para enviar mensagens."}],"admin-whatsapp.run.heading":[{"type":0,"value":"3 · Envio"}],"admin-whatsapp.run.noneRequeued":[{"type":0,"value":"Nenhum envio interrompido para reenviar."}],"admin-whatsapp.run.reason.awaitingInterrupted":[{"type":0,"value":"há envios interrompidos para revisar"}],"admin-whatsapp.run.reason.circuitBreaker":[{"type":0,"value":"muitas recusas seguidas da Meta"}],"admin-whatsapp.run.reason.fatal":[{"type":0,"value":"a Meta recusou todos os envios (código "},{"type":1,"value":"code"},{"type":0,"value":")"}],"admin-whatsapp.run.reason.operator":[{"type":0,"value":"a pedido da equipe"}],"admin-whatsapp.run.reason.operatorCancelled":[{"type":0,"value":"cancelado pela equipe"}],"admin-whatsapp.run.reason.restart":[{"type":0,"value":"o servidor reiniciou"}],"admin-whatsapp.run.reason.unknownTemplate":[{"type":0,"value":"modelo desconhecido nesta versão"}],"admin-whatsapp.run.recipients":[{"type":0,"value":"destinatários"}],"admin-whatsapp.run.requeued":[{"type":2,"value":"count","style":{"type":0,"tokens":[{"stem":"group-off","options":[]}],"parsedOptions":{"useGrouping":false}}},{"type":0,"value":" envio(s) recolocado(s) na fila."}],"admin-whatsapp.run.resume":[{"type":0,"value":"Retomar"}],"admin-whatsapp.run.retryInterrupted":[{"type":0,"value":"Reenviar interrompidos"}],"admin-whatsapp.run.spent":[{"type":0,"value":"Gasto: "},{"type":2,"value":"cost","style":{"type":0,"tokens":[{"stem":"currency","options":["USD"]},{"stem":".00##","options":[]}],"parsedOptions":{"style":"currency","currency":"USD","minimumFractionDigits":2,"maximumFractionDigits":4}}}],"admin-whatsapp.run.startFailed":[{"type":0,"value":"Não foi possível iniciar o envio."}],"admin-whatsapp.run.started":[{"type":0,"value":"Envio iniciado."}],"admin-whatsapp.run.status":[{"type":5,"value":"status","options":{"running":{"value":[{"type":0,"value":"Em andamento"}]},"paused":{"value":[{"type":0,"value":"Pausado"}]},"done":{"value":[{"type":0,"value":"Concluído"}]},"failed":{"value":[{"type":0,"value":"Interrompido"}]},"other":{"value":[{"type":0,"value":"Desconhecido"}]}}}],"admin-whatsapp.run.statusWithReason":[{"type":1,"value":"status"},{"type":0,"value":" · "},{"type":1,"value":"reason"}],"admin-whatsapp.run.stop":[{"type":0,"value":"Parar"}],"admin-whatsapp.run.stopped":[{"type":0,"value":"O envio parou antes de terminar."}],"admin-whatsapp.slots.button":[{"type":0,"value":"Botão"}],"admin-whatsapp.slots.heading":[{"type":0,"value":"O que cada modelo carrega"}],"admin-whatsapp.slots.hint":[{"type":0,"value":"Confira esta ordem contra o modelo aprovado no WhatsApp Manager. Uma ordem trocada não dá erro visível aqui: a Meta recusa o envio inteiro com o código 132000."}],"admin-whatsapp.slots.price":[{"type":2,"value":"cost","style":{"type":0,"tokens":[{"stem":"currency","options":["USD"]},{"stem":".00##","options":[]}],"parsedOptions":{"style":"currency","currency":"USD","minimumFractionDigits":2,"maximumFractionDigits":4}}},{"type":0,"value":" por mensagem entregue"}],"admin-whatsapp.template":[{"type":0,"value":"Modelo"}],"admin-whatsapp.test.failed":[{"type":0,"value":"Não foi possível enviar o teste."}],"admin-whatsapp.test.heading":[{"type":0,"value":"2 · Envio de teste"}],"admin-whatsapp.test.hint.after":[{"type":0,"value":") — o link do ingresso não abre nada. Serve para conferir o modelo e a chegada, e não grava nada no registro do envio."}],"admin-whatsapp.test.hint.before":[{"type":0,"value":"Manda uma mensagem para um número digitado, com valores de exemplo ("}],"admin-whatsapp.test.hint.between":[{"type":0,"value":"e"}],"admin-whatsapp.test.phone":[{"type":0,"value":"Telefone"}],"admin-whatsapp.test.phoneHint":[{"type":0,"value":"Com DDD. O número não aparece no endereço nem nos registros."}],"admin-whatsapp.test.refused":[{"type":0,"value":"A Meta recusou: "},{"type":1,"value":"title"},{"type":0,"value":"."}],"admin-whatsapp.test.refusedWithCode":[{"type":0,"value":"A Meta recusou: "},{"type":1,"value":"title"},{"type":0,"value":" ("},{"type":1,"value":"code"},{"type":0,"value":")."}],"admin-whatsapp.test.sentNormalized":[{"type":0,"value":"Enviado. A Meta normalizou o número para "},{"type":1,"value":"waId"},{"type":0,"value":" — confira se chegou."}],"admin-whatsapp.test.sentUnchanged":[{"type":0,"value":"Enviado, sem alteração no número."}],"admin-whatsapp.test.submit":[{"type":0,"value":"Enviar teste"}],"admin-whatsapp.title":[{"type":0,"value":"Mensagens"}],"admin-whatsapp.variable.checkinTime":[{"type":0,"value":"Horário de chegada"}],"admin-whatsapp.variable.entryLinkToken":[{"type":0,"value":"Token do link de entrada"}],"admin-whatsapp.variable.firstName":[{"type":0,"value":"Primeiro nome"}],"admin-whatsapp.variable.lunchOption":[{"type":0,"value":"Almoço"}],"admin-whatsapp.variable.team":[{"type":0,"value":"Equipe"}],"admin-whatsapp.variable.ticketCode":[{"type":0,"value":"Código do ingresso"}]}</script>
+<script type="application/json" data-i18n="admin-errors" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"admin-errors.attendeeArchived":[{"type":0,"value":"Este participante está arquivado e o ingresso não pode ser utilizado no check-in."}],"admin-errors.attendeeNotFound":[{"type":0,"value":"Participante não encontrado."}],"admin-errors.audienceInvalid":[{"type":0,"value":"Público inválido."}],"admin-errors.invalidAttendee":[{"type":0,"value":"Participante inválido."}],"admin-errors.itemAlreadyRedeemed":[{"type":0,"value":"Não é possível remover "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"item"}]}}},{"type":0,"value":": já foi retirado."}],"admin-errors.itemNotEntitled":[{"type":0,"value":"Este participante não tem direito a "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"item"}]}}},{"type":0,"value":"."}],"admin-errors.itemNotRedeemed":[{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"O lanche"}]},"drink":{"value":[{"type":0,"value":"A bebida"}]},"tshirt":{"value":[{"type":0,"value":"A camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"A camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"O almoço"}]},"other":{"value":[{"type":0,"value":"O item"}]}}},{"type":0,"value":" ainda não foi retirado."}],"admin-errors.leaveNotConfirmed":[{"type":0,"value":"Ação cancelada. Toque novamente para sair."}],"admin-errors.listChanged":[{"type":0,"value":"A lista mudou. Revise antes de enviar."}],"admin-errors.nameInvalid":[{"type":0,"value":"Informe o nome completo, com no máximo 120 caracteres."}],"admin-errors.optionNotAllowed":[{"type":0,"value":"Escolha uma opção da lista para "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"item"}]}}},{"type":0,"value":"."}],"admin-errors.pauseBeforeRetry":[{"type":0,"value":"Pause o envio antes de reenviar envios interrompidos."}],"admin-errors.phoneInvalid":[{"type":0,"value":"Informe o telefone com DDD, entre 10 e 11 dígitos."}],"admin-errors.phoneMissing":[{"type":0,"value":"Informe o telefone."}],"admin-errors.previewExpired":[{"type":0,"value":"A prévia expirou. Gere uma nova."}],"admin-errors.previewMissing":[{"type":0,"value":"Gere uma prévia antes de enviar."}],"admin-errors.reasonInvalid":[{"type":0,"value":"Escolha um motivo da lista."}],"admin-errors.redemptionChanged":[{"type":0,"value":"O status da retirada mudou enquanto a página estava aberta. Confira e tente novamente."}],"admin-errors.requestInProgress":[{"type":0,"value":"Ainda processando o envio anterior. Tente novamente em alguns instantes."}],"admin-errors.roleInvalid":[{"type":0,"value":"Escolha entre \"participante\" e \"voluntário\"."}],"admin-errors.roleLocked":[{"type":0,"value":"O tipo de ingresso não pode ser alterado depois que check-in foi realizado."}],"admin-errors.runFinished":[{"type":0,"value":"Este envio já terminou."}],"admin-errors.runInProgress":[{"type":0,"value":"Já existe um envio em andamento."}],"admin-errors.runInvalid":[{"type":0,"value":"Envio inválido."}],"admin-errors.runNotFound":[{"type":0,"value":"Envio não encontrado."}],"admin-errors.runNotPaused":[{"type":0,"value":"Este envio não está pausado."}],"admin-errors.runNotRunning":[{"type":0,"value":"Este envio não está em andamento."}],"admin-errors.scheduleChanged":[{"type":0,"value":"Outro administrador mudou a programação enquanto a página estava aberta. Recarregue para ver a versão atual."}],"admin-errors.scheduleDuplicateTime":[{"type":0,"value":"Duas frases configuradas para o mesmo horário. Cada troca precisa de um horário diferente."}],"admin-errors.scheduleInvalid":[{"type":0,"value":"A programação enviada é inválida. Recarregue a página e tente novamente."}],"admin-errors.scheduleTextMissing":[{"type":0,"value":"Os campos de texto não podem estar vazios."}],"admin-errors.scheduleTextTooLong":[{"type":0,"value":"O texto personalizado pode ter no máximo "},{"type":2,"value":"max","style":null},{"type":0,"value":" caracteres."}],"admin-errors.scheduleTimeInvalid":[{"type":0,"value":"Uma das datas é inválida ou fora do horário programado do evento."}],"admin-errors.scheduleTooLong":[{"type":0,"value":"Limite de frases ultrapassado. Remova algumas e tente novamente."}],"admin-errors.sendingDisabled":[{"type":0,"value":"O envio pelo WhatsApp está desativado neste servidor."}],"admin-errors.templateAudienceMismatch":[{"type":0,"value":"Este modelo não pode ser enviado a esse público."}],"admin-errors.templateInvalid":[{"type":0,"value":"Modelo inválido."}],"admin-errors.testPhoneInvalid":[{"type":0,"value":"Telefone inválido: informe DDD e número."}],"admin-errors.ticketCodeFormat":[{"type":0,"value":"O código deve ter seis letras ou números."}],"admin-errors.ticketCodePrefix":[{"type":0,"value":"O prefixo do código não corresponde ao tipo de ingresso."}],"admin-errors.ticketCodeTaken":[{"type":0,"value":"Esse código de ingresso já está em uso."}],"admin-errors.ticketLimitCap":[{"type":0,"value":"O limite deve ser um número inteiro entre "},{"type":2,"value":"min","style":null},{"type":0,"value":" e "},{"type":2,"value":"max","style":null},{"type":0,"value":"."}],"admin-errors.ticketLimitMode":[{"type":0,"value":"Escolha o que acontece ao atingir o limite: bloquear ou apenas avisar."}],"admin-errors.ticketLimitReached":[{"type":0,"value":"O limite de ingressos foi atingido."}],"admin-errors.ticketLimitScope":[{"type":0,"value":"Escolha o que o limite conta: desativado, todos os participantes ou apenas os ingressos criados na porta."}],"admin-errors.volunteerOnlyItem":[{"type":0,"value":"Somente voluntários podem ter direito a "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"este item"}]}}},{"type":0,"value":"."}],"admin-errors.whatsappDoorLocked":[{"type":0,"value":"O envio de ingressos por WhatsApp está desativado nas configurações do servidor."}]}</script>
+
+
+<div class="sender">
+  <header class="sender__head">
+    <h1 class="sender__title">Mensagens</h1>
+    <p class="sender__lead">
+      Envia o modelo aprovado pela Meta para participantes ou voluntários, um por vez.
+    </p>
+  </header>
+
+    <p class="sender__note">
+    <strong>“Enviado” significa que a Meta aceitou a mensagem</strong>, não que alguém a recebeu. “Entregues” e “lidos” chegam depois, por confirmação da Meta.
+    <strong>“Lidos” sempre mostra menos do que a realidade</strong>: a confirmação de leitura só chega de quem a mantém ativada no aparelho. E um envio concluído continua recebendo confirmações por minutos ou horas, então esses dois números ainda se movem depois que a tela diz “concluído”.
+  </p>
+
+  
+    <p class="sender__note sender__note--off">
+      <strong>O envio está desativado neste servidor.</strong> A prévia e os controles de um envio existente funcionam; iniciar, retomar e testar são recusados até que
+      <code>WHATSAPP_ENABLED</code> seja ligado.
+    </p>
+  
+
+    <section class="sender__panel">
+    <h2 class="sender__subtitle">1 · Prévia</h2>
+
+    <form
+      class="sender__form"
+      data-whatsapp="preview-form"
+      method="post"
+      action="/admin/whatsapp"
+    >
+      <div class="sender__field">
+        <label class="sender__label" for="templateKey">Modelo</label>
+        <select id="templateKey" name="templateKey">
+          
+        </select>
+      </div>
+
+      <div class="sender__field">
+        <label class="sender__label" for="role">Público</label>
+        <select id="role" name="role">
+          
+            <option value="participant">Participantes</option>
+          
+            <option value="volunteer">Voluntários</option>
+          
+        </select>
+      </div>
+
+      <div class="sender__actions">
+        <button type="submit"><span class="btn-label">Pré-visualizar</span></button>
+      </div>
+    </form>
+
+    <p class="sender__error" data-whatsapp="preview-error" role="alert"></p>
+
+    <div data-whatsapp="preview-result" hidden>
+      <p class="sender__counts" data-whatsapp="preview-counts"></p>
+      <p class="sender__hint" data-whatsapp="preview-cost"></p>
+
+      <ul class="sender__rows" data-whatsapp="preview-rows"></ul>
+
+      <p class="sender__hint" data-whatsapp="preview-more" hidden></p>
+
+      <div class="sender__actions">
+        <button
+          type="button"
+          data-whatsapp="confirm"
+          data-sending-enabled="false"
+          disabled
+        >
+          <span class="btn-label" data-whatsapp="confirm-label">Enviar</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+    <section class="sender__panel">
+    <h2 class="sender__subtitle">O que cada modelo carrega</h2>
+    <p class="sender__hint">
+      Confira esta ordem contra o modelo aprovado no WhatsApp Manager. Uma ordem trocada não dá erro visível aqui: a Meta recusa o envio inteiro com o código 132000.
+    </p>
+
+    <ul class="sender__templates">
+      
+    </ul>
+  </section>
+
+    <section class="sender__panel">
+    <h2 class="sender__subtitle">2 · Envio de teste</h2>
+    <p class="sender__hint">
+      Manda uma mensagem para um número digitado, com valores de exemplo (<code>Teste</code> e
+      <code>teste-envio</code>) — o link do ingresso não abre nada. Serve para conferir o modelo e a chegada, e não grava nada no registro do envio.
+    </p>
+
+    <form
+      class="sender__form"
+      data-whatsapp="test-form"
+      method="post"
+      action="/admin/whatsapp"
+    >
+      <div class="sender__field">
+        <label class="sender__label" for="testTemplateKey">Modelo</label>
+        <select id="testTemplateKey" name="templateKey">
+          
+        </select>
+      </div>
+
+      <div class="sender__field">
+        <label class="sender__label" for="phone">Telefone</label>
+        <input id="phone" name="phone" type="tel" autocomplete="off" inputmode="tel" />
+        <p class="sender__hint">Com DDD. O número não aparece no endereço nem nos registros.</p>
+      </div>
+
+      <div class="sender__actions">
+        <button type="submit" disabled>
+          <span class="btn-label">Enviar teste</span>
+        </button>
+      </div>
+    </form>
+
+    <p class="sender__error" data-whatsapp="test-error" role="alert"></p>
+    <p class="sender__result" data-whatsapp="test-result"></p>
+  </section>
+
+    <section
+    class="sender__panel sender__run"
+    data-whatsapp="run"
+    data-run-id=""
+    data-status=""
+    data-poll="live"
+    hidden
+  >
+    <h2 class="sender__subtitle">3 · Envio</h2>
+
+    <p class="sender__hint">
+      <span class="sender__status" data-whatsapp="status"></span>
+      · <span data-whatsapp="total">0</span> destinatários
+    </p>
+
+    <p class="sender__hint" data-whatsapp="spent" hidden>
+      
+    </p>
+
+    <dl class="sender__grid">
+      
+        <div class="sender__metric">
+          <dt>Enviados</dt>
+          <dd data-whatsapp="count-sent">0</dd>
+        </div>
+      
+        <div class="sender__metric">
+          <dt>Entregues</dt>
+          <dd data-whatsapp="count-delivered">0</dd>
+        </div>
+      
+        <div class="sender__metric">
+          <dt>Lidos</dt>
+          <dd data-whatsapp="count-read">0</dd>
+        </div>
+      
+        <div class="sender__metric">
+          <dt>Falhas</dt>
+          <dd data-whatsapp="count-failed">0</dd>
+        </div>
+      
+        <div class="sender__metric">
+          <dt>Ignorados</dt>
+          <dd data-whatsapp="count-skipped">0</dd>
+        </div>
+      
+        <div class="sender__metric">
+          <dt>Adiados</dt>
+          <dd data-whatsapp="count-deferred">0</dd>
+        </div>
+      
+        <div class="sender__metric">
+          <dt>Interrompidos</dt>
+          <dd data-whatsapp="count-interrupted">0</dd>
+        </div>
+      
+        <div class="sender__metric">
+          <dt>Na fila</dt>
+          <dd data-whatsapp="count-pending">0</dd>
+        </div>
+      
+    </dl>
+
+    <div class="sender__actions">
+      <button type="button" class="ghost" data-whatsapp="stop">
+        <span class="btn-label">Parar</span>
+      </button>
+      <button type="button" class="ghost" data-whatsapp="resume" disabled>
+        <span class="btn-label">Retomar</span>
+      </button>
+      <button type="button" class="ghost" data-whatsapp="retry-interrupted">
+        <span class="btn-label">Reenviar interrompidos</span>
+      </button>
+      <button type="button" class="ghost" data-whatsapp="cancel">
+        <span class="btn-label">Cancelar envio</span>
+      </button>
+    </div>
+
+    <p class="sender__error" data-whatsapp="run-error" role="alert"></p>
+
+    <h3 class="sender__label">Falhas por motivo</h3>
+
+    <p class="sender__hint" data-whatsapp="failures-empty" >
+      Nenhuma falha registrada.
+    </p>
+
+    <table class="sender__table">
+      <thead>
+        <tr><th scope="col">Motivo</th><th scope="col">Quantidade</th></tr>
+      </thead>
+      <tbody data-whatsapp="failures">
+        
+      </tbody>
+    </table>
+  </section>
+</div>
+
+  </main>
+
+    <div data-main="toast" role="status" aria-live="polite" aria-atomic="true">
+  <span data-toast="icon" class="material-symbols-outlined" aria-hidden="true"></span>
+  <div data-toast="msg-container"><span data-toast="msg"></span></div>
+</div>
+
+
+    <!--
+  Raised by modules/ui/challenge-gate.ts when Cloudflare challenges a fetch.
+
+  Both messages ship rendered and hidden and the script reveals one. The
+  strings come from the shared chrome catalog, except the blocked one: that
+  message names who to ask for help, and on the administrator screens the
+  reader is the volunteer the attendee copy tells them to call. Callers that
+  need the other wording pass `challengeBlocked`.
+
+  `warning` is used rather than a lock or a clock because the icon subset is
+  frozen at 21 glyphs (docs/infrastructure/asset-delivery.md) — an icon outside it renders as
+  its own name, silently.
+-->
+
+<div
+  id="app-challenge"
+  data-main="challenge"
+  class="app-challenge"
+  role="alertdialog"
+  aria-labelledby="challenge-title"
+  aria-modal="true"
+  hidden
+>
+  <div class="challenge-content">
+    <span class="material-symbols-outlined" aria-hidden="true">warning</span>
+
+    <!--
+      The label wraps both variants rather than sitting on either. A `hidden`
+      element contributes nothing to the accessible name, so this resolves to
+      whichever message the script revealed.
+    -->
+    <div id="challenge-title">
+      <p data-challenge="expired" hidden>Verificação de segurança expirada</p>
+
+      <p data-challenge="blocked" hidden>Não foi possível completar a verificação. Dirija-se à mesa de suporte</p>
+
+            <p data-challenge="expired-access" hidden>
+        Sessão expirada. Entre novamente para continuar
+      </p>
+    </div>
+
+    <button
+      type="button"
+      data-challenge="continue"
+      data-label-expired="Continuar"
+      data-label-blocked="Tentar novamente"
+      data-label-reauth="Entrar novamente"
+    ></button>
+  </div>
+</div>
+
+
+  <!-- global scripts -->
+  <script type="module" src="/js/theme/theme.js"></script>
+    <script type="module" src="/js/telemetry/index.js"></script>
+  <script type="module" src="/js/pages/admin/shell/index.js"></script>
+
+  <!-- page-specific scripts -->
+  <script type="module" src="/js/pages/admin/whatsapp/index.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<footer>
+  <div class="footer-top small-print">
+    <span><%= chrome.footerCopyright({
+      year: new Date().getFullYear(),
+      eventName: copyDefaults.eventName,
+    }) %></span>
+    <span class="dot">•</span>
+    <span class="credit">
+      <%= chrome.footerCreditPrefix() %>
+      <a href="<%= copyDefaults.organiserUrl %>" target="_blank"><%= copyDefaults.organiserName %></a>
+    </span>
+  </div>
+
+  <div class="footer-links small-print">
+    <a href="/privacy"><%= chrome.footerPrivacy() %></a>
+    <span class="dot">•</span>
+    <a href="/terms"><%= chrome.footerTerms() %></a>
+    <%
+      /*
+       * `locals.` rather than a bare `showLogout`: layouts/plain.ejs includes
+       * this partial without the flag, and EJS throws on an undeclared name.
+       *
+       * The dot sits inside the wrapper so the per-page CSS that hides the
+       * button never leaves an orphaned separator behind it.
+       */
+    %>
+    <% if (locals.showLogout) { %>
+    <span class="footer-logout-wrap">
+      <span class="dot">•</span>
+      <button class="footer-logout" data-footer="logout" type="button">
+        <%= chrome.footerLogout() %>
+      </button>
+    </span>
+    <% } %>
+    <span class="dot">•</span>
+    <!--
+      The icon and the label name the theme the tap will switch *to*, not the
+      one in effect. `client/theme/theme.ts` rewrites both on load from the
+      two data labels, so the aria-label here is only what a light-themed first
+      paint happens to need.
+    -->
+    <button
+      class="theme-toggle"
+      data-theme-toggle
+      type="button"
+      aria-label="<%= chrome.footerThemeToDark() %>"
+      data-label-dark="<%= chrome.footerThemeToDark() %>"
+      data-label-light="<%= chrome.footerThemeToLight() %>"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+    </button>
+    <%# Absent unless more than one locale is offered, which in production means
+        not until a second real locale ships. A disclosure rather than a row of
+        links, so the footer does not widen as locales are added, and native,
+        so it works without JavaScript. Each link is a plain GET: the locale
+        middleware stores the choice and redirects without `lang`. The toggle's
+        code names a country, not a language, so the endonym follows it in the
+        accessible name. -%>
+    <% if (locals.localeLinks && locals.localeLinks.length) { %>
+    <% const currentLocale = locals.localeLinks.find((link) => link.current); %>
+    <span class="footer-locales-wrap">
+      <span class="dot">•</span>
+      <details class="footer-locales" aria-label="<%= chrome.footerLanguages() %>">
+        <summary lang="<%= currentLocale.locale %>">
+          <%= currentLocale.region %><span class="visually-hidden"> <%= currentLocale.label %></span>
+          <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span>
+        </summary>
+        <ul class="footer-locales-menu">
+          <% locals.localeLinks.forEach((link) => { %>
+          <li>
+            <a
+              href="<%= link.href %>"
+              hreflang="<%= link.locale %>"
+              lang="<%= link.locale %>"
+              <% if (link.current) { %>aria-current="true"<% } %>
+            >
+              <span class="footer-locales-code"><%= link.region %></span>
+              <span class="footer-locales-name"><%= link.label %></span>
+              <% if (link.current) { %>
+              <span class="material-symbols-outlined" aria-hidden="true">check</span>
+              <% } %>
+            </a>
+          </li>
+          <% }) %>
+        </ul>
+      </details>
+    </span>
+    <% } %>
+  </div>
+</footer>

@@ -1,0 +1,46 @@
+<%
+/*
+ * The arrival screen.
+ *
+ * Its job is to tell an operator what this deployment can do — which is why a
+ * `planned` section renders as "em breve" rather than being left out. A section
+ * that silently is not there reads as a broken deployment.
+ *
+ * Rendered from the same registry the rail reads, server-side: `adminChrome`
+ * has already put the filtered list on the response, so there is nothing here
+ * for a script to fetch or to draw.
+ *
+ * A plain list rather than a <nav>: these are the links the rail already
+ * carries, and a second landmark with the same contents is noise for anyone
+ * navigating by landmark. The rail is the navigation; this is content.
+ */
+const nav = locals.adminNav || [];
+%>
+<div class="admin-home">
+  <h1 class="admin-home__title"><%= shell.homeTitle() %></h1>
+
+  <% if (nav.length === 0) { %>
+  <p class="admin-home__empty">
+    <%= shell.homeEmpty() %>
+  </p>
+  <% } else { %>
+  <ul class="admin-home__grid">
+    <% for (const item of nav) { %>
+    <li class="admin-home__cell">
+      <% if (item.status === 'ready') { %>
+      <a class="admin-home__card" href="<%= item.href %>">
+        <span class="material-symbols-outlined" aria-hidden="true"><%= item.icon %></span>
+        <span class="admin-home__label"><%= item.label %></span>
+      </a>
+      <% } else { %>
+      <div class="admin-home__card admin-home__card--planned">
+        <span class="material-symbols-outlined" aria-hidden="true"><%= item.icon %></span>
+        <span class="admin-home__label"><%= item.label %></span>
+        <span class="admin-home__soon"><%= shell.navSoon() %></span>
+      </div>
+      <% } %>
+    </li>
+    <% } %>
+  </ul>
+  <% } %>
+</div>

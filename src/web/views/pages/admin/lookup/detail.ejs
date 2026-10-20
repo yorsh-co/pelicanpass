@@ -1,0 +1,142 @@
+<%# i18n: admin-lookup %>
+<%
+/*
+ * One attendee, for a volunteer standing next to them.
+ *
+ * This is the only page in the application that renders a verification code.
+ * It shows one person at a time for that reason, and the code sits behind a
+ * closed `details` element so it is not on screen until somebody asks for it.
+ *
+ * The confirm button is absent for an attendee who is already present: marking
+ * them again is a no-op that answers `alreadyCheckedIn`, and offering a control
+ * that does nothing invites a press. The presence line is the confirmation.
+ *
+ * The hidden form below is how this page reaches itself. It is rendered by a
+ * POST — the attendee ID travels in a body so it never reaches the phone's
+ * history — so the bundle re-submits it instead of reloading, which would
+ * otherwise raise the browser's resubmission prompt.
+ *
+ * **Every value off the record uses the escaping output tag, never the raw
+ * one.** `attendee_nickname` is the one attendee-controlled string here.
+ *
+ * (Do not name EJS's delimiters literally in this comment. The scanner is
+ * lexical and does not know it is inside a JavaScript comment, which cost the
+ * roster template a compile error the first time it rendered.)
+ */
+const attendee = locals.attendee || null;
+const canMark = locals.canMark || false;
+%>
+<%- include('../../../partials/i18n-catalogs') %>
+
+<div class="lookup-record">
+  <header class="lookup-record__head">
+    <div class="lookup-record__headline">
+      <h1 class="lookup-record__title"><%= attendee.name %></h1>
+      <%# Back to an empty search box, not to the results. The term was
+          submitted rather than put in a URL, so there is nothing to return to —
+          and for a volunteer moving to the next person, an empty box is where
+          they were going anyway.
+
+          `aria-hidden` on the ligature is load-bearing: without it a screen
+          reader announces the literal word "close". -%>
+      <a class="lookup-record__close" href="/admin/lookup">
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        <span class="visually-hidden"><%= copy.recordClose() %></span>
+      </a>
+    </div>
+    <% if (attendee.nickname) { %>
+    <p class="lookup-record__nickname"><%= attendee.nickname %></p>
+    <% } %>
+    <p class="lookup-record__role">
+      <span class="role-badge role-badge--<%= attendee.role %>">
+        <%= shell.role({ role: attendee.role }) %>
+      </span>
+    </p>
+  </header>
+
+  <% if (attendee.archived) { %>
+  <p class="lookup-record__flag">
+    <%= copy.recordArchived() %>
+  </p>
+  <% } %>
+
+  <dl class="lookup-record__fields">
+    <div>
+      <dt><%= shell.ticketCode() %></dt>
+      <dd><code class="lookup-record__code ticket-code"><%= attendee.ticketCode %></code></dd>
+    </div>
+
+    <div>
+      <dt><%= shell.presence() %></dt>
+      <dd>
+        <% if (attendee.checkedIn) { %>
+        <span class="lookup-record__present">
+          <%= attendee.checkinNumber === null ? shell.present() : copy.recordPresentNumber({ number: attendee.checkinNumber }) %>
+        </span>
+        <% } else { %>
+        <span class="lookup-record__absent"><%= copy.recordAbsent() %></span>
+        <% } %>
+      </dd>
+    </div>
+  </dl>
+
+  <%# A `details` element rather than a scripted toggle: closed by default,
+      reveals on tap, reachable from a keyboard, and it still works if the page
+      bundle fails to load. The code is the last four digits of the phone and
+      the only shared secret in the check-in flow, so it is not on screen until
+      it is asked for. -%>
+  <details class="lookup-code">
+    <summary>
+      <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
+      <%= copy.recordShowCode() %>
+    </summary>
+    <p class="lookup-code__value"><%= attendee.verificationCode %></p>
+    <p class="lookup-code__hint">
+      <%= copy.recordCodeHint() %>
+    </p>
+  </details>
+
+  <p class="lookup-record__error" data-lookup-error role="alert"></p>
+
+  <% if (attendee.checkedIn) { %>
+  <%# Rendered on this branch rather than injected by the bundle, so it appears
+      after the page reloads following a confirmation and also for somebody who
+      arrived already checked in and lost their session on the way. -%>
+  <p class="lookup-record__note">
+    <%= copy.recordCheckedInContinue() %>
+  </p>
+  <p class="lookup-record__note">
+    <%= copy.recordCheckedInNoteBefore() %> <strong>/checkin</strong>
+    <%= copy.recordCheckedInNoteAfter() %>
+  </p>
+
+  <% } else if (canMark && !attendee.archived) { %>
+  <div class="lookup-record__actions">
+    <button type="button" data-lookup-mark="<%= attendee.attendeeId %>">
+      <span class="material-symbols-outlined" aria-hidden="true">how_to_reg</span>
+      <span class="btn-label"><%= copy.recordMark() %></span>
+    </button>
+    <p class="lookup-record__hint">
+      <%= copy.recordMarkHint() %>
+    </p>
+  </div>
+
+  <% } else if (!canMark && !attendee.archived) { %>
+  <p class="lookup-record__hint">
+    <%= copy.recordReadOnly() %>
+  </p>
+  <% } %>
+
+  <%# Submitted by the page bundle after a confirmation, to render the record
+      again from the server. `hidden` rather than CSS: it carries no control a
+      person is meant to reach. -%>
+  <form id="record" method="post" action="/admin/lookup/record" hidden>
+    <input type="hidden" name="attendeeId" value="<%= attendee.attendeeId %>" />
+  </form>
+</div>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/admin/lookup.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/admin/lookup/detail/index.js"></script>

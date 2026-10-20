@@ -1,0 +1,434 @@
+<%# i18n: pass %>
+<% const hasNumber = initialData?.data?.profile?.checkinNumber != null; %>
+<% const profile = initialData?.data?.profile; %>
+<% const welcomePhase = initialData?.data?.pass?.welcome ?? 'arrival'; %>
+<% const welcomeText = welcomePhase === 'custom' ? initialData?.data?.pass?.welcomeText ?? '' : null; %>
+<% const showTeam = profile?.attendeeRole === 'volunteer' && profile?.team != null; %>
+<!--
+  The attendee pass. Shared by the participant and volunteer pass pages, which
+  the route picks by role — everything that differs between them is data, so
+  there is nothing left to fork a template over.
+
+  Three faces, switched by `ui/face.ts`: the front, the QR back, and a
+  volunteer's actions. The head sits outside all of them, so the card reads as
+  one object rather than as separate screens.
+
+  The head is also a pair of tabs. The wordmark is the front's tab, active on
+  the front and the back; on the actions face it is the inactive one, and the
+  `frontTab` button laid over it returns to the front. The access tab at the
+  right, in the volunteer's tier colour, opens the actions and is active there.
+-->
+<div data-pass="pass" class="pass skeleton" data-face="front">
+  <div class="pass-head">
+    <%- include('../partials/header') %>
+
+    <%# A `<header>` cannot sit inside a button, so this one is laid over the
+        wordmark instead, and shown only while the actions face is up. %>
+    <button
+      type="button"
+      data-pass="frontTab"
+      class="pass-front-tab"
+      aria-label="<%= copy.frontTab() %>"
+      hidden
+    ></button>
+
+    <%# Volunteers without an action have no tab; their chip stays here. %>
+    <span
+      data-pass="roleBadge"
+      class="role-badge"
+      hidden
+    ></span>
+
+    <button
+      type="button"
+      data-pass="accessTab"
+      class="pass-tab"
+      aria-controls="pass-face-actions"
+      aria-expanded="false"
+      hidden
+    >
+      <span data-pass="accessChip" class="role-badge"></span>
+    </button>
+  </div>
+
+  <div data-pass="faceFront" class="pass-face pass-front">
+    <!--
+      That welcome and the number label below are rendered into their `copy-`
+      slots from the pass catalog.
+    -->
+    <div class="pass-name" data-pass="nickname">
+      <div class="pass-name-line" data-pass="nicknameLine">
+        <p
+          data-pass="displayName"
+          class="pass-name-value"
+          data-skeleton="value"
+        >
+          &nbsp;
+        </p>
+
+        <button
+          type="button"
+          class="pass-name-edit"
+          data-pass="nicknameTrigger"
+          aria-label="<%= copy.nicknameEditLabel() %>"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+        </button>
+      </div>
+
+      <form class="pass-name-form" data-pass="nicknameForm" hidden>
+        <label class="visually-hidden" for="pass-nickname-input">
+          <%= copy.nicknameInputLabel() %>
+        </label>
+
+        <div class="pass-name-controls">
+          <input
+            id="pass-nickname-input"
+            data-pass="nicknameInput"
+            type="text"
+            inputmode="text"
+            autocomplete="off"
+            autocapitalize="words"
+            enterkeyhint="done"
+            maxlength="<%= nicknameMaxLength %>"
+            pattern="<%= nicknamePattern %>"
+            title="<%= copy.nicknameInputTitle({ min: nicknameMinLength, max: nicknameMaxLength }) %>"
+          />
+
+          <button
+            type="submit"
+            class="pass-name-action"
+            data-pass="nicknameSave"
+            aria-label="<%= copy.nicknameSave() %>"
+          >
+            <span class="material-symbols-outlined" aria-hidden="true">check</span>
+          </button>
+
+          <button
+            type="button"
+            class="pass-name-action"
+            data-pass="nicknameCancel"
+            aria-label="<%= copy.nicknameCancel() %>"
+          >
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          </button>
+        </div>
+
+        <div
+          data-pass="nicknameHint"
+          class="hint-div"
+          aria-live="polite"
+        ></div>
+      </form>
+    </div>
+
+    <!--
+      One line under the name: a volunteer's team and role once they have been
+      assigned one, the welcome otherwise. A role without a team gets the
+      welcome: on its own it does not say where to find them. The separator is
+      drawn by CSS, so the line holds only the two values. Hidden as a whole
+      while the nickname editor is open.
+    -->
+    <div data-pass="tagline">
+      <% if (showTeam) { %>
+        <p class="pass-welcome"><%= profile.team %><% if (profile.teamRole != null) { %><span class="pass-team-role"><%= profile.teamRole %></span><% } %></p>
+      <% } else { %>
+        <p data-pass="copy-welcome" data-phase="<%= welcomePhase %>" class="pass-welcome"><%= welcomeText ?? copy.welcome({ phase: welcomePhase }) %></p>
+      <% } %>
+    </div>
+
+    <div data-pass="checkinNumberBlock" class="pass-number-block">
+      <p data-pass="copy-numberLabel" class="pass-number-label"><% if (hasNumber) { %><%= copy.numberLabel() %><% } %></p>
+
+      <div class="pass-number-row">
+        <p
+          data-pass="checkinNumber"
+          class="pass-number"
+          data-skeleton="value"
+        >
+          &nbsp;
+        </p>
+
+        <ul class="pass-number-details">
+          <li data-pass="copy-numberDetail1"><% if (hasNumber) { %><%= copy.numberDetail1() %><% } %></li>
+          <li data-pass="copy-numberDetail2"><% if (hasNumber) { %><%= copy.numberDetail2() %><% } %></li>
+        </ul>
+      </div>
+    </div>
+
+    <!--
+      Each chip is a button that turns the pass over to its QR. `ui/pass.ts`
+      builds them and `ui/face.ts` listens on this list.
+    -->
+    <ul data-pass="chips" class="pass-chips"></ul>
+
+    <!--
+      The way in to the questionnaire, on a line of its own: the row below
+      splits into equal halves, and a button that comes and goes with the
+      survey's window would squeeze the ones that are always there.
+
+      First of the links and filled with the accent, because it is the only one
+      with a deadline: someone opening the pass while it is open should see it
+      before anything else they could tap.
+
+      Rendered only for an audience with a questionnaire, and shown only while it
+      is open and not yet answered. `ui/survey.ts` follows the pass poll from
+      there.
+    -->
+    <% if (survey.definition) { %>
+    <div class="pass-survey-line">
+      <button
+        type="button"
+        data-pass="surveyChip"
+        class="pass-staff-link pass-survey-link"
+        aria-haspopup="dialog"
+        <% if (survey.state !== 'open') { %>hidden<% } %>
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+        <span><%= copy.surveyLink() %></span>
+      </button>
+    </div>
+    <% } %>
+
+    <!--
+      A participant's pass has no staff links, so the venue map takes this row.
+      A volunteer's staff links are on the actions face, behind the access tab,
+      and their map is the icon in the foot; the row is then empty and takes no
+      space.
+    -->
+    <div class="pass-staff-links">
+      <button type="button" data-pass="mapChip" class="pass-staff-link" hidden>
+        <span class="material-symbols-outlined" aria-hidden="true">map</span>
+        <span data-pass="copy-mapLink"><%= copy.mapLink() %></span>
+      </button>
+    </div>
+
+    <!--
+      The foot carries two things now, so they are grouped rather than left as
+      three children of a `space-between` row: a third item lands adrift in the
+      middle of it, reading as an unrelated thing rather than as a stamp on the
+      check-in line.
+
+      The clock is this face's only sign of life, and only that. A volunteer
+      glancing at the phone sees the seconds move, which a screenshot cannot do
+      — a screen recording and a reimplemented front end both defeat it, and
+      the checks that have to hold are on the back, where the band rotates
+      against the volunteer's own and the code is signed.
+
+      Last in its group on purpose. Libre Franklin ships no `tnum` and its
+      digits are proportional, so `HH:MM:SS` changes width every second and no
+      `font-variant-numeric` will fix that here; being last means the only edge
+      that moves is its own, and the button across the row never feels it.
+
+      `&nbsp;` as below: an empty paragraph is zero tall, so the foot would
+      grow a line the moment the first tick landed.
+
+      `aria-hidden`, and not merely the band clock's silence on `aria-live`.
+      This value is not addressed to the person holding the phone — it is a
+      check someone across the counter makes by eye — and read aloud after the
+      date it claims they checked in at a second-precise time they did not.
+    -->
+    <div class="pass-foot">
+      <div class="pass-foot-meta">
+        <p data-pass="checkinAt" class="pass-date"></p>
+
+        <p
+          data-pass="frontClock"
+          class="pass-date pass-front-clock"
+          aria-hidden="true"
+        >
+          &nbsp;
+        </p>
+      </div>
+
+      <div class="pass-foot-actions">
+        <button
+          type="button"
+          data-pass="mapIcon"
+          class="pass-verify-btn"
+          aria-label="<%= copy.mapLink() %>"
+          title="<%= copy.mapLink() %>"
+          hidden
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">map</span>
+        </button>
+
+        <button type="button" data-pass="showQr" class="pass-verify-btn">
+          <span class="material-symbols-outlined" aria-hidden="true">info</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--
+    The back: the QR a volunteer scans, and the band and clock they compare by
+    eye when a camera will not open.
+
+    `aria-live="polite"` on the band, not on the clock: a screen reader
+    announcing every second would be unusable.
+  -->
+  <div data-pass="faceBack" class="pass-face pass-back" hidden>
+    <div data-pass="passLive" class="pass-live band-block">
+      <!--
+        No `src` attribute and no skeleton.
+
+        `alt=""` because there is nothing to say — a screen reader cannot scan a
+        QR, and the band and ticket code beside it carry the same identity in text.
+      -->
+      <img data-pass="passQr" class="pass-qr" alt="" />
+
+      <div class="pass-live-meta">
+        <% if (bandEnabled) { %>
+        <p data-pass="copy-bandLabel" class="pass-live-label"><%= copy.bandLabel() %></p>
+        <% } %>
+
+        <!--
+          How much of the window is left, draining to empty as the word expires.
+          The word and the clock sit inside the arc: one panel to hold out
+          rather than three lines to read down.
+
+          `aria-hidden` on the graphic only. It sits on the whole block for as
+          long as that block was a bar; here it would silence the band's own
+          `aria-live` along with the drawing.
+        -->
+        <div data-pass="passWindow" class="pass-window window-ring">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <circle class="window-ring-track" cx="50" cy="50" r="46" pathLength="1" />
+            <circle class="window-ring-arc" cx="50" cy="50" r="46" pathLength="1" />
+          </svg>
+
+          <div class="window-ring-face">
+            <%# The band is optional; the ring and the clock are not. With
+                PASS_BAND_ENABLED off the arc still drains over the window the
+                token is signed for, which is what the retry cover is keyed to. %>
+            <% if (bandEnabled) { %>
+            <div class="band-slot">
+              <p
+                data-pass="passBand"
+                class="band"
+                aria-live="polite"
+              >
+                &nbsp;
+              </p>
+            </div>
+            <% } %>
+
+            <p data-pass="passClock" class="band-clock">&nbsp;</p>
+          </div>
+        </div>
+      </div>
+
+      <!--
+        Covers the whole block — QR included — once the band has been stale long
+        enough to mean it. Everything behind it is hidden rather than painted
+        over: the card is a gradient and the code is a white plate, so no tint
+        that reads correctly here would have covered them.
+
+        No `hidden` attribute: the stylesheet shows this from the block's state
+        class, and `hidden` would beat it through the reset's `!important`.
+      -->
+      <button data-pass="passRetry" class="band-retry" type="button">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+        <span data-pass="copy-retry"><%= copy.bandRetry() %></span>
+      </button>
+    </div>
+
+    <!--
+      Who the volunteer is serving, in the words their own review uses: a
+      check-in number for a participant, a first name for a volunteer, and the
+      ticket code they type when a camera will not open.
+    -->
+    <p class="pass-identity">
+      <span data-pass="identityValue" class="pass-identity-value"></span>
+
+      <span class="pass-identity-ticket">
+        <span data-pass="copy-ticketLabel"><%= copy.ticketLabel() %></span>
+        <span data-pass="ticketCode" class="pass-ticket-value"></span>
+      </span>
+    </p>
+
+    <p data-pass="copy-backHint" class="pass-back-hint"><%= copy.backHint() %></p>
+
+    <button type="button" data-pass="hideQr" class="pass-back-btn">
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      <span data-pass="copy-hideQr"><%= copy.hideQr() %></span>
+    </button>
+  </div>
+
+  <!--
+    A volunteer's actions, behind the access tab: the links to the staff
+    surfaces their access covers, and nothing else. Which of them show is
+    decided from the profile by `ui/pass.ts`; the tab only appears when at
+    least one does. On this face the body takes the tier colour (see `pass.css`).
+
+    `/admin` opens in a new tab and asks for its own login: this pass's session
+    is no part of it, and the link grants nothing.
+  -->
+  <div data-pass="faceActions" id="pass-face-actions" class="pass-face pass-actions" hidden>
+    <h2 class="pass-actions-title"><%= copy.actionsTitle() %></h2>
+
+    <div class="pass-actions-links">
+      <a data-pass="staffLink" class="pass-staff-link" href="/staff" hidden>
+        <span class="material-symbols-outlined" aria-hidden="true">qr_code_scanner</span>
+        <span data-pass="copy-staffLink"><%= copy.staffLink() %></span>
+      </a>
+
+      <a data-pass="raffleLink" class="pass-staff-link" href="/raffle" hidden>
+        <span class="material-symbols-outlined" aria-hidden="true">casino</span>
+        <span data-pass="copy-raffleLink"><%= copy.raffleLink() %></span>
+      </a>
+
+      <a data-pass="adminLink" class="pass-staff-link" href="/admin" target="_blank" hidden>
+        <span class="material-symbols-outlined" aria-hidden="true">admin_panel_settings</span>
+        <span data-pass="copy-adminLink"><%= copy.adminLink() %></span>
+      </a>
+    </div>
+
+    <button type="button" data-pass="hideActions" class="pass-back-btn">
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      <span data-pass="copy-actionsClose"><%= copy.actionsClose() %></span>
+    </button>
+  </div>
+
+  <!--
+    The venue map, over whichever face is up. A modal dialog rather than a third
+    face: the browser supplies the focus trap, Escape and the return of focus to
+    the button that opened it, and the face underneath keeps its scroll.
+
+    The image has its `src` at render, and is not lazy, so it is already cached
+    by the time anyone taps the button.
+  -->
+  <dialog
+    data-pass="mapDialog"
+    class="pass-map"
+    aria-labelledby="pass-map-title"
+  >
+    <div class="pass-map-head">
+      <h2 id="pass-map-title" data-pass="copy-mapTitle" class="pass-map-title"><%= copy.mapTitle() %></h2>
+
+      <button
+        type="button"
+        data-pass="hideMap"
+        class="pass-map-close"
+        aria-label="<%= copy.mapClose() %>"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      </button>
+    </div>
+
+    <div data-pass="mapBody" class="pass-map-body">
+      <img
+        data-pass="mapImage"
+        class="pass-map-image"
+        src="/assets/images/map/venue-map.svg"
+        alt="<%= copy.mapAlt() %>"
+        decoding="async"
+        draggable="false"
+      />
+    </div>
+
+    <% if (initialData?.data?.profile?.attendeeRole !== 'volunteer') { %>
+      <p class="pass-map-help"><%= copy.mapHelp() %></p>
+    <% } %>
+  </dialog>
+</div>

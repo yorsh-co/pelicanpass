@@ -1,0 +1,290 @@
+/*
+ * The WhatsApp sender.
+ *
+ * One sheet for one document, the way `pages/admin/lookup.css` covers its
+ * section.
+ *
+ * **No media query**, following that sheet: the shell's `min-width: 60rem` in
+ * `pages/admin.css` is the only one in this codebase. This screen is a single
+ * column of panels that simply gets roomier, and the one table it carries is
+ * two columns wide.
+ */
+
+.sender {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+
+  max-width: var(--admin-content-max);
+}
+
+/* ------------------------------------------------------------------ header */
+
+.sender__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: 0;
+}
+
+.sender__title {
+  margin: 0;
+
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+.sender__lead {
+  margin: 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* A statement of fact the operator has to carry away from this screen, so it
+   is part of the page rather than a tooltip on one number. */
+.sender__note {
+  margin: 0;
+  padding: var(--space-3);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.sender__note strong {
+  color: var(--text);
+  font-weight: var(--weight-semibold);
+}
+
+.sender__note--off {
+  border-color: var(--error);
+  color: var(--text);
+}
+
+/* ------------------------------------------------------------------ panels */
+
+.sender__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+
+  padding: var(--space-4);
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.sender__subtitle {
+  margin: 0;
+
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+.sender__hint {
+  margin: 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.sender__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-3);
+}
+
+.sender__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-1);
+}
+
+.sender__field select {
+  padding: var(--space-1);
+}
+
+.sender__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  margin-top: var(--space-5);
+}
+
+.sender__error {
+  margin: 0;
+
+  color: var(--error);
+  font-size: var(--text-sm);
+}
+
+.sender__result {
+  margin: 0;
+
+  font-size: var(--text-sm);
+}
+
+/* -------------------------------------------------------------- the slots */
+
+.sender__templates {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* The same sub-surface as `.sender__metric`, so a template reads as one unit
+   inside the panel rather than as lines running into the next one. */
+.sender__template {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  padding: var(--space-3);
+
+  background: var(--surface-hover);
+  border-radius: var(--radius-md);
+}
+
+.sender__template-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+/* `.sender__label` carries a bottom margin meant for form fields. */
+.sender__template-head .sender__label {
+  margin: 0;
+}
+
+.sender__template .sender__slots {
+  padding-top: var(--space-2);
+
+  border-top: 1px solid var(--border);
+}
+
+.sender__slots {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+
+  font-size: var(--text-sm);
+}
+
+.sender__slot code {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+/* ------------------------------------------------------------ the preview */
+
+.sender__counts {
+  margin: 0;
+
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+}
+
+.sender__rows {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+
+  max-height: 18rem;
+  overflow-y: auto;
+
+  font-size: var(--text-sm);
+}
+
+.sender__rows li[data-state='already_sent'],
+.sender__rows li[data-state='invalid_phone'] {
+  color: var(--text-muted);
+}
+
+/* ----------------------------------------------------------- the progress */
+
+.sender__status {
+  font-weight: var(--weight-semibold);
+}
+
+.sender__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: var(--space-3);
+
+  margin: 0;
+}
+
+.sender__metric {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+
+  padding: var(--space-3);
+
+  background: var(--surface-hover);
+  border-radius: var(--radius-md);
+}
+
+.sender__metric dt {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.sender__metric dd {
+  margin: 0;
+
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+/* The poll's own state, not the run's: it says whether these numbers are still
+   being refreshed. Dimming the whole region is the honest signal — a stale
+   figure that looks live is worse than one that looks unavailable. */
+.sender__run[data-poll='stale'] .sender__grid {
+  opacity: 0.6;
+}
+
+.sender__table {
+  width: 100%;
+  border-collapse: collapse;
+
+  font-size: var(--text-sm);
+}
+
+.sender__table th,
+.sender__table td {
+  padding: var(--space-2);
+
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.sender__table td {
+  text-align: right;
+}

@@ -1,0 +1,99 @@
+<%# i18n: landing %>
+<%# The pre-event curtain, raised by middleware/landing.middleware.ts.
+
+    Served through layouts/plain rather than layouts/main for the reason written
+    over /privacy in web.routes.ts: layouts/main paints a full-viewport boot
+    screen only JavaScript removes, and hides <main> under <noscript>. A curtain
+    that a failed bundle turns into a blank screen is worse than no curtain, and
+    this is the page every wrong-day visitor lands on. %>
+<script id="landing-data" type="application/json" nonce="<%= cspNonce %>">
+  <%- JSON.stringify(initialData).replace(/</g, '\\u003c') %>
+</script>
+<%- include('../partials/i18n-catalogs') %>
+
+<main class="landing">
+  <div class="landing-content">
+    <div class="logo">
+        <img
+        class="boot-wordmark"
+        src="/assets/images/logo/wordmark-primary.svg"
+        alt="<%= chrome.wordmarkAlt() %>"
+        />
+    </div>
+    <p class="landing-lede"><%= copy.lede() %></p>
+
+    <%# The information on the page. The clock below it is the drama, which is
+        why that one is aria-hidden and this one is plain text: it is also what
+        stays readable if the countdown never starts. %>
+    <!--
+    <p class="landing-opens">
+      O check-in abre <strong><%= opensAtLabel %></strong>
+    </p>
+    -->
+
+    <%# Seeded server-side, so the first paint is already correct and a page
+        without JavaScript shows real numbers rather than empty boxes.
+
+        Each digit ships as a bare glyph. pages/landing/ui/digit-reel.ts swaps
+        in a reel parked on that same glyph, which is why hydration is
+        invisible, and why a page whose bundle never arrives still reads right.
+
+        aria-hidden on the whole block: announcing a value that rewrites every
+        second is noise, and the sentence above carries the meaning. Nothing in
+        here needs to be reachable, which is also why the unit labels can be
+        this terse. %>
+    <div class="landing-countdown" data-landing="countdown" aria-hidden="true" <%= locals.reopening ? 'hidden' : '' %>>
+      <p class="landing-days" data-landing="days" <%= countdown.days === 0 ? 'hidden' : '' %>>
+        <span data-landing="days-value"><%= countdown.days %></span>
+        <span data-landing="days-label"><%= copy.days({ days: countdown.days }) %></span>
+      </p>
+
+      <div class="landing-units">
+        <% [
+             { unit: 'hours', label: copy.unitHours() },
+             { unit: 'minutes', label: copy.unitMinutes() },
+             { unit: 'seconds', label: copy.unitSeconds() },
+           ].forEach(({ unit, label }) => { %>
+        <div class="landing-unit">
+          <span class="landing-digits" data-unit="<%= unit %>">
+            <% countdown[unit].split('').forEach((digit) => { %><span class="landing-digit"><%= digit %></span><% }) %>
+          </span>
+          <span class="landing-unit-label"><%= label %></span>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <%# The standalone fallback's answer to zero: it has no check-in to send
+        anyone to, so it says so and reloads until the live app is back.
+        Absent from the live app's markup; drawn visible when the fallback
+        renders after the window has opened. role="status" so the swap from
+        the countdown is announced. %>
+    <% if (locals.fallback) { %>
+    <p class="landing-reopening" data-landing="reopening" role="status" <%= locals.reopening ? '' : 'hidden' %>>
+      <%= copy.reopening() %>
+    </p>
+    <% } %>
+
+    <%# Revealed by the client the moment the window opens. Hidden rather than
+        absent so the reveal costs no layout work at the one second of the day
+        this page is being watched. %>
+    <a
+      class="landing-action"
+      data-landing="action"
+      href="/checkin<%= audience === 'volunteer' ? '?audience=volunteer' : '' %>"
+      hidden
+    >
+      <%= copy.action() %>
+    </a>
+  </div>
+</main>
+
+<%# Asset block last, for the reason spelled out in pages/error.ejs: moved to
+    the top it would need an explicit contentFor('body'), and omitting that
+    renders a blank page with no error. %>
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/landing.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/landing/index.js"></script>

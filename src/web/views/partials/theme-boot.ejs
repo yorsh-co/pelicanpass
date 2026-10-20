@@ -1,0 +1,27 @@
+<%
+/*
+ * Applies the stored theme before the first paint.
+ *
+ * This has to be a blocking inline script. `client/theme/theme.ts` is a module
+ * and therefore deferred, so setting the attribute there lands *after* the page
+ * has painted in the OS theme — a full-page flash on every navigation for
+ * anyone whose choice differs from their phone's.
+ *
+ * The attribute goes on `<html>`, not `<body>` as `debug.ts` does: the root is
+ * where `color-scheme` has to be set for `light-dark()` to resolve, and it
+ * exists before `<body>` is parsed.
+ *
+ * `scriptSrc` carries no `'unsafe-inline'`, so the nonce is load-bearing.
+ */
+%>
+<script nonce="<%= cspNonce %>">
+  // Safari in private browsing has historically thrown on localStorage rather
+  // than returning null, which would abort head parsing.
+  try {
+    const theme = localStorage.getItem('theme');
+
+    if (theme === 'light' || theme === 'dark') {
+      document.documentElement.dataset.theme = theme;
+    }
+  } catch {}
+</script>

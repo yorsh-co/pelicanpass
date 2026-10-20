@@ -1,0 +1,896 @@
+/*
+ * The attendees editor: the roster table and, from phase 8, the record form.
+ *
+ * One sheet for the section rather than one per document, the way
+ * pages/attendee/checkin.css covers one flow. It is linked per page from each
+ * view's `contentFor('styles')`; the shell's own sheet comes from the layout.
+ *
+ * **No media query.** The shell's `min-width: 60rem` is the only one in this
+ * codebase and its own comment explains why it is an exception. The table earns
+ * its narrow-screen behaviour from an overflow container instead, which costs
+ * nothing and adds no breakpoint to maintain.
+ */
+
+@import '../../components/limit-meter.css';
+
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.admin-list__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: 0;
+}
+
+.admin-list__title {
+  margin: 0;
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+.admin-list__new {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  padding: var(--space-2) var(--space-4);
+
+  border-radius: var(--radius-md);
+  background: var(--accent);
+  color: var(--accent-text);
+
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+}
+
+.admin-list__new:hover {
+  filter: brightness(1.05);
+}
+
+/* ----------------------------------------------------------- door switch */
+
+.admin-list__door {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+
+  padding: var(--space-4);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.admin-list__door-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.admin-list__door-title {
+  margin: 0;
+  font-size: var(--text-lg);
+}
+
+.admin-list__door-state {
+  margin: 0;
+  font-weight: var(--weight-semibold);
+}
+
+.admin-list__door-state.is-on {
+  color: var(--success);
+}
+
+.admin-list__door-state.is-off {
+  color: var(--text-muted);
+}
+
+.admin-list__door-hint {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.admin-list__door-warning {
+  margin: 0;
+  color: var(--warn);
+  font-size: var(--text-sm);
+}
+
+.admin-list__door-error {
+  margin: 0;
+  color: var(--error);
+  font-size: var(--text-sm);
+}
+
+/* ---------------------------------------------------------- ticket limit */
+
+/* The status pill takes the same tones as the meter, from `--limit-tone`. */
+.admin-list__limit-status[data-status='off'] {
+  --limit-tone: var(--text-muted);
+}
+
+.admin-list__limit-status[data-status='ok'] {
+  --limit-tone: var(--success);
+}
+
+.admin-list__limit-status[data-status='near'] {
+  --limit-tone: var(--warn);
+}
+
+.admin-list__limit-status[data-status='reached'],
+.admin-list__limit-status[data-status='over'] {
+  --limit-tone: var(--error);
+}
+
+.admin-list__limit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+
+  padding: var(--space-4);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.admin-list__limit-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.admin-list__limit-title {
+  margin: 0;
+  font-size: var(--text-lg);
+}
+
+.admin-list__limit-status,
+.admin-list__limit-mode {
+  margin: 0;
+  padding: 0 var(--space-3);
+
+  border: 1px solid currentcolor;
+  border-radius: var(--radius-full);
+
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  line-height: 1.5rem;
+}
+
+.admin-list__limit-status {
+  color: var(--limit-tone);
+}
+
+/* The mode is a setting, not a state, so it takes no status colour. */
+.admin-list__limit-mode {
+  color: var(--text-muted);
+}
+
+.admin-list__limit-status[hidden],
+.admin-list__limit-mode[hidden],
+.admin-list__limit-hint[hidden],
+.admin-list__limit-error[hidden] {
+  display: none;
+}
+
+.admin-list__limit-hint {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.admin-list__limit-error {
+  margin: 0;
+  color: var(--error);
+  font-size: var(--text-sm);
+}
+
+.admin-list__limit-edit {
+  width: auto;
+  padding: var(--space-2) var(--space-4);
+}
+
+.admin-list__limit-edit[hidden] {
+  display: none;
+}
+
+.admin-list__limit-form {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+}
+
+.admin-list__limit-form[hidden] {
+  display: none;
+}
+
+.admin-list__limit-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.admin-list__limit-legend {
+  margin-bottom: var(--space-1);
+  padding: 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+/* The whole row is the target, 44px tall, rather than the radio alone. */
+.admin-list__limit-choice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+
+  min-height: 2.75rem;
+  margin: 0;
+
+  color: var(--text);
+  font-size: var(--text-base);
+}
+
+.admin-list__limit-choice input {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--accent);
+}
+
+.admin-list__limit-group:disabled .admin-list__limit-choice {
+  color: var(--text-muted);
+}
+
+.admin-list__limit-field input {
+  min-height: 3rem;
+}
+
+.admin-list__limit-field input:disabled {
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+}
+
+.admin-list__limit-field .admin-list__limit-hint {
+  margin-top: var(--space-1);
+}
+
+.admin-list__limit-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.admin-list__limit-actions button {
+  width: auto;
+  flex: 1 1 0;
+}
+
+/* --------------------------------------------------------------- filters */
+
+/*
+ * A grid rather than a wrapping row, so a control that wraps still fills the
+ * row it lands on. `min(100%, …)` keeps a single track from overflowing at
+ * 320px; search takes a row of its own at every width.
+ */
+.admin-list__filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+
+  padding: var(--space-4);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.admin-list__fields--container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-3);
+}
+
+.admin-list__search,
+.admin-list__field {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-list__label {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-1);
+}
+
+.admin-list__filters input,
+.admin-list__filters select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+
+  background: var(--surface-sunken);
+  color: var(--text);
+
+  font-size: var(--text-base);
+}
+
+.admin-list__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.admin-list__clear {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  text-decoration: none;
+
+  justify-content: center;
+  min-width: 30%;
+  min-height: var(--button-height);
+  border-radius: var(--radius-md);
+
+  padding: var(--space-4);
+  font-size: var(--text-base);
+}
+
+.admin-list__clear:hover {
+  color: var(--text);
+  background: var(--accent-soft);
+}
+
+.admin-list__count {
+  margin: calc(var(--space-3) * -1) 0 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.admin-list__empty {
+  margin: 0;
+  padding: var(--space-6) 0;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* The out-of-range state's way back to page one, which is a form submission
+   rather than a link for the same reason the pager is. */
+.admin-list__empty button {
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+
+  color: var(--text);
+  text-decoration: underline;
+}
+
+/* ----------------------------------------------------------------- table */
+
+/*
+ * The scroll container that replaces a breakpoint. `min-width` on the table is
+ * what makes it scroll rather than crush its columns to unreadable widths.
+ */
+.admin-list__scroll {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.admin-table {
+  width: 100%;
+  min-width: 52rem;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.admin-table th,
+.admin-table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  vertical-align: top;
+}
+
+.admin-table thead th {
+  position: sticky;
+  top: 0;
+
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.admin-table tbody tr + tr {
+  border-top: 1px solid var(--border);
+}
+
+.admin-table tbody tr {
+  cursor: pointer;
+}
+
+.admin-table tbody tr:hover {
+  background: var(--surface-hover);
+}
+
+/* Dimmed rather than hidden: the row is still a record, and an operator who
+   filtered for archived attendees is looking straight at it. */
+.admin-table__row--archived {
+  opacity: 0.6;
+}
+
+/* A submit button, not a link: the record's address carries no attendee ID, so
+   opening one means posting it. These declarations are what a button needs to
+   stop looking like one and read as the cell it fills. */
+.admin-table__open {
+  display: block;
+  width: 100%;
+
+  padding: 0;
+
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* The row paints the hover background; this button has to stay out of its way.
+   Without this the base button hover reclaims both properties and drops the
+   accent skin on top of the name cell — see `.lookup-card:hover`. */
+.admin-table__open:hover {
+  background: none;
+  color: inherit;
+}
+
+/* Tap feedback meant for a real button. A run of text inside a table cell
+   shrinking under the pointer is not that. */
+.admin-table__open:active {
+  transform: none;
+}
+
+.admin-table__name {
+  display: block;
+  color: var(--text);
+  font-weight: var(--weight-medium);
+}
+
+.admin-table__nickname {
+  display: block;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.admin-table__code {
+  font-family: var(--font-mono, monospace);
+  font-size: var(--text-sm);
+}
+
+.admin-table__muted {
+  color: var(--text-muted);
+}
+
+.admin-table__flag {
+  display: inline-block;
+  margin-top: var(--space-1);
+  padding: 0 var(--space-2);
+
+  border-radius: var(--radius-full);
+  background: var(--surface-hover);
+
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.admin-table__item {
+  display: block;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+/*
+ * A collected item carries a mark as well as the colour, for the reason
+ * components/band.css gives about the red and green pair: colour alone is not
+ * an affordance everybody can read.
+ */
+.admin-table__item--redeemed::before {
+  content: '✓ ';
+  color: var(--success, var(--text));
+}
+
+/* ----------------------------------------------------------------- pager */
+
+.admin-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* Buttons for the same reason the edit control is one: a pager link would put
+   the filters, and so the search term, in the URL. */
+.admin-pager button {
+  width: auto;
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+
+  color: var(--text);
+  text-decoration: underline;
+}
+
+/* ------------------------------------------------------------------ form */
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: 40rem;
+  margin: auto;
+}
+
+.admin-form__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: 0;
+}
+
+/*
+ * `flex-start` rather than `center`. A long name wraps to two lines, and
+ * centring would float the close control to the middle of the block instead of
+ * leaving it level with the first line of the name.
+ */
+.admin-form__headline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.admin-form__title {
+  /* Lets a long unbroken name shrink rather than shove the icon off the edge. */
+  min-width: 0;
+
+  margin: 0;
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+/* Icon-only, so it needs a hit area of its own rather than the glyph's box.
+   The hover is the roster edit control's, for the same reason: they are the
+   same kind of quiet control. */
+.admin-form__close {
+  flex: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2.25rem;
+  height: 2.25rem;
+
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.admin-form__close:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.admin-form__flag {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+
+  border-radius: var(--radius-md);
+  background: var(--surface-hover);
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/*
+ * The ticket limit banner above the record form. Same meter as the roster's
+ * panel; the blocked line takes the danger colour because it stops the save.
+ */
+.admin-form__limit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  padding: var(--space-4);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.admin-form__limit-blocked {
+  margin: 0;
+  color: var(--error);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.admin-form__limit-blocked[hidden] {
+  display: none;
+}
+
+.admin-form__form,
+.admin-form__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.admin-form__group {
+  margin: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.admin-form__legend {
+  padding: 0 var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.admin-form__field {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-form__label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+
+  margin-bottom: var(--space-1);
+}
+
+.admin-form__field input,
+.admin-form__field select {
+  width: 100%;
+  min-height: 3rem;
+  padding: var(--space-3) var(--space-4);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+
+  background: var(--surface);
+  color: var(--text);
+
+  font-size: var(--text-base);
+}
+
+.admin-form__field input:focus-visible,
+.admin-form__field select:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* An immutable value still reads as a value, not as a broken input. */
+.admin-form__field input[readonly],
+.admin-form__field input:disabled,
+.admin-form__field select:disabled {
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  cursor: default;
+}
+
+/* A field that is locked until its pencil is pressed. */
+.admin-form__lock {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.admin-form__unlock {
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  min-height: 0;
+  padding: 0;
+}
+
+.admin-form__static {
+  margin: 0;
+  padding: var(--space-3) 0;
+  font-size: var(--text-base);
+}
+
+.admin-form__hint {
+  margin: 0;
+  margin-top: var(--space-1);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+}
+
+.admin-form__tag {
+  padding: 0 var(--space-2);
+
+  border-radius: var(--radius-full);
+  background: var(--surface-hover);
+
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-regular);
+  text-transform: none;
+}
+
+/*
+ * Holds its line whether or not it carries a message, so showing an error does
+ * not shift the submit button out from under the pointer mid-click. The same
+ * reasoning as `.admin-gate__error` on the sign-in form.
+ */
+/*
+ * A checkbox beside its label, which `.admin-form__label` does not lay out:
+ * that class sits above a full-width control.
+ */
+.admin-form__toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.admin-form__toggle input {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.admin-form__toggle input:disabled + label {
+  color: var(--text-muted);
+}
+
+.admin-form__toggle label {
+  margin: 0;
+}
+
+.admin-form__error {
+  margin: 0;
+  min-height: 1.25rem;
+
+  color: var(--error);
+  font-size: var(--text-sm);
+}
+
+.admin-form__error:empty {
+  min-height: 0;
+}
+
+.admin-form__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.admin-form__cancel {
+  display: inline-flex;
+  align-items: center;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  text-decoration: none;
+
+  justify-content: center;
+  min-width: 30%;
+  min-height: var(--button-height);
+  border-radius: var(--radius-md);
+
+  padding: var(--space-4);
+  font-size: var(--text-base);
+}
+
+.admin-form__cancel:hover {
+  color: var(--text);
+  background: var(--accent-soft);
+}
+
+.admin-form__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+
+  padding: var(--space-4);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.admin-form__subtitle {
+  margin: 0;
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+}
+
+/*
+ * The danger zone, set apart from the two read-only asides above it by an
+ * `--error` edge rather than a filled panel: the section is not itself a
+ * warning, it is where one control lives, and a red block would shout over the
+ * record it belongs to.
+ */
+.admin-form__aside--danger {
+  border-color: var(--error);
+}
+
+.admin-form__aside--danger .admin-form__subtitle {
+  color: var(--error);
+}
+
+/*
+ * The armed half of the two-step confirm, drawn the way the lookup's does it.
+ * The roster carried this control in a dense table and let the label text alone
+ * say it was armed; a single control under its own heading can afford to say so
+ * in more than one way.
+ */
+.admin-form__archive.is-armed,
+.admin-form__archive.is-armed:hover,
+[data-attendee-checkin-mark].is-armed,
+[data-attendee-checkin-mark].is-armed:hover {
+  border-color: var(--error);
+  background: var(--error);
+  color: var(--accent-text);
+}
+
+.admin-form__perms {
+  margin: 0;
+  padding-left: var(--space-5);
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}

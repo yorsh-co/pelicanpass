@@ -1,0 +1,43 @@
+/*
+ * The secondary wordmark, which is every surface but the boot screen. The
+ * primary — the one-line, two-colour lockup — is the boot screen's alone and is
+ * styled in components/boot-screen.css.
+ *
+ * Single-colour artwork that used to be `fill="white"` and shipped as <img>,
+ * which meant it could not follow a theme — on the light canvas it rendered
+ * white on white.
+ *
+ * Drawn as a mask instead, so the glyphs take `currentColor` and inherit
+ * whatever the surface calls for: `--text` on canvas, `--text-on-brand` on the
+ * landing page and the pass. The SVG is untouched — masking reads its alpha
+ * channel, not its fill — so it stays a cached file rather than inlined markup
+ * on every page.
+ *
+ * This is why the primary mark cannot come through here: it carries white and
+ * `--text-on-brand-muted` as two deliberate tones, and a mask flattens both to
+ * one colour.
+ *
+ * The `-webkit-` half is load-bearing: unprefixed `mask-image` only landed in
+ * Safari 16.4, and this is an app for whatever phone an attendee walks in with.
+ *
+ * The ratio must track the SVG's viewBox. `mask-size: contain` fits the artwork
+ * inside the box rather than distorting it, so a stale ratio does not look
+ * broken — it silently letterboxes, leaving the element reserving width the
+ * mark does not paint.
+ */
+
+.wordmark {
+  display: block;
+  height: 2rem;
+  aspect-ratio: 341 / 75;
+  background-color: currentcolor;
+
+  -webkit-mask-image: url('/assets/images/logo/wordmark-secondary.svg');
+  mask-image: url('/assets/images/logo/wordmark-secondary.svg');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}

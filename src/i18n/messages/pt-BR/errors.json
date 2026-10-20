@@ -1,0 +1,74 @@
+{
+  "errors.busy.heading": {
+    "defaultMessage": "Servidor indisponível",
+    "description": "Short phrase at the top of the server-busy card, shown while the server is turning requests away to recover from overload."
+  },
+  "errors.busy.message": {
+    "defaultMessage": "Servidor indisponível Aguarde alguns segundos e recarregue a página.",
+    "description": "Explains the server-busy error. The wait is short (seconds), and reloading is the remedy."
+  },
+  "errors.busy.subtitle": {
+    "defaultMessage": "Servidor indisponível",
+    "description": "One line naming the server-busy error."
+  },
+  "errors.fallback.heading": {
+    "defaultMessage": "Algo deu errado",
+    "description": "Short phrase at the top of the card for any other error."
+  },
+  "errors.fallback.message": {
+    "defaultMessage": "Verifique o endereço e tente novamente. Se o problema persistir, dirija-se à mesa de suporte",
+    "description": "Explains any other error and where to get help at the event."
+  },
+  "errors.fallback.subtitle": {
+    "defaultMessage": "Não foi possível concluir sua solicitação",
+    "description": "One line naming any other error."
+  },
+  "errors.homeAction": {
+    "defaultMessage": "Voltar ao início",
+    "description": "Button on an error page that goes to the start. It lands on check-in without a session and on the pass with one; under /admin it goes to the admin home."
+  },
+  "errors.internal.heading": {
+    "defaultMessage": "Erro inesperado. Dirija-se à mesa de suporte",
+    "description": "Short phrase at the top of the server-error card."
+  },
+  "errors.internal.message": {
+    "defaultMessage": "Ocorreu um erro interno no servidor. Tente novamente em alguns instantes",
+    "description": "Explains a server error in plain language."
+  },
+  "errors.internal.subtitle": {
+    "defaultMessage": "Algo deu errado",
+    "description": "One line naming a server error."
+  },
+  "errors.notFound.heading": {
+    "defaultMessage": "404",
+    "description": "Large glyph at the top of the page-not-found card."
+  },
+  "errors.notFound.message": {
+    "defaultMessage": "O conteúdo que você está tentando acessar não existe ou foi removido.",
+    "description": "Explains a missing page in plain language."
+  },
+  "errors.notFound.subtitle": {
+    "defaultMessage": "Página não encontrada",
+    "description": "One line naming a missing page."
+  },
+  "errors.rateLimited.heading": {
+    "defaultMessage": "Muitas tentativas",
+    "description": "Short phrase at the top of the too-many-requests card. The page exists because the visitor is retrying too fast, so it has no retry button."
+  },
+  "errors.rateLimited.message": {
+    "defaultMessage": "Muitas tentativas em pouco tempo. Aguarde alguns instantes e tente novamente.",
+    "description": "Explains the too-many-requests error when the wait is not known."
+  },
+  "errors.rateLimited.messageWithRetry": {
+    "defaultMessage": "Muitas tentativas em pouco tempo. Aguarde alguns instantes e tente novamente. {unit, select, seconds {Tente novamente em {count, number} segundos.} minutes {Tente novamente em {count, plural, one {# minuto} other {# minutos}}.} other {Tente novamente em {count, number} segundos.}}",
+    "description": "Explains the too-many-requests error when the wait is known. unit is seconds for a wait of a minute or less, and minutes (rounded up) beyond that; count is the wait in that unit."
+  },
+  "errors.rateLimited.subtitle": {
+    "defaultMessage": "Muitas tentativas em pouco tempo",
+    "description": "One line naming the too-many-requests error."
+  },
+  "errors.title": {
+    "defaultMessage": "{subtitle} — {appTitle}",
+    "description": "Browser tab title of an error page. subtitle is the error's one-line summary; appTitle is the application's configured name."
+  }
+}

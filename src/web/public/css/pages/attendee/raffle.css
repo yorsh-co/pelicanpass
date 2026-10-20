@@ -1,0 +1,331 @@
+/*
+ * The raffle draw surface.
+ *
+ * Deliberately not the pass, for the same reason `staff.css` is not: the pass
+ * is the reward and carries the brand gradient, and this is a tool. It differs
+ * from the scanner in one way that matters — the scanner is read at arm's
+ * length by the person holding it, and this is read across a room. The number
+ * is sized for the room; everything else gets out of its way.
+ */
+
+.raffle-container {
+  gap: var(--space-4);
+}
+
+.raffle-head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/* Shaped like `.staff-pass-link`, and quiet for the same reason. */
+.raffle-pass-link {
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.raffle-pass-link:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.raffle-pass-link .material-symbols-outlined {
+  font-size: 20px;
+}
+
+/* the stage */
+
+.raffle-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+
+  margin: auto;
+
+  /*
+   * Reserves the number's full height from first paint. Without it the whole
+   * page jumps down the first time a number lands, on the one screen in the
+   * application that has a room looking at it.
+   */
+  min-height: calc(var(--text-hero) * 1.2);
+}
+
+/*
+ * The stage element. Holds the reels, and is what carries the two state classes
+ * the script toggles: `is-spinning` while they move, `is-drawn` as they land.
+ */
+.raffle-number {
+  font-size: var(--text-hero);
+  font-weight: var(--weight-bold);
+  line-height: 1;
+
+  /*
+   * Tabular figures so every digit occupies the same box. The reel windows are
+   * sized in `em` against this, and proportional figures would make each reel a
+   * different width — a `1` against a `0` — for the same nominal size.
+   */
+  font-variant-numeric: tabular-nums;
+
+  color: var(--accent);
+}
+
+/*
+ * The reels.
+ *
+ * Dimmed until the first spin, so the machine is visibly present and ready
+ * before anything happens — and so the stage reserves its exact final size from
+ * first paint rather than reflowing under the first draw.
+ */
+.raffle-reels {
+  display: inline-flex;
+  gap: 0.04em;
+
+  opacity: 0.3;
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+
+.raffle-number.is-spinning .raffle-reels,
+.raffle-number.is-drawn .raffle-reels {
+  opacity: 1;
+}
+
+/*
+ * One digit's window. The strip behind it is tens of `em` tall and every bit of
+ * it outside this box is clipped.
+ */
+.raffle-reel {
+  overflow: hidden;
+  height: 1em;
+}
+
+.raffle-reel-strip {
+  display: flex;
+  flex-direction: column;
+}
+
+.raffle-reel-strip > span {
+  height: 1em;
+  line-height: 1;
+  text-align: center;
+}
+
+/*
+ * The drum: the window's edges fade while the reel is moving, so digits arrive
+ * and leave rather than being sliced off by a hard edge.
+ *
+ * On `is-spinning` only. Fading the top and bottom of a `1em` window also fades
+ * the top and bottom of the *resting* digit, which reads as a rendering fault
+ * once the reel has settled.
+ *
+ * `will-change` rides the same class rather than sitting on the strip
+ * permanently: three promoted layers is not a reasonable resting state for a
+ * page that is idle for most of an evening.
+ */
+.raffle-number.is-spinning .raffle-reel {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 28%,
+    #000 72%,
+    transparent 100%
+  );
+}
+
+.raffle-number.is-spinning .raffle-reel-strip {
+  will-change: transform;
+}
+
+.raffle-number.is-drawn {
+  animation: raffle-land var(--duration-slow) var(--ease-spring);
+}
+
+/*
+ * The landing. Its own keyframe rather than the shared `pop`: that one starts
+ * from `scale(0.6)` and an opacity of zero, which is right for a number
+ * appearing out of nothing and wrong for one that has just been rolled to — the
+ * digits are already on screen and must not blink out to arrive.
+ *
+ * Under `prefers-reduced-motion` the reset in `base/reset.css` caps this to
+ * 0.01ms, which is the correct outcome: the digits are parked before the class
+ * is added, so capping it reveals them rather than parking the animation. The
+ * spin itself is scripted and asks about the preference directly, because that
+ * reset cannot reach WAAPI.
+ */
+@keyframes raffle-land {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.raffle-idle-hint {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* the controls */
+
+.raffle-draw-btn {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 3.25rem;
+
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+/*
+ * A row rather than a stacked label: the checkbox and its word are one control,
+ * and the label is the larger half of the tap target.
+ */
+.raffle-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+
+  margin-top: var(--space-5);
+}
+
+.raffle-toggle input {
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--accent);
+}
+
+.raffle-toggle label {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+/* what has been called */
+
+.raffle-drawn-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+
+  margin-bottom: var(--space-2);
+}
+
+.raffle-drawn-heading {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+}
+
+.raffle-counters {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/*
+ * Wraps rather than scrolls. Two hundred numbers down a column would be a
+ * column nobody reaches the end of; as a grid of chips the whole evening is on
+ * one screen, which is the question actually being asked of this list.
+ */
+.raffle-drawn-list {
+  list-style: none;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.raffle-drawn-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+
+  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-3);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--surface);
+}
+
+.raffle-drawn-number {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * Putting a number back. Quiet by default — the list is read far more often
+ * than it is edited, and a row of loud undo buttons would read as a list of
+ * things to undo.
+ */
+.raffle-reset-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+
+  color: var(--text-muted);
+}
+
+.raffle-reset-btn:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.raffle-reset-btn .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.raffle-drawn-empty {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/*
+ * The footer logout.
+ *
+ * Hidden by `partials/footer.css` and opted into per page, the same way
+ * `pass.css` and `staff.css` do it. Leaving the flow is offered here for
+ * the same reason it is on the scanner: whoever is running the draw is signed
+ * in as themselves, and the phone gets handed back at the end of the evening.
+ */
+body[data-page='raffle'] .footer-logout-wrap {
+  display: inline-flex;
+}

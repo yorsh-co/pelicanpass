@@ -1,0 +1,13 @@
+{
+  // Frontend unit tests: browser code, exercised under node:test. Node's types
+  // are needed for the runner and assertions, which is why these files are kept
+  // out of tsconfig.json and checked here instead.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "tsBuildInfoFile": "../../../node_modules/.cache/tsconfig.frontend-tests.tsbuildinfo"
+  },
+  "include": ["**/*.test.ts"],
+  // Replaces the parent's exclude, which would otherwise drop every file above.
+  "exclude": []
+}

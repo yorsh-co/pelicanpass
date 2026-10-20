@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Entrar | PelicanPass</title>
+
+    
+  <meta name="theme-color" content="#fafafc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0a11" media="(prefers-color-scheme: dark)" />
+  
+
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/images/icon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icon/favicon-32x32.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/images/icon/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest" crossorigin="use-credentials">
+
+    
+
+  <!-- global styles -->
+  <link rel="stylesheet" href="/css/dist/main.css" />
+
+  <!-- stored theme, applied before first paint. These pages carry no toggle of
+       their own, but must honour a choice made on the check-in flow. -->
+  
+<script nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+  // Safari in private browsing has historically thrown on localStorage rather
+  // than returning null, which would abort head parsing.
+  try {
+    const theme = localStorage.getItem('theme');
+
+    if (theme === 'light' || theme === 'dark') {
+      document.documentElement.dataset.theme = theme;
+    }
+  } catch {}
+</script>
+
+
+  <!-- page-specific styles -->
+  <link rel="stylesheet" href="/css/dist/pages/admin.css" />
+
+</head>
+<body class="plain-page" data-audience="">
+
+  <div class="plain-wrapper">
+    
+<script type="application/json" data-i18n="admin-login" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"admin-login.error.blocked":[{"type":0,"value":"Muitas tentativas. Aguarde alguns minutos."}],"admin-login.error.blockedFor":[{"type":0,"value":"Muitas tentativas. Tente novamente em "},{"type":2,"value":"minutes","style":{"type":0,"tokens":[{"stem":"group-off","options":[]}],"parsedOptions":{"useGrouping":false}}},{"type":0,"value":" min."}],"admin-login.error.captchaRequired":[{"type":0,"value":"Verificação de segurança não concluída. Tente novamente."}],"admin-login.error.failed":[{"type":0,"value":"Usuário ou senha inválidos."}],"admin-login.error.offline":[{"type":0,"value":"Não foi possível completar o login. Verifique a conexão e tente novamente."}],"admin-login.heading":[{"type":0,"value":"Administração"}],"admin-login.lede":[{"type":0,"value":"Acesso restrito à equipe."}],"admin-login.noscript":[{"type":0,"value":"Esta página precisa de JavaScript."}],"admin-login.password":[{"type":0,"value":"Senha"}],"admin-login.reveal":[{"type":0,"value":"Mostrar senha"}],"admin-login.submit":[{"type":0,"value":"Entrar"}],"admin-login.title":[{"type":0,"value":"Entrar | "},{"type":1,"value":"appTitle"}],"admin-login.username":[{"type":0,"value":"Usuário ou e-mail"}]}</script>
+
+
+<main class="admin-gate">
+  <h1 class="admin-gate__title">Administração</h1>
+  <p class="admin-gate__lede">Acesso restrito à equipe.</p>
+
+    <form class="admin-gate__form" data-admin="form" method="post" novalidate>
+    <label class="admin-gate__field">
+      <span class="admin-gate__label">Usuário ou e-mail</span>
+      <input
+        data-admin="username"
+        name="username"
+        type="text"
+        autocomplete="username"
+        autocapitalize="none"
+        autocorrect="off"
+        spellcheck="false"
+        maxlength="64"
+        required
+      />
+    </label>
+
+        <div class="admin-gate__field">
+      <label class="admin-gate__label" for="admin-password">
+        Senha
+      </label>
+      <div class="admin-gate__secret">
+        <input
+          id="admin-password"
+          data-admin="password"
+          name="password"
+          type="password"
+          autocomplete="current-password"
+          maxlength="256"
+          required
+        />
+        <button
+          data-admin="reveal"
+          class="ghost admin-gate__reveal"
+          type="button"
+          aria-pressed="false"
+          aria-controls="admin-password"
+          aria-label="Mostrar senha"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
+        </button>
+      </div>
+    </div>
+
+        <div
+      data-admin="captcha"
+      data-sitekey="test-site-key"
+      class="captcha-container"
+    ></div>
+
+        <p
+      class="admin-gate__error"
+      data-admin="error"
+      role="alert"
+      aria-live="assertive"
+    ></p>
+
+    <button data-admin="submit" type="submit">
+      <span class="btn-label">Entrar</span>
+    </button>
+  </form>
+
+  <noscript>
+    <p class="admin-gate__error">
+      Esta página precisa de JavaScript.
+    </p>
+  </noscript>
+</main>
+
+<!--
+  Raised by modules/ui/challenge-gate.ts when Cloudflare challenges a fetch.
+
+  Both messages ship rendered and hidden and the script reveals one. The
+  strings come from the shared chrome catalog, except the blocked one: that
+  message names who to ask for help, and on the administrator screens the
+  reader is the volunteer the attendee copy tells them to call. Callers that
+  need the other wording pass `challengeBlocked`.
+
+  `warning` is used rather than a lock or a clock because the icon subset is
+  frozen at 21 glyphs (docs/infrastructure/asset-delivery.md) — an icon outside it renders as
+  its own name, silently.
+-->
+
+<div
+  id="app-challenge"
+  data-main="challenge"
+  class="app-challenge"
+  role="alertdialog"
+  aria-labelledby="challenge-title"
+  aria-modal="true"
+  hidden
+>
+  <div class="challenge-content">
+    <span class="material-symbols-outlined" aria-hidden="true">warning</span>
+
+    <!--
+      The label wraps both variants rather than sitting on either. A `hidden`
+      element contributes nothing to the accessible name, so this resolves to
+      whichever message the script revealed.
+    -->
+    <div id="challenge-title">
+      <p data-challenge="expired" hidden>Verificação de segurança expirada</p>
+
+      <p data-challenge="blocked" hidden>Não foi possível completar a verificação. Dirija-se à mesa de suporte</p>
+
+            <p data-challenge="expired-access" hidden>
+        Sessão expirada. Entre novamente para continuar
+      </p>
+    </div>
+
+    <button
+      type="button"
+      data-challenge="continue"
+      data-label-expired="Continuar"
+      data-label-blocked="Tentar novamente"
+      data-label-reauth="Entrar novamente"
+    ></button>
+  </div>
+</div>
+
+
+
+    <footer>
+  <div class="footer-top small-print">
+    <span>© 2026 PelicanPass</span>
+    <span class="dot">•</span>
+    <span class="credit">
+      por
+      <a href="https://github.com/yorsh-co/pelicanpass" target="_blank">PelicanPass</a>
+    </span>
+  </div>
+
+  <div class="footer-links small-print">
+    <a href="/privacy">Privacidade</a>
+    <span class="dot">•</span>
+    <a href="/terms">Termos</a>
+    
+    
+    <span class="dot">•</span>
+    <!--
+      The icon and the label name the theme the tap will switch *to*, not the
+      one in effect. `client/theme/theme.ts` rewrites both on load from the
+      two data labels, so the aria-label here is only what a light-themed first
+      paint happens to need.
+    -->
+    <button
+      class="theme-toggle"
+      data-theme-toggle
+      type="button"
+      aria-label="Ativar tema escuro"
+      data-label-dark="Ativar tema escuro"
+      data-label-light="Ativar tema claro"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+    </button>
+        
+    
+    <span class="footer-locales-wrap">
+      <span class="dot">•</span>
+      <details class="footer-locales" aria-label="Idiomas">
+        <summary lang="pt-BR">
+          BR<span class="visually-hidden"> português (Brasil)</span>
+          <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span>
+        </summary>
+        <ul class="footer-locales-menu">
+          
+          <li>
+            <a
+              href="/admin-login?lang=pt-BR"
+              hreflang="pt-BR"
+              lang="pt-BR"
+              aria-current="true"
+            >
+              <span class="footer-locales-code">BR</span>
+              <span class="footer-locales-name">português (Brasil)</span>
+              
+              <span class="material-symbols-outlined" aria-hidden="true">check</span>
+              
+            </a>
+          </li>
+          
+          <li>
+            <a
+              href="/admin-login?lang=en-XA"
+              hreflang="en-XA"
+              lang="en-XA"
+              
+            >
+              <span class="footer-locales-code">XA</span>
+              <span class="footer-locales-name">English (Pseudo-Accents)</span>
+              
+            </a>
+          </li>
+          
+        </ul>
+      </details>
+    </span>
+    
+  </div>
+</footer>
+
+  </div>
+
+  <!-- global scripts. The only script these pages load: the footer's theme
+       toggle would otherwise render here and do nothing. -->
+  <script type="module" src="/js/theme/theme.js"></script>
+
+  <!-- page-specific scripts -->
+  <script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+  defer
+></script>
+
+<script type="module" src="/js/pages/admin/login/index.js"></script>
+
+</body>
+</html>

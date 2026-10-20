@@ -1,0 +1,52 @@
+# Changelog
+
+All notable changes to this project are documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to
+[Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.0, were developed in a private repository and are not published.
+
+## [2.0.0] - 2026-10-20
+
+### Added
+
+- `COPY_DEFAULTS` in `src/constants/copy-defaults.ts`, the event name, organiser name and organiser URL filled into the copy, carrying the PelicanPass brand
+- `{name}` placeholders in the Markdown content files (notices and questionnaires), filled from `COPY_DEFAULTS` by `src/shared/utils/copy-placeholders.ts`; an unknown placeholder fails the boot, and square-bracket operator fields are left alone
+- `--host-church <name>` option for the post-event report build, naming the church that hosts the event
+- `docs/design/brand.md`, the PelicanPass brand guide: the mark's construction, the wordmarks, the colour palette with contrast ratios, the backdrop, the motifs, the type and the icon files
+- `npm run brand:build` and `scripts/brand/`, a generator that draws the PelicanPass icons, wordmarks, backdrop and motifs from the brand guide
+- Implementation plans for the admin result exports, the admin CSV import and a faster QR scanner, in `docs/development/` and linked from the roadmap
+
+### Changed
+
+- The icons, wordmarks, backdrop and boot-screen motifs are the PelicanPass identity from `docs/design/brand.md`, and `--text-on-brand-muted` is Shallows (`#cfe6e8`)
+- The accent is Harbour in the light theme and Pouch in the dark, replacing the previous magenta and teal across check-in, the pass, staff and admin; the questionnaire chip on the pass is Pouch with Abyss ink in both themes, and the neutral access tier and the landing page's `theme-color` follow the new backdrop
+- The footer names the event and links the organiser from `COPY_DEFAULTS`, and the wordmark alt text and the header and admin rail `aria-label` read `chrome.wordmarkAlt`
+- The check-in redirect and pass welcome lines no longer name the event, and the questionnaire card heading takes the event name from `COPY_DEFAULTS`
+- The venue map is served as `/assets/images/map/venue-map.svg`, and is now a generic sample map with matching alt text
+- The WhatsApp template descriptions use an example domain instead of the original event's
+- The product name is spelled `PelicanPass` in the default `APP_TITLE`, in `.env.example` and in `README.md`
+- `src/web/content/pt-BR/terms-of-use.md` and `privacy-notice.md` are templates: they open with a review banner for the operator and carry bracketed legal fields (`[RAZÃO SOCIAL]`, `[CNPJ]`, `[CONTATO]`, `[SITE]`) instead of the original organiser's identity
+- The participant and volunteer questionnaires in `src/web/content/pt-BR` are replaced with short generic ones, and the report's rating groups in `scripts/report/core/rating-groups.ts` follow the new question ids
+- Questionnaire ids are English snake_case (`overall_rating`, `would_return`) with the copy still in pt-BR, and the report links a follow-up text question to its parent as `<id>_comment`
+- The post-event report's title, cover and slides take the event name from `COPY_DEFAULTS`
+- The post-event report compares the host church with the other churches only when built with `--host-church`
+- The post-event report stores its preferences under `pelicanpass-report-` keys; settings saved under the old keys are not carried over
+- `CHANGELOG.md` starts at the public `2.0.0` release, with the entries for earlier versions left in the private history
+- The documentation and the event report use neutral examples instead of the original event's names
+- The production host is named `prod-server` (SSH aliases `prod-server-cf`, `prod-server-cf-standby`) in the docs, scripts, compose file and load-test history
+- The development host is named `dev-server` in the docs, scripts and load-test history
+- cloudflared 2026.10.2 (was 2026.10.0)
+- Tailscale v1.104.1 (was v1.102.5)
+- The dev server (`npm run dev:app`) restarts with `node --watch` instead of nodemon, and `nodemon.json` is gone. It restarts only for files the server imports, so edits to views and to `src/web/content/*.md` need a manual restart. Restarts send `SIGUSR2`, as nodemon did, so they skip the graceful shutdown and its "Application stopped cleanly" alert
+
+### Removed
+
+- The parent organisation's privacy policy document; `SECURITY.md` now names the operator of a deployment as its data controller
+
+### Security
+
+- Development dependencies refreshed in `package-lock.json` for four advisories: `shell-quote` 1.9.0 → 1.12.0 under `concurrently` 9.2.5 (GHSA-pqg4-j6r4-53mv), `brace-expansion` 5.0.9 → 5.0.12 (GHSA-q2hr-2g5m-vwhr, GHSA-qhr7-859c-m2p7, GHSA-6j4f-fj2g-mc7p) and `fast-copy` 4.0.3 → 4.2.0 (GHSA-jggr-w7fw-pc2j). None of them ships in the production image
+- Removing nodemon drops `chokidar` 3 and `braces`, clearing GHSA-vfj7-8cjw-p6xm, which had no fixed release
+- The post-event report loads ECharts 6.1.0 instead of 5.5.1 (GHSA-fgmj-fm8m-jvvx, an XSS in the default tooltip of the `lines` series); the report draws only bar and line series, so it was not exposed

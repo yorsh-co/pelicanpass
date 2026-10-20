@@ -1,0 +1,190 @@
+{
+  "admin-errors.attendeeArchived": {
+    "defaultMessage": "Este participante está arquivado e o ingresso não pode ser utilizado no check-in.",
+    "description": "The attendee is archived, so they cannot be checked in."
+  },
+  "admin-errors.attendeeNotFound": {
+    "defaultMessage": "Participante não encontrado.",
+    "description": "The attendee no longer exists, for example because another operator removed the record."
+  },
+  "admin-errors.audienceInvalid": {
+    "defaultMessage": "Público inválido.",
+    "description": "The WhatsApp audience sent is not participants or volunteers. Only a tampered or outdated form reaches this."
+  },
+  "admin-errors.invalidAttendee": {
+    "defaultMessage": "Participante inválido.",
+    "description": "The request did not name a valid attendee. Only a tampered or outdated page reaches this."
+  },
+  "admin-errors.itemAlreadyRedeemed": {
+    "defaultMessage": "Não é possível remover {item, select, meal {lanche} drink {bebida} tshirt {camiseta} tshirt_volunteer {camiseta de voluntário} lunch {almoço} other {item}}: já foi retirado.",
+    "description": "Refuses clearing an entitlement the attendee has already collected. {item} is the item, lowercase, as it reads mid-sentence; other is only a fallback."
+  },
+  "admin-errors.itemNotEntitled": {
+    "defaultMessage": "Este participante não tem direito a {item, select, meal {lanche} drink {bebida} tshirt {camiseta} tshirt_volunteer {camiseta de voluntário} lunch {almoço} other {item}}.",
+    "description": "Refuses marking an item as collected when the attendee is not entitled to it. {item} is the item, lowercase, as it reads mid-sentence; other is only a fallback."
+  },
+  "admin-errors.itemNotRedeemed": {
+    "defaultMessage": "{item, select, meal {O lanche} drink {A bebida} tshirt {A camiseta} tshirt_volunteer {A camiseta de voluntário} lunch {O almoço} other {O item}} ainda não foi retirado.",
+    "description": "Refuses undoing a collection that is not recorded. {item} is the item, capitalised at the start of the sentence; other is only a fallback."
+  },
+  "admin-errors.leaveNotConfirmed": {
+    "defaultMessage": "Ação cancelada. Toque novamente para sair.",
+    "description": "Warning toast shown when an armed two-press control cancels a click on a link or form that would leave the page, so the pending action is not lost silently. The next click leaves normally."
+  },
+  "admin-errors.listChanged": {
+    "defaultMessage": "A lista mudou. Revise antes de enviar.",
+    "description": "The recipients changed between preview and send; the operator must preview again."
+  },
+  "admin-errors.nameInvalid": {
+    "defaultMessage": "Informe o nome completo, com no máximo 120 caracteres.",
+    "description": "The attendee's name is empty, has no letters, or is longer than the 120-character limit."
+  },
+  "admin-errors.optionNotAllowed": {
+    "defaultMessage": "Escolha uma opção da lista para {item, select, meal {lanche} drink {bebida} tshirt {camiseta} tshirt_volunteer {camiseta de voluntário} lunch {almoço} other {item}}.",
+    "description": "An entitlement value (meal option, drink option, t-shirt size, volunteer t-shirt size, lunch) is not on the approved list and is not the value already stored. {item} names the field, lowercase; other is only a fallback."
+  },
+  "admin-errors.pauseBeforeRetry": {
+    "defaultMessage": "Pause o envio antes de reenviar envios interrompidos.",
+    "description": "Retrying interrupted sends is only allowed while the run is paused."
+  },
+  "admin-errors.phoneInvalid": {
+    "defaultMessage": "Informe o telefone com DDD, entre 10 e 11 dígitos.",
+    "description": "The attendee's phone has too few or too many digits. The last four digits are the check-in verification code."
+  },
+  "admin-errors.phoneMissing": {
+    "defaultMessage": "Informe o telefone.",
+    "description": "The WhatsApp test send was submitted without a phone number."
+  },
+  "admin-errors.previewExpired": {
+    "defaultMessage": "A prévia expirou. Gere uma nova.",
+    "description": "The preview token expired before the operator confirmed the send."
+  },
+  "admin-errors.previewMissing": {
+    "defaultMessage": "Gere uma prévia antes de enviar.",
+    "description": "A send was requested without a preview. Only an outdated page reaches this."
+  },
+  "admin-errors.reasonInvalid": {
+    "defaultMessage": "Escolha um motivo da lista.",
+    "description": "A correction arrived without a reason, or with one not allowed for that correction."
+  },
+  "admin-errors.redemptionChanged": {
+    "defaultMessage": "O status da retirada mudou enquanto a página estava aberta. Confira e tente novamente.",
+    "description": "Refuses an undo because the collection was recorded again after the page was opened; the operator must look again."
+  },
+  "admin-errors.requestInProgress": {
+    "defaultMessage": "Ainda processando o envio anterior. Tente novamente em alguns instantes.",
+    "description": "The same save is still running from an earlier tap, typically one whose answer timed out. Trying again once it finishes shows its result rather than repeating it."
+  },
+  "admin-errors.roleInvalid": {
+    "defaultMessage": "Escolha entre \"participante\" e \"voluntário\".",
+    "description": "The attendee's role is neither participant nor volunteer."
+  },
+  "admin-errors.roleLocked": {
+    "defaultMessage": "O tipo de ingresso não pode ser alterado depois que check-in foi realizado.",
+    "description": "The role cannot change once the attendee has checked in: their arrival number counts for the raffle."
+  },
+  "admin-errors.runFinished": {
+    "defaultMessage": "Este envio já terminou.",
+    "description": "The run cannot be cancelled because it has already ended."
+  },
+  "admin-errors.runInProgress": {
+    "defaultMessage": "Já existe um envio em andamento.",
+    "description": "Only one WhatsApp run may be active at a time."
+  },
+  "admin-errors.runInvalid": {
+    "defaultMessage": "Envio inválido.",
+    "description": "The request did not name a valid run. Only a tampered or outdated page reaches this."
+  },
+  "admin-errors.runNotFound": {
+    "defaultMessage": "Envio não encontrado.",
+    "description": "The run named no longer exists for this event."
+  },
+  "admin-errors.runNotPaused": {
+    "defaultMessage": "Este envio não está pausado.",
+    "description": "Resume was pressed on a run that is not paused, usually because another operator already resumed it."
+  },
+  "admin-errors.runNotRunning": {
+    "defaultMessage": "Este envio não está em andamento.",
+    "description": "Stop was pressed on a run that is not running, usually because it already finished or was paused."
+  },
+  "admin-errors.scheduleChanged": {
+    "defaultMessage": "Outro administrador mudou a programação enquanto a página estava aberta. Recarregue para ver a versão atual.",
+    "description": "Refuses a save of the pass welcome schedule because someone else saved it after this page was opened. Nothing was changed; the operator must reload and redo their edit."
+  },
+  "admin-errors.scheduleDuplicateTime": {
+    "defaultMessage": "Duas frases configuradas para o mesmo horário. Cada troca precisa de um horário diferente.",
+    "description": "Refuses a pass welcome schedule in which two entries start at the same date and time."
+  },
+  "admin-errors.scheduleInvalid": {
+    "defaultMessage": "A programação enviada é inválida. Recarregue a página e tente novamente.",
+    "description": "Refuses a pass welcome schedule whose shape is wrong, such as an unknown phase. Only a tampered or outdated page reaches this."
+  },
+  "admin-errors.scheduleTextMissing": {
+    "defaultMessage": "Os campos de texto não podem estar vazios.",
+    "description": "Refuses a pass welcome schedule in which a custom entry has no text, or only spaces and invisible characters."
+  },
+  "admin-errors.scheduleTextTooLong": {
+    "defaultMessage": "O texto personalizado pode ter no máximo {max, number} caracteres.",
+    "description": "Refuses a pass welcome schedule in which a custom entry's text is longer than the limit. {max} is the limit, a number."
+  },
+  "admin-errors.scheduleTimeInvalid": {
+    "defaultMessage": "Uma das datas é inválida ou fora do horário programado do evento.",
+    "description": "Refuses a pass welcome schedule entry whose date and time is malformed, or falls in a daylight-saving gap or overlap of the event's time zone."
+  },
+  "admin-errors.scheduleTooLong": {
+    "defaultMessage": "Limite de frases ultrapassado. Remova algumas e tente novamente.",
+    "description": "Refuses a pass welcome schedule with more entries than the server accepts."
+  },
+  "admin-errors.sendingDisabled": {
+    "defaultMessage": "O envio pelo WhatsApp está desativado neste servidor.",
+    "description": "Starting, resuming and test sends are refused while WHATSAPP_ENABLED is off on this server."
+  },
+  "admin-errors.templateAudienceMismatch": {
+    "defaultMessage": "Este modelo não pode ser enviado a esse público.",
+    "description": "The chosen template is not approved for the chosen audience."
+  },
+  "admin-errors.templateInvalid": {
+    "defaultMessage": "Modelo inválido.",
+    "description": "The template sent is not a registered one. Only a tampered or outdated form reaches this."
+  },
+  "admin-errors.testPhoneInvalid": {
+    "defaultMessage": "Telefone inválido: informe DDD e número.",
+    "description": "The test send's phone number could not be read."
+  },
+  "admin-errors.ticketCodeFormat": {
+    "defaultMessage": "O código deve ter seis letras ou números.",
+    "description": "A typed ticket code has the wrong shape."
+  },
+  "admin-errors.ticketCodePrefix": {
+    "defaultMessage": "O prefixo do código não corresponde ao tipo de ingresso.",
+    "description": "A typed ticket code's prefix (v for volunteers) does not match the chosen role."
+  },
+  "admin-errors.ticketCodeTaken": {
+    "defaultMessage": "Esse código de ingresso já está em uso.",
+    "description": "A typed ticket code already belongs to another attendee."
+  },
+  "admin-errors.ticketLimitCap": {
+    "defaultMessage": "O limite deve ser um número inteiro entre {min, number} e {max, number}.",
+    "description": "The ticket limit's cap is not a whole number in range. {min} and {max} are the smallest and largest cap, numbers."
+  },
+  "admin-errors.ticketLimitMode": {
+    "defaultMessage": "Escolha o que acontece ao atingir o limite: bloquear ou apenas avisar.",
+    "description": "The ticket limit's mode is missing or is neither hard (refuses the ticket) nor warn (only warns)."
+  },
+  "admin-errors.ticketLimitReached": {
+    "defaultMessage": "O limite de ingressos foi atingido.",
+    "description": "A participant could not be created or restored because the hard ticket limit has no room left. The message carries no figures; the form's banner shows them."
+  },
+  "admin-errors.ticketLimitScope": {
+    "defaultMessage": "Escolha o que o limite conta: desativado, todos os participantes ou apenas os ingressos criados na porta.",
+    "description": "The ticket limit's scope is missing or is none of off, total (every participant) or door (only tickets created in the editor)."
+  },
+  "admin-errors.volunteerOnlyItem": {
+    "defaultMessage": "Somente voluntários podem ter direito a {item, select, meal {lanche} drink {bebida} tshirt {camiseta} tshirt_volunteer {camiseta de voluntário} lunch {almoço} other {este item}}.",
+    "description": "A volunteer-only item was set on a participant. {item} is the item, lowercase, as it reads mid-sentence; other is only a fallback. To change a volunteer holding one to a participant, clear the item first."
+  },
+  "admin-errors.whatsappDoorLocked": {
+    "defaultMessage": "O envio de ingressos por WhatsApp está desativado nas configurações do servidor.",
+    "description": "The door WhatsApp switch cannot be changed because WHATSAPP_DOOR_ENABLED or WHATSAPP_ENABLED is false in .env."
+  }
+}

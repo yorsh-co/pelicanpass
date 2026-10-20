@@ -1,0 +1,80 @@
+/*
+ * The ticket limit's meter, shared by the roster's panel, the record form's
+ * banner and the metrics page's door panel (markup in
+ * `views/partials/ticket-limit-meter.ejs`).
+ *
+ * Its colour comes from `--limit-tone`, set once per status, so the bar and the
+ * usage line cannot disagree; the roster's pill sets the same property in
+ * `pages/admin/attendees.css`. Every tone is an existing semantic token:
+ * `--success`, `--warn` and `--error` carry both themes' values, and
+ * `--text-muted` is the neutral for a limit that is off.
+ */
+.limit-meter[data-status='off'],
+.limit-meter__usage[data-status='off'] {
+  --limit-tone: var(--text-muted);
+}
+
+.limit-meter[data-status='ok'],
+.limit-meter__usage[data-status='ok'] {
+  --limit-tone: var(--success);
+}
+
+.limit-meter[data-status='near'],
+.limit-meter__usage[data-status='near'] {
+  --limit-tone: var(--warn);
+}
+
+.limit-meter[data-status='reached'],
+.limit-meter__usage[data-status='reached'],
+.limit-meter[data-status='over'],
+.limit-meter__usage[data-status='over'] {
+  --limit-tone: var(--error);
+}
+
+.limit-meter {
+  position: relative;
+  align-self: stretch;
+  height: 0.75rem;
+  overflow: hidden;
+
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  background: var(--surface-sunken);
+}
+
+.limit-meter[hidden] {
+  display: none;
+}
+
+/* Width is `--limit-fill`, set by the script; zero until it runs. */
+.limit-meter__fill {
+  display: block;
+  width: calc(var(--limit-fill, 0) * 100%);
+  height: 100%;
+
+  background: var(--limit-tone);
+  transition: width var(--duration-slow) var(--ease-out);
+}
+
+/*
+ * Over the cap the bar is already full, so the excess is shown by texture
+ * rather than length: stripes, which also tell the state apart without colour.
+ */
+.limit-meter[data-status='over'] .limit-meter__fill {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--limit-tone) 0 0.4rem,
+    var(--surface) 0.4rem 0.6rem
+  );
+}
+
+.limit-meter__usage {
+  margin: 0;
+  color: var(--limit-tone);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.limit-meter__usage[hidden] {
+  display: none;
+}

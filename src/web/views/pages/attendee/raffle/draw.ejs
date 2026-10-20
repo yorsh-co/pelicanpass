@@ -1,0 +1,94 @@
+<%# i18n: raffle %>
+<%- include('../../../partials/i18n-catalogs') %>
+
+<main data-raffle="main-container" class="main-container raffle-container">
+  <div class="raffle-head">
+    <%- include('../../../partials/header') %>
+
+    <!--
+      The way back, shaped like the staff surface's own: a link rather than a
+      button, so it works without JavaScript and long-pressing it opens the pass
+      in a second tab. Whoever is running the draw is holding their own pass too.
+    -->
+    <a data-raffle="passLink" class="raffle-pass-link" href="/pass">
+      <span class="material-symbols-outlined" aria-hidden="true">
+        confirmation_number
+      </span>
+      <span data-raffle="copy-passLink"><%= chrome.passLink() %></span>
+    </a>
+  </div>
+
+  <!--
+    The stage. One number, as large as the type scale goes.
+
+    `aria-hidden` on the number itself and a separate live region beside it:
+    while it rolls, this element changes sixty times a second, and a live region
+    announcing that would be unusable. The winner is written into
+    `data-raffle="announce"` once, after the roll settles.
+  -->
+  <section class="raffle-stage">
+    <p
+      data-raffle="number"
+      class="raffle-number"
+      aria-hidden="true"
+    >&nbsp;</p>
+
+    <p data-raffle="copy-idle" class="raffle-idle-hint"><%= copy.idle() %></p>
+
+    <p
+      data-raffle="announce"
+      class="visually-hidden"
+      aria-live="polite"
+    ></p>
+  </section>
+
+  <div class="step-controls">
+    <button data-raffle="drawButton" class="raffle-draw-btn" type="button">
+      <span data-raffle="copy-drawButton" class="btn-label"><%= copy.drawButton() %></span>
+      <span class="btn-spinner"></span>
+    </button>
+
+    <!--
+      A real checkbox with a real label. The state is read when the button is
+      tapped and sent with the request — the server is what enforces it, and
+      this is the control that says so.
+
+      Deliberately not persisted: a reload comes back with repeats off, which is
+      the reading of an ambiguous state that cannot call a number twice.
+    -->
+    <div class="raffle-toggle">
+      <input id="raffle-repeats" data-raffle="repeats" type="checkbox" />
+      <label
+        for="raffle-repeats"
+        data-raffle="copy-repeatsLabel"
+      ><%= copy.repeatsLabel() %></label>
+    </div>
+
+    <div data-raffle="hint" class="hint-div" aria-live="polite"></div>
+  </div>
+
+  <!--
+    What has been called, and the counters that say how much is left.
+
+    Numbers only, never names: the draw needs no more than a number to do its
+    job, and this is a screen that gets pointed at a projector.
+  -->
+  <section class="raffle-drawn">
+    <div class="raffle-drawn-head">
+      <h2 data-raffle="copy-drawnHeading" class="raffle-drawn-heading"><%= copy.drawnHeading() %></h2>
+      <p data-raffle="counters" class="raffle-counters"></p>
+    </div>
+
+    <ul data-raffle="drawn" class="raffle-drawn-list"></ul>
+
+    <p data-raffle="copy-drawnEmpty" class="raffle-drawn-empty" hidden><%= copy.drawnEmpty() %></p>
+  </section>
+
+  <%- include('../../../partials/footer', { showLogout: true }) %>
+</main>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/attendee/raffle.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/attendee/raffle/index.js"></script>

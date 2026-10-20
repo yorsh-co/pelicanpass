@@ -1,0 +1,135 @@
+<%
+/*
+ * The administrator rail: the navigation, the identity and the controls
+ * that belong to the shell rather than to any screen.
+ *
+ * Rendered server-side from `res.locals.adminNav`, which `adminChrome` has
+ * already filtered to what this administrator may see. That is what keeps a
+ * section from flashing into view before a script can remove it, and what lets
+ * the whole rail work with JavaScript disabled.
+ *
+ * `locals.` on every read: EJS throws on an undeclared name, and a route that
+ * forgets `adminChrome` should degrade to an empty rail rather than a 500.
+ * partials/footer.ejs carries the same guard for the same reason.
+ */
+const nav = locals.adminNav || [];
+const currentKey = locals.navKey || '';
+%>
+<div class="admin-rail" data-admin-shell="rail">
+  <div class="admin-rail__head">
+    <a class="wordmark admin-rail__title" role="img" aria-label="<%= chrome.wordmarkAlt() %>" href="/admin"></a>
+    <!--<a class="admin-rail__title" href="/admin">Administração</a>-->
+
+    <%# The drawer's only control. Below the breakpoint CSS lifts this to the
+        top of the viewport; above it the button is hidden and the rail is
+        always open. -%>
+    <button
+      class="admin-rail__menu"
+      data-admin-shell="menu"
+      type="button"
+      aria-expanded="false"
+      aria-controls="admin-rail-panel"
+      aria-label="<%= shell.menuOpen() %>"
+      data-label-open="<%= shell.menuOpen() %>"
+      data-label-close="<%= shell.menuClose() %>"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+    </button>
+  </div>
+
+  <%# Everything the menu button shows and hides, as one element, so that
+      `aria-controls` names exactly what `aria-expanded` describes. The button
+      stays outside it: a control that disappears with the thing it controls
+      cannot bring it back. -%>
+  <div class="admin-rail__panel" id="admin-rail-panel">
+  <nav class="admin-rail__nav" id="admin-rail-nav" aria-label="<%= shell.navLabel() %>">
+    <ul class="admin-rail__list">
+      <% for (const item of nav) { %>
+      <li class="admin-rail__item">
+        <% if (item.status === 'ready') { %>
+        <a
+          class="admin-rail__link"
+          href="<%= item.href %>"
+          <% if (item.key === currentKey) { %>aria-current="page"<% } %>
+        >
+          <span class="material-symbols-outlined" aria-hidden="true"><%= item.icon %></span>
+          <span class="admin-rail__label"><%= item.label %></span>
+        </a>
+        <% } else { %>
+        <%# A span, not a disabled link: there is nothing to navigate to yet,
+            and "em breve" is a more useful answer on event day than a section
+            that silently is not there. -%>
+        <span class="admin-rail__link admin-rail__link--planned">
+          <span class="material-symbols-outlined" aria-hidden="true"><%= item.icon %></span>
+          <span class="admin-rail__label"><%= item.label %></span>
+          <span class="admin-rail__soon"><%= shell.navSoon() %></span>
+        </span>
+        <% } %>
+      </li>
+      <% } %>
+    </ul>
+  </nav>
+
+  <div class="admin-rail__foot">
+    <p class="admin-rail__user"><%= locals.adminUsername || '' %></p>
+
+    <div class="admin-rail__actions">
+      <%# Sign-out is a POST through api.admin.logout(), so it needs the shell
+          bundle. That was already true of the page it moved from. -%>
+      <button class="ghost admin-rail__logout" data-admin-shell="logout" type="button">
+        <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+        <span class="btn-label"><%= shell.logout() %></span>
+      </button>
+
+      <!--
+        The icon and the label name the theme the tap will switch *to*, not the
+        one in effect. `client/theme/theme.ts` rewrites both on load, so the
+        values here are only what a light-themed first paint happens to need.
+      -->
+      <button
+        class="theme-toggle"
+        data-theme-toggle
+        type="button"
+        aria-label="<%= chrome.footerThemeToDark() %>"
+        data-label-dark="<%= chrome.footerThemeToDark() %>"
+        data-label-light="<%= chrome.footerThemeToLight() %>"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+      </button>
+
+      <%# The public footer's locale menu, which admin pages do not render.
+          Absent unless more than one locale is offered. `small-print` stands
+          in for the `footer` ancestor that sizes and colours the toggle there.
+          Last in the row, so the panel's right-edge anchor keeps it inside the
+          rail and a 320px drawer. -%>
+      <% if (locals.localeLinks && locals.localeLinks.length) { %>
+      <% const currentLocale = locals.localeLinks.find((link) => link.current); %>
+      <details class="footer-locales small-print" aria-label="<%= chrome.footerLanguages() %>">
+        <summary lang="<%= currentLocale.locale %>">
+          <%= currentLocale.region %><span class="visually-hidden"> <%= currentLocale.label %></span>
+          <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span>
+        </summary>
+        <ul class="footer-locales-menu">
+          <% locals.localeLinks.forEach((link) => { %>
+          <li>
+            <a
+              href="<%= link.href %>"
+              hreflang="<%= link.locale %>"
+              lang="<%= link.locale %>"
+              <% if (link.current) { %>aria-current="true"<% } %>
+            >
+              <span class="footer-locales-code"><%= link.region %></span>
+              <span class="footer-locales-name"><%= link.label %></span>
+              <% if (link.current) { %>
+              <span class="material-symbols-outlined" aria-hidden="true">check</span>
+              <% } %>
+            </a>
+          </li>
+          <% }) %>
+        </ul>
+      </details>
+      <% } %>
+    </div>
+  </div>
+  </div>
+</div>

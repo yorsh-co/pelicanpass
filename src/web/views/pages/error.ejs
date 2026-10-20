@@ -1,0 +1,27 @@
+<%# Every status renders through this one template; the copy comes from the
+    table in web/render-error-page.ts.
+
+    The card was a <div> until the step rules in components/container.css were
+    scoped to `.content-wrapper`. Before that they styled the bare <section>
+    element, so any sectioning element anywhere in the application rendered at
+    `position: absolute; inset: 0; opacity: 0` and left the page blank. %>
+<main class="error-page">
+  <%- include('../partials/header') %>
+
+  <section class="error-card">
+    <p class="error-heading"><%= heading %></p>
+    <h1 class="error-subtitle"><%= subtitle %></h1>
+
+    <p class="error-message"><%= message %></p>
+
+    <% if (action) { %>
+    <a class="error-action" href="<%= action.href %>"><%= action.label %></a>
+    <% } %>
+  </section>
+</main>
+
+<%# Asset block last, so the page body is everything above it. Moved to the top
+    it would need an explicit `contentFor('body')`, and omitting that renders a
+    blank page with no error. %>
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/error.css" />

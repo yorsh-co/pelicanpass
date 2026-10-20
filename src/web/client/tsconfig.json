@@ -1,0 +1,16 @@
+{
+  // Frontend: browser code, bundled to src/web/public/js by
+  // scripts/build-client.ts. Sources live outside the webroot so that
+  // express.static never serves an unbuilt .ts file.
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    // No Node ambient globals (process, Buffer, etc.) in browser code.
+    "types": [],
+    "tsBuildInfoFile": "../../../node_modules/.cache/tsconfig.frontend.tsbuildinfo"
+  },
+  "include": ["**/*.ts"],
+  // Unit tests run under Node and need its types; tsconfig.test.json checks
+  // them, so Node's globals never reach the browser code.
+  "exclude": ["**/*.test.ts"]
+}

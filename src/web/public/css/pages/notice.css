@@ -1,0 +1,111 @@
+/*
+ * Reading layout for the standalone notice pages served through
+ * layouts/plain.ejs — the privacy notice and the terms of use. Long-form prose
+ * rather than the app's centred cards, so it sets its own measure and vertical
+ * rhythm on top of the shared tokens.
+ *
+ * Both pages are rendered from Markdown (src/web/content/privacy-notice.md and
+ * terms-of-use.md), so every selector here targets an element the converter
+ * emits — there are no classes to hang styles on inside the article.
+ */
+
+.notice {
+  color: var(--text);
+  /* Comfortable measure for reading on a phone, capped so it never runs long
+     on a desktop. */
+  font-size: var(--text-base);
+  /* Prose leading, deliberately looser than --leading-normal: this is the one
+     long-form document in the app, and legal copy is read in full or not at
+     all. A token for it would only ever have this consumer. */
+  line-height: 1.65;
+}
+
+.notice h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(var(--text-2xl), 5vw, var(--text-3xl));
+  line-height: var(--leading-tight);
+  font-weight: var(--weight-semibold);
+  text-wrap: balance;
+}
+
+/* The lede — the one paragraph that sits directly under the title. */
+.notice > h1 + p {
+  margin: 0;
+  /* Softened from the body colour rather than set to --muted: that grey is
+     tuned for small print on the dark gradient and drops below readable
+     contrast against the light palette. */
+  color: var(--text);
+  opacity: 0.8;
+  font-size: var(--text-base);
+}
+
+/* Carries the rhythm between sections: the heading's own top margin is what
+   separates each block from the one before it. */
+.notice h2 {
+  margin: clamp(1.5rem, 4vh, 2rem) 0 0.6rem;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+.notice p {
+  margin: 0 0 0.75rem;
+}
+
+.notice p:last-child {
+  margin-bottom: 0;
+}
+
+.notice ul {
+  margin: 0 0 0.75rem;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.notice li {
+  margin: 0;
+}
+
+/*
+ * Secondary remarks — what is not collected, and the erasure caveats — written
+ * as Markdown blockquotes. Set apart by the panel, not by dimming: these carry
+ * substantive information a reader has to be able to act on, and --muted is a
+ * small-print grey that loses contrast badly against the light palette.
+ */
+.notice blockquote {
+  margin: 0.75rem 0 0;
+  padding: 0.75rem 0.9rem;
+  border-radius: 8px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  font-size: var(--text-sm);
+}
+
+.notice a {
+  color: inherit;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+.notice a:hover,
+.notice a:focus-visible {
+  text-decoration-thickness: 2px;
+}
+
+/* The thematic break closes the notice: everything after it is the footer,
+   carrying the link to the governing policy and the revision date. */
+.notice hr {
+  margin: clamp(1.75rem, 5vh, 2.5rem) 0 1rem;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+.notice hr ~ p {
+  font-size: var(--text-sm);
+}
+
+.notice hr ~ p:last-child {
+  opacity: 0.75;
+}

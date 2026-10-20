@@ -1,0 +1,126 @@
+{
+  "admin-tshirts.record.absent": {
+    "defaultMessage": "Ainda não realizou o check-in",
+    "description": "Presence of an attendee who has not checked in, on the t-shirt desk's record."
+  },
+  "admin-tshirts.record.archived": {
+    "defaultMessage": "Este participante está arquivado. A camiseta não pode ser entregue.",
+    "description": "Banner on an archived attendee's t-shirt record. No hand-over control is offered."
+  },
+  "admin-tshirts.record.close": {
+    "defaultMessage": "Voltar para a busca",
+    "description": "Accessible name of the record's close button. Returns to an empty search."
+  },
+  "admin-tshirts.record.codeHint": {
+    "defaultMessage": "Peça os quatro últimos dígitos do telefone cadastrado e confira antes de entregar.",
+    "description": "Explains the verification code under it, for the person at the desk."
+  },
+  "admin-tshirts.record.confirm": {
+    "defaultMessage": "Confirmar?",
+    "description": "Label of the armed hand-over button: a second press records the t-shirt as collected, which cannot be undone on this screen. Reverts after a few seconds."
+  },
+  "admin-tshirts.record.duplicate": {
+    "defaultMessage": "Esta camiseta já havia sido retirada.",
+    "description": "Warning toast when the hand-over was refused as a duplicate: the shirt had already been collected. The record under it shows when."
+  },
+  "admin-tshirts.record.failed": {
+    "defaultMessage": "Não foi possível registrar a entrega. Tente novamente.",
+    "description": "Error line when recording the hand-over failed for a reason the server did not explain."
+  },
+  "admin-tshirts.record.forbidden": {
+    "defaultMessage": "Você não tem mais permissão para registrar entregas de camisetas.",
+    "description": "Toast when the t-shirt desk permission was withdrawn while the record was open."
+  },
+  "admin-tshirts.record.pending": {
+    "defaultMessage": "Ainda não retirada",
+    "description": "State of a t-shirt that was not collected yet."
+  },
+  "admin-tshirts.record.presentNumber": {
+    "defaultMessage": "Check-in realizado · #{number, number, ::group-off}",
+    "description": "Presence of an attendee who checked in and holds arrival number {number}."
+  },
+  "admin-tshirts.record.redeem": {
+    "defaultMessage": "Entregar camiseta {size}",
+    "description": "Button that records the t-shirt as handed over. {size} is the size the attendee ordered."
+  },
+  "admin-tshirts.record.redeemHint": {
+    "defaultMessage": "Registre a entrega somente depois de conferir o código de verificação e entregar a camiseta. A entrega não pode ser desfeita nesta tela.",
+    "description": "Hint under the hand-over button."
+  },
+  "admin-tshirts.record.redeemed": {
+    "defaultMessage": "Entrega registrada.",
+    "description": "Toast on the record's page after the operator recorded the t-shirt as handed over."
+  },
+  "admin-tshirts.record.redeemedAt": {
+    "defaultMessage": "Retirada em {time}",
+    "description": "State of a t-shirt that was already collected. {time} is the date and time of the collection, in the event's time zone."
+  },
+  "admin-tshirts.record.redeeming": {
+    "defaultMessage": "Registrando…",
+    "description": "Label of the hand-over button while the request is in flight."
+  },
+  "admin-tshirts.record.showCode": {
+    "defaultMessage": "Visualizar o código de verificação",
+    "description": "Summary of the collapsed panel holding the attendee's verification code. Kept closed until asked for: the code is the check-in's only shared secret."
+  },
+  "admin-tshirts.record.size": {
+    "defaultMessage": "Tamanho",
+    "description": "Label of the t-shirt size on the record."
+  },
+  "admin-tshirts.record.status": {
+    "defaultMessage": "Situação",
+    "description": "Label of the collection state on the record: collected, or not yet."
+  },
+  "admin-tshirts.search.absent": {
+    "defaultMessage": "não chegou",
+    "description": "Tag on a result card for somebody who has not checked in. Lowercase: it trails the role badge."
+  },
+  "admin-tshirts.search.count": {
+    "defaultMessage": "{total, plural, =1 {{total, number, ::group-off} resultado} other {{total, number, ::group-off} resultados}}",
+    "description": "Number of matching attendees above the results."
+  },
+  "admin-tshirts.search.idle": {
+    "defaultMessage": "Digite um nome, código do ingresso ou telefone para começar.",
+    "description": "Shown before anything was searched."
+  },
+  "admin-tshirts.search.lede": {
+    "defaultMessage": "Busque pelo nome, código do ingresso ou telefone para localizar quem tem direito à camiseta e registrar a entrega.",
+    "description": "Line under the t-shirt desk heading."
+  },
+  "admin-tshirts.search.miss": {
+    "defaultMessage": "Nenhuma camiseta encontrada para “{query}”.",
+    "description": "No result. {query} is the search as typed, trimmed and lowercased."
+  },
+  "admin-tshirts.search.missHint": {
+    "defaultMessage": "Confira a situação selecionada: quem já retirou a camiseta só aparece em “Retiradas” ou “Todas”.",
+    "description": "Suggestion after a search with no result. The quoted names are the labels of the status choices."
+  },
+  "admin-tshirts.search.pending": {
+    "defaultMessage": "Não retirada",
+    "description": "Tag on a result card for a t-shirt that was not collected yet."
+  },
+  "admin-tshirts.search.redeemedAt": {
+    "defaultMessage": "Retirada em {time}",
+    "description": "Tag on a result card for a t-shirt already collected. {time} is the date and time of the collection, in the event's time zone."
+  },
+  "admin-tshirts.search.status": {
+    "defaultMessage": "Situação",
+    "description": "Legend of the status choice (not collected, collected, all). The choice applies on the next search."
+  },
+  "admin-tshirts.search.status.all": {
+    "defaultMessage": "Todas",
+    "description": "Status choice: everybody with a t-shirt, collected or not."
+  },
+  "admin-tshirts.search.status.pending": {
+    "defaultMessage": "Pendentes",
+    "description": "Status choice: t-shirts not yet collected. The default."
+  },
+  "admin-tshirts.search.status.redeemed": {
+    "defaultMessage": "Retiradas",
+    "description": "Status choice: t-shirts already collected."
+  },
+  "admin-tshirts.search.title": {
+    "defaultMessage": "Camisetas",
+    "description": "Heading of the t-shirt desk."
+  }
+}

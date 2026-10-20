@@ -1,0 +1,195 @@
+<%# i18n: admin-pass %>
+<%
+/*
+ * The pass's welcome schedule: which schedule passes follow and what it says
+ * now, the editor that supersedes `.env`, what each phase reads like, and the
+ * `.env` default itself.
+ *
+ * `data-pass-welcome` attributes are the contract with
+ * `pages/admin/pass/index.ts`, which adds and removes rows, saves and reloads.
+ * Times in the editor are wall times in `timeZone`, as the server reads them
+ * back; everything else is server-rendered.
+ *
+ * `locals.` on every read: EJS throws on an undeclared name, and a route that
+ * forgot a value should degrade rather than 500.
+ */
+const phases = locals.phases || [];
+const custom = locals.custom || { value: 'custom', label: 'custom' };
+const rows = locals.rows || [];
+const defaults = locals.defaults || [];
+const isAdmin = locals.source === 'admin';
+
+/** One editor row. The `<template>` below renders it blank, for new rows. */
+const row = (entry) => { %>
+<tr data-pass-welcome="row">
+  <td>
+    <select name="phase" aria-label="<%= copy.columnPhase() %>">
+      <% phases.forEach((phase) => { %>
+      <option value="<%= phase.value %>" <% if (phase.value === entry.phase) { %>selected<% } %>><%= phase.label %></option>
+      <% }) %>
+      <option value="<%= custom.value %>" <% if (custom.value === entry.phase) { %>selected<% } %>><%= custom.label %></option>
+    </select>
+    <%# Shown only while the row is custom; the script toggles it with the
+        select. Its `maxlength` mirrors WELCOME_TEXT_MAX_LENGTH. -%>
+    <input
+      class="pass-admin__text"
+      type="text"
+      name="text"
+      maxlength="<%= locals.textMaxLength %>"
+      value="<%= entry.text %>"
+      placeholder="<%= copy.text() %>"
+      aria-label="<%= copy.text() %>"
+      data-pass-welcome="text"
+      <% if (entry.phase !== custom.value) { %>hidden<% } %>
+    />
+  </td>
+  <td>
+    <input
+      type="datetime-local"
+      name="at"
+      step="60"
+      value="<%= entry.at %>"
+      aria-label="<%= copy.columnAt() %>"
+      required
+    />
+  </td>
+  <td class="pass-admin__remove-cell">
+    <button
+      class="ghost pass-admin__remove"
+      type="button"
+      data-pass-welcome="remove"
+      aria-label="<%= copy.remove() %>"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+    </button>
+  </td>
+</tr>
+<% };
+%>
+<%- include('../../../partials/i18n-catalogs') %>
+
+<div class="pass-admin">
+  <header class="pass-admin__head">
+    <h1 class="pass-admin__title"><%= copy.heading() %></h1>
+    <p class="pass-admin__lead"><%= copy.intro() %></p>
+  </header>
+
+  <%# ---------------------------------------------------------------- state -%>
+  <section class="pass-admin__panel">
+    <p class="pass-admin__state"><%= copy.current({ phase: locals.current }) %></p>
+    <p class="pass-admin__hint">
+      <%= isAdmin ? copy.sourceAdmin() : copy.sourceEnv() %>
+      <%= locals.next ? copy.next({ phase: locals.next.phase, at: locals.next.at }) : copy.nextNone() %>
+    </p>
+  </section>
+
+  <%# --------------------------------------------------------------- editor -%>
+  <section class="pass-admin__panel">
+    <h2 class="pass-admin__subtitle"><%= copy.editorHeading() %></h2>
+    <p class="pass-admin__hint"><%= copy.editorHint({ timeZone: locals.timeZone }) %></p>
+    <% if (!isAdmin) { %>
+    <p class="pass-admin__note"><%= copy.editorFromDefaults() %></p>
+    <% } %>
+
+    <form
+      class="pass-admin__form"
+      data-pass-welcome="form"
+      data-revision="<%= locals.revision %>"
+      novalidate
+    >
+      <%# Its own scroll container, as the questionnaire's table is: below
+          ~440px the inputs are wider than the panel. -%>
+      <div class="pass-admin__scroll">
+        <table class="pass-admin__table">
+          <thead>
+            <tr>
+              <th scope="col"><%= copy.columnPhase() %></th>
+              <th scope="col"><%= copy.columnAt() %></th>
+              <th scope="col"><span class="visually-hidden"><%= copy.remove() %></span></th>
+            </tr>
+          </thead>
+          <tbody data-pass-welcome="rows">
+            <% rows.forEach((entry) => { row(entry); }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="pass-admin__muted" data-pass-welcome="empty" <% if (rows.length > 0) { %>hidden<% } %>>
+        <%= copy.editorEmpty() %>
+      </p>
+
+      <template data-pass-welcome="template">
+        <% row({ phase: 'default', text: '', at: '' }); %>
+      </template>
+
+      <div class="pass-admin__actions">
+        <button class="ghost" type="button" data-pass-welcome="add">
+          <span class="material-symbols-outlined" aria-hidden="true">add</span>
+          <span class="btn-label"><%= copy.add() %></span>
+        </button>
+        <button type="submit" data-pass-welcome="save"><%= copy.save() %></button>
+        <% if (isAdmin) { %>
+        <%# Two presses, as the attendee editor's archive is: the first arms it
+            and relabels it, and it disarms on its own after a few seconds. -%>
+        <button class="ghost pass-admin__reset" type="button" data-pass-welcome="reset">
+          <span class="btn-label"><%= copy.reset() %></span>
+        </button>
+        <% } %>
+      </div>
+
+      <p class="pass-admin__error" data-pass-welcome="error" role="alert" hidden></p>
+    </form>
+  </section>
+
+  <%# --------------------------------------------------------------- legend -%>
+  <section class="pass-admin__panel">
+    <h2 class="pass-admin__subtitle"><%= copy.legendHeading() %></h2>
+    <dl class="pass-admin__legend">
+      <% phases.forEach((phase) => { %>
+      <div>
+        <dt><%= phase.label %></dt>
+        <dd><%= copy.preview({ text: phase.text }) %></dd>
+      </div>
+      <% }) %>
+      <div>
+        <dt><%= custom.label %></dt>
+        <dd><%= copy.legendCustom() %></dd>
+      </div>
+    </dl>
+    <p class="pass-admin__note"><%= copy.legendNote() %></p>
+  </section>
+
+  <%# ------------------------------------------------------------- defaults -%>
+  <section class="pass-admin__panel">
+    <h2 class="pass-admin__subtitle"><%= copy.defaultsHeading() %></h2>
+    <p class="pass-admin__hint"><%= copy.defaultsHint() %></p>
+    <% if (defaults.length === 0) { %>
+    <p class="pass-admin__muted"><%= copy.defaultsEmpty() %></p>
+    <% } else { %>
+    <div class="pass-admin__scroll">
+      <table class="pass-admin__table">
+        <thead>
+          <tr>
+            <th scope="col"><%= copy.columnPhase() %></th>
+            <th scope="col"><%= copy.columnAt() %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% defaults.forEach((entry) => { %>
+          <tr>
+            <td><%= entry.phase %></td>
+            <td><%= entry.at %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </section>
+</div>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/admin/pass.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/admin/pass/index.js"></script>

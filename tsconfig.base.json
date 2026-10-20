@@ -1,0 +1,53 @@
+{
+  // Shared by tsconfig.json (backend) and src/web/client/tsconfig.json (frontend).
+  //
+  // Both halves hand-author ESM with explicit import extensions, so both use the
+  // same module settings. Neither half emits from tsc — see "noEmit" below.
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    "strict": true,
+    "verbatimModuleSyntax": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+
+    // An optional property means absent, not present-and-undefined. Anything
+    // that can hold an explicit undefined has to say "?: T | undefined".
+    "exactOptionalPropertyTypes": true,
+
+    // Side-effect imports ("import './foo.ts'") are resolved rather than
+    // trusted. tsc otherwise ignores them entirely, which would leave the one
+    // specifier form that neither it nor esbuild checks.
+    "noUncheckedSideEffectImports": true,
+
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+
+    // Import specifiers name the file that actually exists on disk ("./foo.ts"),
+    // not TypeScript's "./foo.js" convention. Node's type stripping resolves
+    // specifiers literally and throws ERR_MODULE_NOT_FOUND on "./foo.js" when
+    // only "./foo.ts" exists; esbuild resolves either. Requires "noEmit".
+    "allowImportingTsExtensions": true,
+
+    // Node strips types rather than compiling them, so only syntax that erases
+    // to nothing is legal: no enum, no namespace, no parameter properties.
+    // tsc enforces that here instead of letting it fail at runtime.
+    "erasableSyntaxOnly": true,
+
+    // tsc is a type checker only, never a build tool, in both halves:
+    //   - backend  runs .ts directly on Node (native type stripping, no build)
+    //   - frontend is bundled by esbuild (scripts/build-client.ts)
+    "noEmit": true,
+    "incremental": true
+  }
+}

@@ -1,0 +1,8 @@
+<%#
+  The compiled message catalogs this page's script reads, one block per
+  namespace, from `inlineCatalogs` in src/i18n/server.ts. JSON blocks are never
+  executed; the nonce matches the page's other inline data blocks.
+-%>
+<% for (const [ns, json] of messages) { -%>
+<script type="application/json" data-i18n="<%= ns %>" nonce="<%= cspNonce %>"><%- json %></script>
+<% } -%>

@@ -1,0 +1,338 @@
+{
+  "admin-whatsapp.audience": {
+    "defaultMessage": "Público",
+    "description": "Label of the audience picker."
+  },
+  "admin-whatsapp.audience.participant": {
+    "defaultMessage": "Participantes",
+    "description": "Audience option: participants. A run is aimed at one audience."
+  },
+  "admin-whatsapp.audience.volunteer": {
+    "defaultMessage": "Voluntários",
+    "description": "Audience option: volunteers."
+  },
+  "admin-whatsapp.disabled.after": {
+    "defaultMessage": "seja ligado.",
+    "description": "Ends the disabled notice after the setting name WHATSAPP_ENABLED. See admin-whatsapp.disabled.before."
+  },
+  "admin-whatsapp.disabled.before": {
+    "defaultMessage": "A prévia e os controles de um envio existente funcionam; iniciar, retomar e testar são recusados até que",
+    "description": "Continues the disabled notice up to the setting name WHATSAPP_ENABLED, which is rendered as code; admin-whatsapp.disabled.after follows it."
+  },
+  "admin-whatsapp.disabled.lead": {
+    "defaultMessage": "O envio está desativado neste servidor.",
+    "description": "Bold opening of the notice shown when sending is switched off on this server."
+  },
+  "admin-whatsapp.failure.alreadySent": {
+    "defaultMessage": "Já tinha recebido este modelo",
+    "description": "Failure reason row: the recipient had already been sent this template, so the send was skipped."
+  },
+  "admin-whatsapp.failure.interrupted": {
+    "defaultMessage": "Interrompido",
+    "description": "Failure reason row: the send was cut off, usually by a restart, and its outcome is unknown."
+  },
+  "admin-whatsapp.failure.invalidPhone": {
+    "defaultMessage": "{reason, select, empty {Sem telefone} length {Telefone com tamanho inválido} unqualified {Telefone de outro país sem + e código do país} ddd {DDD inválido} other {Telefone inválido}}",
+    "description": "Failure reason row: the recipient's phone could not be turned into a WhatsApp number, so they were skipped. other is only a fallback."
+  },
+  "admin-whatsapp.failure.meta": {
+    "defaultMessage": "Recusado pela Meta (código {code})",
+    "description": "Failure reason row for a refusal Meta reported only by code. {code} is Meta's numeric error code. Refusals Meta names itself show Meta's English title instead."
+  },
+  "admin-whatsapp.failure.noResponse": {
+    "defaultMessage": "Sem resposta da Meta",
+    "description": "Failure reason row: Meta did not answer, even after retries."
+  },
+  "admin-whatsapp.failures.count": {
+    "defaultMessage": "Quantidade",
+    "description": "Failure table column: how many sends failed for that reason."
+  },
+  "admin-whatsapp.failures.heading": {
+    "defaultMessage": "Falhas por motivo",
+    "description": "Heading of the run's failure breakdown."
+  },
+  "admin-whatsapp.failures.none": {
+    "defaultMessage": "Nenhuma falha registrada.",
+    "description": "Shown when the run has no failure."
+  },
+  "admin-whatsapp.failures.reason": {
+    "defaultMessage": "Motivo",
+    "description": "Failure table column: Meta's error title."
+  },
+  "admin-whatsapp.lede": {
+    "defaultMessage": "Envia o modelo aprovado pela Meta para participantes ou voluntários, um por vez.",
+    "description": "Line under the sender's heading."
+  },
+  "admin-whatsapp.note.read.lead": {
+    "defaultMessage": "“Lidos” sempre mostra menos do que a realidade",
+    "description": "Bold opening of the second half of the delivery note, continued by admin-whatsapp.note.read.rest."
+  },
+  "admin-whatsapp.note.read.rest": {
+    "defaultMessage": ": a confirmação de leitura só chega de quem a mantém ativada no aparelho. E um envio concluído continua recebendo confirmações por minutos ou horas, então esses dois números ainda se movem depois que a tela diz “concluído”.",
+    "description": "Continues admin-whatsapp.note.read.lead, hence the leading colon. Read receipts arrive only from people who keep them on, and receipts keep arriving after a run completes."
+  },
+  "admin-whatsapp.note.sent.lead": {
+    "defaultMessage": "“Enviado” significa que a Meta aceitou a mensagem",
+    "description": "Bold opening of the delivery note, continued by admin-whatsapp.note.sent.rest. Required on this screen: it explains the gap between sent and delivered."
+  },
+  "admin-whatsapp.note.sent.rest": {
+    "defaultMessage": ", não que alguém a recebeu. “Entregues” e “lidos” chegam depois, por confirmação da Meta.",
+    "description": "Continues admin-whatsapp.note.sent.lead in the same sentence, hence the leading comma."
+  },
+  "admin-whatsapp.preview.confirm": {
+    "defaultMessage": "Enviar",
+    "description": "Start button before a preview exists. Replaced by admin-whatsapp.preview.confirmTo."
+  },
+  "admin-whatsapp.preview.confirmTo": {
+    "defaultMessage": "Enviar \"{template}\" para {count, number, ::group-off} destinatários",
+    "description": "Start button after a preview. {template} is the template's label and {count} the new recipients. Not inflected for a count of one."
+  },
+  "admin-whatsapp.preview.cost": {
+    "defaultMessage": "Custo estimado: até {cost, number, ::currency/USD .00##}",
+    "description": "Estimated Meta charge for the new recipients of a preview, in US dollars. An upper bound: Meta bills only delivered messages, and utility messages inside an open conversation are free. Shows 2 to 4 decimals because a single message costs less than a cent."
+  },
+  "admin-whatsapp.preview.counts": {
+    "defaultMessage": "{newRecipients, number, ::group-off} novos destinatários · {alreadySent, number, ::group-off} já receberam · {invalidPhone, number, ::group-off} sem número válido",
+    "description": "Summary of a preview: who would be sent to, who already received this template, and who has no valid number. Not inflected for a count of one."
+  },
+  "admin-whatsapp.preview.failed": {
+    "defaultMessage": "Não foi possível gerar a prévia.",
+    "description": "Error line when a preview failed for a reason the server did not explain."
+  },
+  "admin-whatsapp.preview.heading": {
+    "defaultMessage": "1 · Prévia",
+    "description": "Heading of the first panel: previewing who a run would reach."
+  },
+  "admin-whatsapp.preview.more": {
+    "defaultMessage": "Mostrando {shown, number, ::group-off} de {total, number, ::group-off}.",
+    "description": "Under a preview list that is cut short: {shown} rows of {total}."
+  },
+  "admin-whatsapp.preview.submit": {
+    "defaultMessage": "Pré-visualizar",
+    "description": "Button that builds the preview."
+  },
+  "admin-whatsapp.run.cancel": {
+    "defaultMessage": "Cancelar envio",
+    "description": "Ends the run for good."
+  },
+  "admin-whatsapp.run.count.deferred": {
+    "defaultMessage": "Adiados",
+    "description": "Run figure: sends postponed for a later attempt."
+  },
+  "admin-whatsapp.run.count.delivered": {
+    "defaultMessage": "Entregues",
+    "description": "Run figure: messages Meta reported delivered."
+  },
+  "admin-whatsapp.run.count.failed": {
+    "defaultMessage": "Falhas",
+    "description": "Run figure: messages that failed."
+  },
+  "admin-whatsapp.run.count.interrupted": {
+    "defaultMessage": "Interrompidos",
+    "description": "Run figure: sends cut off when the run stopped; admin-whatsapp.run.retryInterrupted requeues them."
+  },
+  "admin-whatsapp.run.count.pending": {
+    "defaultMessage": "Na fila",
+    "description": "Run figure: sends still waiting."
+  },
+  "admin-whatsapp.run.count.read": {
+    "defaultMessage": "Lidos",
+    "description": "Run figure: messages Meta reported read. Undercounts; see admin-whatsapp.note.read.lead."
+  },
+  "admin-whatsapp.run.count.sent": {
+    "defaultMessage": "Enviados",
+    "description": "Run figure: messages Meta accepted."
+  },
+  "admin-whatsapp.run.count.skipped": {
+    "defaultMessage": "Ignorados",
+    "description": "Run figure: recipients skipped, for example for an invalid number."
+  },
+  "admin-whatsapp.run.done": {
+    "defaultMessage": "Envio concluído.",
+    "description": "Toast when the watched run completed."
+  },
+  "admin-whatsapp.run.failed": {
+    "defaultMessage": "Não foi possível concluir. Tente de novo.",
+    "description": "Error line when a run control failed for a reason the server did not explain."
+  },
+  "admin-whatsapp.run.forbidden": {
+    "defaultMessage": "Você não tem mais permissão para enviar mensagens.",
+    "description": "Error line when the operator's send permission was withdrawn while the page was open."
+  },
+  "admin-whatsapp.run.heading": {
+    "defaultMessage": "3 · Envio",
+    "description": "Heading of the third panel: the run in progress."
+  },
+  "admin-whatsapp.run.noneRequeued": {
+    "defaultMessage": "Nenhum envio interrompido para reenviar.",
+    "description": "Toast after admin-whatsapp.run.retryInterrupted when nothing was cut off."
+  },
+  "admin-whatsapp.run.reason.awaitingInterrupted": {
+    "defaultMessage": "há envios interrompidos para revisar",
+    "description": "Why a run is paused: every other recipient was handled, and interrupted sends are waiting for the operator to retry or leave them. Follows the status, lowercase."
+  },
+  "admin-whatsapp.run.reason.circuitBreaker": {
+    "defaultMessage": "muitas recusas seguidas da Meta",
+    "description": "Why a run stopped: several recipients in a row were refused, which usually means the template or the numbers are wrong. Follows the status, lowercase."
+  },
+  "admin-whatsapp.run.reason.fatal": {
+    "defaultMessage": "a Meta recusou todos os envios (código {code})",
+    "description": "Why a run stopped: Meta refused in a way every remaining send would repeat, such as an expired token or a template mismatch. {code} is Meta's error code, or UNKNOWN. Follows the status, lowercase."
+  },
+  "admin-whatsapp.run.reason.operator": {
+    "defaultMessage": "a pedido da equipe",
+    "description": "Why a run is paused: an operator pressed Stop. Follows the status in \"Pausado · …\", so it starts lowercase."
+  },
+  "admin-whatsapp.run.reason.operatorCancelled": {
+    "defaultMessage": "cancelado pela equipe",
+    "description": "Why a run ended: an operator cancelled it. Follows the status, lowercase."
+  },
+  "admin-whatsapp.run.reason.restart": {
+    "defaultMessage": "o servidor reiniciou",
+    "description": "Why a run is paused: the server restarted mid-run, and sends in flight were marked interrupted. Follows the status, lowercase."
+  },
+  "admin-whatsapp.run.reason.unknownTemplate": {
+    "defaultMessage": "modelo desconhecido nesta versão",
+    "description": "Why a run stopped: it names a template this release no longer has. Nothing was sent for it. Follows the status, lowercase."
+  },
+  "admin-whatsapp.run.recipients": {
+    "defaultMessage": "destinatários",
+    "description": "Trails the run's recipient total, which the page refreshes in place: \"Em andamento · 12 destinatários\"."
+  },
+  "admin-whatsapp.run.requeued": {
+    "defaultMessage": "{count, number, ::group-off} envio(s) recolocado(s) na fila.",
+    "description": "Toast after admin-whatsapp.run.retryInterrupted. {count} is at least one. Not inflected: it keeps the (s) form."
+  },
+  "admin-whatsapp.run.resume": {
+    "defaultMessage": "Retomar",
+    "description": "Resumes a paused run."
+  },
+  "admin-whatsapp.run.retryInterrupted": {
+    "defaultMessage": "Reenviar interrompidos",
+    "description": "Requeues the sends that were cut off."
+  },
+  "admin-whatsapp.run.spent": {
+    "defaultMessage": "Gasto: {cost, number, ::currency/USD .00##}",
+    "description": "Meta charges so far for this run, in US dollars: delivered messages times the template category's current rate. Shows 2 to 4 decimals because a single message costs less than a cent."
+  },
+  "admin-whatsapp.run.startFailed": {
+    "defaultMessage": "Não foi possível iniciar o envio.",
+    "description": "Error line when starting the run failed for a reason the server did not explain."
+  },
+  "admin-whatsapp.run.started": {
+    "defaultMessage": "Envio iniciado.",
+    "description": "Toast after a run started."
+  },
+  "admin-whatsapp.run.status": {
+    "defaultMessage": "{status, select, running {Em andamento} paused {Pausado} done {Concluído} failed {Interrompido} other {Desconhecido}}",
+    "description": "A run's status. other is only a fallback for a status the server does not send today."
+  },
+  "admin-whatsapp.run.statusWithReason": {
+    "defaultMessage": "{status} · {reason}",
+    "description": "A run's status with the reason it stopped. {status} is admin-whatsapp.run.status; {reason} is the server's own stop reason."
+  },
+  "admin-whatsapp.run.stop": {
+    "defaultMessage": "Parar",
+    "description": "Pauses the run."
+  },
+  "admin-whatsapp.run.stopped": {
+    "defaultMessage": "O envio parou antes de terminar.",
+    "description": "Toast when the watched run ended without completing."
+  },
+  "admin-whatsapp.slots.button": {
+    "defaultMessage": "Botão",
+    "description": "Marks the variable that fills the template's link button, in place of a {{n}} position."
+  },
+  "admin-whatsapp.slots.heading": {
+    "defaultMessage": "O que cada modelo carrega",
+    "description": "Heading of the panel listing each template's variables in order."
+  },
+  "admin-whatsapp.slots.hint": {
+    "defaultMessage": "Confira esta ordem contra o modelo aprovado no WhatsApp Manager. Uma ordem trocada não dá erro visível aqui: a Meta recusa o envio inteiro com o código 132000.",
+    "description": "Why the variable order matters: a mismatch fails silently here and Meta refuses the whole run."
+  },
+  "admin-whatsapp.slots.price": {
+    "defaultMessage": "{cost, number, ::currency/USD .00##} por mensagem entregue",
+    "description": "Under a template's key in the slots panel: what Meta charges for one delivered message of that template's category, in US dollars."
+  },
+  "admin-whatsapp.template": {
+    "defaultMessage": "Modelo",
+    "description": "Label of the template picker, in the preview and the test panel."
+  },
+  "admin-whatsapp.test.failed": {
+    "defaultMessage": "Não foi possível enviar o teste.",
+    "description": "Error line when the test send failed for a reason the server did not explain."
+  },
+  "admin-whatsapp.test.heading": {
+    "defaultMessage": "2 · Envio de teste",
+    "description": "Heading of the second panel: sending one message to a typed number."
+  },
+  "admin-whatsapp.test.hint.after": {
+    "defaultMessage": ") — o link do ingresso não abre nada. Serve para conferir o modelo e a chegada, e não grava nada no registro do envio.",
+    "description": "Last piece of the test hint, after teste-envio, hence the closing parenthesis. See admin-whatsapp.test.hint.before."
+  },
+  "admin-whatsapp.test.hint.before": {
+    "defaultMessage": "Manda uma mensagem para um número digitado, com valores de exemplo (",
+    "description": "First of three pieces of the test hint, around the sample values Teste and teste-envio, which are rendered as code: \"… valores de exemplo (Teste e teste-envio) — o link do ingresso não abre nada. …\""
+  },
+  "admin-whatsapp.test.hint.between": {
+    "defaultMessage": "e",
+    "description": "Second piece of the test hint, between the sample values Teste and teste-envio. See admin-whatsapp.test.hint.before."
+  },
+  "admin-whatsapp.test.phone": {
+    "defaultMessage": "Telefone",
+    "description": "Label of the test number field."
+  },
+  "admin-whatsapp.test.phoneHint": {
+    "defaultMessage": "Com DDD. O número não aparece no endereço nem nos registros.",
+    "description": "Hint under the test number: it is never put in a URL or logged."
+  },
+  "admin-whatsapp.test.refused": {
+    "defaultMessage": "A Meta recusou: {title}.",
+    "description": "Test result when Meta refused the message. {title} is Meta's own error title, in English."
+  },
+  "admin-whatsapp.test.refusedWithCode": {
+    "defaultMessage": "A Meta recusou: {title} ({code}).",
+    "description": "As admin-whatsapp.test.refused, with Meta's numeric error {code}."
+  },
+  "admin-whatsapp.test.sentNormalized": {
+    "defaultMessage": "Enviado. A Meta normalizou o número para {waId} — confira se chegou.",
+    "description": "Test result when Meta accepted the message but rewrote the number to {waId}, the WhatsApp ID it delivered to."
+  },
+  "admin-whatsapp.test.sentUnchanged": {
+    "defaultMessage": "Enviado, sem alteração no número.",
+    "description": "Test result when Meta accepted the message for the number as typed."
+  },
+  "admin-whatsapp.test.submit": {
+    "defaultMessage": "Enviar teste",
+    "description": "Button that sends the test message."
+  },
+  "admin-whatsapp.title": {
+    "defaultMessage": "Mensagens",
+    "description": "Heading of the WhatsApp sender."
+  },
+  "admin-whatsapp.variable.checkinTime": {
+    "defaultMessage": "Horário de chegada",
+    "description": "A template variable: the volunteer's check-in time. Volunteer-only; templates using it can be sent to volunteers only."
+  },
+  "admin-whatsapp.variable.entryLinkToken": {
+    "defaultMessage": "Token do link de entrada",
+    "description": "A template variable: the token that completes the attendee's entry link button. A credential; never shown in the preview."
+  },
+  "admin-whatsapp.variable.firstName": {
+    "defaultMessage": "Primeiro nome",
+    "description": "A template variable: the attendee's first name. The keys are fixed by the published privacy notice; only this label is copy."
+  },
+  "admin-whatsapp.variable.lunchOption": {
+    "defaultMessage": "Almoço",
+    "description": "A template variable: the volunteer's lunch slot, or a hyphen when they have none. Volunteer-only; templates using it can be sent to volunteers only."
+  },
+  "admin-whatsapp.variable.team": {
+    "defaultMessage": "Equipe",
+    "description": "A template variable: the volunteer's team. Volunteer-only; templates using it can be sent to volunteers only."
+  },
+  "admin-whatsapp.variable.ticketCode": {
+    "defaultMessage": "Código do ingresso",
+    "description": "A template variable: the attendee's ticket code."
+  }
+}

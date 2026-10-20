@@ -1,0 +1,235 @@
+{
+    admin off
+
+    # Scoped per listener: the public vhost and the admin vhost sit behind
+    # different proxies, so they trust different peers and read different
+    # headers. An unscoped block would apply CF-Connecting-IP to :8080 as well,
+    # where a tailnet client sends that header for itself.
+    servers :80 {
+        # cloudflared is the only thing on the edge network, so this names it
+        # exactly. EDGE_SUBNET and VPN_IP are supplied by the `proxy` service
+        # from the same anchor that pins the network in each compose file, so
+        # the subnet, the sidecar's address and these gates cannot disagree.
+        #
+        # Compose substitutes its default for an empty override, so this is
+        # never blank there. Run outside compose, a blank EDGE_SUBNET is not an
+        # error: Caddy starts with no trusted proxy, and every public client
+        # shares cloudflared's address as its rate-limit key. A blank VPN_IP,
+        # by contrast, fails to provision below.
+        #
+        # Not 172.16.0.0/12: that covers the web network too, which would let
+        # the app container itself pass as a trusted proxy.
+        trusted_proxies static {$EDGE_SUBNET}
+
+        # Replaces the default X-Forwarded-For. Only consulted when the peer is
+        # a trusted proxy; otherwise {client_ip} falls back to the peer's own
+        # address.
+        client_ip_headers CF-Connecting-IP
+    }
+
+    servers :8080 {
+        # The Tailscale sidecar alone. Narrower than the edge /24 above on
+        # purpose: nothing else on that network gets to name the client of an
+        # admin request.
+        trusted_proxies static {$VPN_IP}/32
+
+        # Caddy's default, written out because the block above overrides it and
+        # the divergence is the whole point of the split. The sidecar sets
+        # X-Forwarded-For to the tailnet address of the device that called it.
+        client_ip_headers X-Forwarded-For
+    }
+}
+
+# {$SITE_HOST}, not {env.SITE_HOST}. A site address is structural and is parsed
+# before runtime placeholders exist, so the {env.…} form would be taken as a
+# literal hostname. {$…} is substituted by the Caddyfile adapter as plain text,
+# before parsing, which is what makes it work here.
+#
+# The bare host, with the scheme written out — APP_URL cannot stand in for it.
+# The adapter has no string functions, so the scheme cannot be stripped, and
+# binding https:// here would enable automatic HTTPS against an ACME endpoint
+# nothing reaches through the tunnel and orphan the `servers :80` block above.
+#
+# Supplied by the `proxy` service in both compose files, which marks it required
+# with `:?`. Deliberately has no default here, and Caddy cannot be the one to
+# catch a missing value: an empty substitution leaves `http://`, which adapts
+# cleanly to a catch-all on :80 and would answer any Host header. Compose
+# refuses to start the stack instead.
+http://{$SITE_HOST} {
+    # Belt and braces over trusted_proxies above: anything reaching this vhost
+    # from outside the edge network is forging its own origin.
+    @not-cloudflared not remote_ip {$EDGE_SUBNET}
+    respond @not-cloudflared 403
+
+    # The admin paths used to be refused here outright, on the grounds that
+    # /admin answered only through the tailnet. They now answer on this hostname
+    # too, behind Cloudflare Access at the edge and the origin's own verification
+    # of its assertion — see docs/infrastructure/cloudflare-rules.md, which carries the header
+    # contract below. There is nothing to route
+    # for them: they fall through to the reverse_proxy below like everything else.
+
+    # /readyz is a different case and stays refused. It names which dependency
+    # is down and how long it took to say so, which is a reconnaissance gift
+    # through the tunnel. Both spellings are listed because Express serves
+    # /readyz/ too. /healthz stays public because Caddy's own upstream check
+    # uses it and it answers `ok` regardless.
+    @readyz path /readyz /readyz/
+    respond @readyz 403
+
+    reverse_proxy app:3000 {
+        # {client_ip}, not {http.request.header.CF-Connecting-IP}. The header
+        # form copies whatever arrives without asking who sent it, which let
+        # anything on the web network choose its own req.ip and so its own
+        # rate-limit key. {client_ip} reads that header only from a trusted
+        # peer, and falls back to the peer's own address otherwise.
+        #
+        # Verified against Caddy 2.11.1: {http.request.client_ip} is NOT a
+        # registered placeholder and passes through as a literal string.
+        # {client_ip} is the spelling that resolves.
+        header_up X-Forwarded-For {client_ip}
+
+        # Stripped, not passed through, and this one is load-bearing. The :8080
+        # listener sets X-Admin-Gate to vouch for a request that did not come
+        # through Cloudflare, and the origin's Access gate stands aside when it
+        # sees it. A caller that could set it from the internet would walk past
+        # that gate. Removed for every path rather than only the admin ones:
+        # narrower would mean remembering to widen it when a path is added.
+        header_up -X-Admin-Gate
+
+        # CF-Connecting-IP is deliberately passed through rather than stripped.
+        # Nothing in the app reads it; the pino serializer logs it as `cfIp`,
+        # which is the only independent cross-check on req.ip available from
+        # the logs during the event.
+
+        # Stop sending traffic to an upstream that is no longer answering.
+        health_uri /healthz
+
+        # Re-checked every 2 s, not Caddy's 30 s default: a check that lands
+        # while `app` is being recreated marks it down, and with the default
+        # every request answers 503 until the next check, up to 30 s after the
+        # app is back.
+        health_interval 2s
+
+        # A request that finds no upstream, or cannot connect, waits up to 5 s
+        # for one rather than failing at once. That spans a recreate of `app`
+        # (about a second to boot) and the next health check. Only requests that
+        # never reached the app are retried, so a POST is not sent twice.
+        lb_try_duration 5s
+        lb_try_interval 250ms
+
+        # Idle upstream connections close here first: below the app's
+        # keepAliveTimeout (35 s, src/server.ts). Caddy's own default is 2 min,
+        # so a request could go down a connection Node was closing and fail as
+        # a 502.
+        #
+        # response_header_timeout bounds a handler that never answers. 50 s sits
+        # above the longest client deadline (30 s), so Caddy never cuts off a
+        # client that is still waiting, and above the slowest legitimate handler
+        # (about 40 s: attendee create plus the door message), so a request that
+        # will succeed is not logged as a failure. It sits below Cloudflare's
+        # 100 s origin timeout, which would otherwise answer 524 first. It frees
+        # the proxy connection; it does not cancel the handler, which Node runs
+        # to completion. Headers only: a body that streams after them is not cut.
+        transport http {
+            keepalive 30s
+            response_header_timeout 50s
+        }
+    }
+}
+
+# Admin surface. Reached only through the Tailscale sidecar, which terminates
+# TLS with the Service's ts.net certificate and forwards plain HTTP here. Never
+# published to the host — 8080 exists only on the edge network.
+:8080 {
+    # `route` pins these to the order written. Caddy sorts `redir` ahead of
+    # `respond` by default, which would let the catch-all answer a request that
+    # had not yet cleared the peer check below.
+    route {
+        @not-vpn not remote_ip {$VPN_IP}
+        respond @not-vpn 403
+
+        # The admin surface, plus the static prefixes its views render through —
+        # the admin pages share a layout with the public ones and arrive
+        # unstyled without them.
+        # /site.webmanifest is here for layouts/plain, which renders
+        # /admin/login: it carries the manifest link the public pages use, so
+        # without this the first page an operator hits logs a 404.
+        @admin path /admin /admin/* /api/v1/admin /api/v1/admin/* /readyz /readyz/ /css/* /js/* /assets/* /favicon.ico /site.webmanifest
+        reverse_proxy @admin app:3000 {
+            # The sidecar is the only trusted proxy on this listener, so
+            # {client_ip} is the tailnet address it reported for the calling
+            # device — one limiter key per operator rather than one for all of
+            # them, which is what {remote_host} used to give.
+            #
+            # Unforgeable because `tailscale serve` *sets* X-Forwarded-For to
+            # the connection's own source address (`ipn/ipnlocal/serve.go`,
+            # `addProxyForwardedHeaders`), replacing anything the client sent
+            # rather than appending to it. That distinction is load-bearing:
+            # Caddy resolves {client_ip} to the left-most value of the list, so
+            # an appended real address behind a forged one would lose. Nothing
+            # but the sidecar is trusted here for the same reason. If the
+            # sidecar ever stops sending the header, {client_ip} falls back to
+            # its own address — the behaviour this replaced, not a bypass.
+            #
+            # CF-Connecting-IP no longer feeds {client_ip} here, but is still
+            # stripped: it is the independent cross-check on req.ip in the logs
+            # and must not be something a tailnet client can write.
+            header_up X-Forwarded-For {client_ip}
+            header_up -CF-Connecting-IP
+
+            # Serve terminated TLS upstream; without this the app sees Caddy's
+            # own plaintext hop and req.protocol is wrong.
+            header_up X-Forwarded-Proto https
+
+            # Vouches for the request so the origin's Cloudflare Access gate
+            # stands aside: this path does not pass through Cloudflare, so there
+            # is no assertion for it to verify. Trustworthy for the same reason
+            # {client_ip} is above — the only peer that can set it is a listener
+            # nothing else on the network can reach — and the public vhost strips
+            # any inbound copy before proxying.
+            #
+            # Set on the whole @admin matcher, which also covers /readyz and the
+            # static prefixes. Harmless: the gate is mounted only on /admin and
+            # /api/v1/admin, so nothing else reads it.
+            header_up X-Admin-Gate tailnet
+
+            health_uri /healthz
+            health_interval 2s
+            lb_try_duration 5s
+            lb_try_interval 250ms
+
+            # As on the public vhost: close idle connections before the app does,
+            # and bound the wait for response headers.
+            transport http {
+                keepalive 30s
+                response_header_timeout 50s
+            }
+        }
+
+        # Refused rather than redirected. A fetch() follows a 302 silently and
+        # then fails parsing an HTML page as JSON, which is a worse error to
+        # read than a plain 403.
+        @public-api path /api/* /healthz
+        respond @public-api 403
+
+        # Whatever is left is a person who reached the tailnet name without the
+        # path, so send them to the admin interface rather than a dead end. The
+        # `*` is required: a bare `/admin` would parse as a path matcher and
+        # leave the redirect with no destination.
+        redir * /admin 302
+    }
+}
+
+# {$SERVER_NAME} names the machine this stack runs on. Substituted as plain text
+# into the JSON body, so it must not contain a quote. The compose files supply
+# it with a default, so an unset value reads as "unnamed" rather than "".
+http://proxy {
+    respond <<EOF
+{
+    "status": "ok",
+    "service": "proxy",
+    "app": "pelicanpass",
+    "server": "{$SERVER_NAME}"
+}
+EOF 200
+}

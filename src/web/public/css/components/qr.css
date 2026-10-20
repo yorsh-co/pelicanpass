@@ -1,0 +1,376 @@
+/*
+ * The scanner has two shapes.
+ *
+ * Inline, before the camera starts: a bordered square sitting in the step, big
+ * enough to show what is about to happen.
+ *
+ * Full-screen, once it is running: `body[data-camera="on"]` lifts it out of the
+ * flow and over the whole viewport. This is the step most likely to fail —
+ * camera permission, a dim auditorium, glare on a printed poster — and it used
+ * to be a 300px square below a collapsed table below a heading, which is the
+ * smallest thing on the page for the hardest job on the page.
+ */
+.qr-reader-wrapper {
+  position: relative;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+
+  height: 0;
+  opacity: 0;
+
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    height var(--duration-slow) var(--ease-out);
+}
+
+.qr-reader-wrapper.show {
+  height: auto;
+  opacity: 1;
+}
+
+.qr-reader-wrapper.skeleton {
+  background: var(--surface-sunken);
+}
+
+.qr-reader {
+  width: 100%;
+  overflow: hidden;
+  opacity: 0;
+
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+
+.qr-reader-wrapper.show .qr-reader {
+  aspect-ratio: 1 / 1;
+  max-height: 300px;
+  opacity: 1;
+}
+
+/* Placeholder glyphs, shown before the video is live and while a scan runs. */
+.qr-reader-wrapper .qr-reader-icon {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--text-muted);
+}
+
+.qr-reader-icon span {
+  font-size: 4.5rem;
+  opacity: 0.4;
+  display: none;
+}
+
+.qr-reader-wrapper.skeleton .qr-reader-icon .on-skeleton {
+  display: block;
+}
+
+.qr-reader-wrapper.processing .qr-reader-icon .on-processing {
+  display: block;
+}
+
+/*
+ * html5-qrcode draws its own shaded region and status line. Both are replaced
+ * by `.qr-viewfinder` below, which is drawn against our own tokens.
+ */
+#qr-shaded-region {
+  display: none !important;
+}
+
+.qr-reader > div:last-of-type {
+  opacity: 0;
+}
+
+/* processing */
+.qr-reader-wrapper.processing::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  background: var(--scrim);
+  pointer-events: none;
+}
+
+/* ---------- full-screen scanning ---------- */
+
+body[data-camera='on'] .qr-reader-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+
+  height: auto;
+  border: none;
+  border-radius: 0;
+  background: var(--camera-bg);
+}
+
+body[data-camera='on'] .qr-reader,
+body[data-camera='on'] .qr-reader-wrapper.show .qr-reader {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  aspect-ratio: auto;
+}
+
+/*
+ * Fill the viewport rather than letterbox, by cropping the box and not the
+ * frame. html5-qrcode maps the box to the camera frame one axis at a time, as if
+ * the frame were stretched to fit, so the video keeps the stream's own aspect
+ * ratio and the reader's `overflow: hidden` trims the excess.
+ *
+ * Height is `lvh` because the library measures the box once, when the feed
+ * starts; the large viewport does not move when the browser toolbars do.
+ */
+body[data-camera='on'] .qr-reader {
+  position: relative;
+}
+
+body[data-camera='on'] .qr-reader video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+
+  width: auto !important;
+  max-width: none;
+  height: 100%;
+  height: 100lvh;
+}
+
+@media (orientation: landscape) {
+  body[data-camera='on'] .qr-reader video {
+    width: 100% !important;
+    height: auto;
+  }
+}
+
+/*
+ * The viewfinder. One element carries both the cut-out and the surrounding
+ * dimming: an enormous spread `box-shadow` darkens everything outside the box
+ * without a second overlay element to keep aligned with it.
+ */
+.qr-viewfinder {
+  display: none;
+}
+
+body[data-camera='on'] .qr-viewfinder {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+
+  width: min(70vw, 17rem);
+  aspect-ratio: 1 / 1;
+
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 0 100vmax var(--scrim);
+}
+
+/*
+ * Corner brackets. `--text-on-brand` (white in both themes) rather than
+ * `--accent`: these sit on a live camera feed whose brightness is unknown, and
+ * the deep violet the light theme uses for accents disappears against a dark
+ * room.
+ */
+.qr-viewfinder span {
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid var(--text-on-brand);
+}
+
+.qr-viewfinder span:nth-child(1) {
+  top: -1px;
+  left: -1px;
+  border-right: none;
+  border-bottom: none;
+  border-top-left-radius: var(--radius-md);
+}
+
+.qr-viewfinder span:nth-child(2) {
+  top: -1px;
+  right: -1px;
+  border-left: none;
+  border-bottom: none;
+  border-top-right-radius: var(--radius-md);
+}
+
+.qr-viewfinder span:nth-child(3) {
+  bottom: -1px;
+  left: -1px;
+  border-right: none;
+  border-top: none;
+  border-bottom-left-radius: var(--radius-md);
+}
+
+.qr-viewfinder span:nth-child(4) {
+  bottom: -1px;
+  right: -1px;
+  border-left: none;
+  border-top: none;
+  border-bottom-right-radius: var(--radius-md);
+}
+
+/*
+ * The instruction, torch and help text ride over the camera on their own
+ * scrim, anchored where the thumb is.
+ */
+body[data-camera='on'] .qr-step .step-controls {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: calc(var(--z-overlay) + 1);
+
+  margin: 0;
+  padding: var(--space-8) var(--space-5)
+    calc(var(--space-5) + env(safe-area-inset-bottom));
+
+  background: var(--scrim-gradient);
+  text-align: center;
+}
+
+body[data-camera='on'] .qr-step .step-controls,
+body[data-camera='on'] .qr-step .hint-div,
+body[data-camera='on'] .qr-step .qr-help {
+  color: var(--text-on-brand);
+}
+
+/*
+ * The cookie notice goes with the rest of the chrome. Camera mode is a
+ * transient state inside a page that already carried the notice before the
+ * viewfinder opened and carries it again on the way out, so nothing is
+ * withheld — and the scrim over the viewfinder is the wrong place to read
+ * small print.
+ */
+body[data-camera='on'] .checkin-head,
+body[data-camera='on'] .qr-step .table-wrapper,
+body[data-camera='on'] .qr-step .privacy-notice,
+body[data-camera='on'] footer {
+  display: none;
+}
+
+.qr-torch {
+  width: auto;
+  margin: 0 auto;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  display: none;
+}
+
+body[data-camera='on'] .qr-torch {
+  display: inline-flex;
+  background: var(--camera-control-bg);
+  color: var(--text-on-brand);
+}
+
+body[data-camera='on'] .qr-torch.is-on {
+  background: var(--text-on-brand);
+  color: var(--camera-bg);
+}
+
+.qr-help {
+  margin-top: var(--space-3);
+  text-align: center;
+}
+
+/*
+ * The way through for a camera that will not scan, so it is not offered over
+ * the feed: the attendee is either scanning or asking to be let through.
+ */
+.qr-presence {
+  margin-top: var(--space-2);
+  text-align: center;
+}
+
+body[data-camera='on'] .qr-presence {
+  display: none;
+}
+
+/*
+ * The two controls that sit on the feed itself: the escape route at the top
+ * left, and the camera switch at the top right.
+ *
+ * The escape route matters most — everything else on the page is hidden in this
+ * state, top bar included, so without it the only ways out are a successful
+ * scan and a reload.
+ *
+ * Above the viewfinder's dimming and the `processing` scrim, so both stay
+ * reachable while a scan is in flight.
+ */
+.qr-close,
+.qr-switch {
+  display: none;
+}
+
+body[data-camera='on'] .qr-close,
+body[data-camera='on'] .qr-switch {
+  position: absolute;
+  top: calc(var(--space-4) + env(safe-area-inset-top));
+  z-index: 3;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+
+  border-radius: var(--radius-full);
+  background: var(--camera-control-bg);
+  color: var(--text-on-brand);
+}
+
+body[data-camera='on'] .qr-close {
+  left: var(--space-4);
+}
+
+/*
+ * The skeleton covers the feed until its first frame, which may never come: a
+ * permission prompt refused or left unanswered, or a camera the browser cannot
+ * open. `skeleton.css` blanks and disables every button inside it, so the
+ * escape route is taken back out — it exists for exactly this state.
+ */
+body[data-camera='on'] .qr-reader-wrapper.skeleton .qr-close {
+  pointer-events: auto;
+  cursor: pointer;
+  color: var(--text-on-brand) !important;
+  background: var(--camera-control-bg);
+}
+
+body[data-camera='on'] .qr-reader-wrapper.skeleton .qr-close::before {
+  content: none;
+}
+
+body[data-camera='on'] .qr-switch {
+  right: var(--space-4);
+}
+
+/* `button.ghost:hover` resolves to page tokens, which are unreadable on a feed. */
+body[data-camera='on'] .qr-close:hover,
+body[data-camera='on'] .qr-switch:hover {
+  background: var(--camera-control-bg);
+  color: var(--text-on-brand);
+}
+
+/* The flip is a real stop and start; the button says so while it runs. */
+body[data-camera='on'] .qr-switch:disabled {
+  opacity: 0.6;
+}
+
+/*
+ * The front feed, mirrored. Decoding reads raw frames off a canvas, so this
+ * cannot affect what scans — but a code held up to a selfie camera is aimed by
+ * a preview that moves the same way the hand does.
+ */
+body[data-camera='on'][data-facing='user'] .qr-reader video {
+  transform: scaleX(-1);
+}

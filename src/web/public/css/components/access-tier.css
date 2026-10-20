@@ -1,0 +1,60 @@
+/*
+ * What a volunteer's access looks like from across a table: one fill and ink
+ * per tier, read off `data-access`. Shared by the pass, where it paints the
+ * tab and the card, and by the administrator screens' tier chip.
+ *
+ * A volunteer with actions but no tier has no `data-access` and keeps the
+ * neutral pair, the pass backdrop's own mid-tone. The neutral pair sits in
+ * `:where()` so it has no specificity and every tier below overrides it, in
+ * whatever order a page's own sheet arrives. The pass backdrop is the same in
+ * both schemes, so these are too. Chosen to differ in hue — navy,
+ * deep red, deep gold, teal, deep magenta. Ink on fill is >= 5.5:1; the
+ * neutral pair, white on the backdrop's mid-tone, is 12.1:1.
+ */
+:where(.pass, .access-chip) {
+  --access-stripe: #0b3b48;
+  --access-ink: var(--text-on-brand);
+}
+
+[data-access='edit'] {
+  --access-stripe: #1e2a78;
+  --access-ink: #ffffff;
+}
+
+[data-access='lookup'] {
+  --access-stripe: #b91c1c;
+  --access-ink: #ffffff;
+}
+
+[data-access='tshirt'] {
+  --access-stripe: #7a5600;
+  --access-ink: #ffffff;
+}
+
+[data-access='redeem'] {
+  --access-stripe: #0f766e;
+  --access-ink: #ffffff;
+}
+
+[data-access='raffle'] {
+  --access-stripe: #7a1456;
+  --access-ink: #ffffff;
+}
+
+/* The chip: the tier's name in its pass colours, so the two read as one. */
+.access-chip {
+  display: inline-block;
+  flex-shrink: 0;
+
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+
+  background: var(--access-stripe);
+  color: var(--access-ink);
+
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}

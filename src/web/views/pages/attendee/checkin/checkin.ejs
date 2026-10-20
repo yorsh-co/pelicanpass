@@ -1,0 +1,466 @@
+<%# i18n: checkin, qr %>
+<% const copyAudience = locals.audience || 'participant'; %>
+<script id="checkin-data" type="application/json" nonce="<%= cspNonce %>">
+  <%- JSON.stringify(initialData).replace(/</g, '\\u003c') %>
+</script>
+<%- include('../../../partials/i18n-catalogs') %>
+
+<main data-checkin="main-container" class="main-container checkin-container">
+  <div class="checkin-head">
+    <%- include('../../../partials/header') %>
+
+    <ol
+      class="progress"
+      data-checkin="progress"
+      aria-label="<%= copy.progressLabel() %>"
+    >
+      <li class="progress-step" data-progress="ticket">
+        <span class="progress-label"><%= copy.progressTicket() %></span>
+      </li>
+      <li class="progress-step" data-progress="verification">
+        <span class="progress-label"><%= copy.progressVerification() %></span>
+      </li>
+      <li class="progress-step" data-progress="qr">
+        <span class="progress-label"><%= copy.progressArrival() %></span>
+      </li>
+    </ol>
+  </div>
+
+  <div class="content-wrapper">
+    <!-- ticket step -->
+    <section data-checkin="ticket-step" class="ticket-step skeleton" inert>
+      <div class="step-body">
+        <h1 class="step-question" tabindex="-1" data-checkin="ticket-copy-header">
+          <%= copy.ticketHeader() %>
+        </h1>
+      </div>
+
+      <div class="step-controls">
+        <label class="visually-hidden" for="checkin-ticket-code-input">
+          <%= copy.ticketInputLabel() %>
+        </label>
+
+        <div data-checkin="ticket-input-wrapper" class="input-wrapper">
+          <input
+            id="checkin-ticket-code-input"
+            data-checkin="ticket-code-input"
+            type="text"
+            inputmode="text"
+            pattern="<%= ticketPattern %>"
+            autocomplete="one-time-code"
+            enterkeyhint="send"
+            required
+            disabled
+          />
+        </div>
+
+        <div
+          data-checkin="ticket-hint-div"
+          class="hint-div"
+          aria-live="polite"
+        ></div>
+
+        <p class="ticket-help small-print" data-checkin="ticket-copy-help">
+          <%= copy.ticketHelp() %>
+        </p>
+
+        <%- include('../../../components/privacy-notice') %>
+
+        <div
+          id="ticket-captcha-div"
+          data-checkin="ticket-captcha-div"
+          data-sitekey="<%= turnstileSiteKey %>"
+          class="captcha-container"
+        ></div>
+      </div>
+    </section>
+
+    <!-- ticket verification -->
+    <section
+      data-checkin="verification-step"
+      class="verification-step skeleton"
+      inert
+    >
+      <div class="step-body">
+        <h1 class="step-question" tabindex="-1" data-checkin="verification-copy-header">
+          <%= copy.verificationHeader({ audience: copyAudience }) %>
+        </h1>
+
+        <div data-checkin="verification-table-wrapper" class="table-wrapper">
+          <table>
+            <tr>
+              <th>
+                <div>
+                  <span class="material-symbols-outlined" aria-hidden="true">
+                    confirmation_number
+                  </span>
+                  <span data-checkin="verification-copy-ticketLabel"
+                    ><%= copy.userPreviewTicketLabel() %></span
+                  >
+                </div>
+              </th>
+              <td>
+                <span
+                  data-checkin="verification-ticketCode"
+                  data-skeleton="value"
+                  >•••••</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <div>
+                  <span class="material-symbols-outlined" aria-hidden="true">
+                    id_card
+                  </span>
+                  <span data-checkin="verification-copy-nameLabel"><%= copy.userPreviewNameLabel() %></span>
+                </div>
+              </th>
+              <td>
+                <span data-checkin="verification-name" data-skeleton="value"
+                  >••••• ••••••••</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <div>
+                  <span class="material-symbols-outlined" aria-hidden="true">
+                    call
+                  </span>
+                  <span data-checkin="verification-copy-phoneLabel"
+                    ><%= copy.userPreviewPhoneLabel() %></span
+                  >
+                </div>
+              </th>
+              <td>
+                <span
+                  data-checkin="verification-phoneStart"
+                  data-checkin-value=""
+                  data-skeleton="value"
+                  >(••) •••••-••••</span
+                >
+              </td>
+            </tr>
+          </table>
+
+          <button
+            data-checkin="verification-table-toggle"
+            class="ghost table-toggle"
+            type="button"
+            aria-expanded="true"
+            disabled
+          >
+            <span
+              data-checkin="verification-table-toggle-label"
+              class="material-symbols-outlined"
+              aria-hidden="true"
+              >keyboard_arrow_up</span
+            >
+            <span class="visually-hidden"><%= copy.previewToggle() %></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="step-controls">
+        <label class="visually-hidden" for="checkin-verification-code-input">
+          <%= copy.verificationInputLabel() %>
+        </label>
+
+        <div data-checkin="verification-input-wrapper" class="input-wrapper">
+          <input
+            id="checkin-verification-code-input"
+            data-checkin="verification-code-input"
+            class="tel-input txt-center"
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]{4}"
+            autocomplete="one-time-code"
+            enterkeyhint="send"
+            required
+            disabled
+          />
+        </div>
+
+        <div
+          data-checkin="verification-hint-div"
+          class="hint-div"
+          aria-live="polite"
+        ></div>
+
+        <button
+          data-checkin="verification-back-btn"
+          class="ghost back-btn"
+          type="button"
+          disabled
+        >
+          <span data-checkin="verification-copy-backButton" class="btn-label"
+            ><%= copy.verificationBackButton() %></span
+          >
+        </button>
+      </div>
+    </section>
+
+    <!-- qr step -->
+    <section data-checkin="qr-step" class="qr-step skeleton" inert>
+      <div class="step-body">
+        <h1 class="step-question" tabindex="-1" data-checkin="qr-copy-header">
+          <%= copy.scannerHeader() %>
+        </h1>
+
+        <div data-checkin="qr-table-wrapper" class="table-wrapper collapsed">
+          <table>
+            <tr>
+              <th>
+                <div>
+                  <span class="material-symbols-outlined" aria-hidden="true">
+                    confirmation_number
+                  </span>
+                  <span data-checkin="qr-copy-ticketLabel"><%= copy.userPreviewTicketLabel() %></span>
+                </div>
+              </th>
+              <td>
+                <span data-checkin="qr-ticketCode" data-skeleton="value"
+                  >•••••</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <div>
+                  <span class="material-symbols-outlined" aria-hidden="true">
+                    id_card
+                  </span>
+                  <span data-checkin="qr-copy-nameLabel"><%= copy.userPreviewNameLabel() %></span>
+                </div>
+              </th>
+              <td>
+                <span data-checkin="qr-name" data-skeleton="value"
+                  >••••• ••••••••</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <div>
+                  <span class="material-symbols-outlined" aria-hidden="true">
+                    call
+                  </span>
+                  <span data-checkin="qr-copy-phoneLabel"><%= copy.userPreviewPhoneLabel() %></span>
+                </div>
+              </th>
+              <td>
+                <span
+                  data-checkin="qr-phoneStart"
+                  data-checkin-value=""
+                  data-skeleton="value"
+                  >(••) •••••-••••</span
+                >
+              </td>
+            </tr>
+          </table>
+
+          <button
+            data-checkin="qr-table-toggle"
+            class="ghost table-toggle"
+            type="button"
+            aria-expanded="false"
+            disabled
+          >
+            <span
+              data-checkin="qr-table-toggle-label"
+              class="material-symbols-outlined"
+              aria-hidden="true"
+              >keyboard_arrow_down</span
+            >
+            <span class="visually-hidden"><%= copy.previewToggle() %></span>
+          </button>
+        </div>
+
+        <div
+          data-checkin="qr-reader-wrapper"
+          data-skeleton="div"
+          class="qr-reader-wrapper skeleton"
+        >
+          <div
+            id="checkin-qr-reader"
+            data-checkin="qr-reader-div"
+            class="qr-reader skeleton"
+          ></div>
+          <div class="qr-reader-icon" aria-hidden="true">
+            <span class="material-symbols-outlined on-skeleton">
+              no_photography
+            </span>
+            <span class="material-symbols-outlined on-processing">
+              qr_code_scanner
+            </span>
+          </div>
+          <div class="qr-viewfinder" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+
+          <button data-checkin="qr-close-btn" class="ghost qr-close" type="button">
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+            <span data-checkin="qr-copy-closeButton" class="visually-hidden"
+              ><%= copy.closeButton() %></span
+            >
+          </button>
+
+          <!--
+            The way out of a camera that will not focus, will not open, or is
+            covered by a case. Hidden until the running feed proves there is a
+            second camera to reach; `modules/qr.ts` reveals it.
+          -->
+          <button
+            data-checkin="qr-switch-btn"
+            class="ghost qr-switch"
+            type="button"
+            hidden
+          >
+            <span class="material-symbols-outlined" aria-hidden="true"
+              >cameraswitch</span
+            >
+            <span
+              data-checkin="qr-copy-switchCameraButton"
+              class="visually-hidden"
+              ><%= copy.switchCameraButton() %></span
+            >
+          </button>
+        </div>
+      </div>
+
+      <div class="step-controls">
+        <button
+          data-checkin="start-camera-btn"
+          class="qr-start-btn show"
+          type="button"
+          disabled
+        >
+          <span class="material-symbols-outlined btn-label" aria-hidden="true">
+            qr_code_scanner
+          </span>
+          <span data-checkin="qr-copy-cameraButton" class="btn-label"
+            ><%= copy.cameraButton() %></span
+          >
+          <span class="btn-spinner"></span>
+        </button>
+
+        <button
+          data-checkin="qr-torch-btn"
+          class="ghost qr-torch"
+          type="button"
+          aria-pressed="false"
+          hidden
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">
+            flashlight_on
+          </span>
+          <span data-checkin="qr-copy-torchButton"><%= copy.torchButton() %></span>
+        </button>
+
+        <div
+          data-checkin="qr-hint-div"
+          class="hint-div"
+          aria-live="polite"
+        ></div>
+
+        <p class="qr-help small-print" data-checkin="qr-copy-help">
+          <%= copy.scannerHelp() %>
+        </p>
+
+        <button
+          data-checkin="qr-presence-btn"
+          class="ghost qr-presence"
+          type="button"
+          disabled
+        >
+          <span data-checkin="qr-copy-presenceButton" class="btn-label"
+            ><%= copy.scannerPresenceButton() %></span
+          >
+          <span class="btn-spinner"></span>
+        </button>
+
+        <%- include('../../../components/privacy-notice') %>
+      </div>
+    </section>
+
+    <!-- success step -->
+    <section data-checkin="success-step" class="success-step" inert>
+      <div class="step-body success-body">
+        <div class="success-card">
+          <div class="success-card-head">
+            <%- include('../../../partials/header') %>
+
+            <span class="success-mark" aria-hidden="true">
+              <span class="material-symbols-outlined">check</span>
+            </span>
+          </div>
+
+          <h1
+            class="step-question success-greeting"
+            tabindex="-1"
+            data-checkin="success-greeting"
+          >
+            <%= copy.successHeading() %>
+          </h1>
+
+          <div
+            class="success-number-block"
+            data-checkin="success-number-block"
+            hidden
+          >
+            <p
+              class="success-number-label"
+              data-checkin="success-copy-numberLabel"
+            >
+              <%= copy.successNumberLabel() %>
+            </p>
+            <p
+              class="success-number"
+              data-checkin="success-checkinNumber"
+            ></p>
+          </div>
+
+          <div
+            data-checkin="success-message"
+            class="success-message"
+            aria-live="polite"
+          ></div>
+        </div>
+      </div>
+
+      <div class="step-controls">
+        <div data-checkin="success-hint-div" class="hint-div">
+          <a href="/" data-checkin="success-copy-help"><%= copy.successHelp() %></a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <%- include('../../../partials/footer', { showLogout: true }) %>
+</main>
+
+<!-- page-specific styles -->
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/attendee/checkin.css" />
+<%# The ticket-code face is otherwise fetched on the first keystroke, so the
+    opening characters would paint in the fallback and then swap. Font
+    preloads need `crossorigin` even on the same origin. -%>
+<link
+  rel="preload"
+  as="font"
+  href="/assets/fonts/red-hat-mono-ticket.woff2"
+  type="font/woff2"
+  crossorigin
+/>
+
+<!-- page-specific scripts -->
+<%- contentFor('scripts') %>
+<!-- cloudflare turnstile captcha -->
+<script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+  defer
+></script>
+
+<!-- static files -->
+<script type="module" src="/js/pages/attendee/checkin/index.js"></script>

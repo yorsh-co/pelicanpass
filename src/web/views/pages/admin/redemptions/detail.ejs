@@ -1,0 +1,164 @@
+<%# i18n: admin-redemptions %>
+<%
+/*
+ * One attendee's redemptions: where each item stands, the corrections an
+ * administrator can make, and everything the counter recorded.
+ *
+ * Rendered by a POST, so the attendee ID never reaches a URL. The hidden
+ * `#record` form is how the page reaches itself again after a correction,
+ * for the reason lookup/detail.ejs gives.
+ *
+ * Each correction carries what it needs in `data-*` attributes: the item, the
+ * correction, and for an undo the collection time this page showed. That time
+ * is what lets the server refuse an undo of a collection the page never saw.
+ *
+ * Correction controls are absent for an operator without `redemptions:write`
+ * and for an archived record, and the API refuses both on its own.
+ *
+ * The escaping output tag on every value off the record, for the reason the
+ * other admin templates give.
+ */
+const attendee = locals.attendee || null;
+const items = locals.items || [];
+const history = locals.history || [];
+const reasons = locals.reasons || { mark: [], revert: [] };
+const canCorrect = locals.canCorrect || false;
+const canEdit = locals.canEdit || false;
+const truncatedAt = locals.truncatedAt || null;
+%>
+<%- include('../../../partials/i18n-catalogs') %>
+
+<div class="redemption-record">
+  <header class="redemption-record__head">
+    <div class="redemption-record__headline">
+      <h1 class="redemption-record__title"><%= attendee.name %></h1>
+      <a class="redemption-record__close" href="/admin/redemptions">
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        <span class="visually-hidden"><%= copy.recordClose() %></span>
+      </a>
+    </div>
+    <% if (attendee.nickname) { %>
+    <p class="redemption-record__nickname"><%= attendee.nickname %></p>
+    <% } %>
+    <p class="redemption-record__meta">
+      <span class="role-badge role-badge--<%= attendee.role %>">
+        <%= shell.role({ role: attendee.role }) %>
+      </span>
+      <code class="admin-table__code ticket-code"><%= attendee.ticketCode %></code>
+      <span>
+        <%= attendee.checkedIn ? (attendee.checkinNumber === null ? shell.present() : `#${attendee.checkinNumber}`) : '' %>
+      </span>
+    </p>
+
+    <% if (canEdit) { %>
+    <%# A form post, not a link: the editor is reached with the ID in a body. -%>
+    <form method="post" action="/admin/attendees/edit">
+      <input type="hidden" name="attendeeId" value="<%= attendee.attendeeId %>" />
+      <button class="ghost redemption-record__edit" type="submit"><%= copy.recordEdit() %></button>
+    </form>
+    <% } %>
+  </header>
+
+  <% if (attendee.archived) { %>
+  <p class="redemption-record__flag"><%= copy.recordArchived() %></p>
+  <% } else if (!canCorrect) { %>
+  <p class="redemption-record__hint"><%= copy.recordReadOnly() %></p>
+  <% } %>
+
+  <section aria-labelledby="record-items">
+    <h2 class="redemptions__heading" id="record-items"><%= copy.recordItems() %></h2>
+
+    <p class="redemption-record__error" data-redemption-error role="alert"></p>
+
+    <% if (items.length === 0) { %>
+    <p class="admin-list__empty"><%= copy.recordNoItems() %></p>
+    <% } %>
+
+    <ul class="redemption-record__items">
+      <% for (const entry of items) { %>
+      <% const correction = entry.redeemedAt ? 'revert' : 'mark'; %>
+      <li class="redemption-record__item<%= entry.redeemedAt ? ' is-redeemed' : '' %>">
+        <div class="redemption-record__item-text">
+          <span class="redemption-record__item-label"><%= entry.label %></span>
+          <span class="redemption-record__item-option"><%= entry.option %></span>
+          <span class="redemption-record__item-status">
+            <%= entry.redeemedAt ? copy.recordRedeemedAt({ time: entry.redeemedAtText }) : copy.recordPending() %>
+          </span>
+        </div>
+
+        <% if (canCorrect) { %>
+        <div class="redemption-record__correct">
+          <label class="visually-hidden" for="reason-<%= entry.item %>"><%= copy.actionReason() %></label>
+          <select id="reason-<%= entry.item %>" data-redemption-reason>
+            <option value=""><%= copy.actionReasonPlaceholder() %></option>
+            <% for (const reason of reasons[correction]) { %>
+            <option value="<%= reason.value %>"><%= reason.label %></option>
+            <% } %>
+          </select>
+          <button
+            type="button"
+            class="<%= correction === 'revert' ? 'ghost ' : '' %>redemption-record__action"
+            data-redemption-action="<%= correction %>"
+            data-item="<%= entry.item %>"
+            data-attendee-id="<%= attendee.attendeeId %>"
+            <% if (entry.redeemedAt) { %>data-expected-redeemed-at="<%= entry.redeemedAt %>"<% } %>
+          >
+            <span class="btn-label"><%= correction === 'revert' ? copy.actionRevert() : copy.actionMark() %></span>
+          </button>
+        </div>
+        <% } %>
+      </li>
+      <% } %>
+    </ul>
+  </section>
+
+  <section aria-labelledby="record-history">
+    <h2 class="redemptions__heading" id="record-history"><%= copy.historyHeading() %></h2>
+
+    <% if (history.length === 0) { %>
+    <p class="admin-list__empty"><%= copy.historyEmpty() %></p>
+    <% } else { %>
+    <div class="admin-list__scroll">
+      <table class="admin-table redemption-record__history">
+        <thead>
+          <tr>
+            <th scope="col"><%= copy.historyWhen() %></th>
+            <th scope="col"><%= copy.historyItem() %></th>
+            <th scope="col"><%= copy.historyOutcome() %></th>
+            <th scope="col"><%= copy.historyBy() %></th>
+            <th scope="col"><%= copy.historyReason() %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (const entry of history) { %>
+          <tr class="redemption-record__outcome--<%= entry.outcome %>">
+            <td><%= entry.when %></td>
+            <td><%= entry.item %></td>
+            <td><%= entry.outcomeLabel %></td>
+            <td>
+              <%= entry.by %>
+              <span class="admin-table__flag"><%= entry.actorKind %></span>
+            </td>
+            <td><%= entry.reason || '' %></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <% if (truncatedAt) { %>
+    <p class="redemptions__footnote"><%= copy.historyTruncated({ count: truncatedAt }) %></p>
+    <% } %>
+    <% } %>
+  </section>
+
+  <form id="record" method="post" action="/admin/redemptions/record" hidden>
+    <input type="hidden" name="attendeeId" value="<%= attendee.attendeeId %>" />
+  </form>
+</div>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/admin/attendees.css" />
+<link rel="stylesheet" href="/css/dist/pages/admin/redemptions.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/admin/redemptions/detail/index.js"></script>

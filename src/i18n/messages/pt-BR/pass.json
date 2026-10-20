@@ -1,0 +1,158 @@
+{
+  "pass.accessBadge": {
+    "defaultMessage": "{tier, select, edit {Cadastro} raffle {Gerador de N°} lookup {Consulta} tshirt {Camisetas} redeem {Retiradas} other {Voluntário}}",
+    "description": "Chip on the tab at the top right of a volunteer's own pass, beside the logo. Tapping the tab opens the volunteer's actions (the staff links), and the chip names what their access lets them do, so a team leader can ask what it says and know what to expect of them; read aloud as the tab's name, so it is a plain word or two. Shown in capital letters by the stylesheet, so the stored case is not what appears. tier is the highest access the volunteer holds: edit is the registration screen, raffle the number generator, redeem the collection of items, lookup the attendee search, tshirt the T-shirt desk. A volunteer who can both look up and redeem shows lookup. other is only a fallback for a tier the server does not send today, so it names the volunteer role and never claims an access. A volunteer with actions but none of these tiers gets the tab with the plain volunteer chip, chrome.role.volunteer, and a volunteer with no actions at all sees that chip in the header with no tab. It is the longest text the tab takes and shares a row with the logo on a 320px screen, so keep it short; it may wrap onto two lines. N° is the abbreviation of número."
+  },
+  "pass.actionsClose": {
+    "defaultMessage": "Voltar",
+    "description": "Button at the foot of the volunteer's actions view that returns to the front of the pass."
+  },
+  "pass.actionsTitle": {
+    "defaultMessage": "Suas funções",
+    "description": "Heading of the volunteer's actions view, the face opened by the access tab, above the links to the staff surfaces they may use. funções are the jobs their access covers."
+  },
+  "pass.adminLink": {
+    "defaultMessage": "Painel admin",
+    "description": "Link to the admin area, shown only to a volunteer who also holds an admin account. The admin area asks for its own login. Kept short: it has a line of its own, but sits among the other staff links."
+  },
+  "pass.backHint": {
+    "defaultMessage": "Mostre esta tela para retiradas",
+    "description": "Under the identity line on the QR side. The QR is not self-explanatory to someone holding it for the first time in a queue."
+  },
+  "pass.band.label": {
+    "defaultMessage": "palavra chave",
+    "description": "Label above the rotating word on the pass. Says what the volunteer is checking, because a bare word reads as decoration and gets ignored."
+  },
+  "pass.band.retry": {
+    "defaultMessage": "Atualizar",
+    "description": "Replaces the band word when it stops refreshing. A label and an action rather than a state: the volunteer in front of the attendee needs the screen fixed, not diagnosed."
+  },
+  "pass.chip.ariaLabel": {
+    "defaultMessage": "{name}, retirar — mostre seu ingresso para retirar itens",
+    "description": "Accessible name of an item chip not yet collected. name is the chip's visible name. The chip's glyph is hidden from assistive technology, so this says what tapping it does; resgatar repeats the chip's visible state."
+  },
+  "pass.chip.name": {
+    "defaultMessage": "{item} · {value}",
+    "description": "An item chip's name with the attendee's choice for it, such as a T-shirt size. item is the item's name; value comes from the attendee's registration."
+  },
+  "pass.chip.pending": {
+    "defaultMessage": "retirar",
+    "description": "State of an item chip the attendee has not collected yet. The staff screen uses the matching word."
+  },
+  "pass.chip.redeemed": {
+    "defaultMessage": "retirado",
+    "description": "State of an item chip already collected. The staff screen uses the matching word."
+  },
+  "pass.frontTab": {
+    "defaultMessage": "Voltar ao ingresso",
+    "description": "Accessible name of the logo's tab on the actions view, which returns to the front of the pass. Never shown as text: the logo itself is what is on screen. Read aloud as a button."
+  },
+  "pass.hideQr": {
+    "defaultMessage": "Voltar",
+    "description": "Turns the pass back from the QR side."
+  },
+  "pass.init.rateLimited": {
+    "defaultMessage": "Muitas tentativas. Espere um pouco antes de tentar novamente",
+    "description": "Shown after being sent back to the pass because of too many attempts."
+  },
+  "pass.init.recoverableError": {
+    "defaultMessage": "Algo deu errado. Tente recarregar a página",
+    "description": "The pass failed to draw but the session is intact, so reloading fixes it."
+  },
+  "pass.init.unknownError": {
+    "defaultMessage": "Algo deu errado. Tente novamente",
+    "description": "Shown after being sent back to the pass for any other failure."
+  },
+  "pass.map.alt": {
+    "defaultMessage": "Mapa de exemplo do local do evento. Na entrada, embaixo: check-in. Seguindo pela passarela central, para cima: o auditório, no topo, com o palco ao fundo. No caminho, à esquerda: a praça de alimentação. À direita: os banheiros, mais acima, e o balcão de informações e apoio, mais abaixo.",
+    "description": "Alternative text for the venue map image. Names the places an attendee is most likely to look for, since a screen reader cannot read the drawing."
+  },
+  "pass.map.close": {
+    "defaultMessage": "Fechar mapa",
+    "description": "Accessible name of the close button on the venue map. The button shows only a close icon."
+  },
+  "pass.map.help": {
+    "defaultMessage": "Se precisar de ajuda para se localizar, fale com um dos nossos voluntários",
+    "description": "Fixed line under the venue map, for participants who cannot find their way from the drawing. Points them to the volunteers on site. Not shown to volunteers."
+  },
+  "pass.map.link": {
+    "defaultMessage": "Mapa",
+    "description": "Opens the venue map over the pass. The visible label of a participant's button, and the accessible name and tooltip of a volunteer's icon-only button. Kept short: it may share a row with other buttons on narrow phones."
+  },
+  "pass.map.title": {
+    "defaultMessage": "Mapa do local",
+    "description": "Heading of the venue map shown over the pass."
+  },
+  "pass.nickname.cancel": {
+    "defaultMessage": "Cancelar",
+    "description": "Accessible name of the cross button that closes the name editor without saving."
+  },
+  "pass.nickname.cleared": {
+    "defaultMessage": "Voltamos para o seu primeiro nome",
+    "description": "The name was cleared, so the pass shows the attendee's first name again."
+  },
+  "pass.nickname.editLabel": {
+    "defaultMessage": "Personalize como seu nome aparece no app",
+    "description": "Accessible name of the pencil button that opens the name editor."
+  },
+  "pass.nickname.failed": {
+    "defaultMessage": "Algo de errado. Tente novamente",
+    "description": "Saving the name failed for a reason worth retrying."
+  },
+  "pass.nickname.hint": {
+    "defaultMessage": "Personalize como seu nome aparece no app",
+    "description": "Hint in the name editor. Only the attendee ever sees the name it sets."
+  },
+  "pass.nickname.inputLabel": {
+    "defaultMessage": "Como seu nome aparece na sua tela",
+    "description": "Screen-reader label of the name editor's field."
+  },
+  "pass.nickname.inputTitle": {
+    "defaultMessage": "Letras, números, espaço, apóstrofo e hífen, de {min, number} a {max, number} caracteres.",
+    "description": "Tooltip the browser shows when the typed name breaks the field's rules. min and max are the allowed length."
+  },
+  "pass.nickname.invalid": {
+    "defaultMessage": "Use letras, números, espaço, apóstrofo ou hífen",
+    "description": "The typed name has characters the app does not accept, or is too long."
+  },
+  "pass.nickname.save": {
+    "defaultMessage": "Salvar",
+    "description": "Accessible name of the check-mark button that saves the name."
+  },
+  "pass.nickname.saved": {
+    "defaultMessage": "Salvo",
+    "description": "The name was saved."
+  },
+  "pass.number.detail1": {
+    "defaultMessage": "chapelaria",
+    "description": "First of two stacked lines beside the check-in number saying what it is for: the cloakroom. Without them the number is something an attendee has no reason to keep on screen."
+  },
+  "pass.number.detail2": {
+    "defaultMessage": "interações",
+    "description": "Second of two stacked lines beside the check-in number saying what it is for: the raffle draws."
+  },
+  "pass.number.label": {
+    "defaultMessage": "seu número é",
+    "description": "Label above the attendee's check-in number, the largest thing on the pass."
+  },
+  "pass.raffleLink": {
+    "defaultMessage": "Gerador de números",
+    "description": "Link to the raffle screen, shown only to a volunteer who may run the draw."
+  },
+  "pass.staffLink": {
+    "defaultMessage": "Retiradas",
+    "description": "Link to the redemption scanner, shown only to a volunteer who may record redemptions. Kept short: it shares a row with the raffle link on narrow phones."
+  },
+  "pass.surveyLink": {
+    "defaultMessage": "Deixe seu feedback",
+    "description": "Highlighted button on its own line on the front of the pass, above the other links, that opens the experience questionnaire. Shown only while the questionnaire is open and this attendee has not answered it yet."
+  },
+  "pass.ticketLabel": {
+    "defaultMessage": "ingresso",
+    "description": "Labels the ticket code, so nobody reads the code itself aloud as a label."
+  },
+  "pass.welcome": {
+    "defaultMessage": "{phase, select, arrival {que bom que você chegou!} default {bem-vindo!} survey {conte para a gente como foi sua experiência} thanks {obrigado por ter participado!} other {bem-vindo!}}",
+    "description": "The line under the attendee's name on the pass, for participants and for volunteers with no team assigned; an assigned volunteer sees their team and role there instead. phase is the part of the event it is shown in, switched at the times set in PASS_WELCOME_SCHEDULE: arrival until the first switch, then whichever phase is scheduled. survey points down at the feedback button below it, so it is meant for while the questionnaire is open; an attendee for whom it is not open sees default instead. thanks replaces survey once this attendee has answered the questionnaire, as a closing line for the day. Same voice as the check-in flow: informal pt-BR, warm, never talking down; the audience is 14–18 and reads being patronised as disrespect."
+  }
+}

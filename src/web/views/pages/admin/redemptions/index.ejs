@@ -1,0 +1,292 @@
+<%# i18n: admin-redemptions %>
+<%
+/*
+ * The redemptions screen: per-item totals, the per-option breakdown, and who
+ * is entitled to one item.
+ *
+ * Server-rendered in full, like the roster: the filters, the search and the
+ * pager all submit one POST form, so the screen reads and navigates with
+ * JavaScript off. The bundle refreshes the totals in place and lets a whole
+ * row open its record; nothing else depends on it.
+ *
+ * **Nothing here builds a URL out of an attendee**, for the reason the roster
+ * gives. The record opens by posting its ID from a button.
+ *
+ * The totals carry `data-summary-*` attributes. They are the contract with the
+ * bundle, which writes the refreshed counts into them; an option that appears
+ * after the page was rendered shows on the next load, not before.
+ *
+ * `locals.` on every read, and the escaping output tag on every value off a
+ * row, for the reasons the roster template gives.
+ */
+const filters = locals.filters || { item: 'tshirt', status: 'all', checkedIn: null, q: '', page: 1 };
+const summary = locals.summary || { updatedAt: '', items: [] };
+const rows = locals.rows || [];
+const total = locals.total || 0;
+const pageCount = locals.pageCount || 1;
+
+const itemLabels = locals.itemLabels || {};
+const statusFilters = locals.statusFilters || {};
+const checkinFilters = locals.checkinFilters || {};
+
+const checkinValue = filters.checkedIn === null ? '' : filters.checkedIn ? 'yes' : 'no';
+
+const filtered = filters.item !== 'tshirt' || filters.status !== 'all'
+  || filters.checkedIn !== null || filters.q !== '';
+%>
+<%- include('../../../partials/i18n-catalogs') %>
+
+<div
+  class="admin-list redemptions"
+  data-redemptions="root"
+  data-state="live"
+  data-timezone="<%= locals.timezone || '' %>"
+>
+  <header class="admin-list__head">
+    <div>
+      <h1 class="admin-list__title"><%= copy.pageTitle() %></h1>
+      <p class="redemptions__lede"><%= copy.pageLede() %></p>
+    </div>
+
+    <%# Liveness. Written by the bundle as refreshes land, and left saying when
+        the page was rendered if the bundle never loads. -%>
+    <p class="redemptions__state" data-redemptions="state" role="status">
+      <%= copy.stateUpdated({ time: summary.updatedAt }) %>
+    </p>
+  </header>
+
+  <section class="redemptions__summary" aria-labelledby="redemptions-summary">
+    <h2 class="redemptions__heading" id="redemptions-summary"><%= copy.summaryHeading() %></h2>
+
+    <div class="redemptions__cards">
+      <% for (const entry of summary.items) { %>
+      <article class="redemptions__card" data-summary-item="<%= entry.item %>">
+        <h3 class="redemptions__card-title"><%= entry.label %></h3>
+
+        <% if (entry.expected === 0) { %>
+        <p class="redemptions__none"><%= copy.summaryNone() %></p>
+        <% } else { %>
+        <p class="redemptions__progress" data-field="progress"><%= entry.progress %></p>
+
+        <dl class="redemptions__figures">
+          <div>
+            <dt><%= copy.summaryRedeemed() %></dt>
+            <dd data-field="redeemed"><%= entry.redeemed %></dd>
+          </div>
+          <div>
+            <dt><%= copy.summaryExpected() %></dt>
+            <dd data-field="expected"><%= entry.expected %></dd>
+          </div>
+          <div>
+            <dt><%= copy.summaryPendingPresent() %></dt>
+            <dd data-field="pendingPresent"><%= entry.pendingPresent %></dd>
+          </div>
+          <div>
+            <dt><%= copy.summaryPendingAbsent() %></dt>
+            <dd data-field="pendingAbsent"><%= entry.pendingAbsent %></dd>
+          </div>
+        </dl>
+        <% } %>
+      </article>
+      <% } %>
+    </div>
+
+    <%# A `details` element, closed by default: the breakdown is for whoever
+        is checking stock at a counter, and it is long. It stays open across
+        refreshes because the bundle writes cells, not the element. -%>
+    <details class="redemptions__options">
+      <summary><%= copy.summaryOptions() %></summary>
+
+      <div class="admin-list__scroll">
+        <table class="admin-table redemptions__table">
+          <thead>
+            <tr>
+              <th scope="col"><%= copy.summaryItem() %></th>
+              <th scope="col"><%= copy.summaryOption() %></th>
+              <th scope="col"><%= copy.summaryRedeemed() %></th>
+              <th scope="col"><%= copy.summaryExpected() %></th>
+              <th scope="col"><%= copy.summaryPendingPresent() %></th>
+              <th scope="col"><%= copy.summaryPendingAbsent() %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (const entry of summary.items) { %>
+            <% for (const option of entry.options) { %>
+            <tr data-summary-item="<%= entry.item %>" data-summary-option="<%= option.option %>">
+              <td><%= entry.label %></td>
+              <td><%= option.option %></td>
+              <td data-field="redeemed"><%= option.redeemed %></td>
+              <td data-field="expected"><%= option.expected %></td>
+              <td data-field="pendingPresent"><%= option.pendingPresent %></td>
+              <td data-field="pendingAbsent"><%= option.pendingAbsent %></td>
+            </tr>
+            <% } %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <p class="redemptions__footnote"><%= copy.summaryScope() %></p>
+  </section>
+
+  <section class="redemptions__list" aria-labelledby="redemptions-list">
+    <h2 class="redemptions__heading" id="redemptions-list"><%= copy.listHeading() %></h2>
+
+    <%# No `page` field, for the reasons the roster's filter form gives. -%>
+    <form
+      class="admin-list__filters"
+      id="filters"
+      method="post"
+      action="/admin/redemptions"
+    >
+
+      <div class="admin-list__fields--container">
+
+        <div class="admin-list__field">
+            <label class="admin-list__label" for="item"><%= copy.filterItem() %></label>
+            <select id="item" name="item">
+            <% for (const [value, label] of Object.entries(itemLabels)) { %>
+            <option value="<%= value %>" <%= value === filters.item ? 'selected' : '' %>><%= label %></option>
+            <% } %>
+            </select>
+        </div>
+
+        <div class="admin-list__field">
+            <label class="admin-list__label" for="status"><%= copy.filterStatus() %></label>
+            <select id="status" name="status">
+            <% for (const [value, label] of Object.entries(statusFilters)) { %>
+            <option value="<%= value %>" <%= value === filters.status ? 'selected' : '' %>><%= label %></option>
+            <% } %>
+            </select>
+        </div>
+
+        <div class="admin-list__field">
+            <label class="admin-list__label" for="checkin"><%= shell.presence() %></label>
+            <select id="checkin" name="checkin">
+            <% for (const [value, label] of Object.entries(checkinFilters)) { %>
+            <option value="<%= value %>" <%= value === checkinValue ? 'selected' : '' %>><%= label %></option>
+            <% } %>
+            </select>
+        </div>
+
+      </div>
+
+      <div class="admin-list__search">
+        <label class="admin-list__label" for="q"><%= shell.searchLabel() %></label>
+        <input
+          id="q"
+          name="q"
+          type="search"
+          value="<%= filters.q %>"
+          placeholder="<%= shell.searchPlaceholder() %>"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="admin-list__actions">
+        <button type="submit"><%= shell.searchSubmit() %></button>
+        <% if (filtered) { %>
+        <a class="admin-list__clear" href="/admin/redemptions">
+          <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          <span><%= copy.listClear() %></span>
+        </a>
+        <% } %>
+      </div>
+    </form>
+
+    <p class="admin-list__count" role="status">
+      <%= copy.listCount({ total }) %>
+    </p>
+
+    <%# How a row opens. Empty: the ID rides on the button that submits it. -%>
+    <form id="record" method="post" action="/admin/redemptions/record"></form>
+
+    <% if (rows.length > 0) { %>
+    <div class="admin-list__scroll">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th scope="col"><%= copy.listName() %></th>
+            <th scope="col"><%= copy.listCode() %></th>
+            <th scope="col"><%= shell.presence() %></th>
+            <th scope="col"><%= copy.listOption() %></th>
+            <th scope="col"><%= copy.listStatus() %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (const row of rows) { %>
+          <tr>
+            <td>
+              <button
+                class="admin-table__open"
+                type="submit"
+                form="record"
+                name="attendeeId"
+                value="<%= row.attendeeId %>"
+              >
+                <span class="admin-table__name"><%= row.name %></span>
+                <% if (row.nickname) { %>
+                <span class="admin-table__nickname"><%= row.nickname %></span>
+                <% } %>
+              </button>
+              <span class="role-badge role-badge--<%= row.role %>">
+                <%= shell.role({ role: row.role }) %>
+              </span>
+            </td>
+
+            <td><code class="admin-table__code ticket-code"><%= row.ticketCode %></code></td>
+
+            <td>
+              <% if (row.checkedIn) { %>
+              <%= row.checkinNumber === null ? shell.present() : `#${row.checkinNumber}` %>
+              <% } else { %>
+              <span class="admin-table__muted">—</span>
+              <% } %>
+            </td>
+
+            <td><%= row.option %></td>
+
+            <td>
+              <% if (row.redeemedAt) { %>
+              <span class="admin-table__item admin-table__item--redeemed"><%= copy.listRedeemedAt({ time: row.redeemedAt }) %></span>
+              <% } else { %>
+              <span class="admin-table__muted"><%= copy.listPending() %></span>
+              <% } %>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if (pageCount > 1) { %>
+    <nav class="admin-pager" aria-label="<%= shell.pagerLabel() %>">
+      <% if (filters.page > 1) { %>
+      <button type="submit" form="filters" name="page" value="<%= filters.page - 1 %>"><%= shell.pagerPrevious() %></button>
+      <% } %>
+      <span><%= shell.pagerPosition({ page: filters.page, count: pageCount }) %></span>
+      <% if (filters.page < pageCount) { %>
+      <button type="submit" form="filters" name="page" value="<%= filters.page + 1 %>"><%= shell.pagerNext() %></button>
+      <% } %>
+    </nav>
+    <% } %>
+
+    <% } else if (total > 0) { %>
+    <p class="admin-list__empty">
+      <%= shell.pagerOutOfRange() %>
+      <button type="submit" form="filters" name="page" value="1"><%= shell.pagerBackToFirst() %></button>.
+    </p>
+
+    <% } else { %>
+    <p class="admin-list__empty"><%= copy.listEmpty() %></p>
+    <% } %>
+  </section>
+</div>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/admin/attendees.css" />
+<link rel="stylesheet" href="/css/dist/pages/admin/redemptions.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/admin/redemptions/index.js"></script>

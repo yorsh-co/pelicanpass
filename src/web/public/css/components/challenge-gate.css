@@ -1,0 +1,53 @@
+/*
+ * The cover raised when Cloudflare challenges a fetch. Built on the same shape
+ * as `.app-boot` — fixed, full-viewport, faded in by a `.show` class — with the
+ * one difference that matters: this one takes pointer events, because the whole
+ * point of it is the button.
+ *
+ * Above `--z-boot`, not below: a challenge can land while the boot screen is
+ * still up, and a prompt nobody can see is the failure this replaces.
+ */
+.app-challenge {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-challenge);
+
+  background: var(--surface);
+  color: var(--text);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+
+  opacity: 0;
+
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+
+.app-challenge.show {
+  opacity: 1;
+}
+
+.challenge-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+
+  width: 100%;
+  max-width: var(--content-max);
+
+  text-align: center;
+}
+
+.challenge-content .material-symbols-outlined {
+  font-size: 2.5rem;
+  color: var(--text-muted);
+}
+
+.challenge-content p {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}

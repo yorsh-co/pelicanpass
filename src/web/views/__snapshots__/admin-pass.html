@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="pt-BR" data-release="test-release">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Passe | PelicanPass</title>
+
+  <!-- keeps the browser chrome on the same palette as the page -->
+  <meta name="theme-color" content="#fafafc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0a11" media="(prefers-color-scheme: dark)" />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/images/icon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icon/favicon-32x32.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/images/icon/apple-touch-icon.png">
+  
+    <!-- global styles -->
+  <link rel="stylesheet" href="/css/dist/main.css" />
+
+  <!-- stored theme, applied before first paint. The toggle lives in the rail
+       rather than the public footer, but the stored choice is the same one. -->
+  
+<script nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+  // Safari in private browsing has historically thrown on localStorage rather
+  // than returning null, which would abort head parsing.
+  try {
+    const theme = localStorage.getItem('theme');
+
+    if (theme === 'light' || theme === 'dark') {
+      document.documentElement.dataset.theme = theme;
+    }
+  } catch {}
+</script>
+
+
+  <!-- the shell's own styles, linked once here so each screen adds only its own -->
+  <link rel="stylesheet" href="/css/dist/pages/admin.css" />
+
+  <!-- page-specific styles -->
+  <link rel="stylesheet" href="/css/dist/pages/admin/pass.css" />
+
+</head>
+<body class="admin-page" data-nodeenv="test">
+
+  <a class="admin-skip" href="#conteudo">Pular para o conteúdo</a>
+
+    
+<div class="admin-rail" data-admin-shell="rail">
+  <div class="admin-rail__head">
+    <a class="wordmark admin-rail__title" role="img" aria-label="PelicanPass" href="/admin"></a>
+    <!--<a class="admin-rail__title" href="/admin">Administração</a>-->
+
+        <button
+      class="admin-rail__menu"
+      data-admin-shell="menu"
+      type="button"
+      aria-expanded="false"
+      aria-controls="admin-rail-panel"
+      aria-label="Abrir menu"
+      data-label-open="Abrir menu"
+      data-label-close="Fechar menu"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+    </button>
+  </div>
+
+    <div class="admin-rail__panel" id="admin-rail-panel">
+  <nav class="admin-rail__nav" id="admin-rail-nav" aria-label="Ferramentas">
+    <ul class="admin-rail__list">
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/metrics"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">monitoring</span>
+          <span class="admin-rail__label">metrics</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/volunteers"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">how_to_reg</span>
+          <span class="admin-rail__label">volunteers</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/attendees"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">group</span>
+          <span class="admin-rail__label">attendees</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/redemptions"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">redeem</span>
+          <span class="admin-rail__label">redemptions</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/lookup"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">person_search</span>
+          <span class="admin-rail__label">lookup</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/tshirts"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">checkroom</span>
+          <span class="admin-rail__label">tshirts</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/survey"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+          <span class="admin-rail__label">survey</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/pass"
+          aria-current="page"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">id_card</span>
+          <span class="admin-rail__label">pass</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/whatsapp"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">send</span>
+          <span class="admin-rail__label">whatsapp</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+                <span class="admin-rail__link admin-rail__link--planned">
+          <span class="material-symbols-outlined" aria-hidden="true">download</span>
+          <span class="admin-rail__label">exports</span>
+          <span class="admin-rail__soon">em breve</span>
+        </span>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+                <span class="admin-rail__link admin-rail__link--planned">
+          <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
+          <span class="admin-rail__label">import</span>
+          <span class="admin-rail__soon">em breve</span>
+        </span>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+                <span class="admin-rail__link admin-rail__link--planned">
+          <span class="material-symbols-outlined" aria-hidden="true">admin_panel_settings</span>
+          <span class="admin-rail__label">admins</span>
+          <span class="admin-rail__soon">em breve</span>
+        </span>
+        
+      </li>
+      
+    </ul>
+  </nav>
+
+  <div class="admin-rail__foot">
+    <p class="admin-rail__user">operadora</p>
+
+    <div class="admin-rail__actions">
+            <button class="ghost admin-rail__logout" data-admin-shell="logout" type="button">
+        <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+        <span class="btn-label">Sair</span>
+      </button>
+
+      <!--
+        The icon and the label name the theme the tap will switch *to*, not the
+        one in effect. `client/theme/theme.ts` rewrites both on load, so the
+        values here are only what a light-themed first paint happens to need.
+      -->
+      <button
+        class="theme-toggle"
+        data-theme-toggle
+        type="button"
+        aria-label="Ativar tema escuro"
+        data-label-dark="Ativar tema escuro"
+        data-label-light="Ativar tema claro"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+      </button>
+
+            
+      
+      <details class="footer-locales small-print" aria-label="Idiomas">
+        <summary lang="pt-BR">
+          BR<span class="visually-hidden"> português (Brasil)</span>
+          <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span>
+        </summary>
+        <ul class="footer-locales-menu">
+          
+          <li>
+            <a
+              href="/admin-pass?lang=pt-BR"
+              hreflang="pt-BR"
+              lang="pt-BR"
+              aria-current="true"
+            >
+              <span class="footer-locales-code">BR</span>
+              <span class="footer-locales-name">português (Brasil)</span>
+              
+              <span class="material-symbols-outlined" aria-hidden="true">check</span>
+              
+            </a>
+          </li>
+          
+          <li>
+            <a
+              href="/admin-pass?lang=en-XA"
+              hreflang="en-XA"
+              lang="en-XA"
+              
+            >
+              <span class="footer-locales-code">XA</span>
+              <span class="footer-locales-name">English (Pseudo-Accents)</span>
+              
+            </a>
+          </li>
+          
+        </ul>
+      </details>
+      
+    </div>
+  </div>
+  </div>
+</div>
+
+
+  <main class="admin-main" id="conteudo">
+    
+
+<script type="application/json" data-i18n="admin-pass" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"admin-pass.add":[{"type":0,"value":"Adicionar frase programada"}],"admin-pass.column.at":[{"type":0,"value":"A partir de"}],"admin-pass.column.phase":[{"type":0,"value":"Fase"}],"admin-pass.current":[{"type":0,"value":"Agora: "},{"type":1,"value":"phase"}],"admin-pass.customLabel":[{"type":0,"value":"Personalizado: “"},{"type":1,"value":"text"},{"type":0,"value":"”"}],"admin-pass.defaults.empty":[{"type":0,"value":"Vazio: o ingresso do participante mostra a frase padrão o evento todo."}],"admin-pass.defaults.heading":[{"type":0,"value":"Padrão definido nas configurações do servidor"}],"admin-pass.defaults.hint":[{"type":0,"value":"Vale enquanto não houver programação salva aqui. Mudá-lo exige acesso ao servidor."}],"admin-pass.editor.empty":[{"type":0,"value":"Nenhuma troca: o ingresso do participante mostra a frase padrão o evento todo."}],"admin-pass.editor.fromDefaults":[{"type":0,"value":"O editor segue as configurações do servidor. Depois de salvar, sua programação passa a valer."}],"admin-pass.editor.heading":[{"type":0,"value":"Programação"}],"admin-pass.editor.hint":[{"type":0,"value":"Horários no fuso do evento ("},{"type":1,"value":"timeZone"},{"type":0,"value":"). A ordem das linhas não importa: as frase serão reordenadas depois de salvar."}],"admin-pass.failed":[{"type":0,"value":"Não foi possível salvar. Tente novamente."}],"admin-pass.forbidden":[{"type":0,"value":"Sua conta não pode mudar a programação das frases que aparecem no ingresso."}],"admin-pass.heading":[{"type":0,"value":"Frase do ingresso"}],"admin-pass.intro":[{"type":0,"value":"A frase embaixo do nome no ingresso do participante muda ao longo do evento. Defina aqui quando cada frase aparece: os ingressos dos participantes atualizam automaticamente dentro de 30 segundos."}],"admin-pass.invalid.duplicateTime":[{"type":0,"value":"Duas linhas estão no mesmo horário. Cada frase precisa ser programada para um horário diferente."}],"admin-pass.invalid.missingText":[{"type":0,"value":"O campo de texto não pode estar vazio."}],"admin-pass.invalid.missingTime":[{"type":0,"value":"Preencha a data e o horário de todas as linhas."}],"admin-pass.legend.custom":[{"type":0,"value":"O texto escrito na própria linha, exatamente como está."}],"admin-pass.legend.heading":[{"type":0,"value":"O que cada fase mostra"}],"admin-pass.legend.note":[{"type":0,"value":"Antes da primeira troca, o passe mostra a frase padrão. Enquanto a frase programado é a do questionário de feedback, quem já respondeu vê um agradecimento, e quem não tem o questionário aberto vê a frase padrão. Uma frase personalizada aparece para todos."}],"admin-pass.next":[{"type":0,"value":"Próxima frase programada: "},{"type":1,"value":"phase"},{"type":0,"value":" em "},{"type":1,"value":"at"}],"admin-pass.next.none":[{"type":0,"value":"Nenhuma frase programada daqui em diante."}],"admin-pass.phase.arrival":[{"type":0,"value":"Boas-vindas"}],"admin-pass.phase.custom":[{"type":0,"value":"Personalizado"}],"admin-pass.phase.default":[{"type":0,"value":"Padrão"}],"admin-pass.phase.survey":[{"type":0,"value":"Feedback"}],"admin-pass.phase.thanks":[{"type":0,"value":"Agradecimento"}],"admin-pass.preview":[{"type":0,"value":"“"},{"type":1,"value":"text"},{"type":0,"value":"”"}],"admin-pass.remove":[{"type":0,"value":"Remover"}],"admin-pass.reset":[{"type":0,"value":"Voltar à configuração do servidor"}],"admin-pass.reset.confirm":[{"type":0,"value":"Confirmar: voltar à configuração do servidor"}],"admin-pass.reset.done":[{"type":0,"value":"Os ingressos voltaram a seguir a configuração do servidor"}],"admin-pass.save":[{"type":0,"value":"Salvar programação"}],"admin-pass.saved":[{"type":0,"value":"Programação salva."}],"admin-pass.source.admin":[{"type":0,"value":"Seguindo a programação salva aqui."}],"admin-pass.source.env":[{"type":0,"value":"Seguindo a configuração do servidor"}],"admin-pass.text":[{"type":0,"value":"Texto da frase"}]}</script>
+<script type="application/json" data-i18n="admin-errors" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"admin-errors.attendeeArchived":[{"type":0,"value":"Este participante está arquivado e o ingresso não pode ser utilizado no check-in."}],"admin-errors.attendeeNotFound":[{"type":0,"value":"Participante não encontrado."}],"admin-errors.audienceInvalid":[{"type":0,"value":"Público inválido."}],"admin-errors.invalidAttendee":[{"type":0,"value":"Participante inválido."}],"admin-errors.itemAlreadyRedeemed":[{"type":0,"value":"Não é possível remover "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"item"}]}}},{"type":0,"value":": já foi retirado."}],"admin-errors.itemNotEntitled":[{"type":0,"value":"Este participante não tem direito a "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"item"}]}}},{"type":0,"value":"."}],"admin-errors.itemNotRedeemed":[{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"O lanche"}]},"drink":{"value":[{"type":0,"value":"A bebida"}]},"tshirt":{"value":[{"type":0,"value":"A camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"A camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"O almoço"}]},"other":{"value":[{"type":0,"value":"O item"}]}}},{"type":0,"value":" ainda não foi retirado."}],"admin-errors.leaveNotConfirmed":[{"type":0,"value":"Ação cancelada. Toque novamente para sair."}],"admin-errors.listChanged":[{"type":0,"value":"A lista mudou. Revise antes de enviar."}],"admin-errors.nameInvalid":[{"type":0,"value":"Informe o nome completo, com no máximo 120 caracteres."}],"admin-errors.optionNotAllowed":[{"type":0,"value":"Escolha uma opção da lista para "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"item"}]}}},{"type":0,"value":"."}],"admin-errors.pauseBeforeRetry":[{"type":0,"value":"Pause o envio antes de reenviar envios interrompidos."}],"admin-errors.phoneInvalid":[{"type":0,"value":"Informe o telefone com DDD, entre 10 e 11 dígitos."}],"admin-errors.phoneMissing":[{"type":0,"value":"Informe o telefone."}],"admin-errors.previewExpired":[{"type":0,"value":"A prévia expirou. Gere uma nova."}],"admin-errors.previewMissing":[{"type":0,"value":"Gere uma prévia antes de enviar."}],"admin-errors.reasonInvalid":[{"type":0,"value":"Escolha um motivo da lista."}],"admin-errors.redemptionChanged":[{"type":0,"value":"O status da retirada mudou enquanto a página estava aberta. Confira e tente novamente."}],"admin-errors.requestInProgress":[{"type":0,"value":"Ainda processando o envio anterior. Tente novamente em alguns instantes."}],"admin-errors.roleInvalid":[{"type":0,"value":"Escolha entre \"participante\" e \"voluntário\"."}],"admin-errors.roleLocked":[{"type":0,"value":"O tipo de ingresso não pode ser alterado depois que check-in foi realizado."}],"admin-errors.runFinished":[{"type":0,"value":"Este envio já terminou."}],"admin-errors.runInProgress":[{"type":0,"value":"Já existe um envio em andamento."}],"admin-errors.runInvalid":[{"type":0,"value":"Envio inválido."}],"admin-errors.runNotFound":[{"type":0,"value":"Envio não encontrado."}],"admin-errors.runNotPaused":[{"type":0,"value":"Este envio não está pausado."}],"admin-errors.runNotRunning":[{"type":0,"value":"Este envio não está em andamento."}],"admin-errors.scheduleChanged":[{"type":0,"value":"Outro administrador mudou a programação enquanto a página estava aberta. Recarregue para ver a versão atual."}],"admin-errors.scheduleDuplicateTime":[{"type":0,"value":"Duas frases configuradas para o mesmo horário. Cada troca precisa de um horário diferente."}],"admin-errors.scheduleInvalid":[{"type":0,"value":"A programação enviada é inválida. Recarregue a página e tente novamente."}],"admin-errors.scheduleTextMissing":[{"type":0,"value":"Os campos de texto não podem estar vazios."}],"admin-errors.scheduleTextTooLong":[{"type":0,"value":"O texto personalizado pode ter no máximo "},{"type":2,"value":"max","style":null},{"type":0,"value":" caracteres."}],"admin-errors.scheduleTimeInvalid":[{"type":0,"value":"Uma das datas é inválida ou fora do horário programado do evento."}],"admin-errors.scheduleTooLong":[{"type":0,"value":"Limite de frases ultrapassado. Remova algumas e tente novamente."}],"admin-errors.sendingDisabled":[{"type":0,"value":"O envio pelo WhatsApp está desativado neste servidor."}],"admin-errors.templateAudienceMismatch":[{"type":0,"value":"Este modelo não pode ser enviado a esse público."}],"admin-errors.templateInvalid":[{"type":0,"value":"Modelo inválido."}],"admin-errors.testPhoneInvalid":[{"type":0,"value":"Telefone inválido: informe DDD e número."}],"admin-errors.ticketCodeFormat":[{"type":0,"value":"O código deve ter seis letras ou números."}],"admin-errors.ticketCodePrefix":[{"type":0,"value":"O prefixo do código não corresponde ao tipo de ingresso."}],"admin-errors.ticketCodeTaken":[{"type":0,"value":"Esse código de ingresso já está em uso."}],"admin-errors.ticketLimitCap":[{"type":0,"value":"O limite deve ser um número inteiro entre "},{"type":2,"value":"min","style":null},{"type":0,"value":" e "},{"type":2,"value":"max","style":null},{"type":0,"value":"."}],"admin-errors.ticketLimitMode":[{"type":0,"value":"Escolha o que acontece ao atingir o limite: bloquear ou apenas avisar."}],"admin-errors.ticketLimitReached":[{"type":0,"value":"O limite de ingressos foi atingido."}],"admin-errors.ticketLimitScope":[{"type":0,"value":"Escolha o que o limite conta: desativado, todos os participantes ou apenas os ingressos criados na porta."}],"admin-errors.volunteerOnlyItem":[{"type":0,"value":"Somente voluntários podem ter direito a "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"este item"}]}}},{"type":0,"value":"."}],"admin-errors.whatsappDoorLocked":[{"type":0,"value":"O envio de ingressos por WhatsApp está desativado nas configurações do servidor."}]}</script>
+
+
+<div class="pass-admin">
+  <header class="pass-admin__head">
+    <h1 class="pass-admin__title">Frase do ingresso</h1>
+    <p class="pass-admin__lead">A frase embaixo do nome no ingresso do participante muda ao longo do evento. Defina aqui quando cada frase aparece: os ingressos dos participantes atualizam automaticamente dentro de 30 segundos.</p>
+  </header>
+
+    <section class="pass-admin__panel">
+    <p class="pass-admin__state">Agora: Boas-vindas</p>
+    <p class="pass-admin__hint">
+      Seguindo a configuração do servidor
+      Próxima frase programada: Feedback em 17/10/2026 15:00
+    </p>
+  </section>
+
+    <section class="pass-admin__panel">
+    <h2 class="pass-admin__subtitle">Programação</h2>
+    <p class="pass-admin__hint">Horários no fuso do evento (America/Sao_Paulo). A ordem das linhas não importa: as frase serão reordenadas depois de salvar.</p>
+    
+    <p class="pass-admin__note">O editor segue as configurações do servidor. Depois de salvar, sua programação passa a valer.</p>
+    
+
+    <form
+      class="pass-admin__form"
+      data-pass-welcome="form"
+      data-revision="3"
+      novalidate
+    >
+            <div class="pass-admin__scroll">
+        <table class="pass-admin__table">
+          <thead>
+            <tr>
+              <th scope="col">Fase</th>
+              <th scope="col">A partir de</th>
+              <th scope="col"><span class="visually-hidden">Remover</span></th>
+            </tr>
+          </thead>
+          <tbody data-pass-welcome="rows">
+            
+<tr data-pass-welcome="row">
+  <td>
+    <select name="phase" aria-label="Fase">
+      
+      <option value="arrival" selected>Boas-vindas</option>
+      
+      <option value="thanks" >Agradecimento</option>
+      
+      <option value="custom" >Personalizado</option>
+    </select>
+        <input
+      class="pass-admin__text"
+      type="text"
+      name="text"
+      maxlength="80"
+      value=""
+      placeholder="Texto da frase"
+      aria-label="Texto da frase"
+      data-pass-welcome="text"
+      hidden
+    />
+  </td>
+  <td>
+    <input
+      type="datetime-local"
+      name="at"
+      step="60"
+      value="2026-10-17T08:00"
+      aria-label="A partir de"
+      required
+    />
+  </td>
+  <td class="pass-admin__remove-cell">
+    <button
+      class="ghost pass-admin__remove"
+      type="button"
+      data-pass-welcome="remove"
+      aria-label="Remover"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+    </button>
+  </td>
+</tr>
+
+<tr data-pass-welcome="row">
+  <td>
+    <select name="phase" aria-label="Fase">
+      
+      <option value="arrival" >Boas-vindas</option>
+      
+      <option value="thanks" >Agradecimento</option>
+      
+      <option value="custom" selected>Personalizado</option>
+    </select>
+        <input
+      class="pass-admin__text"
+      type="text"
+      name="text"
+      maxlength="80"
+      value="Bom &lt;evento&gt;"
+      placeholder="Texto da frase"
+      aria-label="Texto da frase"
+      data-pass-welcome="text"
+      
+    />
+  </td>
+  <td>
+    <input
+      type="datetime-local"
+      name="at"
+      step="60"
+      value="2026-10-17T15:00"
+      aria-label="A partir de"
+      required
+    />
+  </td>
+  <td class="pass-admin__remove-cell">
+    <button
+      class="ghost pass-admin__remove"
+      type="button"
+      data-pass-welcome="remove"
+      aria-label="Remover"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+    </button>
+  </td>
+</tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <p class="pass-admin__muted" data-pass-welcome="empty" hidden>
+        Nenhuma troca: o ingresso do participante mostra a frase padrão o evento todo.
+      </p>
+
+      <template data-pass-welcome="template">
+        
+<tr data-pass-welcome="row">
+  <td>
+    <select name="phase" aria-label="Fase">
+      
+      <option value="arrival" >Boas-vindas</option>
+      
+      <option value="thanks" >Agradecimento</option>
+      
+      <option value="custom" >Personalizado</option>
+    </select>
+        <input
+      class="pass-admin__text"
+      type="text"
+      name="text"
+      maxlength="80"
+      value=""
+      placeholder="Texto da frase"
+      aria-label="Texto da frase"
+      data-pass-welcome="text"
+      hidden
+    />
+  </td>
+  <td>
+    <input
+      type="datetime-local"
+      name="at"
+      step="60"
+      value=""
+      aria-label="A partir de"
+      required
+    />
+  </td>
+  <td class="pass-admin__remove-cell">
+    <button
+      class="ghost pass-admin__remove"
+      type="button"
+      data-pass-welcome="remove"
+      aria-label="Remover"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+    </button>
+  </td>
+</tr>
+
+      </template>
+
+      <div class="pass-admin__actions">
+        <button class="ghost" type="button" data-pass-welcome="add">
+          <span class="material-symbols-outlined" aria-hidden="true">add</span>
+          <span class="btn-label">Adicionar frase programada</span>
+        </button>
+        <button type="submit" data-pass-welcome="save">Salvar programação</button>
+        
+      </div>
+
+      <p class="pass-admin__error" data-pass-welcome="error" role="alert" hidden></p>
+    </form>
+  </section>
+
+    <section class="pass-admin__panel">
+    <h2 class="pass-admin__subtitle">O que cada fase mostra</h2>
+    <dl class="pass-admin__legend">
+      
+      <div>
+        <dt>Boas-vindas</dt>
+        <dd>“Bem-vindo”</dd>
+      </div>
+      
+      <div>
+        <dt>Agradecimento</dt>
+        <dd>“Obrigado”</dd>
+      </div>
+      
+      <div>
+        <dt>Personalizado</dt>
+        <dd>O texto escrito na própria linha, exatamente como está.</dd>
+      </div>
+    </dl>
+    <p class="pass-admin__note">Antes da primeira troca, o passe mostra a frase padrão. Enquanto a frase programado é a do questionário de feedback, quem já respondeu vê um agradecimento, e quem não tem o questionário aberto vê a frase padrão. Uma frase personalizada aparece para todos.</p>
+  </section>
+
+    <section class="pass-admin__panel">
+    <h2 class="pass-admin__subtitle">Padrão definido nas configurações do servidor</h2>
+    <p class="pass-admin__hint">Vale enquanto não houver programação salva aqui. Mudá-lo exige acesso ao servidor.</p>
+    
+    <div class="pass-admin__scroll">
+      <table class="pass-admin__table">
+        <thead>
+          <tr>
+            <th scope="col">Fase</th>
+            <th scope="col">A partir de</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td>Boas-vindas</td>
+            <td>17/10/2026 08:00</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    
+  </section>
+</div>
+
+  </main>
+
+    <div data-main="toast" role="status" aria-live="polite" aria-atomic="true">
+  <span data-toast="icon" class="material-symbols-outlined" aria-hidden="true"></span>
+  <div data-toast="msg-container"><span data-toast="msg"></span></div>
+</div>
+
+
+    <!--
+  Raised by modules/ui/challenge-gate.ts when Cloudflare challenges a fetch.
+
+  Both messages ship rendered and hidden and the script reveals one. The
+  strings come from the shared chrome catalog, except the blocked one: that
+  message names who to ask for help, and on the administrator screens the
+  reader is the volunteer the attendee copy tells them to call. Callers that
+  need the other wording pass `challengeBlocked`.
+
+  `warning` is used rather than a lock or a clock because the icon subset is
+  frozen at 21 glyphs (docs/infrastructure/asset-delivery.md) — an icon outside it renders as
+  its own name, silently.
+-->
+
+<div
+  id="app-challenge"
+  data-main="challenge"
+  class="app-challenge"
+  role="alertdialog"
+  aria-labelledby="challenge-title"
+  aria-modal="true"
+  hidden
+>
+  <div class="challenge-content">
+    <span class="material-symbols-outlined" aria-hidden="true">warning</span>
+
+    <!--
+      The label wraps both variants rather than sitting on either. A `hidden`
+      element contributes nothing to the accessible name, so this resolves to
+      whichever message the script revealed.
+    -->
+    <div id="challenge-title">
+      <p data-challenge="expired" hidden>Verificação de segurança expirada</p>
+
+      <p data-challenge="blocked" hidden>Não foi possível completar a verificação. Dirija-se à mesa de suporte</p>
+
+            <p data-challenge="expired-access" hidden>
+        Sessão expirada. Entre novamente para continuar
+      </p>
+    </div>
+
+    <button
+      type="button"
+      data-challenge="continue"
+      data-label-expired="Continuar"
+      data-label-blocked="Tentar novamente"
+      data-label-reauth="Entrar novamente"
+    ></button>
+  </div>
+</div>
+
+
+  <!-- global scripts -->
+  <script type="module" src="/js/theme/theme.js"></script>
+    <script type="module" src="/js/telemetry/index.js"></script>
+  <script type="module" src="/js/pages/admin/shell/index.js"></script>
+
+  <!-- page-specific scripts -->
+  <script type="module" src="/js/pages/admin/pass/index.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+[Unit]
+# Not enabled: started on the event morning and stopped at failover (restore.sh)
+# and at teardown, so it never pulls outside the event window.
+Description=Pull a standby snapshot every minute
+
+[Timer]
+OnCalendar=*:*:00
+AccuracySec=1s

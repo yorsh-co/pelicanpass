@@ -1,0 +1,183 @@
+<%# i18n: admin-volunteers %>
+<%
+/*
+ * One volunteer's permissions: the six values an administrator may change, the
+ * linked administrator account (read-only), and what was changed before.
+ *
+ * Rendered by a POST, so the attendee ID never reaches a URL. The hidden
+ * `#record` form is how the page reaches itself again after a save, for the
+ * reason lookup/detail.ejs gives: the reload shows the stored values, the tier
+ * the pass will now show, and the new history entry.
+ *
+ * `data-volunteer` attributes are the contract with
+ * `pages/admin/volunteers/detail/index.ts`. The station boxes keep their ticks
+ * while disabled, so switching collections back on restores them.
+ *
+ * The escaping output tag on every value off the record, for the reason the
+ * other admin templates give.
+ */
+const volunteer = locals.volunteer || null;
+const stations = locals.stations || [];
+const history = locals.history || [];
+const labelMaxLength = locals.labelMaxLength || 40;
+%>
+<%- include('../../../partials/i18n-catalogs') %>
+
+<div class="admin-form volunteer-record">
+  <header class="admin-form__head">
+    <div class="admin-form__headline">
+      <h1 class="admin-form__title"><%= volunteer.name %></h1>
+      <a class="redemption-record__close" href="/admin/volunteers">
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        <span class="visually-hidden"><%= copy.recordClose() %></span>
+      </a>
+    </div>
+    <% if (volunteer.nickname) { %>
+    <p class="redemption-record__nickname"><%= volunteer.nickname %></p>
+    <% } %>
+    <p class="redemption-record__meta">
+      <span
+        class="access-chip"
+        data-volunteer="tier"
+        <% if (volunteer.tier !== 'none') { %>data-access="<%= volunteer.tier %>"<% } %>
+      ><%= volunteer.tierLabel %></span>
+      <code class="admin-table__code ticket-code"><%= volunteer.ticketCode %></code>
+    </p>
+  </header>
+
+  <form
+    class="admin-form__form"
+    data-volunteer="form"
+    data-attendee-id="<%= volunteer.attendeeId %>"
+    novalidate
+  >
+    <fieldset class="admin-form__group">
+      <legend class="admin-form__legend"><%= copy.recordRedeemHeading() %></legend>
+
+      <div class="admin-form__toggle">
+        <input
+          id="can-redeem"
+          type="checkbox"
+          name="canRedeem"
+          data-volunteer="canRedeem"
+          <%= volunteer.canRedeem ? 'checked' : '' %>
+        />
+        <label for="can-redeem"><%= copy.recordCanRedeem() %></label>
+      </div>
+
+      <fieldset class="volunteer-record__stations" data-volunteer="stations" <%= volunteer.canRedeem ? '' : 'disabled' %>>
+        <legend class="admin-form__label"><%= copy.recordStations() %></legend>
+        <% for (const station of stations) { %>
+        <div class="admin-form__toggle">
+          <input
+            id="station-<%= station.item %>"
+            type="checkbox"
+            name="redeemScopes"
+            value="<%= station.item %>"
+            <%= volunteer.redeemScopes.includes(station.item) ? 'checked' : '' %>
+          />
+          <label for="station-<%= station.item %>"><%= station.label %></label>
+        </div>
+        <% } %>
+      </fieldset>
+
+      <%# The bundle swaps this as the switch and the ticks change. -%>
+      <p class="admin-form__hint" data-volunteer="hint" aria-live="polite">
+        <% if (!volunteer.canRedeem) { %><%= copy.recordStationsOff() %><% } else if (volunteer.redeemScopes.length === 0) { %><%= copy.recordStationsEmpty() %><% } %>
+      </p>
+    </fieldset>
+
+    <fieldset class="admin-form__group">
+      <legend class="admin-form__legend"><%= copy.recordOtherHeading() %></legend>
+
+      <div class="admin-form__toggle">
+        <input id="can-draw" type="checkbox" name="canDraw" <%= volunteer.canDraw ? 'checked' : '' %> />
+        <label for="can-draw"><%= copy.recordCanDraw() %></label>
+      </div>
+
+      <div class="admin-form__toggle">
+        <input id="show-admin-link" type="checkbox" name="showAdminLink" <%= volunteer.showAdminLink ? 'checked' : '' %> />
+        <label for="show-admin-link"><%= copy.recordShowAdminLink() %></label>
+      </div>
+    </fieldset>
+
+    <fieldset class="admin-form__group">
+      <legend class="admin-form__legend"><%= copy.recordTeamHeading() %></legend>
+
+      <div class="admin-form__field">
+        <label class="admin-form__label" for="team"><%= copy.recordTeam() %></label>
+        <input id="team" type="text" name="team" maxlength="<%= labelMaxLength %>" autocomplete="off" value="<%= volunteer.team || '' %>" />
+      </div>
+
+      <div class="admin-form__field">
+        <label class="admin-form__label" for="team-role"><%= copy.recordTeamRole() %></label>
+        <input id="team-role" type="text" name="teamRole" maxlength="<%= labelMaxLength %>" autocomplete="off" value="<%= volunteer.teamRole || '' %>" />
+      </div>
+
+      <div class="admin-form__field">
+        <label class="admin-form__label" for="checkin-time"><%= copy.recordCheckinTime() %></label>
+        <input id="checkin-time" type="time" name="checkinTime" step="60" value="<%= volunteer.checkinTime || '' %>" />
+      </div>
+    </fieldset>
+
+    <p class="admin-form__error" data-volunteer="error" role="alert"></p>
+
+    <div class="admin-form__actions">
+      <button type="submit" data-volunteer="save"><%= copy.recordSave() %></button>
+    </div>
+  </form>
+
+  <section class="admin-form__aside" aria-labelledby="volunteer-account">
+    <h2 class="admin-form__subtitle" id="volunteer-account"><%= copy.recordAccountHeading() %></h2>
+    <% if (volunteer.adminUsername) { %>
+    <p class="volunteer-record__account">
+      <code class="admin-table__code"><%= copy.recordAccountUser({ username: volunteer.adminUsername }) %></code>
+      <% if (volunteer.adminDisabled) { %>
+      <span class="admin-table__flag"><%= copy.recordAccountDisabled() %></span>
+      <% } %>
+    </p>
+    <% } else { %>
+    <p class="redemption-record__hint"><%= copy.recordAccountNone() %></p>
+    <% } %>
+    <p class="admin-form__hint"><%= copy.recordAccountNote() %></p>
+  </section>
+
+  <section class="admin-form__aside" aria-labelledby="volunteer-history">
+    <h2 class="admin-form__subtitle" id="volunteer-history"><%= copy.historyHeading() %></h2>
+
+    <% if (history.length === 0) { %>
+    <p class="redemption-record__hint"><%= copy.historyEmpty() %></p>
+    <% } else { %>
+    <ol class="volunteer-record__history">
+      <% for (const entry of history) { %>
+      <li class="volunteer-record__entry">
+        <p class="volunteer-record__entry-head">
+          <time><%= entry.when %></time>
+          <span><%= copy.historyBy({ name: entry.by }) %></span>
+        </p>
+        <dl class="volunteer-record__diffs">
+          <% for (const diff of entry.diffs) { %>
+          <div>
+            <dt><%= diff.field %></dt>
+            <dd><%= copy.historyChange({ before: diff.before || '—', after: diff.after || '—' }) %></dd>
+          </div>
+          <% } %>
+        </dl>
+      </li>
+      <% } %>
+    </ol>
+    <% } %>
+  </section>
+
+  <form id="record" method="post" action="/admin/volunteers/record" hidden>
+    <input type="hidden" name="attendeeId" value="<%= volunteer.attendeeId %>" />
+  </form>
+</div>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/admin/attendees.css" />
+<link rel="stylesheet" href="/css/dist/pages/admin/redemptions.css" />
+<link rel="stylesheet" href="/css/dist/pages/admin/volunteers.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/admin/volunteers/detail/index.js"></script>

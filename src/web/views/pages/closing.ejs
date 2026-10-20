@@ -1,0 +1,24 @@
+<%# i18n: landing %>
+<%# The post-event page, drawn once EVENT_CLOSES_AT has passed by
+    middleware/landing.middleware.ts and by the standalone fallback, which keeps
+    serving it after the production host is torn down.
+
+    layouts/plain for the reason given over pages/landing.ejs, and no script at
+    all: there is nothing left to count down or open. %>
+<main class="landing">
+  <div class="landing-content">
+    <div class="logo">
+      <img
+        class="boot-wordmark"
+        src="/assets/images/logo/wordmark-primary.svg"
+        alt="<%= chrome.wordmarkAlt() %>"
+      />
+    </div>
+    <h1 class="landing-title"><%= copy.closedTitle() %></h1>
+    <p class="landing-lede"><%= copy.closedBody() %></p>
+  </div>
+</main>
+
+<%# Asset block last, for the reason spelled out in pages/error.ejs. %>
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/landing.css" />

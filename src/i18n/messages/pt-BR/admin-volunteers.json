@@ -1,0 +1,230 @@
+{
+  "admin-volunteers.error.failed": {
+    "defaultMessage": "Não foi possível salvar. Tente de novo.",
+    "description": "Error line when a save failed for a reason the server did not explain."
+  },
+  "admin-volunteers.error.forbidden": {
+    "defaultMessage": "Você não tem mais permissão para editar voluntários.",
+    "description": "Error line when the operator's volunteers:write permission was withdrawn while the record was open."
+  },
+  "admin-volunteers.error.notFound": {
+    "defaultMessage": "Este voluntário não foi encontrado neste evento.",
+    "description": "Error line when the volunteer no longer exists in the event."
+  },
+  "admin-volunteers.filter.search": {
+    "defaultMessage": "Buscar",
+    "description": "Label of the search box above the list."
+  },
+  "admin-volunteers.filter.searchPlaceholder": {
+    "defaultMessage": "Nome, apelido ou código",
+    "description": "Placeholder of the search box above the volunteer list: the three things it matches."
+  },
+  "admin-volunteers.filter.team": {
+    "defaultMessage": "Equipe",
+    "description": "Label of the team choice above the list."
+  },
+  "admin-volunteers.filter.teamAll": {
+    "defaultMessage": "Todas",
+    "description": "Team choice value: volunteers of every team."
+  },
+  "admin-volunteers.filter.teamNone": {
+    "defaultMessage": "Sem equipe",
+    "description": "Team choice value: volunteers with no team set."
+  },
+  "admin-volunteers.filter.tierAll": {
+    "defaultMessage": "Todos",
+    "description": "First access chip above the list: no filter on access."
+  },
+  "admin-volunteers.filter.tierChip": {
+    "defaultMessage": "{label} ({count, number})",
+    "description": "Access chip above the list. {label} is the access name, as admin-volunteers.tier writes it, and {count} how many volunteers hold it."
+  },
+  "admin-volunteers.filter.tierLabel": {
+    "defaultMessage": "Acesso",
+    "description": "Label of the access chips above the volunteer list."
+  },
+  "admin-volunteers.history.by": {
+    "defaultMessage": "por {name}",
+    "description": "After the time of a change. {name} is the administrator who made it."
+  },
+  "admin-volunteers.history.change": {
+    "defaultMessage": "{before} → {after}",
+    "description": "One history line's old and new value. {before} and {after} are written by the other history messages."
+  },
+  "admin-volunteers.history.empty": {
+    "defaultMessage": "Nenhuma alteração feita por esta tela.",
+    "description": "Shown when the volunteer's permissions were never changed from this screen."
+  },
+  "admin-volunteers.history.field": {
+    "defaultMessage": "{field, select, canRedeem {Retiradas} redeemScopes {Estações} canDraw {Gerador de N°} showAdminLink {Link do admin} team {Equipe} teamRole {Função} checkinTime {Horário de chegada} other {}}",
+    "description": "Name of the permission a history line changed. N° is the abbreviation of número. other is only a fallback."
+  },
+  "admin-volunteers.history.heading": {
+    "defaultMessage": "Histórico",
+    "description": "Heading of the volunteer's list of past changes."
+  },
+  "admin-volunteers.history.no": {
+    "defaultMessage": "Não",
+    "description": "A switch's value in a history line: off."
+  },
+  "admin-volunteers.history.removedAdmin": {
+    "defaultMessage": "conta removida",
+    "description": "Stands for the name in admin-volunteers.history.by when the administrator's account has since been deleted. Lowercase."
+  },
+  "admin-volunteers.history.yes": {
+    "defaultMessage": "Sim",
+    "description": "A switch's value in a history line: on."
+  },
+  "admin-volunteers.list.adminLink": {
+    "defaultMessage": "Link do admin",
+    "description": "Small mark on a volunteer card: their pass shows the link to the administrator screen."
+  },
+  "admin-volunteers.list.clear": {
+    "defaultMessage": "Limpar filtros",
+    "description": "Button in the no-match message that removes every filter."
+  },
+  "admin-volunteers.list.code": {
+    "defaultMessage": "Código",
+    "description": "Label of the ticket code on a volunteer card."
+  },
+  "admin-volunteers.list.count": {
+    "defaultMessage": "{count, plural, =0 {Nenhum voluntário} =1 {# voluntário} other {# voluntários}}",
+    "description": "Line above the list, read aloud when a filter changes. {count} is how many volunteers are showing."
+  },
+  "admin-volunteers.legend.access": {
+    "defaultMessage": "{tier, select, edit {Cadastra e edita participantes} lookup {Consulta participantes e marca presença} tshirt {Entrega camisetas no balcão de camisetas} redeem {Entrega itens no seu posto} raffle {Gera os números das interações} none {Nenhuma das anteriores; no máximo consulta sem marcar presença ou o link para o /admin} other {Nenhuma das anteriores}}",
+    "description": "Legend entry above the volunteer list: what a volunteer with this access can do, beside the access chip. tier is the access, as admin-volunteers.tier names it: edit registers and edits attendees on the roster, lookup searches attendees and marks them present, tshirt hands out T-shirts at the T-shirt desk, redeem hands out items (T-shirt, lunch and the like) at the station the volunteer works, raffle runs the number draw. none is the plain volunteer: none of the above, at most a lookup that cannot mark anyone present, or the link to the /admin area, which is written as is. other is only a fallback. A sentence fragment with no final period, as the entries are short lines."
+  },
+  "admin-volunteers.legend.grant": {
+    "defaultMessage": "{tier, select, edit {Conta admin vinculada com attendees:read e attendees:write} lookup {Conta admin vinculada com attendees:read e checkin:write} tshirt {Conta admin vinculada com tshirt:redeem} redeem {can_redeem com ao menos um posto} raffle {can_draw} none {Qualquer outro voluntário} other {Qualquer outro voluntário}}",
+    "description": "Legend entry above the volunteer list, in a muted second line under what the access allows: what grants this access to a volunteer. tier is the access, as admin-volunteers.tier names it. edit, lookup and tshirt come from the administrator account linked to the volunteer (the admin_username column), which must be active and hold the permissions named. redeem is the can_redeem flag with at least one valid station. raffle is the can_draw flag. none is any volunteer that fits no other row. attendees:read, attendees:write, checkin:write, tshirt:redeem, can_redeem and can_draw are permission and column identifiers: keep them exactly as written, untranslated. other is only a fallback. A sentence fragment with no final period."
+  },
+  "admin-volunteers.legend.heading": {
+    "defaultMessage": "Níveis de acesso",
+    "description": "Heading of the legend above the volunteer list, which explains each access chip: what it lets a volunteer do and what grants it."
+  },
+  "admin-volunteers.legend.lede": {
+    "defaultMessage": "A etiqueta mostra o nível mais alto que se aplica ao voluntário; ele também pode ter os níveis abaixo.",
+    "description": "One line under the legend heading. The chip on a volunteer shows only the highest access that applies, in the order listed (the first row wins), while the volunteer may also hold the accesses listed after it, so someone who can both look up and redeem shows lookup. The chip is the colored access label on each row."
+  },
+  "admin-volunteers.list.empty": {
+    "defaultMessage": "Nenhum voluntário cadastrado neste evento.",
+    "description": "Shown instead of the list when the event has no volunteers."
+  },
+  "admin-volunteers.list.heading": {
+    "defaultMessage": "Voluntários do evento",
+    "description": "Visually hidden heading of the volunteer list."
+  },
+  "admin-volunteers.list.noMatches": {
+    "defaultMessage": "Nenhum voluntário corresponde aos filtros.",
+    "description": "Shown when the access, team and search filters leave nobody."
+  },
+  "admin-volunteers.list.noTeam": {
+    "defaultMessage": "Sem equipe",
+    "description": "Where a volunteer's team would be, when they have none."
+  },
+  "admin-volunteers.list.raffle": {
+    "defaultMessage": "Gerador de N°",
+    "description": "Small mark on a volunteer card: they may use the number generator. N° is the abbreviation of número."
+  },
+  "admin-volunteers.list.stations": {
+    "defaultMessage": "Estações",
+    "description": "Label of the stations a volunteer may record collections at, on a volunteer card."
+  },
+  "admin-volunteers.page.lede": {
+    "defaultMessage": "O que cada voluntário pode fazer e a que equipe pertence. Cada alteração fica registrada no histórico.",
+    "description": "Line under the heading of the volunteer permissions screen. It says what the screen edits and that changes are recorded."
+  },
+  "admin-volunteers.page.title": {
+    "defaultMessage": "Voluntários",
+    "description": "Heading of the volunteer permissions screen."
+  },
+  "admin-volunteers.record.accountDisabled": {
+    "defaultMessage": "desativada",
+    "description": "Tag after the linked account's username when the account is switched off. Lowercase."
+  },
+  "admin-volunteers.record.accountHeading": {
+    "defaultMessage": "Conta de administração",
+    "description": "Heading of the read-only block about the administrator account linked to the volunteer."
+  },
+  "admin-volunteers.record.accountNone": {
+    "defaultMessage": "Nenhuma conta vinculada.",
+    "description": "Shown when the volunteer is linked to no administrator account."
+  },
+  "admin-volunteers.record.accountNote": {
+    "defaultMessage": "Esta vinculação não se altera aqui: ela é feita pela importação de permissões de voluntários.",
+    "description": "Note under the linked account: the account is read-only on this screen and changes through the volunteer permissions import."
+  },
+  "admin-volunteers.record.accountUser": {
+    "defaultMessage": "Usuário: {username}",
+    "description": "Line naming the linked administrator account. {username} is the account's username."
+  },
+  "admin-volunteers.record.canDraw": {
+    "defaultMessage": "Pode usar o gerador de números",
+    "description": "Switch: the volunteer may draw numbers at the raffle."
+  },
+  "admin-volunteers.record.canRedeem": {
+    "defaultMessage": "Pode registrar retiradas",
+    "description": "Switch: the volunteer may record collections at the counters."
+  },
+  "admin-volunteers.record.close": {
+    "defaultMessage": "Voltar à lista",
+    "description": "Accessible name of the icon that leaves a volunteer's record for the list."
+  },
+  "admin-volunteers.record.otherHeading": {
+    "defaultMessage": "Outros acessos",
+    "description": "Heading of the group of controls about the raffle and the admin link."
+  },
+  "admin-volunteers.record.redeemHeading": {
+    "defaultMessage": "Retiradas",
+    "description": "Heading of the group of controls about collecting items."
+  },
+  "admin-volunteers.record.save": {
+    "defaultMessage": "Salvar",
+    "description": "Button that saves the volunteer's permissions."
+  },
+  "admin-volunteers.record.showAdminLink": {
+    "defaultMessage": "Mostrar o link do admin no passe",
+    "description": "Switch: the volunteer's pass links to the administrator screen. A link only: that screen still asks for its own login."
+  },
+  "admin-volunteers.record.stations": {
+    "defaultMessage": "Estações",
+    "description": "Legend of the stations the volunteer may record collections for. Each is an item, named as chrome.item* does."
+  },
+  "admin-volunteers.record.stationsEmpty": {
+    "defaultMessage": "Sem estações, não pode registrar retiradas.",
+    "description": "Hint under the stations when the volunteer may record collections but no station is ticked: the permission grants nothing until one is."
+  },
+  "admin-volunteers.record.stationsOff": {
+    "defaultMessage": "Ligue \"Pode registrar retiradas\" para escolher as estações.",
+    "description": "Hint under the stations while the collections switch is off, which disables them. The ticks are kept, so switching it back on restores them. The quoted text must match admin-volunteers.record.canRedeem."
+  },
+  "admin-volunteers.record.checkinTime": {
+    "defaultMessage": "Horário de chegada",
+    "description": "Label of the time of day the volunteer is expected on event day."
+  },
+  "admin-volunteers.record.team": {
+    "defaultMessage": "Equipe",
+    "description": "Label of the volunteer's team, free text."
+  },
+  "admin-volunteers.record.teamHeading": {
+    "defaultMessage": "Equipe",
+    "description": "Heading of the group with the volunteer's team and role."
+  },
+  "admin-volunteers.record.teamRole": {
+    "defaultMessage": "Função",
+    "description": "Label of the volunteer's role within the team, free text."
+  },
+  "admin-volunteers.tier": {
+    "defaultMessage": "{tier, select, edit {Cadastro} raffle {Gerador de N°} lookup {Consulta} tshirt {Camisetas} redeem {Retiradas} none {Voluntário} other {Voluntário}}",
+    "description": "Chip naming a volunteer's access, beside their name on the list and on their record. MUST match pass.accessBadge word for word: it is the same chip that appears on the volunteer's own pass, in the same colours, so an administrator reads what the volunteer will see. tier is the highest access the volunteer holds: edit is the registration screen, raffle the number generator, redeem the collection of items, lookup the attendee search, tshirt the T-shirt desk. A volunteer who can both look up and redeem shows lookup. none is the plain volunteer with none of these, which the pass shows as its other fallback; other is only a fallback. Shown in capital letters by the stylesheet. N° is the abbreviation of número."
+  },
+  "admin-volunteers.toast.saved": {
+    "defaultMessage": "Permissões salvas.",
+    "description": "Green confirmation after the volunteer's permissions were saved."
+  },
+  "admin-volunteers.toast.unchanged": {
+    "defaultMessage": "Nada mudou: as permissões já estavam assim.",
+    "description": "Green confirmation after a save that matched what was already stored, so nothing was written and no history entry was added."
+  }
+}

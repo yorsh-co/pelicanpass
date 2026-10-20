@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="pt-BR" data-release="test-release">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Participantes | PelicanPass</title>
+
+  <!-- keeps the browser chrome on the same palette as the page -->
+  <meta name="theme-color" content="#fafafc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0a11" media="(prefers-color-scheme: dark)" />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/images/icon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icon/favicon-32x32.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/images/icon/apple-touch-icon.png">
+  
+    <!-- global styles -->
+  <link rel="stylesheet" href="/css/dist/main.css" />
+
+  <!-- stored theme, applied before first paint. The toggle lives in the rail
+       rather than the public footer, but the stored choice is the same one. -->
+  
+<script nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+  // Safari in private browsing has historically thrown on localStorage rather
+  // than returning null, which would abort head parsing.
+  try {
+    const theme = localStorage.getItem('theme');
+
+    if (theme === 'light' || theme === 'dark') {
+      document.documentElement.dataset.theme = theme;
+    }
+  } catch {}
+</script>
+
+
+  <!-- the shell's own styles, linked once here so each screen adds only its own -->
+  <link rel="stylesheet" href="/css/dist/pages/admin.css" />
+
+  <!-- page-specific styles -->
+  <link rel="stylesheet" href="/css/dist/pages/admin/attendees.css" />
+
+</head>
+<body class="admin-page" data-nodeenv="test">
+
+  <a class="admin-skip" href="#conteudo">Pular para o conteúdo</a>
+
+    
+<div class="admin-rail" data-admin-shell="rail">
+  <div class="admin-rail__head">
+    <a class="wordmark admin-rail__title" role="img" aria-label="PelicanPass" href="/admin"></a>
+    <!--<a class="admin-rail__title" href="/admin">Administração</a>-->
+
+        <button
+      class="admin-rail__menu"
+      data-admin-shell="menu"
+      type="button"
+      aria-expanded="false"
+      aria-controls="admin-rail-panel"
+      aria-label="Abrir menu"
+      data-label-open="Abrir menu"
+      data-label-close="Fechar menu"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+    </button>
+  </div>
+
+    <div class="admin-rail__panel" id="admin-rail-panel">
+  <nav class="admin-rail__nav" id="admin-rail-nav" aria-label="Ferramentas">
+    <ul class="admin-rail__list">
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/metrics"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">monitoring</span>
+          <span class="admin-rail__label">metrics</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/volunteers"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">how_to_reg</span>
+          <span class="admin-rail__label">volunteers</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/attendees"
+          aria-current="page"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">group</span>
+          <span class="admin-rail__label">attendees</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/redemptions"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">redeem</span>
+          <span class="admin-rail__label">redemptions</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/lookup"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">person_search</span>
+          <span class="admin-rail__label">lookup</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/tshirts"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">checkroom</span>
+          <span class="admin-rail__label">tshirts</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/survey"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+          <span class="admin-rail__label">survey</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/pass"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">id_card</span>
+          <span class="admin-rail__label">pass</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/whatsapp"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">send</span>
+          <span class="admin-rail__label">whatsapp</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+                <span class="admin-rail__link admin-rail__link--planned">
+          <span class="material-symbols-outlined" aria-hidden="true">download</span>
+          <span class="admin-rail__label">exports</span>
+          <span class="admin-rail__soon">em breve</span>
+        </span>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+                <span class="admin-rail__link admin-rail__link--planned">
+          <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
+          <span class="admin-rail__label">import</span>
+          <span class="admin-rail__soon">em breve</span>
+        </span>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+                <span class="admin-rail__link admin-rail__link--planned">
+          <span class="material-symbols-outlined" aria-hidden="true">admin_panel_settings</span>
+          <span class="admin-rail__label">admins</span>
+          <span class="admin-rail__soon">em breve</span>
+        </span>
+        
+      </li>
+      
+    </ul>
+  </nav>
+
+  <div class="admin-rail__foot">
+    <p class="admin-rail__user">operadora</p>
+
+    <div class="admin-rail__actions">
+            <button class="ghost admin-rail__logout" data-admin-shell="logout" type="button">
+        <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+        <span class="btn-label">Sair</span>
+      </button>
+
+      <!--
+        The icon and the label name the theme the tap will switch *to*, not the
+        one in effect. `client/theme/theme.ts` rewrites both on load, so the
+        values here are only what a light-themed first paint happens to need.
+      -->
+      <button
+        class="theme-toggle"
+        data-theme-toggle
+        type="button"
+        aria-label="Ativar tema escuro"
+        data-label-dark="Ativar tema escuro"
+        data-label-light="Ativar tema claro"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+      </button>
+
+            
+      
+      <details class="footer-locales small-print" aria-label="Idiomas">
+        <summary lang="pt-BR">
+          BR<span class="visually-hidden"> português (Brasil)</span>
+          <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span>
+        </summary>
+        <ul class="footer-locales-menu">
+          
+          <li>
+            <a
+              href="/admin-attendees-list?lang=pt-BR"
+              hreflang="pt-BR"
+              lang="pt-BR"
+              aria-current="true"
+            >
+              <span class="footer-locales-code">BR</span>
+              <span class="footer-locales-name">português (Brasil)</span>
+              
+              <span class="material-symbols-outlined" aria-hidden="true">check</span>
+              
+            </a>
+          </li>
+          
+          <li>
+            <a
+              href="/admin-attendees-list?lang=en-XA"
+              hreflang="en-XA"
+              lang="en-XA"
+              
+            >
+              <span class="footer-locales-code">XA</span>
+              <span class="footer-locales-name">English (Pseudo-Accents)</span>
+              
+            </a>
+          </li>
+          
+        </ul>
+      </details>
+      
+    </div>
+  </div>
+  </div>
+</div>
+
+
+  <main class="admin-main" id="conteudo">
+    
+
+<div class="admin-list">
+  <header class="admin-list__head">
+    <h1 class="admin-list__title">Participantes</h1>
+
+    
+    <a class="admin-list__new" href="/admin/attendees/new">
+      <span class="material-symbols-outlined" aria-hidden="true">add</span>
+      <span>Novo participante</span>
+    </a>
+    
+  </header>
+
+    
+  <script type="application/json" data-i18n="admin-attendees" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"admin-attendees.checkin.absent":[{"type":0,"value":"Ainda não realizou o check-in"}],"admin-attendees.checkin.alreadyPresent":[{"type":0,"value":"O check-in já havia sido realizado."}],"admin-attendees.checkin.at":[{"type":0,"value":"Check-in realizado em "},{"type":1,"value":"time"}],"admin-attendees.checkin.confirm":[{"type":0,"value":"Confirmar?"}],"admin-attendees.checkin.failed":[{"type":0,"value":"Não foi possível confirmar o check-in. Tente novamente."}],"admin-attendees.checkin.forbidden":[{"type":0,"value":"Você não tem mais permissão para confirmar o check-in."}],"admin-attendees.checkin.heading":[{"type":0,"value":"Check-in"}],"admin-attendees.checkin.mark":[{"type":0,"value":"Confirmar check-in"}],"admin-attendees.checkin.markHint":[{"type":0,"value":"Confirme o check-in de um participante manualmente. Use apenas se você estiver junto com o participante e ele não puder realizar a confirmação de presença (QR Code). O número de check-in será gerado automaticamente após a confirmação."}],"admin-attendees.checkin.marked":[{"type":0,"value":"Check-in confirmado."}],"admin-attendees.checkin.notOpen":[{"type":0,"value":"O check-in ainda não abriu para este público."}],"admin-attendees.checkin.number":[{"type":0,"value":"Check-in realizado · #"},{"type":2,"value":"number","style":{"type":0,"tokens":[{"stem":"group-off","options":[]}],"parsedOptions":{"useGrouping":false}}}],"admin-attendees.checkin.readOnly":[{"type":0,"value":"Sua conta não tem permissão para confirmar o check-in."}],"admin-attendees.checkin.unsaved":[{"type":0,"value":"Salve ou descarte as alterações ao formulário antes de confirmar o check-in."}],"admin-attendees.danger.archive":[{"type":0,"value":"Arquivar"}],"admin-attendees.danger.archiveHint":[{"type":0,"value":"Arquive o participante para bloquear o acesso ao check-in e ao app. O participante pode ser restaurado por esta mesma tela."}],"admin-attendees.danger.archived":[{"type":0,"value":"Participante arquivado."}],"admin-attendees.danger.confirm":[{"type":0,"value":"Confirmar?"}],"admin-attendees.danger.heading":[{"type":0,"value":"Zona de risco"}],"admin-attendees.danger.restore":[{"type":0,"value":"Restaurar"}],"admin-attendees.danger.restoreHint":[{"type":0,"value":"Restaure o participante para liberar acesso ao check-in e ao app"}],"admin-attendees.danger.restored":[{"type":0,"value":"Participante restaurado."}],"admin-attendees.door.failed":[{"type":0,"value":"Não foi possível ativar o envio por WhatsApp. Tente novamente."}],"admin-attendees.door.forbidden":[{"type":0,"value":"Você não tem mais permissão para alterar o envio por WhatsApp."}],"admin-attendees.door.heading":[{"type":0,"value":"Envio de ingressos por WhatsApp"}],"admin-attendees.door.intro":[{"type":0,"value":"Envio automático de novos ingressos por WhatsApp."}],"admin-attendees.door.locked":[{"type":0,"value":"O envio de ingressos por WhatsApp está indisponível."}],"admin-attendees.door.overBudget":[{"type":0,"value":"O limite de orçamento definido foi atingido: o envio de mensagens foi desativado."}],"admin-attendees.door.saved":[{"type":5,"value":"on","options":{"yes":{"value":[{"type":0,"value":"Envio por WhatsApp ativado."}]},"no":{"value":[{"type":0,"value":"Envio por WhatsApp desativado."}]},"other":{"value":[{"type":0,"value":"Envio por WhatsApp desativado."}]}}}],"admin-attendees.door.spend":[{"type":0,"value":"Orçamento usado: "},{"type":2,"value":"spent","style":{"type":0,"tokens":[{"stem":"currency","options":["USD"]},{"stem":".00##","options":[]}],"parsedOptions":{"style":"currency","currency":"USD","minimumFractionDigits":2,"maximumFractionDigits":4}}},{"type":0,"value":" de "},{"type":2,"value":"budget","style":{"type":0,"tokens":[{"stem":"currency","options":["USD"]},{"stem":".00##","options":[]}],"parsedOptions":{"style":"currency","currency":"USD","minimumFractionDigits":2,"maximumFractionDigits":4}}},{"type":0,"value":" ("},{"type":2,"value":"price","style":{"type":0,"tokens":[{"stem":"currency","options":["USD"]},{"stem":".00##","options":[]}],"parsedOptions":{"style":"currency","currency":"USD","minimumFractionDigits":2,"maximumFractionDigits":4}}},{"type":0,"value":" por mensagem)"}],"admin-attendees.door.state":[{"type":5,"value":"on","options":{"yes":{"value":[{"type":0,"value":"Ativado"}]},"no":{"value":[{"type":0,"value":"Desativado"}]},"other":{"value":[{"type":0,"value":"Desativado"}]}}}],"admin-attendees.door.turnOff":[{"type":0,"value":"Desativar"}],"admin-attendees.door.turnOn":[{"type":0,"value":"Ativar"}],"admin-attendees.form.actionFailed":[{"type":0,"value":"Algo deu errado. Tente novamente."}],"admin-attendees.form.archivedFlag":[{"type":0,"value":"Este participante está arquivado: não é possível realizar o check-in, visualizar o ingresso nem participar das interações."}],"admin-attendees.form.cancel":[{"type":0,"value":"Cancelar"}],"admin-attendees.form.close":[{"type":0,"value":"Voltar para a lista de participantes"}],"admin-attendees.form.create":[{"type":0,"value":"Cadastrar"}],"admin-attendees.form.created":[{"type":0,"value":"Participante cadastrado."}],"admin-attendees.form.createdWhatsappFailed":[{"type":0,"value":"Participante cadastrado com sucesso, mas não foi possível enviar o ingresso por WhatsApp. Informe o código do ingresso ao participante para digitação na tela de check-in."}],"admin-attendees.form.createdWhatsappSent":[{"type":0,"value":"Participante cadastrado e ingresso enviado por WhatsApp."}],"admin-attendees.form.createdWhatsappSkipped":[{"type":0,"value":"O participante foi cadastrado sem envio do ingresso por WhatsApp: "},{"type":5,"value":"reason","options":{"lockedByEnv":{"value":[{"type":0,"value":"indisponível"}]},"switchedOff":{"value":[{"type":0,"value":"desativado"}]},"overBudget":{"value":[{"type":0,"value":"limite de orçamento atingido"}]},"phoneInvalid":{"value":[{"type":0,"value":"n° de WhatsApp inválido"}]},"rateLimited":{"value":[{"type":0,"value":"o limite de envios deste login foi atingido, tente novamente em alguns minutos"}]},"alreadySent":{"value":[{"type":0,"value":"a mensagem já foi enviada para esse número"}]},"attendeeCapReached":{"value":[{"type":0,"value":"mensagens não podem mais ser enviados (limite do participante atingido)"}]},"attendeeUnavailable":{"value":[{"type":0,"value":"o ingresso está desativado"}]},"other":{"value":[{"type":0,"value":"o envio de mensagens está indisponível"}]}}},{"type":0,"value":". Informe o código do ingresso diretamente para o participante."}],"admin-attendees.form.forbidden":[{"type":0,"value":"Você não tem mais permissão para editar participantes."}],"admin-attendees.form.itemNone":[{"type":0,"value":"Nenhum"}],"admin-attendees.form.itemOffList":[{"type":1,"value":"value"},{"type":0,"value":" (fora da lista)"}],"admin-attendees.form.itemUnavailable":[{"type":0,"value":"Indisponível"}],"admin-attendees.form.items":[{"type":0,"value":"Itens"}],"admin-attendees.form.itemsHint":[{"type":0,"value":"\"Nenhum\" significa que o participante não recebe o item."}],"admin-attendees.form.name":[{"type":0,"value":"Nome completo"}],"admin-attendees.form.phone":[{"type":0,"value":"Telefone"}],"admin-attendees.form.phoneHint":[{"type":0,"value":"Com DDD, entre 10 e 11 dígitos. Número de outro país: comece com + e o código do país (ex.: +44 7911 123456). Os últimos quatro dígitos são o código de verificação no check-in."}],"admin-attendees.form.readOnly":[{"type":0,"value":"Você não tem permissão para editar participantes."}],"admin-attendees.form.redeemed":[{"type":0,"value":"retirado"}],"admin-attendees.form.roleLocked":[{"type":0,"value":"O tipo de ingresso não pode ser mudado depois que a check-in foi confirmado."}],"admin-attendees.form.save":[{"type":0,"value":"Salvar"}],"admin-attendees.form.saveFailed":[{"type":0,"value":"Não foi possível salvar. Tente novamente."}],"admin-attendees.form.saved":[{"type":0,"value":"Alterações salvas."}],"admin-attendees.form.savedWhatsappFailed":[{"type":0,"value":"Alterações salvas com sucesso, mas não foi possível enviar o link atualizado por WhatsApp. Informe o código do ingresso ao participante para digitação na tela de check-in."}],"admin-attendees.form.savedWhatsappSent":[{"type":0,"value":"Alterações salvas e ingresso enviado por WhatsApp."}],"admin-attendees.form.savedWhatsappSkipped":[{"type":0,"value":"Alterações salvas sem envio do link por WhatsApp: "},{"type":5,"value":"reason","options":{"lockedByEnv":{"value":[{"type":0,"value":"indisponível"}]},"switchedOff":{"value":[{"type":0,"value":"desativado"}]},"overBudget":{"value":[{"type":0,"value":"limite de orçamento atingido"}]},"phoneInvalid":{"value":[{"type":0,"value":"n° de WhatsApp inválido"}]},"rateLimited":{"value":[{"type":0,"value":"o limite de envios deste login foi atingido, tente novamente em alguns minutos"}]},"alreadySent":{"value":[{"type":0,"value":"a mensagem já foi enviada para esse número"}]},"attendeeCapReached":{"value":[{"type":0,"value":"mensagens não podem mais ser enviados (limite do participante atingido)"}]},"attendeeUnavailable":{"value":[{"type":0,"value":"o ingresso está desativado"}]},"other":{"value":[{"type":0,"value":"o envio de mensagens está indisponível"}]}}},{"type":0,"value":". Informe o código do ingresso diretamente para o participante."}],"admin-attendees.form.ticketCodeEdit":[{"type":0,"value":"Definir o código de ingresso"}],"admin-attendees.form.ticketCodeHint.after":[{"type":0,"value":"para voluntários."}],"admin-attendees.form.ticketCodeHint.before":[{"type":0,"value":"O código é gerado automaticamente pelo sistema:"}],"admin-attendees.form.ticketCodeHint.between":[{"type":0,"value":"(participantes) ou"}],"admin-attendees.form.ticketCodeLocked":[{"type":0,"value":"O código de ingresso não pode ser alterado depois que o participante foi cadastrado. Para alterar o ingresso, arquive este participante e crie um novo."}],"admin-attendees.form.ticketCodePlaceholder":[{"type":0,"value":"automático"}],"admin-attendees.form.tshirtEdit":[{"type":0,"value":"Editar a opção de camiseta"}],"admin-attendees.form.tshirtReservedHint":[{"type":0,"value":"Reservada antecipadamente pelo participante. Toque no lápis para alterar."}],"admin-attendees.form.volunteersOnly":[{"type":0,"value":"Somente para voluntários."}],"admin-attendees.form.whatsapp":[{"type":0,"value":"Enviar o link do ingresso por WhatsApp"}],"admin-attendees.form.whatsappEditHint":[{"type":0,"value":"Selecionar apenas se o telefone cadastrado foi alterado."}],"admin-attendees.form.whatsappHint":[{"type":0,"value":"-"}],"admin-attendees.form.whatsappUnavailable":[{"type":5,"value":"reason","options":{"switchedOff":{"value":[{"type":0,"value":"O envio por WhatsApp foi desativado pela coordenação."}]},"overBudget":{"value":[{"type":0,"value":"O limite de orçamento foi atingido."}]},"other":{"value":[{"type":0,"value":"O envio por WhatsApp está indisponível."}]}}}],"admin-attendees.limit.cancel":[{"type":0,"value":"Cancelar"}],"admin-attendees.limit.capHint":[{"type":0,"value":"Número inteiro de "},{"type":2,"value":"min","style":null},{"type":0,"value":" a "},{"type":2,"value":"max","style":null},{"type":0,"value":"."}],"admin-attendees.limit.capLabel":[{"type":0,"value":"Limite de ingressos"}],"admin-attendees.limit.doorHint":[{"type":0,"value":"Ingressos cadastrados com um código digitado à mão não entram na contagem."}],"admin-attendees.limit.edit":[{"type":0,"value":"Editar limite"}],"admin-attendees.limit.exceeded":[{"type":0,"value":"Limite de ingressos excedido ("},{"type":2,"value":"used","style":null},{"type":0,"value":" / "},{"type":2,"value":"cap","style":null},{"type":0,"value":")."}],"admin-attendees.limit.failed":[{"type":0,"value":"Não foi possível salvar o limite de ingressos. Tente novamente."}],"admin-attendees.limit.forbidden":[{"type":0,"value":"Você não tem mais permissão para alterar o limite de ingressos."}],"admin-attendees.limit.formBlocked":[{"type":0,"value":"O limite de ingressos foi atingido: não é possível cadastrar novos participantes."}],"admin-attendees.limit.formRestoreBlocked":[{"type":0,"value":"O limite de ingressos foi atingido: não é possível restaurar este participante."}],"admin-attendees.limit.heading":[{"type":0,"value":"Limite de ingressos"}],"admin-attendees.limit.left":[{"type":5,"value":"scope","options":{"door":{"value":[{"type":6,"value":"remaining","options":{"=0":{"value":[{"type":0,"value":"nenhum ingresso da porta restante"}]},"one":{"value":[{"type":7},{"type":0,"value":" ingresso da porta restante"}]},"other":{"value":[{"type":7},{"type":0,"value":" ingressos da porta restantes"}]}},"offset":0,"pluralType":"cardinal"}]},"total":{"value":[{"type":6,"value":"remaining","options":{"=0":{"value":[{"type":0,"value":"nenhum ingresso restante"}]},"one":{"value":[{"type":7},{"type":0,"value":" ingresso restante"}]},"other":{"value":[{"type":7},{"type":0,"value":" ingressos restantes"}]}},"offset":0,"pluralType":"cardinal"}]},"other":{"value":[{"type":6,"value":"remaining","options":{"=0":{"value":[{"type":0,"value":"nenhum ingresso restante"}]},"one":{"value":[{"type":7},{"type":0,"value":" ingresso restante"}]},"other":{"value":[{"type":7},{"type":0,"value":" ingressos restantes"}]}},"offset":0,"pluralType":"cardinal"}]}}}],"admin-attendees.limit.meterLabel":[{"type":0,"value":"Uso do limite de ingressos"}],"admin-attendees.limit.meterText":[{"type":2,"value":"used","style":null},{"type":0,"value":" de "},{"type":2,"value":"cap","style":null},{"type":0,"value":", "},{"type":1,"value":"detail"}],"admin-attendees.limit.mode":[{"type":5,"value":"mode","options":{"hard":{"value":[{"type":0,"value":"Bloqueio"}]},"warn":{"value":[{"type":0,"value":"Somente aviso"}]},"other":{"value":[{"type":0,"value":"Bloqueio"}]}}}],"admin-attendees.limit.modeLegend":[{"type":0,"value":"Ao atingir o limite"}],"admin-attendees.limit.modeOption":[{"type":5,"value":"mode","options":{"hard":{"value":[{"type":0,"value":"Bloqueio: impede novos ingressos"}]},"warn":{"value":[{"type":0,"value":"Somente aviso: permite cadastrar e avisa"}]},"other":{"value":[{"type":0,"value":"Bloqueio: impede novos ingressos"}]}}}],"admin-attendees.limit.off":[{"type":0,"value":"Nenhum limite de ingressos definido."}],"admin-attendees.limit.over":[{"type":5,"value":"scope","options":{"door":{"value":[{"type":6,"value":"excess","options":{"one":{"value":[{"type":7},{"type":0,"value":" ingresso da porta acima do limite"}]},"other":{"value":[{"type":7},{"type":0,"value":" ingressos da porta acima do limite"}]}},"offset":0,"pluralType":"cardinal"}]},"total":{"value":[{"type":6,"value":"excess","options":{"one":{"value":[{"type":7},{"type":0,"value":" ingresso acima do limite"}]},"other":{"value":[{"type":7},{"type":0,"value":" ingressos acima do limite"}]}},"offset":0,"pluralType":"cardinal"}]},"other":{"value":[{"type":6,"value":"excess","options":{"one":{"value":[{"type":7},{"type":0,"value":" ingresso acima do limite"}]},"other":{"value":[{"type":7},{"type":0,"value":" ingressos acima do limite"}]}},"offset":0,"pluralType":"cardinal"}]}}}],"admin-attendees.limit.save":[{"type":0,"value":"Salvar"}],"admin-attendees.limit.saved":[{"type":0,"value":"Limite de ingressos atualizado."}],"admin-attendees.limit.scopeLegend":[{"type":0,"value":"O que conta para o limite"}],"admin-attendees.limit.scopeOption":[{"type":5,"value":"scope","options":{"off":{"value":[{"type":0,"value":"Sem limite"}]},"total":{"value":[{"type":0,"value":"Todos os participantes"}]},"door":{"value":[{"type":0,"value":"Somente ingressos gerados na porta"}]},"other":{"value":[{"type":0,"value":"Sem limite"}]}}}],"admin-attendees.limit.status":[{"type":5,"value":"status","options":{"off":{"value":[{"type":0,"value":"Sem limite"}]},"ok":{"value":[{"type":0,"value":"Dentro do limite"}]},"near":{"value":[{"type":0,"value":"Quase no limite"}]},"reached":{"value":[{"type":0,"value":"Limite atingido"}]},"over":{"value":[{"type":0,"value":"Limite excedido"}]},"other":{"value":[{"type":0,"value":"Sem limite"}]}}}],"admin-attendees.limit.usage":[{"type":2,"value":"used","style":null},{"type":0,"value":" / "},{"type":2,"value":"cap","style":null},{"type":0,"value":" · "},{"type":1,"value":"detail"}],"admin-attendees.list.archivedFilter":[{"type":0,"value":"Situação"}],"admin-attendees.list.archivedFlag":[{"type":0,"value":"arquivado"}],"admin-attendees.list.clear":[{"type":0,"value":"Limpar"}],"admin-attendees.list.clearFilters":[{"type":0,"value":"Limpar os filtros"}],"admin-attendees.list.code":[{"type":0,"value":"Ingresso"}],"admin-attendees.list.count":[{"type":6,"value":"total","options":{"=1":{"value":[{"type":2,"value":"total","style":{"type":0,"tokens":[{"stem":"group-off","options":[]}],"parsedOptions":{"useGrouping":false}}},{"type":0,"value":" participante"},{"type":5,"value":"filtered","options":{"yes":{"value":[{"type":0,"value":" encontrados"}]},"no":{"value":[]},"other":{"value":[]}}}]},"other":{"value":[{"type":2,"value":"total","style":{"type":0,"tokens":[{"stem":"group-off","options":[]}],"parsedOptions":{"useGrouping":false}}},{"type":0,"value":" participantes"},{"type":5,"value":"filtered","options":{"yes":{"value":[{"type":0,"value":" encontrados"}]},"no":{"value":[]},"other":{"value":[]}}}]}},"offset":0,"pluralType":"cardinal"}],"admin-attendees.list.createFirst":[{"type":0,"value":"Cadastrar o primeiro participante"}],"admin-attendees.list.drawsFlag":[{"type":0,"value":"gerador de n°"}],"admin-attendees.list.empty":[{"type":0,"value":"Nenhum participante cadastrado."}],"admin-attendees.list.items":[{"type":0,"value":"Retiradas"}],"admin-attendees.list.name":[{"type":0,"value":"Nome"}],"admin-attendees.list.noMatches":[{"type":0,"value":"Nenhum participante corresponde a esses filtros."}],"admin-attendees.list.phone":[{"type":0,"value":"Telefone"}],"admin-attendees.list.redeemsFlag":[{"type":0,"value":"retiradas"}],"admin-attendees.list.title":[{"type":0,"value":"Participantes"}],"admin-attendees.newAttendee":[{"type":0,"value":"Novo participante"}],"admin-attendees.nickname.heading":[{"type":0,"value":"Apelido"}],"admin-attendees.nickname.hint":[{"type":0,"value":"O apelido é definido pelo próprio participante."}],"admin-attendees.nickname.none":[{"type":0,"value":"Nenhum apelido definido."}],"admin-attendees.nickname.remove":[{"type":0,"value":"Remover apelido"}],"admin-attendees.nickname.removed":[{"type":0,"value":"Apelido removido."}],"admin-attendees.perms.draws":[{"type":0,"value":"GERADOR DE NÚMEROS"}],"admin-attendees.perms.heading":[{"type":0,"value":"Permissões de voluntário"}],"admin-attendees.perms.hint":[{"type":0,"value":"-"}],"admin-attendees.perms.noDraws":[{"type":0,"value":"-"}],"admin-attendees.perms.noRedeems":[{"type":0,"value":"-"}],"admin-attendees.perms.noStations":[{"type":0,"value":"-"}],"admin-attendees.perms.redeems":[{"type":0,"value":"RETIRADAS"}],"admin-attendees.perms.stations":[{"type":0,"value":"Retiradas: "},{"type":1,"value":"stations"}],"admin-attendees.roleLabel":[{"type":0,"value":"Tipo de ingresso"}]}</script>
+<script type="application/json" data-i18n="admin-errors" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"admin-errors.attendeeArchived":[{"type":0,"value":"Este participante está arquivado e o ingresso não pode ser utilizado no check-in."}],"admin-errors.attendeeNotFound":[{"type":0,"value":"Participante não encontrado."}],"admin-errors.audienceInvalid":[{"type":0,"value":"Público inválido."}],"admin-errors.invalidAttendee":[{"type":0,"value":"Participante inválido."}],"admin-errors.itemAlreadyRedeemed":[{"type":0,"value":"Não é possível remover "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"item"}]}}},{"type":0,"value":": já foi retirado."}],"admin-errors.itemNotEntitled":[{"type":0,"value":"Este participante não tem direito a "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"item"}]}}},{"type":0,"value":"."}],"admin-errors.itemNotRedeemed":[{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"O lanche"}]},"drink":{"value":[{"type":0,"value":"A bebida"}]},"tshirt":{"value":[{"type":0,"value":"A camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"A camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"O almoço"}]},"other":{"value":[{"type":0,"value":"O item"}]}}},{"type":0,"value":" ainda não foi retirado."}],"admin-errors.leaveNotConfirmed":[{"type":0,"value":"Ação cancelada. Toque novamente para sair."}],"admin-errors.listChanged":[{"type":0,"value":"A lista mudou. Revise antes de enviar."}],"admin-errors.nameInvalid":[{"type":0,"value":"Informe o nome completo, com no máximo 120 caracteres."}],"admin-errors.optionNotAllowed":[{"type":0,"value":"Escolha uma opção da lista para "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"item"}]}}},{"type":0,"value":"."}],"admin-errors.pauseBeforeRetry":[{"type":0,"value":"Pause o envio antes de reenviar envios interrompidos."}],"admin-errors.phoneInvalid":[{"type":0,"value":"Informe o telefone com DDD, entre 10 e 11 dígitos."}],"admin-errors.phoneMissing":[{"type":0,"value":"Informe o telefone."}],"admin-errors.previewExpired":[{"type":0,"value":"A prévia expirou. Gere uma nova."}],"admin-errors.previewMissing":[{"type":0,"value":"Gere uma prévia antes de enviar."}],"admin-errors.reasonInvalid":[{"type":0,"value":"Escolha um motivo da lista."}],"admin-errors.redemptionChanged":[{"type":0,"value":"O status da retirada mudou enquanto a página estava aberta. Confira e tente novamente."}],"admin-errors.requestInProgress":[{"type":0,"value":"Ainda processando o envio anterior. Tente novamente em alguns instantes."}],"admin-errors.roleInvalid":[{"type":0,"value":"Escolha entre \"participante\" e \"voluntário\"."}],"admin-errors.roleLocked":[{"type":0,"value":"O tipo de ingresso não pode ser alterado depois que check-in foi realizado."}],"admin-errors.runFinished":[{"type":0,"value":"Este envio já terminou."}],"admin-errors.runInProgress":[{"type":0,"value":"Já existe um envio em andamento."}],"admin-errors.runInvalid":[{"type":0,"value":"Envio inválido."}],"admin-errors.runNotFound":[{"type":0,"value":"Envio não encontrado."}],"admin-errors.runNotPaused":[{"type":0,"value":"Este envio não está pausado."}],"admin-errors.runNotRunning":[{"type":0,"value":"Este envio não está em andamento."}],"admin-errors.scheduleChanged":[{"type":0,"value":"Outro administrador mudou a programação enquanto a página estava aberta. Recarregue para ver a versão atual."}],"admin-errors.scheduleDuplicateTime":[{"type":0,"value":"Duas frases configuradas para o mesmo horário. Cada troca precisa de um horário diferente."}],"admin-errors.scheduleInvalid":[{"type":0,"value":"A programação enviada é inválida. Recarregue a página e tente novamente."}],"admin-errors.scheduleTextMissing":[{"type":0,"value":"Os campos de texto não podem estar vazios."}],"admin-errors.scheduleTextTooLong":[{"type":0,"value":"O texto personalizado pode ter no máximo "},{"type":2,"value":"max","style":null},{"type":0,"value":" caracteres."}],"admin-errors.scheduleTimeInvalid":[{"type":0,"value":"Uma das datas é inválida ou fora do horário programado do evento."}],"admin-errors.scheduleTooLong":[{"type":0,"value":"Limite de frases ultrapassado. Remova algumas e tente novamente."}],"admin-errors.sendingDisabled":[{"type":0,"value":"O envio pelo WhatsApp está desativado neste servidor."}],"admin-errors.templateAudienceMismatch":[{"type":0,"value":"Este modelo não pode ser enviado a esse público."}],"admin-errors.templateInvalid":[{"type":0,"value":"Modelo inválido."}],"admin-errors.testPhoneInvalid":[{"type":0,"value":"Telefone inválido: informe DDD e número."}],"admin-errors.ticketCodeFormat":[{"type":0,"value":"O código deve ter seis letras ou números."}],"admin-errors.ticketCodePrefix":[{"type":0,"value":"O prefixo do código não corresponde ao tipo de ingresso."}],"admin-errors.ticketCodeTaken":[{"type":0,"value":"Esse código de ingresso já está em uso."}],"admin-errors.ticketLimitCap":[{"type":0,"value":"O limite deve ser um número inteiro entre "},{"type":2,"value":"min","style":null},{"type":0,"value":" e "},{"type":2,"value":"max","style":null},{"type":0,"value":"."}],"admin-errors.ticketLimitMode":[{"type":0,"value":"Escolha o que acontece ao atingir o limite: bloquear ou apenas avisar."}],"admin-errors.ticketLimitReached":[{"type":0,"value":"O limite de ingressos foi atingido."}],"admin-errors.ticketLimitScope":[{"type":0,"value":"Escolha o que o limite conta: desativado, todos os participantes ou apenas os ingressos criados na porta."}],"admin-errors.volunteerOnlyItem":[{"type":0,"value":"Somente voluntários podem ter direito a "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"este item"}]}}},{"type":0,"value":"."}],"admin-errors.whatsappDoorLocked":[{"type":0,"value":"O envio de ingressos por WhatsApp está desativado nas configurações do servidor."}]}</script>
+
+  <section class="admin-list__door" data-door>
+    <div class="admin-list__door-head">
+      <h2 class="admin-list__door-title">Envio de ingressos por WhatsApp</h2>
+      <p class="admin-list__door-state is-on" data-door-state>
+        Ativado
+      </p>
+    </div>
+    <p class="admin-list__door-hint">Envio automático de novos ingressos por WhatsApp.</p>
+    
+    <p class="admin-list__door-hint" data-door-spend>
+      Orçamento usado: US$ 1,25 de US$ 10,00 (US$ 0,0625 por mensagem)
+    </p>
+    <p class="admin-list__door-warning" data-door-budget hidden>
+      O limite de orçamento definido foi atingido: o envio de mensagens foi desativado.
+    </p>
+    <button
+      class="ghost admin-list__door-toggle"
+      type="button"
+      data-door-toggle
+      data-enabled="true"
+    >
+      Desativar
+    </button>
+    <p class="admin-list__door-error" data-door-error role="alert" hidden></p>
+    
+  </section>
+  
+
+    
+  
+  <section class="admin-list__limit" data-limit data-limit-overview="{&#34;scope&#34;:&#34;total&#34;,&#34;cap&#34;:500,&#34;mode&#34;:&#34;hard&#34;,&#34;used&#34;:430,&#34;remaining&#34;:70,&#34;status&#34;:&#34;near&#34;}">
+    <div class="admin-list__limit-head">
+      <h2 class="admin-list__limit-title">Limite de ingressos</h2>
+      <p class="admin-list__limit-status" data-limit-status data-status="near">Quase no limite</p>
+      <p class="admin-list__limit-mode" data-limit-mode >Bloqueio</p>
+    </div>
+    
+<div
+  class="limit-meter"
+  data-limit-meter
+  data-status="near"
+  role="meter"
+  aria-label="Uso do limite de ingressos"
+  aria-valuemin="0"
+  aria-valuemax="500"
+  aria-valuenow="430"
+  aria-valuetext="430 de 500, 70 ingressos restantes"
+  
+>
+  <span class="limit-meter__fill" data-limit-fill></span>
+</div>
+<p class="limit-meter__usage" data-limit-usage data-status="near" >
+  430 / 500 · 70 ingressos restantes
+</p>
+
+    <p class="admin-list__limit-hint" data-limit-off hidden>Nenhum limite de ingressos definido.</p>
+    <p class="admin-list__limit-hint" data-limit-door-hint hidden>Ingressos cadastrados com um código digitado à mão não entram na contagem.</p>
+    
+    <button
+      class="ghost admin-list__limit-edit"
+      type="button"
+      data-limit-edit
+      aria-expanded="false"
+      aria-controls="limit-form"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+      <span class="btn-label">Editar limite</span>
+    </button>
+    <form class="admin-list__limit-form" id="limit-form" data-limit-form method="post" action="/admin/attendees" novalidate hidden>
+      <fieldset class="admin-list__limit-group">
+        <legend class="admin-list__limit-legend">O que conta para o limite</legend>
+        
+        <label class="admin-list__limit-choice">
+          <input type="radio" name="limit-scope" value="off"  />
+          <span>Sem limite</span>
+        </label>
+        
+        <label class="admin-list__limit-choice">
+          <input type="radio" name="limit-scope" value="total" checked />
+          <span>Todos os participantes</span>
+        </label>
+        
+        <label class="admin-list__limit-choice">
+          <input type="radio" name="limit-scope" value="door"  />
+          <span>Somente ingressos gerados na porta</span>
+        </label>
+        
+      </fieldset>
+      <div class="admin-list__limit-field">
+        <label class="admin-list__limit-label" for="limit-cap">Limite de ingressos</label>
+        <input
+          id="limit-cap"
+          name="limit-cap"
+          type="number"
+          inputmode="numeric"
+          min="1"
+          max="10000"
+          step="1"
+          value="500"
+          aria-describedby="limit-cap-hint"
+          
+        />
+        <p class="admin-list__limit-hint" id="limit-cap-hint">Número inteiro de 1 a 10.000.</p>
+      </div>
+      <fieldset class="admin-list__limit-group" data-limit-mode-group >
+        <legend class="admin-list__limit-legend">Ao atingir o limite</legend>
+        
+        <label class="admin-list__limit-choice">
+          <input type="radio" name="limit-mode" value="hard" checked />
+          <span>Bloqueio: impede novos ingressos</span>
+        </label>
+        
+        <label class="admin-list__limit-choice">
+          <input type="radio" name="limit-mode" value="warn"  />
+          <span>Somente aviso: permite cadastrar e avisa</span>
+        </label>
+        
+      </fieldset>
+      <p class="admin-list__limit-error" data-limit-error role="alert" hidden></p>
+      <div class="admin-list__limit-actions">
+        <button type="submit" data-limit-save><span class="btn-label">Salvar</span></button>
+        <button class="ghost" type="button" data-limit-cancel>Cancelar</button>
+      </div>
+    </form>
+    
+  </section>
+  
+
+    <form
+    class="admin-list__filters"
+    id="filters"
+    method="post"
+    action="/admin/attendees"
+  >
+    <div class="admin-list__search">
+      <label class="admin-list__label" for="q">Buscar</label>
+      <input
+        id="q"
+        name="q"
+        type="search"
+        value="ana"
+        placeholder="Nome, apelido, código ou telefone"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="admin-list__fields--container">
+
+        <div class="admin-list__field">
+        <label class="admin-list__label" for="role">Tipo de ingresso</label>
+        <select id="role" name="role">
+            
+            <option value="participant" selected>Participantes</option>
+            
+            <option value="all" >Participantes + voluntários</option>
+            
+            <option value="volunteer" >Voluntários</option>
+            
+        </select>
+        </div>
+
+        <div class="admin-list__field">
+        <label class="admin-list__label" for="checkin">Check-in</label>
+        <select id="checkin" name="checkin">
+            
+            <option value="" selected>Todos</option>
+            
+            <option value="yes" >Check-in realizado</option>
+            
+            <option value="no" >Check-in pendente</option>
+            
+        </select>
+        </div>
+
+        <div class="admin-list__field">
+        <label class="admin-list__label" for="archived">Situação</label>
+        <select id="archived" name="archived">
+            
+            <option value="" selected>Ativos</option>
+            
+            <option value="only" >Arquivados</option>
+            
+            <option value="all" >Todos</option>
+            
+        </select>
+        </div>
+
+    </div>
+
+    <div class="admin-list__actions">
+      <button type="submit">Buscar</button>
+      
+      <a class="admin-list__clear" href="/admin/attendees">
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        <span>Limpar</span>
+      </a>
+      
+    </div>
+  </form>
+
+  <p class="admin-list__count" role="status">
+    2 participantes encontrados
+  </p>
+
+    <form id="record" method="post" action="/admin/attendees/edit"></form>
+
+  
+    <div class="admin-list__scroll">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col">Ingresso</th>
+          <th scope="col">Tipo de ingresso</th>
+          <th scope="col">Check-in</th>
+          <th scope="col">Telefone</th>
+          <th scope="col">Retiradas</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td>
+                        <button
+              class="admin-table__open"
+              type="submit"
+              form="record"
+              name="attendeeId"
+              value="5f0c1f0e-2b6a-4a57-9a53-0d2f6a1b7c01"
+            >
+              <span class="admin-table__name">Ana Souza</span>
+              
+              <span class="admin-table__nickname">Aninha</span>
+              
+            </button>
+            
+          </td>
+
+          <td><code class="admin-table__code ticket-code">EV26-0001</code></td>
+
+          <td>
+            <span class="role-badge role-badge--participant">
+              Participante
+            </span>
+            
+            
+          </td>
+
+          <td>
+            
+            #42
+            
+          </td>
+
+          <td><span class="admin-table__muted">(11) *****-1234…</span></td>
+
+          <td>
+            
+            
+            <span class="admin-table__item admin-table__item--redeemed">
+              Camiseta: M
+            </span>
+            
+            <span class="admin-table__item">
+              Lanche: Vegetariano
+            </span>
+            
+          </td>
+        </tr>
+        
+        <tr class=&#34;admin-table__row--archived&#34;>
+          <td>
+                        <button
+              class="admin-table__open"
+              type="submit"
+              form="record"
+              name="attendeeId"
+              value="5f0c1f0e-2b6a-4a57-9a53-0d2f6a1b7c02"
+            >
+              <span class="admin-table__name">Bruno &lt;Lima&gt;</span>
+              
+            </button>
+            
+            <span class="admin-table__flag">arquivado</span>
+            
+          </td>
+
+          <td><code class="admin-table__code ticket-code">EV26-0002</code></td>
+
+          <td>
+            <span class="role-badge role-badge--volunteer">
+              Voluntário
+            </span>
+            <span class="admin-table__flag">retiradas</span>
+            <span class="admin-table__flag">gerador de n°</span>
+          </td>
+
+          <td>
+            
+            <span class="admin-table__muted">—</span>
+            
+          </td>
+
+          <td><span class="admin-table__muted">(21) *****-9876…</span></td>
+
+          <td>
+            
+            <span class="admin-table__muted">—</span>
+            
+            
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  
+
+    
+</div>
+
+  </main>
+
+    <div data-main="toast" role="status" aria-live="polite" aria-atomic="true">
+  <span data-toast="icon" class="material-symbols-outlined" aria-hidden="true"></span>
+  <div data-toast="msg-container"><span data-toast="msg"></span></div>
+</div>
+
+
+    <!--
+  Raised by modules/ui/challenge-gate.ts when Cloudflare challenges a fetch.
+
+  Both messages ship rendered and hidden and the script reveals one. The
+  strings come from the shared chrome catalog, except the blocked one: that
+  message names who to ask for help, and on the administrator screens the
+  reader is the volunteer the attendee copy tells them to call. Callers that
+  need the other wording pass `challengeBlocked`.
+
+  `warning` is used rather than a lock or a clock because the icon subset is
+  frozen at 21 glyphs (docs/infrastructure/asset-delivery.md) — an icon outside it renders as
+  its own name, silently.
+-->
+
+<div
+  id="app-challenge"
+  data-main="challenge"
+  class="app-challenge"
+  role="alertdialog"
+  aria-labelledby="challenge-title"
+  aria-modal="true"
+  hidden
+>
+  <div class="challenge-content">
+    <span class="material-symbols-outlined" aria-hidden="true">warning</span>
+
+    <!--
+      The label wraps both variants rather than sitting on either. A `hidden`
+      element contributes nothing to the accessible name, so this resolves to
+      whichever message the script revealed.
+    -->
+    <div id="challenge-title">
+      <p data-challenge="expired" hidden>Verificação de segurança expirada</p>
+
+      <p data-challenge="blocked" hidden>Não foi possível completar a verificação. Dirija-se à mesa de suporte</p>
+
+            <p data-challenge="expired-access" hidden>
+        Sessão expirada. Entre novamente para continuar
+      </p>
+    </div>
+
+    <button
+      type="button"
+      data-challenge="continue"
+      data-label-expired="Continuar"
+      data-label-blocked="Tentar novamente"
+      data-label-reauth="Entrar novamente"
+    ></button>
+  </div>
+</div>
+
+
+  <!-- global scripts -->
+  <script type="module" src="/js/theme/theme.js"></script>
+    <script type="module" src="/js/telemetry/index.js"></script>
+  <script type="module" src="/js/pages/admin/shell/index.js"></script>
+
+  <!-- page-specific scripts -->
+  <script type="module" src="/js/pages/admin/attendees/list/index.js"></script>
+
+</body>
+</html>

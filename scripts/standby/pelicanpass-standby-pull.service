@@ -1,0 +1,20 @@
+[Unit]
+# Pulls one validated snapshot of the primary's Postgres and Redis. Started
+# every minute by pelicanpass-standby-pull.timer; see docs/operations/standby.md.
+#
+# A *user* unit: it needs the operator's rootless Docker context and the
+# forced-command snapshot key, and nothing that requires root.
+Description=Pull a standby snapshot from the production primary
+After=docker.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=%h/.config/pelicanpass-standby.env
+
+# Run from the standby's own checkout: restore.sh needs it there anyway, and the
+# scripts validate snapshots against the images that checkout runs.
+ExecStart=/usr/bin/env bash ${STANDBY_LOCAL_DIR}/scripts/standby/pull.sh
+
+# Longer than one interval is a hung tunnel, not a slow dump. The timer starts
+# the next attempt once this one is killed.
+TimeoutStartSec=55

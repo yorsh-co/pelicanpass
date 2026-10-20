@@ -1,0 +1,6 @@
+node_modules
+dist
+src/web/public/js
+.env
+docs/
+src/web/views/__snapshots__

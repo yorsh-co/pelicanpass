@@ -1,0 +1,78 @@
+body {
+  /*
+   * The layout viewport, which is the right floor whenever the keyboard is
+   * closed. `min-height`, so content taller than the visible area still grows
+   * the page and scrolls.
+   *
+   * The visual viewport — `--viewport-height`, published by
+   * `modules/ui/visual-viewport.ts` — matters only while a keyboard covers part
+   * of the screen, and `pages/attendee/checkin` sizes to it then, with a
+   * definite `height` under `body[data-keyboard='open']`. It is not trusted
+   * here: Firefox for Android reports it short by its toolbar on first load,
+   * with no resize to correct it, which left empty space below the shell.
+   */
+  min-height: 100dvh;
+
+  overflow-x: hidden;
+
+  /* Replaces the previous `overflow-y: scroll`, which forced a visible track on
+     every viewport to stop the layout shifting when a step grew past the fold.
+     This reserves the space without drawing the bar. */
+  scrollbar-gutter: stable;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background: var(--canvas);
+  color: var(--text);
+
+  position: relative;
+}
+
+.no-js-warning {
+  background: var(--error-soft);
+  color: var(--error);
+  padding: var(--space-4);
+  text-align: center;
+  font-weight: var(--weight-semibold);
+}
+
+/*
+ * The app shell. Full-bleed rather than a centred fixed-width card: on a phone
+ * the card wasted the top and bottom of the screen and put the input in the
+ * hardest place to reach one-handed. `--content-max` keeps line length sane on
+ * a tablet without reintroducing the card.
+ */
+.main-wrapper {
+  flex: 1;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*
+ * Shell for layouts/plain.ejs — the standalone content pages. Sits here beside
+ * .main-wrapper so any page using that layout gets the shell, while the page's
+ * own stylesheet only has to dress its content.
+ */
+.plain-page {
+  justify-content: flex-start;
+}
+
+.plain-wrapper {
+  flex: 1;
+  width: 100%;
+  max-width: 46rem;
+
+  /* A column, so a page that wants to fill the viewport can say `flex: 1` and
+     get it — the error page centres its card that way. Inert for prose pages,
+     which stack article then footer either way. */
+  display: flex;
+  flex-direction: column;
+  padding: clamp(var(--space-5), 5vw, var(--space-7))
+    clamp(var(--space-4), 5vw, var(--space-6))
+    clamp(var(--space-6), 6vh, var(--space-7));
+}

@@ -1,0 +1,234 @@
+/*
+ * The volunteer permissions screen and one volunteer's record.
+ *
+ * Linked after pages/admin/attendees.css and pages/admin/redemptions.css, whose
+ * `.admin-list`, `.admin-table__*` and `.admin-form__*` classes both pages
+ * reuse; this sheet adds only what they lack. The tier chip is
+ * components/access-tier.css.
+ *
+ * **No media query**, for the reason attendees.css gives. A row is a wrapping
+ * flex line whose cells share a basis: on a wide screen they line up in
+ * columns from one row to the next, and on a phone they stack into a card.
+ */
+
+/* -------------------------------------------------------------- legend */
+
+.volunteers__legend-title {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+}
+
+.volunteers__legend-lede {
+  margin: var(--space-2) 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.volunteers__legend-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+
+/* The chip column is as wide as the longest chip, which does not wrap, so
+   the text lines up from one entry to the next. A phone stacks them. */
+.volunteers__legend-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-4);
+}
+
+.volunteers__legend-item > dt {
+  flex: 0 0 13rem;
+}
+
+.volunteers__legend-item > dd {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  margin: 0;
+  flex: 1 1 14rem;
+}
+
+.volunteers__legend-grant {
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------- list */
+
+.volunteers__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.volunteers__chip {
+  width: auto;
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+}
+
+.volunteers__chip[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.volunteers__list {
+  display: flex;
+  flex-direction: column;
+
+  margin: 0;
+  padding: 0;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  list-style: none;
+}
+
+/* `hidden` is the filters' way of removing a row; the flex display below
+   would otherwise outrank it. */
+.volunteers__row[hidden] {
+  display: none;
+}
+
+.volunteers__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-2) var(--space-4);
+
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.volunteers__row + .volunteers__row {
+  border-top: 1px solid var(--border);
+}
+
+.volunteers__row:hover {
+  background: var(--surface-hover);
+}
+
+.volunteers__cell {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+
+  min-width: 0;
+  flex: 1 1 9rem;
+}
+
+.volunteers__cell--name {
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 2 1 14rem;
+}
+
+.volunteers__cell--name .admin-table__open {
+  width: auto;
+  min-height: 0;
+}
+
+/* Wide enough for the longest chip, which does not wrap, so it never runs
+   under the cell beside it. */
+.volunteers__cell--tier {
+  flex-basis: 13rem;
+}
+
+/* The marks sit beside the stations on one line of small tags. */
+.volunteers__row .admin-table__flag {
+  margin-top: 0;
+}
+
+/* -------------------------------------------------------------- record */
+
+.volunteer-record__stations {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  margin: 0;
+  padding: 0;
+  padding-left: var(--space-5);
+
+  border: 0;
+}
+
+.volunteer-record__stations > .admin-form__label {
+  float: none;
+  padding: 0;
+}
+
+.volunteer-record__account {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+
+  margin: 0;
+}
+
+.volunteer-record__history {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.volunteer-record__entry-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+
+  margin: 0 0 var(--space-1);
+
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.volunteer-record__diffs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.volunteer-record__diffs > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+}
+
+.volunteer-record__diffs dt {
+  min-width: 7rem;
+  color: var(--text-muted);
+}
+
+.volunteer-record__diffs dd {
+  margin: 0;
+}

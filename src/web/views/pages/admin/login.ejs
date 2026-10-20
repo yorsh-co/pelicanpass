@@ -1,0 +1,113 @@
+<%# i18n: admin-login %>
+<%- include('../../partials/i18n-catalogs') %>
+
+<main class="admin-gate">
+  <h1 class="admin-gate__title"><%= copy.heading() %></h1>
+  <p class="admin-gate__lede"><%= copy.lede() %></p>
+
+  <%# A real <form> rather than two inputs and a button: it brings the password
+      manager, the Enter key and the mobile "Go" affordance for free, and the
+      submit handler cancels the native navigation. -%>
+  <form class="admin-gate__form" data-admin="form" method="post" novalidate>
+    <label class="admin-gate__field">
+      <span class="admin-gate__label"><%= copy.username() %></span>
+      <input
+        data-admin="username"
+        name="username"
+        type="text"
+        autocomplete="username"
+        autocapitalize="none"
+        autocorrect="off"
+        spellcheck="false"
+        maxlength="64"
+        required
+      />
+    </label>
+
+    <%# Labelled by `for` rather than by wrapping, unlike the username field: a
+        wrapping label would fold the toggle's name into the input's. The
+        toggle's label is fixed and its state rides on aria-pressed, so it is
+        announced as "Mostrar senha, pressed" rather than contradicting itself. -%>
+    <div class="admin-gate__field">
+      <label class="admin-gate__label" for="admin-password">
+        <%= copy.password() %>
+      </label>
+      <div class="admin-gate__secret">
+        <input
+          id="admin-password"
+          data-admin="password"
+          name="password"
+          type="password"
+          autocomplete="current-password"
+          maxlength="256"
+          required
+        />
+        <button
+          data-admin="reveal"
+          class="ghost admin-gate__reveal"
+          type="button"
+          aria-pressed="false"
+          aria-controls="admin-password"
+          aria-label="<%= copy.reveal() %>"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
+        </button>
+      </div>
+    </div>
+
+    <%# Rendered on load rather than only once the server has asked for it. The
+        check is unconditional, so every sign-in needs a token anyway, and a
+        container that grows from nothing to ~65px would push the submit button
+        out from under the reader's thumb mid-tap — the concern
+        .admin-gate__error's min-height already records. -%>
+    <div
+      data-admin="captcha"
+      data-sitekey="<%= turnstileSiteKey %>"
+      class="captcha-container"
+    ></div>
+
+    <%# aria-live so the message is announced when it replaces an empty node,
+        and role="alert" so it interrupts — a refused sign-in is the whole
+        outcome of the interaction. -%>
+    <p
+      class="admin-gate__error"
+      data-admin="error"
+      role="alert"
+      aria-live="assertive"
+    ></p>
+
+    <button data-admin="submit" type="submit">
+      <span class="btn-label"><%= copy.submit() %></span>
+    </button>
+  </form>
+
+  <noscript>
+    <p class="admin-gate__error">
+      <%= copy.noscript() %>
+    </p>
+  </noscript>
+</main>
+
+<%# edge-challenge recovery. In the view rather than in layouts/plain: that
+    layout also carries the landing and error pages, which are attendee-facing
+    and make no requests. This page signs in over fetch, so a lapsed
+    cf_clearance lands here. Blocked copy overridden for the same reason as in
+    layouts/admin — the reader is the volunteer. -%>
+<%- include('../../components/challenge-gate', {
+  challengeBlocked: chrome.challengeBlockedAdmin(),
+}) %>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/admin.css" />
+
+<%- contentFor('scripts') %>
+<%# Before the module below, and both are deferred, so `turnstile` exists by the
+    time the page script runs. If this fetch fails the page script still runs and
+    still submits — the server decides, which is what lets
+    TURNSTILE_ADMIN_ENFORCE rescue a blocked CDN. -%>
+<script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+  defer
+></script>
+
+<script type="module" src="/js/pages/admin/login/index.js"></script>

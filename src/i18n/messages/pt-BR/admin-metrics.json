@@ -1,0 +1,502 @@
+{
+  "admin-metrics.disconnected": {
+    "defaultMessage": "Desconectado",
+    "description": "Status line when polls fail and no cause could be found."
+  },
+  "admin-metrics.door.of": {
+    "defaultMessage": "de",
+    "description": "Joins the checked-in total to the expected total, which is rendered and refreshed separately: \"42 de 700\"."
+  },
+  "admin-metrics.door.prefix": {
+    "defaultMessage": "{kind, select, generated {{prefix} (porta)} external {{prefix}} other {?}}",
+    "description": "A ticket prefix's row label under Participantes on the door panel. generated is the d prefix the attendees editor gives walk-ins, hence \"porta\"; external is any other prefix and shows as is. other is only a fallback. prefix is the code's one-character key, such as x or 7."
+  },
+  "admin-metrics.door.prefixToggle": {
+    "defaultMessage": "Por prefixo",
+    "description": "Summary of the collapsible list under Participantes on the door panel that breaks their check-ins down by ticket prefix."
+  },
+  "admin-metrics.door.sparkLabel": {
+    "defaultMessage": "Check-ins por minuto na última hora",
+    "description": "Accessible name of the door panel's sparkline."
+  },
+  "admin-metrics.door.tip.after": {
+    "defaultMessage": ", então é normal que o gráfico volte para zero entre os check-ins.",
+    "description": "End of the door panel tooltip, after the emphasised word, hence the leading comma."
+  },
+  "admin-metrics.door.tip.before": {
+    "defaultMessage": "Check-ins realizados neste evento, em relação à lista de participantes. O gráfico mostra os últimos 60 minutos, um ponto por minuto. A taxa por minuto é a do minuto",
+    "description": "Door panel tooltip, first part, before the emphasised word in admin-metrics.door.tip.emphasis. The sentence ends with admin-metrics.door.tip.after."
+  },
+  "admin-metrics.door.tip.emphasis": {
+    "defaultMessage": "atual",
+    "description": "Emphasised word in the door panel tooltip, between admin-metrics.door.tip.before and .after: the rate is the current minute's."
+  },
+  "admin-metrics.door.title": {
+    "defaultMessage": "Check-ins",
+    "description": "Door panel heading: check-ins as they happen."
+  },
+  "admin-metrics.errors.count": {
+    "defaultMessage": "{count, number}×",
+    "description": "How many times one error signature occurred."
+  },
+  "admin-metrics.errors.none": {
+    "defaultMessage": "Nenhum erro nos últimos 15 minutos",
+    "description": "Shown when no error was recorded in the last 15 minutes."
+  },
+  "admin-metrics.errors.signature": {
+    "defaultMessage": "assinatura {fingerprint}",
+    "description": "Under an error's message: its signature. {fingerprint} is a hash, shown as is."
+  },
+  "admin-metrics.errors.sparkLabel": {
+    "defaultMessage": "Erros por minuto na última hora",
+    "description": "Accessible name of the errors panel's sparkline."
+  },
+  "admin-metrics.errors.tip.after": {
+    "defaultMessage": "agrupa o mesmo defeito visto em muitas requisições, então \"40×\" representa um agrupamento de códigos de erro.",
+    "description": "End of the errors tooltip, after the emphasised term."
+  },
+  "admin-metrics.errors.tip.before": {
+    "defaultMessage": "Erros registrados por minuto, e as assinaturas de erro mais frequentes dos últimos 15 minutos. Uma",
+    "description": "Errors tooltip, first part, before the emphasised term in admin-metrics.errors.tip.emphasis."
+  },
+  "admin-metrics.errors.tip.emphasis": {
+    "defaultMessage": "assinatura",
+    "description": "Emphasised term in the errors tooltip: a signature groups one defect across many requests. Should match admin-metrics.errors.signature."
+  },
+  "admin-metrics.errors.title": {
+    "defaultMessage": "Erros",
+    "description": "Errors panel heading."
+  },
+  "admin-metrics.health.depDown": {
+    "defaultMessage": "fora do ar",
+    "description": "A dependency's value when it does not answer."
+  },
+  "admin-metrics.health.down": {
+    "defaultMessage": "Uma dependência está fora do ar",
+    "description": "Health headline when Redis or Postgres does not answer."
+  },
+  "admin-metrics.health.depUnknown": {
+    "defaultMessage": "sem informações",
+    "description": "A dependency's value when the readiness check could not be reached, so whether it answers is unknown."
+  },
+  "admin-metrics.health.duration": {
+    "defaultMessage": "{ms, number} ms",
+    "description": "A dependency's response time in milliseconds."
+  },
+  "admin-metrics.health.lastAlert": {
+    "defaultMessage": "Último alerta: {title}",
+    "description": "The most recent alert sent to Discord. {title} is the alert's own title, in English."
+  },
+  "admin-metrics.health.noAlerts": {
+    "defaultMessage": "Nenhum alerta desde o início",
+    "description": "Shown when no alert has been sent since the process started."
+  },
+  "admin-metrics.health.ok": {
+    "defaultMessage": "Todas as dependências respondendo",
+    "description": "Health headline when Redis and Postgres both answer."
+  },
+  "admin-metrics.health.tip.after": {
+    "defaultMessage": ", não o da máquina — zera a cada reinício. O último alerta é o que foi enviado ao Discord.",
+    "description": "End of the health tooltip, after the emphasised word, hence the leading comma."
+  },
+  "admin-metrics.health.tip.before": {
+    "defaultMessage": "Status de Redis e Postgres. O tempo no ar se refere à",
+    "description": "Health tooltip, first part, before the emphasised word in admin-metrics.health.tip.emphasis."
+  },
+  "admin-metrics.health.tip.emphasis": {
+    "defaultMessage": "aplicação",
+    "description": "Emphasised word in the health tooltip: uptime is the process's, not the host's."
+  },
+  "admin-metrics.health.title": {
+    "defaultMessage": "Saúde",
+    "description": "Health panel heading: whether the app's dependencies answer."
+  },
+  "admin-metrics.health.unknown": {
+    "defaultMessage": "Não foi possível verificar as dependências",
+    "description": "Health headline when the readiness check could not be reached, so the panel cannot say whether the dependencies answer."
+  },
+  "admin-metrics.health.uptime": {
+    "defaultMessage": "No ar",
+    "description": "Health row label: how long the process has been running."
+  },
+  "admin-metrics.health.uptimeValue": {
+    "defaultMessage": "{minutes, number} min",
+    "description": "The process's uptime in whole minutes."
+  },
+  "admin-metrics.latency.bucket": {
+    "defaultMessage": "≤ {ms, number} ms",
+    "description": "A latency percentile as the edge of its histogram bucket: at most {ms} milliseconds."
+  },
+  "admin-metrics.latency.group.checkinApi": {
+    "defaultMessage": "API de check-in",
+    "description": "Latency row: the check-in API."
+  },
+  "admin-metrics.latency.group.checkinPages": {
+    "defaultMessage": "Páginas de check-in",
+    "description": "Latency row: the check-in pages."
+  },
+  "admin-metrics.latency.group.staffApi": {
+    "defaultMessage": "API de voluntário",
+    "description": "Latency row: the staff API."
+  },
+  "admin-metrics.latency.group.staffPages": {
+    "defaultMessage": "Páginas de voluntário",
+    "description": "Latency row: the staff (redemption and raffle) pages."
+  },
+  "admin-metrics.latency.surface": {
+    "defaultMessage": "Superfície",
+    "description": "Latency table column: which part of the app."
+  },
+  "admin-metrics.latency.tip.after": {
+    "defaultMessage": ": “≤ 250 ms” quer dizer que o percentil cai nessa faixa, não que mediu exatamente isso.",
+    "description": "End of the latency tooltip, after the emphasised term, hence the leading colon. The example must use the same notation as admin-metrics.latency.bucket."
+  },
+  "admin-metrics.latency.tip.before": {
+    "defaultMessage": "Tempo de resposta por rota, nos últimos 15 minutos. Os valores são",
+    "description": "Latency tooltip, first part, before the emphasised term in admin-metrics.latency.tip.emphasis."
+  },
+  "admin-metrics.latency.tip.emphasis": {
+    "defaultMessage": "limites de faixa",
+    "description": "Emphasised term in the latency tooltip: the values are histogram bucket edges, not measurements."
+  },
+  "admin-metrics.latency.title": {
+    "defaultMessage": "Latência",
+    "description": "Latency panel heading: response times."
+  },
+  "admin-metrics.limiter.keyedOn.admin": {
+    "defaultMessage": "a conta do administrador que cadastra",
+    "description": "What one bucket of a rate limiter is keyed on, in its tooltip. In English: \"the administrator account doing the sign-up\"."
+  },
+  "admin-metrics.limiter.keyedOn.adminSession": {
+    "defaultMessage": "sessão de administrador",
+    "description": "What one bucket of a rate limiter is keyed on, in its tooltip. In English: \"admin session\"."
+  },
+  "admin-metrics.limiter.keyedOn.adminUsername": {
+    "defaultMessage": "nome de usuário do administrador",
+    "description": "What one bucket of a rate limiter is keyed on, in its tooltip. In English: \"admin username\"."
+  },
+  "admin-metrics.limiter.keyedOn.attendeeSession": {
+    "defaultMessage": "sessão de participante, já confirmada pelo armazenamento",
+    "description": "What one bucket of a rate limiter is keyed on, in its tooltip. In English: \"attendee session, already resolved by the store\"."
+  },
+  "admin-metrics.limiter.keyedOn.checkinCookie": {
+    "defaultMessage": "cookie de check-in, lido diretamente (a sessão ainda não existe)",
+    "description": "What one bucket of a rate limiter is keyed on, in its tooltip. In English: \"check-in cookie, read directly (the session does not exist yet)\"."
+  },
+  "admin-metrics.limiter.keyedOn.checkinSession": {
+    "defaultMessage": "sessão de check-in, já confirmada pelo armazenamento",
+    "description": "What one bucket of a rate limiter is keyed on, in its tooltip. In English: \"check-in session, already resolved by the store\"."
+  },
+  "admin-metrics.limiter.keyedOn.global": {
+    "defaultMessage": "global, em todo o evento",
+    "description": "What one bucket of a rate limiter is keyed on, in its tooltip. In English: \"global, across the whole event\"."
+  },
+  "admin-metrics.limiter.keyedOn.ip": {
+    "defaultMessage": "endereço IP",
+    "description": "What one bucket of a rate limiter is keyed on, in its tooltip. In English: \"IP address\"."
+  },
+  "admin-metrics.limiter.keyedOn.ipStrict": {
+    "defaultMessage": "endereço IP fora de TRUSTED_IPS",
+    "description": "What one bucket of a rate limiter is keyed on, in its tooltip. In English: \"IP address, not listed in TRUSTED_IPS\"."
+  },
+  "admin-metrics.limiter.keyedOn.ipTrusted": {
+    "defaultMessage": "endereço IP listado em TRUSTED_IPS",
+    "description": "What one bucket of a rate limiter is keyed on, in its tooltip. In English: \"IP address listed in TRUSTED_IPS\"."
+  },
+  "admin-metrics.limiter.keyedOn.lookupVolunteer": {
+    "defaultMessage": "o voluntário que faz a busca",
+    "description": "What one bucket of a rate limiter is keyed on, in its tooltip. In English: \"the volunteer doing the lookup\"."
+  },
+  "admin-metrics.limiter.keyedOn.verifiedAttendee": {
+    "defaultMessage": "o participante sendo verificado",
+    "description": "What one bucket of a rate limiter is keyed on, in its tooltip. In English: \"the attendee being verified\"."
+  },
+  "admin-metrics.limiter.keyedOn.volunteerSession": {
+    "defaultMessage": "a sessão de participante do próprio voluntário",
+    "description": "What one bucket of a rate limiter is keyed on, in its tooltip. In English: \"the volunteer's own attendee session\"."
+  },
+  "admin-metrics.limiter.protects.adminLogin": {
+    "defaultMessage": "o endpoint de entrada dos administradores, que não pode usar o limite por sessão porque a sessão ainda não existe. Dimensionado para a rede interna, não para o local do evento — não há multidão atrás de um endereço aqui",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the admin sign-in endpoint, which cannot use the session limiter because the session does not exist yet. Sized for the tailnet, not a venue — no crowd behind one address here\"."
+  },
+  "admin-metrics.limiter.protects.adminLoginFailures": {
+    "defaultMessage": "as contas de administrador contra tentativas. Só tentativas que FALHAM contam; uma entrada correta devolve os pontos. Uma recusa aqui significa dez falhas em quinze minutos — um erro de digitação repetido, ou alguém tentando",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"admin accounts against guessing. Only FAILED attempts count; a correct sign-in hands the points back. A refusal here means ten failures in fifteen minutes — a typo repeated, or somebody trying\"."
+  },
+  "admin-metrics.limiter.protects.adminSessionRoutes": {
+    "defaultMessage": "as rotas que exigem uma sessão de administrador, contra um ID vazado ou adivinhado",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the routes that require an admin session, against a leaked or guessed ID\"."
+  },
+  "admin-metrics.limiter.protects.api": {
+    "defaultMessage": "todas as rotas /api/v1. 300 em vez de 60 porque um evento presencial não tem um participante por endereço — o wifi do local põe a sala inteira atrás de um só. Não é o controle que impede tentativas; é o que quebraria primeiro",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"every /api/v1 route. 300 rather than 60 because an in-person event does not give one attendee per address — venue wifi puts the whole room behind one. Not the control that stops guessing; the one that would break first\"."
+  },
+  "admin-metrics.limiter.protects.attendeeSessionRoutes": {
+    "defaultMessage": "as rotas que exigem uma sessão de participante, contra um ID vazado ou adivinhado",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the routes that require an attendee session, against a leaked or guessed ID\"."
+  },
+  "admin-metrics.limiter.protects.checkinCreation": {
+    "defaultMessage": "as duas etapas que CRIAM a sessão de check-in e por isso rodam antes de resolveSessions. É ritmo, não controle: trocar o cookie dá uma cota nova — só o limite por IP não pode ser contornado assim",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the two steps that CREATE the check-in session, and so run before resolveSessions. Pacing, not a control: rotating the cookie buys a fresh budget — only the per-IP limit cannot be rotated away\"."
+  },
+  "admin-metrics.limiter.protects.checkinEntry": {
+    "defaultMessage": "a entrada do check-in. Controle de custo, não de tentativas — o que impede tentativas é a cota global de falhas e a por participante, e nenhuma delas usa o IP",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the check-in entry path. Cost control, not guessing control — what stops guessing is the global failure budget and the per-attendee one, and neither keys on IP\"."
+  },
+  "admin-metrics.limiter.protects.checkinEntryFailures": {
+    "defaultMessage": "o código de seis caracteres contra força bruta. Esgotar esta cota exige captcha em TODA chegada, então um pico costuma ser uma fila digitando errado, não um ataque",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the six-character code against brute force. Spending this budget forces a captcha on EVERY arrival, so a spike is usually a queue mistyping rather than an attack\"."
+  },
+  "admin-metrics.limiter.protects.checkinSessionRoutes": {
+    "defaultMessage": "as rotas que exigem uma sessão de check-in, contra um ID vazado ou adivinhado",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the routes that require a checkin session, against a leaked or guessed ID\"."
+  },
+  "admin-metrics.limiter.protects.clientErrorsGlobal": {
+    "defaultMessage": "o disco. Uma publicação com defeito faz setecentos celulares relatarem o mesmo erro ao mesmo tempo; este teto limita o total, não o por endereço",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the disk. A bad deploy makes seven hundred phones report the same error at once; this ceiling bounds the total, not the per-address one\"."
+  },
+  "admin-metrics.limiter.protects.clientErrorsIp": {
+    "defaultMessage": "o endpoint público de erros do navegador. 60 em vez de 5: atrás do NAT da operadora a sala inteira divide um endereço, e com 5/min a regra de pico (>20/min) nunca dispararia",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the public frontend-error endpoint. 60 rather than 5: behind carrier NAT the whole room shares one address, and at 5/min the spike rule (>20/min) could never fire\"."
+  },
+  "admin-metrics.limiter.protects.lookupFailures": {
+    "defaultMessage": "a busca por código digitado, que encontra um participante sem o QR. Uma recusa aqui costuma ser uma câmera quebrada, não abuso",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the typed-code search, which resolves an attendee without the QR. A refusal here is usually a broken camera rather than abuse\"."
+  },
+  "admin-metrics.limiter.protects.metricsPanel": {
+    "defaultMessage": "este próprio painel. Separado do limite de administrador (20/min) porque uma consulta a cada 5 segundos já dá 12/min e esgotaria o resto do trabalho",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"this panel itself. Separate from the admin limit (20/min) because a 5-second poll is already 12/min and would starve the rest of the work\"."
+  },
+  "admin-metrics.limiter.protects.redemptionsPanel": {
+    "defaultMessage": "a tela de retiradas. Separado do limite de administrador (20/min) para que a atualização a cada 10 segundos não tire a cota das correções",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the redemptions screen. Separate from the admin limit (20/min) so the 10-second refresh does not use up the budget corrections need\"."
+  },
+  "admin-metrics.limiter.protects.staffCounters": {
+    "defaultMessage": "os balcões de retirada e o gerador de números. Mais folgado que o limite do participante porque um voluntário atende muitas pessoas em sequência",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the redemption counters and the raffle. Looser than the attendee limit because one volunteer serves many people in a row\"."
+  },
+  "admin-metrics.limiter.protects.verificationFailures": {
+    "defaultMessage": "os quatro últimos dígitos do telefone. Chaveado no participante, não numa sessão ou IP, então descartar um cookie não ajuda e uma sala atrás de um NAT não atrapalha a si mesma",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the last four phone digits. Keyed on the attendee rather than a session or an IP, so discarding a cookie does not help and a room behind one NAT does not get in its own way\"."
+  },
+  "admin-metrics.limiter.protects.web": {
+    "defaultMessage": "as páginas renderizadas, incluindo /admin/login. Cada renderização consulta a sessão no Redis, então é mais um limite de custo que de segurança",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the rendered pages, /admin/login included. Each render costs a Redis session lookup, so this is a cost guard more than a security one\"."
+  },
+  "admin-metrics.limiter.protects.whatsappDoor": {
+    "defaultMessage": "a conta do WhatsApp contra custo: cada participante cadastrado na porta com a mensagem marcada gasta um envio pago. 30 em 10 minutos é mais do que uma pessoa cadastra à mão; uma recusa aqui cadastra o participante mesmo assim, sem a mensagem",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the WhatsApp account against cost: every attendee created at the door with the message ticked spends one paid send. 30 in 10 minutes is more than one person creates by hand; a refusal here still creates the attendee, without the message\"."
+  },
+  "admin-metrics.limiter.protects.whatsappSender": {
+    "defaultMessage": "a própria tela de envio pelo WhatsApp. Separado do limite de administrador (20/min) porque uma consulta a cada 3 segundos já dá 20/min e deixaria o botão de parar sem cota",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the WhatsApp sender screen itself. Separate from the admin limit (20/min) because a 3-second poll is already 20/min and would starve the stop button\"."
+  },
+  "admin-metrics.limiter.protects.whatsappWebhookGlobal": {
+    "defaultMessage": "o retorno de confirmações no total. A Meta envia de muitos endereços, então o limite por IP sozinho não limita nada",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the receipt callback in aggregate. Meta delivers from many addresses, so the per-IP tier alone bounds nothing\"."
+  },
+  "admin-metrics.limiter.protects.whatsappWebhookIp": {
+    "defaultMessage": "o retorno de confirmações. 600 porque um envio para 700 destinatários gera ~2.100 eventos vindos de poucos endereços da Meta, e um 429 para a Meta significa reenvio, não recusa",
+    "description": "What a rate limiter protects and what a refusal there means, in its tooltip. It follows \"Protege:\", so it starts lowercase. In English: \"the receipt callback. 600 because a 700-recipient run is ~2,100 events from a few of Meta's addresses, and a 429 to Meta means redelivery rather than refusal\"."
+  },
+  "admin-metrics.limits.badge": {
+    "defaultMessage": "{badge, select, strict {restrito} trusted {confiável} ip {ip} session {sessão} cookie {cookie} username {usuário} attendee {participante} volunteer {voluntário} global {global} other {?}}",
+    "description": "Badge beside a limiter: what one bucket covers, or which tier of an address pair it is. other is only a fallback."
+  },
+  "admin-metrics.limits.keyCount": {
+    "defaultMessage": "{count, plural, =1 {# chave} other {# chaves}}",
+    "description": "Summary of a limiter's busiest-keys list."
+  },
+  "admin-metrics.limits.keyedOnLabel": {
+    "defaultMessage": "Chave:",
+    "description": "Label before what a limiter's buckets are keyed on, in its tooltip."
+  },
+  "admin-metrics.limits.keys": {
+    "defaultMessage": "Chaves mais ativas",
+    "description": "Limits table column: the busiest keys (addresses, sessions, usernames)."
+  },
+  "admin-metrics.limits.limiter": {
+    "defaultMessage": "Limitador",
+    "description": "Limits table column: the limiter."
+  },
+  "admin-metrics.limits.none": {
+    "defaultMessage": "Nenhum limitador registrado",
+    "description": "Shown when no limiter is registered, which means the instrumentation is broken."
+  },
+  "admin-metrics.limits.peak": {
+    "defaultMessage": "Pico",
+    "description": "Limits table column: this minute's peak against the ceiling."
+  },
+  "admin-metrics.limits.points": {
+    "defaultMessage": "{points, number} pts",
+    "description": "How many points one key consumed this window."
+  },
+  "admin-metrics.limits.protectsLabel": {
+    "defaultMessage": "Protege:",
+    "description": "Label before what a limiter protects, in its tooltip."
+  },
+  "admin-metrics.limits.quota": {
+    "defaultMessage": "{points} por {seconds} s",
+    "description": "A limiter's quota. {points} and {seconds} are numbers, or ? when unknown."
+  },
+  "admin-metrics.limits.quotaLabel": {
+    "defaultMessage": "Cota:",
+    "description": "Label before a limiter's quota, in its tooltip."
+  },
+  "admin-metrics.limits.refused": {
+    "defaultMessage": "Recusadas",
+    "description": "Limits table column: requests refused this window."
+  },
+  "admin-metrics.limits.sessions": {
+    "defaultMessage": "{sessions, number} sessões",
+    "description": "How many distinct sessions one address carries."
+  },
+  "admin-metrics.limits.strictNote": {
+    "defaultMessage": "Incluir o endereço em TRUSTED_IPS o move para a linha “confiável”, com a cota maior. Exige reinício.",
+    "description": "Tooltip note on the strict row of an address pair. TRUSTED_IPS is a setting name; “confiável” should match the trusted badge."
+  },
+  "admin-metrics.limits.tip.after": {
+    "defaultMessage": "é quantas sessões distintas aquele endereço carrega: muitas sessões num IP é NAT da operadora — a sala toda atrás de um endereço —, não um ataque. Uma sessão repetindo é o contrário. O volume sozinho não separa os dois.",
+    "description": "End of the limits tooltip, after the emphasised term."
+  },
+  "admin-metrics.limits.tip.emphasis": {
+    "defaultMessage": "Sessões",
+    "description": "Emphasised term in the limits tooltip: how many distinct sessions an address carries. Should match admin-metrics.limits.sessions."
+  },
+  "admin-metrics.limits.tip.lead": {
+    "defaultMessage": "Todos os limitadores, com o pico deste minuto em relação ao teto da faixa que respondeu. Âmbar acima de 80%, vermelho assim que algo é recusado.",
+    "description": "Limits tooltip, first part, before the emphasised term in admin-metrics.limits.tip.emphasis."
+  },
+  "admin-metrics.limits.title": {
+    "defaultMessage": "Limites",
+    "description": "Limits panel heading: every rate limiter."
+  },
+  "admin-metrics.limits.trustedNote": {
+    "defaultMessage": "Endereços listados em TRUSTED_IPS. Remover um deles o devolve à linha “restrita”.",
+    "description": "Tooltip note on the trusted row of an address pair. “restrita” should match the strict badge."
+  },
+  "admin-metrics.limits.undescribed": {
+    "defaultMessage": "sem descrição",
+    "description": "Shown when a limiter has no description."
+  },
+  "admin-metrics.outage.appDown": {
+    "defaultMessage": "O aplicativo não responde",
+    "description": "Status line when neither the snapshot nor the readiness check answers."
+  },
+  "admin-metrics.outage.postgresDown": {
+    "defaultMessage": "O Postgres está fora do ar",
+    "description": "Status line when the readiness check reports Postgres down. Kept to one clause."
+  },
+  "admin-metrics.outage.readinessUnavailable": {
+    "defaultMessage": "Verificação de prontidão indisponível",
+    "description": "Status line when the readiness check answered without a report, usually because of its own rate limit."
+  },
+  "admin-metrics.outage.readinessRefused": {
+    "defaultMessage": "A verificação de prontidão foi recusada",
+    "description": "Status line when the edge refused the readiness check, which is what the public hostname does by design; it says nothing about whether the app is healthy."
+  },
+  "admin-metrics.outage.redisDown": {
+    "defaultMessage": "O Redis está fora do ar",
+    "description": "Status line when the readiness check reports Redis down. Kept to one clause: the status line appends the age of the data."
+  },
+  "admin-metrics.outage.sessionExpired": {
+    "defaultMessage": "Sessão expirada — entre novamente",
+    "description": "Status line when the dependencies are fine but the snapshot refused this operator: a sign-in problem, not an outage."
+  },
+  "admin-metrics.perMinute": {
+    "defaultMessage": "por minuto",
+    "description": "Unit after a per-minute rate on the door, redemption and error panels."
+  },
+  "admin-metrics.redemptions.duplicate": {
+    "defaultMessage": "Repetidas",
+    "description": "Redemptions table column: attempts to collect an item twice."
+  },
+  "admin-metrics.redemptions.item": {
+    "defaultMessage": "Item",
+    "description": "Redemptions table column: the item."
+  },
+  "admin-metrics.redemptions.notEntitled": {
+    "defaultMessage": "Sem direito",
+    "description": "Redemptions table column: requests for an item the attendee did not register for."
+  },
+  "admin-metrics.redemptions.redeemed": {
+    "defaultMessage": "Retiradas",
+    "description": "Redemptions table column: items handed over."
+  },
+  "admin-metrics.redemptions.tip.duplicate": {
+    "defaultMessage": "Repetida",
+    "description": "Emphasised term in the redemptions tooltip: an attempt to collect the same item twice. Should match admin-metrics.redemptions.duplicate."
+  },
+  "admin-metrics.redemptions.tip.duplicateMeans": {
+    "defaultMessage": "representa uma tentativa duplicada para retirar o mesmo item;",
+    "description": "Explains admin-metrics.redemptions.tip.duplicate, which it follows."
+  },
+  "admin-metrics.redemptions.tip.lead": {
+    "defaultMessage": "Itens entregues nos balcões, durante os últimos 60 minutos.",
+    "description": "Redemptions tooltip, first sentence."
+  },
+  "admin-metrics.redemptions.tip.notEntitled": {
+    "defaultMessage": "Sem direito",
+    "description": "Emphasised term in the redemptions tooltip: asking for an item not registered. Should match admin-metrics.redemptions.notEntitled."
+  },
+  "admin-metrics.redemptions.tip.notEntitledMeans": {
+    "defaultMessage": "representa uma tentativa de retirar um item ao qual o participante não tem direito. Os indicadores deveriam se manter zerados — o contrário indica indicam confusão na fila ou uma lista incorreta.",
+    "description": "Explains admin-metrics.redemptions.tip.notEntitled, which it follows, and ends the tooltip."
+  },
+  "admin-metrics.redemptions.title": {
+    "defaultMessage": "Retiradas",
+    "description": "Redemptions panel heading."
+  },
+  "admin-metrics.refresh": {
+    "defaultMessage": "Atualizar agora",
+    "description": "Accessible name and tooltip of the refresh control beside the countdown."
+  },
+  "admin-metrics.refreshing": {
+    "defaultMessage": "Atualizando…",
+    "description": "Status line while a new snapshot is on its way."
+  },
+  "admin-metrics.release": {
+    "defaultMessage": "versão {release}",
+    "description": "Under the heading: the build the server is running. {release} is a release identifier, shown as is."
+  },
+  "admin-metrics.role": {
+    "defaultMessage": "{role, select, participant {Participantes} volunteer {Voluntários} other {Outros}}",
+    "description": "A role's row label on the door panel, plural. other is only a fallback."
+  },
+  "admin-metrics.survey.closes": {
+    "defaultMessage": "fecha em {at}",
+    "description": "After the questionnaire's open status on its card: when the schedule closes it. {at} is a date and time in the event's time zone."
+  },
+  "admin-metrics.survey.link": {
+    "defaultMessage": "Respostas e downloads",
+    "description": "Link from the questionnaire card to the Feedback page."
+  },
+  "admin-metrics.survey.off": {
+    "defaultMessage": "Desativado",
+    "description": "In place of an audience's answered-of-checked-in ratio on the questionnaire card when its questionnaire is switched off or has no questions."
+  },
+  "admin-metrics.survey.status": {
+    "defaultMessage": "{state, select, open {Aberto} closed {Fechado} other {?}} · {reason, select, schedule {pelo horário configurado} override {definido manualmente} disabled {nenhum público ativado} other {?}}",
+    "description": "Status line of the questionnaire card: whether it is open and what decided it. schedule is the configured opening and closing times, override an administrator's manual choice, disabled both audiences switched off in the server configuration. other is only a fallback."
+  },
+  "admin-metrics.survey.tip": {
+    "defaultMessage": "Mostra apenas os totais de respostas, atualizados junto com o painel. As respostas e os downloads ficam na página Feedback.",
+    "description": "Questionnaire card tooltip. Totals only, by design: no rate or history."
+  },
+  "admin-metrics.survey.title": {
+    "defaultMessage": "Feedback",
+    "description": "Questionnaire panel heading. Matches the Feedback section name in the navigation."
+  },
+  "admin-metrics.survey.unit": {
+    "defaultMessage": "{count, plural, one {resposta} other {respostas}}",
+    "description": "Beside the questionnaire card's headline figure: the total number of answers received."
+  },
+  "admin-metrics.title": {
+    "defaultMessage": "Status",
+    "description": "Heading of the live operations dashboard."
+  },
+  "admin-metrics.window.state": {
+    "defaultMessage": "{state, select, none {sem configuração de horário} open {aberto} closed {fechado} other {?}}",
+    "description": "After a role's name on the door panel: whether its check-in window is open. none means no opening time is configured. other is only a fallback."
+  }
+}

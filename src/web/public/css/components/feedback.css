@@ -1,0 +1,35 @@
+.hint-div {
+  text-align: center;
+
+  margin-block: var(--space-3) var(--space-2);
+
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+
+  /* Reserves the line so a hint appearing or clearing does not shift the
+     controls under the attendee's thumb mid-tap. */
+  min-height: 1.5rem;
+
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+/*
+ * No `animation: shake` here. `ui/hint.showError` already shakes this element
+ * through the Web Animations API, and the two fired together on every error —
+ * one declarative, one scripted, on the same node.
+ *
+ * The scripted one is the survivor because it is the one that can be asked not
+ * to run: it checks `prefers-reduced-motion` itself, which a CSS block cannot
+ * do on its behalf.
+ */
+.hint-div.error {
+  color: var(--error);
+  font-weight: var(--weight-medium);
+}
+
+.hint-div.changing {
+  opacity: 0;
+  transform: translateY(0.25rem);
+}

@@ -1,0 +1,250 @@
+/*
+ * The pass's welcome schedule.
+ *
+ * One sheet for one document, built as `pages/admin/survey.css` is: a single
+ * column of panels. Its one media query stacks the editor's rows on a phone,
+ * where a phase, a date-time and a button do not fit side by side.
+ */
+
+.pass-admin {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+
+  max-width: var(--admin-content-max);
+}
+
+.pass-admin__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: 0;
+}
+
+.pass-admin__title {
+  margin: 0;
+
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+.pass-admin__lead,
+.pass-admin__hint,
+.pass-admin__muted {
+  margin: 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.pass-admin__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+
+  padding: var(--space-4);
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.pass-admin__subtitle {
+  margin: 0;
+
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+.pass-admin__state {
+  margin: 0;
+
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+}
+
+.pass-admin__note {
+  margin: 0;
+  padding: var(--space-3);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+/* ------------------------------------------------------------------ tables */
+
+.pass-admin__scroll {
+  overflow-x: auto;
+}
+
+.pass-admin__table {
+  width: 100%;
+  border-collapse: collapse;
+
+  font-size: var(--text-sm);
+}
+
+.pass-admin__table th,
+.pass-admin__table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border);
+
+  text-align: left;
+  vertical-align: middle;
+}
+
+.pass-admin__table thead th {
+  color: var(--text-muted);
+  font-weight: var(--weight-medium);
+}
+
+/* The attendee editor's field, so the phase and the date-time read as one
+   pair rather than a native select beside a global input. */
+.pass-admin__table select,
+.pass-admin__table input {
+  width: 100%;
+  min-width: 0;
+  min-height: 3rem;
+  padding: var(--space-3) var(--space-4);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+
+  background: var(--surface);
+  color: var(--text);
+
+  font-size: var(--text-base);
+}
+
+.pass-admin__table select:focus-visible,
+.pass-admin__table input:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.pass-admin__table input[aria-invalid='true'] {
+  border-color: var(--error);
+}
+
+/* A custom row's line, under its phase in the same cell, so the row keeps
+   its columns and the phone card layout keeps its two lines. */
+.pass-admin__table .pass-admin__text {
+  display: block;
+  margin-top: var(--space-2);
+}
+
+.pass-admin__table .pass-admin__text[hidden] {
+  display: none;
+}
+
+.pass-admin__remove-cell {
+  width: 1%;
+}
+
+.pass-admin__remove {
+  width: auto;
+  padding: var(--space-2);
+}
+
+/* ------------------------------------------------------------------ editor */
+
+.pass-admin__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.pass-admin__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: space-between;
+}
+
+.pass-admin__actions button {
+  width: auto;
+}
+
+.pass-admin__reset.is-armed,
+.pass-admin__reset.is-armed:hover {
+  border-color: var(--error);
+  background: var(--error);
+  color: var(--accent-text);
+}
+
+.pass-admin__error {
+  margin: 0;
+
+  color: var(--error);
+  font-size: var(--text-sm);
+}
+
+/* ------------------------------------------------------------------ legend */
+
+.pass-admin__legend {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  margin: 0;
+
+  font-size: var(--text-sm);
+}
+
+/* A fixed name column, so a long text wraps under itself on a phone instead
+   of dropping below its name on some rows and not others. */
+.pass-admin__legend div {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+  gap: var(--space-3);
+}
+
+.pass-admin__legend dt {
+  font-weight: var(--weight-medium);
+}
+
+.pass-admin__legend dd {
+  margin: 0;
+
+  color: var(--text-muted);
+}
+
+/* ------------------------------------------------------------------- phone */
+
+/* Each row becomes a card: phase and remove on one line, the date-time
+   full width under them, so no input is narrower than its value. */
+@media (max-width: 480px) {
+  .pass-admin__form .pass-admin__table thead {
+    display: none;
+  }
+
+  .pass-admin__form .pass-admin__table tr {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-2);
+
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .pass-admin__form .pass-admin__table td {
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  .pass-admin__form .pass-admin__table td:nth-child(2) {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .pass-admin__form .pass-admin__table select,
+  .pass-admin__form .pass-admin__table input {
+    width: 100%;
+  }
+}

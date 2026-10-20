@@ -1,0 +1,264 @@
+/*
+ * Design tokens.
+ *
+ * Two rules keep the two themes honest:
+ *
+ * 1. Components reference semantic tokens only. A raw colour literal in a
+ *    component file is a bug — it is a value that cannot follow the theme, and
+ *    it is how the previous light theme ended up rendering white-on-white.
+ * 2. Every colour token carries both values, in one `light-dark()` call.
+ *    Anything written as a bare colour is either theme-independent by nature
+ *    (the brand backdrop, which sits under `--text-on-brand` in both themes) or
+ *    a mistake.
+ *
+ * The dark palette used to live in a second `@media (prefers-color-scheme:
+ * dark)` block. It cannot stay there: the theme toggle needs to override the OS,
+ * and a media query does not respond to a selector. `light-dark()` moves the
+ * decision to `color-scheme` on the root, which the toggle *can* set — and it
+ * keeps rule 2 checkable by eye, one line per token, rather than by diffing two
+ * blocks eighty lines apart.
+ *
+ * `color-scheme` is also what makes form controls, scrollbars and the caret
+ * follow the theme without further styling.
+ *
+ * THE FLOOR: `light-dark()` needs iOS/Safari 17.5, Chrome 123 or Firefox 120.
+ * Below that the declaration is invalid at computed-value time and the token
+ * resolves to nothing, which strips the value from every consumer — an
+ * unstyled page, at the door, on a phone nobody can swap. That is what the
+ * bare light value above each call is for: an older browser keeps it and gets a
+ * permanently light but complete app. Delete one and you delete that floor.
+ */
+
+:root {
+  /* No explicit choice yet, so the OS decides. The two blocks at the foot of
+     this file are what the toggle writes over. */
+  color-scheme: light dark;
+
+  /* Surfaces, lightest to deepest. `sunken` is for wells — inputs, the inside
+     of a viewfinder — not for cards. */
+  --canvas: #fafafc;
+  --canvas: light-dark(#fafafc, #0a0a11);
+  --surface: #ffffff;
+  --surface: light-dark(#ffffff, #14141d);
+  --surface-sunken: #f1f1f6;
+  --surface-sunken: light-dark(#f1f1f6, #08080e);
+  --surface-hover: #f1f1f6;
+  --surface-hover: light-dark(#f1f1f6, #1e1e2a);
+
+  /*
+   * `--border` separates surfaces and may be subtle. `--border-strong` is for
+   * anything that has to be identifiable as a control — inputs, the segmented
+   * code cells — and clears WCAG 1.4.11's 3:1 against canvas, surface and
+   * sunken alike. The old value sat at 1.6:1, which is decoration, not a
+   * boundary.
+   */
+  --border: #e3e3ec;
+  --border: light-dark(#e3e3ec, #262633);
+  --border-strong: #7a7a93;
+  --border-strong: light-dark(#7a7a93, #6b6b8c);
+
+  --text: #14141c;
+  --text: light-dark(#14141c, #f5f5fa);
+  --text-muted: #5a5a70;
+  --text-muted: light-dark(#5a5a70, #c4d8ea);
+
+  /*
+   * Harbour in the light theme, Pouch in the dark (docs/design/brand.md):
+   * Harbour is 2:1 on the dark canvas. `--accent-text` clears 5.5:1 on both
+   * `--accent` and `--accent-hover`, and `--accent` 8:1 on `--accent-soft`.
+   */
+  --accent: #0e4a5a;
+  --accent: light-dark(#0e4a5a, #f5a524);
+  --accent-hover: #072a33;
+  --accent-hover: light-dark(#072a33, #d98b12);
+  --accent-text: #ffffff;
+  --accent-text: light-dark(#ffffff, #072a33);
+  --accent-soft: #e3eff1;
+  --accent-soft: light-dark(#e3eff1, #2a1e0a);
+  --accent-warn: #f5c147;
+
+  --success: #046c4e;
+  --success: light-dark(#046c4e, #34d399);
+  --error: #b4123c;
+  --error: light-dark(#b4123c, #ff8095);
+  --warn: #9a5b00;
+  --warn: light-dark(#9a5b00, #f5c147);
+  --info: #0b5fa5;
+  --info: light-dark(#0b5fa5, #5cc8ff);
+
+  --error-soft: #fdeaef;
+  --error-soft: light-dark(#fdeaef, #2a1119);
+
+  --skeleton-base: #eeeef4;
+  --skeleton-base: light-dark(#eeeef4, #1a1a26);
+  --skeleton-sheen: #f8f8fc;
+  --skeleton-sheen: light-dark(#f8f8fc, #26263a);
+
+  /*
+   * Sits over the camera feed, so it is theme-independent for the same reason
+   * `--brand-backdrop` is: what it darkens is not a themed surface.
+   */
+  --scrim: rgb(0 0 0 / 55%);
+
+  /* The camera surface. Theme-independent for the same reason `--scrim` is:
+     what sits behind it is a live video feed, not a themed surface, so these
+     stay fixed while everything around them follows the theme. */
+  --camera-bg: #000000;
+  --camera-control-bg: rgb(255 255 255 / 16%);
+
+  /* Backs the controls that ride over the camera feed. Opaque where the text
+     sits, clearing upwards so it does not cut a hard line across the view. */
+  --scrim-gradient: linear-gradient(
+    to top,
+    rgb(0 0 0 / 88%) 45%,
+    rgb(0 0 0 / 0%)
+  );
+
+  /* Toasts are transient and must survive whatever is behind them, so they are
+     solid rather than tinted. Light theme pairs the deep semantic hue with
+     white; dark theme inverts to the light hue with near-black. Debug is the
+     exception in both — it stays a dark chip with light text, so it reads as
+     instrumentation rather than as a message to the attendee. */
+  --toast-text: #ffffff;
+  --toast-text: light-dark(#ffffff, #0a0a11);
+  --toast-debug-text: #ffffff;
+  --toast-debug-text: light-dark(#ffffff, #f5f5fa);
+  --toast-debug-bg: #3f3f52;
+  --toast-debug-bg: light-dark(#3f3f52, #2e2e40);
+
+  /*
+   * Shadows carry elevation in the light theme. The dark theme leans on
+   * `--border` instead — a black shadow on a near-black canvas is invisible —
+   * so it uses one deeper layer where the light theme stacks two.
+   *
+   * `light-dark()` takes a colour, not a whole shadow list, so the geometry is
+   * shared and the layer the dark theme does not want is faded to
+   * `transparent`. The surviving layer is the one whose offset and blur already
+   * matched what dark used, so neither theme moved.
+   */
+  --shadow-sm: 0 1px 2px rgb(20 20 28 / 6%), 0 1px 3px rgb(20 20 28 / 8%);
+  --shadow-sm:
+    0 1px 2px light-dark(rgb(20 20 28 / 6%), rgb(0 0 0 / 40%)),
+    0 1px 3px light-dark(rgb(20 20 28 / 8%), transparent);
+  --shadow-md: 0 2px 4px rgb(20 20 28 / 6%), 0 4px 12px rgb(20 20 28 / 8%);
+  --shadow-md:
+    0 2px 4px light-dark(rgb(20 20 28 / 6%), transparent),
+    0 4px 12px light-dark(rgb(20 20 28 / 8%), rgb(0 0 0 / 45%));
+  --shadow-lg: 0 12px 32px rgb(20 20 28 / 12%);
+  --shadow-lg: 0 12px 32px light-dark(rgb(20 20 28 / 12%), rgb(0 0 0 / 55%));
+
+  /*
+   * The one expressive surface in the app. It appears on the boot screen and
+   * on the reward — the success card and the attendee pass it hands off to,
+   * which are the same surface seen at two moments — and nowhere else, which is
+   * what makes the reward read as a reward rather than as more chrome.
+   *
+   * Identical in both themes: it is the brand, not a background.
+   *
+   * The shorthand carries its own sizing: `cover` holds the artwork's 9:16
+   * against any box.
+   *
+   * The raster is the same gradient as the layer under it, drawn by
+   * `npm run brand:build` (the WebP quality, and why, is in
+   * `scripts/brand/build.ts`). It is kept rather than leaving the gradient to
+   * CSS alone because the asset is part of the brand files an event replaces —
+   * see docs/design/brand.md.
+   *
+   * The gradient layer stands in for the frame before the image decodes, the
+   * overscroll area on the landing page — where the background is painted on
+   * `body` — and the asset failing outright. The flat colour last is the final
+   * fallback.
+   *
+   * Contrast, from the two ends of the gradient, Harbour and Abyss:
+   *
+   *   ink                    Harbour   Abyss
+   *   #ffffff                  9.8:1   15.1:1
+   *   --text-on-brand-muted    7.5:1   11.6:1
+   *
+   * Both inks clear 4.5:1 across the whole backdrop. The palette is in
+   * docs/design/brand.md.
+   */
+  --brand-backdrop:
+    url('/assets/images/bg/bg.webp') center / cover no-repeat,
+    linear-gradient(180deg, #0e4a5a 0%, #0b3b48 60%, #072a33 100%), #0e4a5a;
+  --text-on-brand: #ffffff;
+  --text-on-brand-muted: #cfe6e8;
+
+  /* Pouch with Abyss ink, 7.4:1: the fill for a control that sits on the
+     backdrop, where `--accent` would vanish (light) or fail white ink (dark). */
+  --brand-accent: #f5a524;
+  --text-on-brand-accent: #072a33;
+
+  /* Spacing. A 4px base — every gap, pad and margin resolves to one of these. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* Type. `--text-base` stays at 1rem/16px: anything smaller in an input makes
+     iOS Safari zoom on focus. */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+
+  /* The check-in number on the pass. Scales with the viewport because it is the
+     one element allowed to dominate the screen. */
+  --text-hero: clamp(3.5rem, 22vw, 6rem);
+
+  /* Ticket codes. Red Hat Mono's slashed zero keeps 0 distinct from O. */
+  --font-ticket: 'Red Hat Mono', ui-monospace, monospace;
+
+  --leading-tight: 1.15;
+  --leading-normal: 1.5;
+
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-full: 999px;
+
+  --button-height: 3.25rem;
+
+  --z-chrome: 10;
+  --z-overlay: 20;
+  --z-toast: 30;
+  --z-boot: 40;
+  --z-challenge: 50;
+
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 350ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-spring: cubic-bezier(0.2, 0.9, 0.3, 1.2);
+
+  --cell-border: 1px;
+
+  /* Caps line length on wide phones and tablets without reintroducing the
+     fixed-width card the layout used to be built around. */
+  --content-max: 26rem;
+}
+
+/*
+ * The attendee's own choice, written to `<html data-theme>` by
+ * `partials/theme-boot.ejs` before first paint and flipped by
+ * `client/theme/theme.ts`. Narrowing `color-scheme` to a single value is the
+ * whole override: every `light-dark()` above resolves against it.
+ */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}

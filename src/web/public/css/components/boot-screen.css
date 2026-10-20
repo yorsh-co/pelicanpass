@@ -1,0 +1,118 @@
+/*
+ * The second half of the entry that carries `--brand-backdrop`, with the pass as
+ * the exit. `pages/landing.css` is the first half — it opens on this same
+ * backdrop with a wordmark in this same place, so the hand-off reads as one
+ * surface continuing rather than as two.
+ *
+ * The marks themselves differ, and deliberately: this is the only surface that
+ * carries the primary, and the landing page hands over to it from the
+ * secondary. The backdrop and the placement are what carry the continuity.
+ *
+ * Everything between that entry and the pass is neutral canvas, which is what
+ * makes the pass read as a reward rather than as more chrome.
+ */
+.app-boot {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-boot);
+
+  background: var(--brand-backdrop);
+  color: var(--text-on-brand);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    visibility var(--duration-slow) var(--ease-out);
+}
+
+.app-boot.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.boot-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  height: 100%;
+  width: 100%;
+}
+
+.app-boot .logo {
+  margin-top: auto;
+  margin-bottom: var(--space-8);
+  width: 50%;
+  min-width: 10rem;
+
+  display: flex;
+  justify-content: center;
+}
+
+/*.app-boot.show .logo {
+  animation: pop var(--duration-slow) var(--ease-spring) forwards;
+}
+
+.app-boot:not(.show) .logo {
+  animation: fadeOut var(--duration-base) var(--ease-out) forwards;
+}*/
+
+.boot-content .motif {
+  height: 100%;
+}
+
+#boot-motif-right {
+  height: 4rem;
+  position: absolute;
+  top: 7dvh;
+  left: 70dvw;
+}
+
+#boot-motif-left {
+  height: 3rem;
+  position: absolute;
+  top: 25dvh;
+  left: 10dvw;
+}
+
+#boot-motif-centre {
+  height: 13rem;
+  position: absolute;
+  bottom: 35dvh;
+
+  margin: 0 var(--space-8);
+}
+
+.app-boot.show .motif {
+  animation: pop var(--duration-slow) var(--ease-spring) forwards;
+}
+
+.app-boot:not(.show) .motif {
+  animation: fadeOut var(--duration-base) var(--ease-out) forwards;
+}
+
+/*
+ * The primary wordmark, and the only surface that carries it — every other one
+ * takes the secondary mark through `.wordmark` in partials/header.css.
+ *
+ * Sized rather than masked, and the reason is in components/boot-screen.ejs:
+ * the artwork is two-tone, so it ships as an <img> painting its own colours.
+ * Nothing here sets `color`, because nothing here inherits one.
+ *
+ * `min()` rather than a fixed height: this lockup is a single line, mark and
+ * wordmark, and much wider than the secondary; 20rem at a 320px viewport
+ * would overhang the screen.
+ */
+.boot-wordmark {
+  display: block;
+  width: min(75vw, 20rem);
+  height: auto;
+}

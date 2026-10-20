@@ -1,0 +1,36 @@
+* {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/*
+ * Form controls are exempt. Safari has a long history of `user-select: none`
+ * interfering with the caret and with selection inside a field, and the two
+ * code inputs are the whole interaction — a phone that will not let an attendee
+ * place the cursor is worse than one that lets them long-press a heading.
+ */
+input,
+textarea {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.allow-select {
+  user-select: auto;
+  -webkit-user-select: auto;
+}
+
+.display-none {
+  display: none !important;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}

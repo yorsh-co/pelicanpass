@@ -1,0 +1,116 @@
+/*
+ * The step shell. Full-bleed rather than the frosted card this used to be: the
+ * card was a fixed 400px box centred in the viewport, which wasted the top and
+ * bottom of a phone screen and put the input in the hardest place to reach with
+ * a thumb.
+ *
+ * Three zones, top to bottom — brand and progress, the question, then the
+ * controls — with the controls sitting against the bottom inset where the thumb
+ * already is.
+ */
+.main-container {
+  position: relative;
+
+  flex: 1;
+  width: 100%;
+  max-width: var(--content-max);
+
+  display: flex;
+  flex-direction: column;
+
+  /*
+   * The top inset used to come for free: the layout carried a 3.5rem top bar
+   * above this shell, which cleared the status bar on a notched phone. With
+   * that gone and `viewport-fit=cover` still set on the layout, the heading
+   * would sit under the notch without asking for the inset here.
+   */
+  padding: calc(var(--space-5) + env(safe-area-inset-top)) var(--space-5)
+    calc(var(--space-5) + env(safe-area-inset-bottom));
+}
+
+/*
+ * Holds the steps. `flex: 1` so the controls inside a step can be pushed to the
+ * bottom of the available space rather than sitting directly under the heading.
+ */
+.content-wrapper {
+  flex: 1;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+ * Steps are stacked and cross-faded. The inactive ones are taken out of flow
+ * rather than hidden, and `inert` on the element keeps them out of the tab order
+ * and the accessibility tree — without it all four steps' inputs and buttons
+ * were reachable at once.
+ *
+ * **Scoped to `.content-wrapper`, and that scope is load-bearing.** These rules
+ * were once written against the bare `section` element, which meant every
+ * sectioning element anywhere in the application rendered at `opacity: 0`,
+ * absolutely positioned and unclickable — invisible with nothing in the markup
+ * to explain why. The error page carried a comment telling the next person to
+ * use a `<div>` instead; the staff review card was written as a `<section>` and
+ * simply never appeared.
+ *
+ * A descendant selector rather than a child one: it is a superset of what the
+ * check-in steps need, so no arrangement of wrappers inside `.content-wrapper`
+ * can fall out of it, while a `<section>` anywhere else is left alone.
+ */
+.content-wrapper section {
+  opacity: 0;
+  pointer-events: none;
+
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+/*
+ * `flex: 1` is load-bearing, not cosmetic: it is what makes the shown step fill
+ * `.content-wrapper`, which is in turn what gives `.step-controls`'
+ * `margin-top: auto` any slack to push against. Without it the controls sit
+ * directly under the heading and the thumb zone is empty.
+ */
+.content-wrapper section.show {
+  opacity: 1;
+  pointer-events: auto;
+  position: relative;
+  flex: 1;
+
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
+}
+
+/*
+ * Pushes a step's input and buttons to the bottom of the shell, so the tap
+ * target lands in the same place on every step instead of moving with the
+ * length of the copy above it.
+ */
+.step-controls {
+  margin-top: auto;
+  padding-top: var(--space-6);
+}
+
+/*
+ * Mid-request. This used to blur the whole step by 2px and shimmer over it,
+ * which is expensive on a mid-range Android and reads as a broken screen
+ * rather than as waiting. Dimming says the same thing for the cost of one
+ * composited property.
+ */
+.content-wrapper section.processing {
+  pointer-events: none;
+}
+
+.content-wrapper section.processing .step-body,
+.content-wrapper section.processing .step-controls {
+  transition: opacity var(--duration-base) var(--ease-out);
+}

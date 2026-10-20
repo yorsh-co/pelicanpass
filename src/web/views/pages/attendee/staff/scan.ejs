@@ -1,0 +1,239 @@
+<%# i18n: staff, qr %>
+<%- include('../../../partials/i18n-catalogs') %>
+
+<main data-staff="main-container" class="main-container staff-container">
+  <div class="staff-head">
+    <%- include('../../../partials/header') %>
+
+    <!--
+      The way back to the volunteer's pass.
+
+      A link rather than a button: it is navigation, it works without
+      JavaScript, and long-pressing it opens the pass in a second tab, which is
+      worth having for someone who wants both screens.
+    -->
+    <a data-staff="passLink" class="staff-pass-link" href="/pass">
+      <span class="material-symbols-outlined" aria-hidden="true">
+        confirmation_number
+      </span>
+      <span data-staff="copy-passLink"><%= chrome.passLink() %></span>
+    </a>
+  </div>
+
+  <% if (bandEnabled) { %>
+    <!--
+      The band deriving the same value from the same secret and the same
+      thirty-second window as the attendee's pass.
+    -->
+    <div data-staff="bandBlock" class="staff-band-block band-block">
+      <p data-staff="copy-bandLabel" class="staff-band-label"><%= copy.bandLabel() %></p>
+      <!--
+        The same ring the attendee's pass draws, from the same window, with the
+        word and the clock inside it. The two are read against each other, so the
+        shape is shared — `components/window-ring.css`, not a second copy here.
+
+        `aria-hidden` on the graphic only: on the block it would silence the
+        band's own `aria-live`. The clock carries none, unlike the band — a screen
+        reader announcing every second would be unusable.
+      -->
+      <div data-staff="windowBar" class="staff-window window-ring">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle class="window-ring-track" cx="50" cy="50" r="46" pathLength="1" />
+          <circle class="window-ring-arc" cx="50" cy="50" r="46" pathLength="1" />
+        </svg>
+
+        <div class="window-ring-face">
+          <div class="band-slot">
+            <p
+              data-staff="band"
+              class="band"
+              aria-live="polite"
+            >
+              &nbsp;
+            </p>
+          </div>
+
+          <p data-staff="clock" class="band-clock staff-clock">&nbsp;</p>
+        </div>
+      </div>
+
+      <!--
+        Covers the whole block once the band has been stale long enough to mean
+        it. A stale band is worse on this screen than on the pass — a volunteer
+        comparing against one refuses everybody — so nothing behind this is left
+        readable. Shown by the stylesheet from the block's state class, which is
+        why it carries no `hidden`.
+      -->
+      <button data-staff="bandRetry" class="band-retry" type="button">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+        <span data-staff="copy-bandRetry"><%= copy.bandRetry() %></span>
+      </button>
+    </div>
+  <% } else { %>
+    <!--
+      With PASS_BAND_ENABLED off there is nothing to poll for, so this screen
+      keeps only its sign of life. No ring: the arc drew the band's window, and
+      with no request to schedule against there is no window left to draw.
+
+      The card stays, and with it its class: `staff.css` stands this block down
+      while the camera is up, and a loose clock over a viewfinder is exactly the
+      thing that rule exists to remove.
+    -->
+    <div class="staff-band-block">
+      <p data-staff="clock" class="band-clock staff-clock">&nbsp;</p>
+    </div>
+  <% } %>
+
+  <!--
+    The review. One card whether it was opened by a scan or by a typed code, so
+    there is a single path for "we know who this is".
+  -->
+  <section data-staff="review" class="staff-review" hidden aria-live="polite">
+    <div class="staff-review-head">
+      <p data-staff="reviewIdentifier" class="staff-review-identifier"></p>
+      <span data-staff="reviewBadge" class="role-badge" hidden></span>
+    </div>
+
+    <ul data-staff="reviewItems" class="staff-items"></ul>
+
+    <!--
+      How to hand something over, said once rather than on every row. Shown by
+      `renderReview` only when there is a row that can actually be slid.
+
+      `aria-hidden` deliberately: a keyboard or screen-reader activation
+      confirms outright, so sliding is not the instruction for that path.
+    -->
+    <p
+      data-staff="slideHint"
+      class="staff-slide-hint small-print"
+      aria-hidden="true"
+      hidden
+    >
+      <span data-staff="copy-slideHint"><%= copy.reviewSlideHint() %></span>
+    </p>
+
+    <div data-staff="reviewOutcome" class="staff-outcome" hidden></div>
+
+    <button data-staff="reviewClose" class="ghost staff-review-close" type="button">
+      <span data-staff="copy-reviewClose"><%= copy.reviewClose() %></span>
+    </button>
+  </section>
+
+  <!--
+    The scanner. Structure copied from the check-in page's QR step, because
+    `components/qr.css` styles it by class and `modules/qr.ts` drives it by
+    element — the shapes are load-bearing, not decorative.
+  -->
+  <!--
+    No `show` class, unlike the check-in step. There the wrapper doubles as an
+    inline 300px preview before the camera starts; here the scanner is only ever
+    full-screen, so an empty bordered box sitting on the page the rest of the
+    time is just something for the review card to hide behind. `staff.css`
+    restores the opacity the shared rules hang off `.show` for camera mode.
+  -->
+  <div data-staff="qr-reader-wrapper" class="qr-reader-wrapper">
+    <div id="staff-qr-reader" data-staff="qr-reader-div" class="qr-reader"></div>
+
+    <div class="qr-reader-icon" aria-hidden="true">
+      <span class="material-symbols-outlined on-processing">
+        qr_code_scanner
+      </span>
+    </div>
+
+    <div class="qr-viewfinder" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+
+    <button data-staff="qr-close-btn" class="ghost qr-close" type="button">
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      <span class="visually-hidden"><%= copy.closeButton() %></span>
+    </button>
+
+    <!--
+      The way out of a camera that will not focus, will not open, or is covered
+      by a case. Hidden until the running feed proves there is a second camera
+      to reach; `modules/qr.ts` reveals it.
+    -->
+    <button
+      data-staff="qr-switch-btn"
+      class="ghost qr-switch"
+      type="button"
+      hidden
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">
+        cameraswitch
+      </span>
+      <span data-staff="copy-switchCameraButton" class="visually-hidden"><%= copy.switchCameraButton() %></span>
+    </button>
+  </div>
+
+  <div class="step-controls">
+    <button data-staff="start-camera-btn" class="qr-start-btn show" type="button">
+      <span class="material-symbols-outlined btn-label" aria-hidden="true">
+        qr_code_scanner
+      </span>
+      <span data-staff="copy-cameraButton" class="btn-label"><%= copy.cameraButton() %></span>
+      <span class="btn-spinner"></span>
+    </button>
+
+    <button
+      data-staff="qr-torch-btn"
+      class="ghost qr-torch"
+      type="button"
+      aria-pressed="false"
+      hidden
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">
+        flashlight_on
+      </span>
+      <span data-staff="copy-torchButton"><%= copy.torchButton() %></span>
+    </button>
+
+    <div data-staff="qr-hint-div" class="hint-div" aria-live="polite"></div>
+  </div>
+
+  <!--
+    The typed fallback, for a camera that will not open or a pass that will not
+    load. Not a fallback for a Redis outage: it mints a review handle like any
+    other, and without Redis there is no session to reach this page with.
+  -->
+  <details data-staff="lookup" class="staff-lookup">
+    <summary data-staff="copy-lookupSummary"><%= copy.lookupSummary() %></summary>
+
+    <form data-staff="lookupForm" class="staff-lookup-form">
+      <label class="visually-hidden" for="staff-lookup-input">
+        <%= copy.lookupInputLabel() %>
+      </label>
+
+      <input
+        id="staff-lookup-input"
+        data-staff="lookupInput"
+        type="text"
+        inputmode="text"
+        pattern="<%= ticketPattern %>"
+        autocomplete="off"
+        autocapitalize="none"
+        enterkeyhint="search"
+      />
+
+      <button
+        type="submit"
+        data-staff="lookupSubmit"
+        class="staff-lookup-submit"
+      >
+        <span data-staff="copy-lookupSubmit" class="btn-label"><%= copy.lookupSubmit() %></span>
+        <span class="btn-spinner"></span>
+      </button>
+    </form>
+
+    <p data-staff="copy-lookupHelp" class="small-print"><%= copy.lookupHelp() %></p>
+  </details>
+
+  <%- include('../../../partials/footer', { showLogout: true }) %>
+</main>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/attendee/staff.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/attendee/staff/index.js"></script>

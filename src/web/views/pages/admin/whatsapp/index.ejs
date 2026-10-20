@@ -1,0 +1,272 @@
+<%# i18n: admin-whatsapp %>
+<%
+/*
+ * The WhatsApp sender: preview a segment, test one number, start a run, watch it.
+ *
+ * Server-rendered in full, including the run in progress, so the screen is
+ * honest with JavaScript off: it shows what the run was doing when the page was
+ * rendered rather than an empty frame that never fills. The bundle replaces
+ * numbers in place every three seconds.
+ *
+ * `data-whatsapp` attributes are the contract with
+ * `pages/admin/whatsapp/index.ts`.
+ *
+ * **Every form is `method="post"`.** Without it the Enter key submits as GET,
+ * and the test panel carries a typed phone number — `mask.ts` records the
+ * sign-in form that did exactly this and wrote credentials into the request log.
+ * The action re-renders this same page, so a failed bundle degrades to a reload
+ * rather than to a leak.
+ *
+ * Nothing here renders an entry link or a ticket code: the preview carries
+ * masked names and truncated phones and nothing else.
+ *
+ * `locals.` on every read: EJS throws on an undeclared name, and a route that
+ * forgot a value should degrade rather than 500.
+ *
+ * (Do not name EJS's delimiters literally in this comment — the scanner is
+ * lexical and does not know it is inside a JavaScript comment.)
+ */
+const templates = locals.templates || [];
+const audiences = locals.audiences || {};
+const sendingEnabled = locals.sendingEnabled === true;
+const run = locals.run || null;
+
+const COUNTS = [
+  ['sent', copy.runCountSent()],
+  ['delivered', copy.runCountDelivered()],
+  ['read', copy.runCountRead()],
+  ['failed', copy.runCountFailed()],
+  ['skipped', copy.runCountSkipped()],
+  ['deferred', copy.runCountDeferred()],
+  ['interrupted', copy.runCountInterrupted()],
+  ['pending', copy.runCountPending()],
+];
+
+const counts = (run && run.counts) || {};
+const failures = (run && run.failures) || [];
+const spent = run && typeof run.spentUsd === 'number' ? run.spentUsd : null;
+const statusLabel = run ? copy.runStatus({ status: run.status }) : '';
+%>
+<%- include('../../../partials/i18n-catalogs') %>
+
+<div class="sender">
+  <header class="sender__head">
+    <h1 class="sender__title"><%= copy.title() %></h1>
+    <p class="sender__lead">
+      <%= copy.lede() %>
+    </p>
+  </header>
+
+  <%# The sentence the checklist requires, and it stays when the delivery
+      figures arrive: the gap between "enviado" and "entregue" is what it
+      explains. -%>
+  <p class="sender__note">
+    <strong><%= copy.noteSentLead() %></strong><%= copy.noteSentRest() %>
+    <strong><%= copy.noteReadLead() %></strong><%= copy.noteReadRest() %>
+  </p>
+
+  <% if (!sendingEnabled) { %>
+    <p class="sender__note sender__note--off">
+      <strong><%= copy.disabledLead() %></strong> <%= copy.disabledBefore() %>
+      <code>WHATSAPP_ENABLED</code> <%= copy.disabledAfter() %>
+    </p>
+  <% } %>
+
+  <%# ------------------------------------------------------------ preview -%>
+  <section class="sender__panel">
+    <h2 class="sender__subtitle"><%= copy.previewHeading() %></h2>
+
+    <form
+      class="sender__form"
+      data-whatsapp="preview-form"
+      method="post"
+      action="/admin/whatsapp"
+    >
+      <div class="sender__field">
+        <label class="sender__label" for="templateKey"><%= copy.template() %></label>
+        <select id="templateKey" name="templateKey">
+          <% templates.forEach((template) => { %>
+            <option value="<%= template.key %>"><%= template.key %> (<%= template.description %>)</option>
+          <% }); %>
+        </select>
+      </div>
+
+      <div class="sender__field">
+        <label class="sender__label" for="role"><%= copy.audience() %></label>
+        <select id="role" name="role">
+          <% Object.keys(audiences).forEach((value) => { %>
+            <option value="<%= value %>"><%= audiences[value] %></option>
+          <% }); %>
+        </select>
+      </div>
+
+      <div class="sender__actions">
+        <button type="submit"><span class="btn-label"><%= copy.previewSubmit() %></span></button>
+      </div>
+    </form>
+
+    <p class="sender__error" data-whatsapp="preview-error" role="alert"></p>
+
+    <div data-whatsapp="preview-result" hidden>
+      <p class="sender__counts" data-whatsapp="preview-counts"></p>
+      <p class="sender__hint" data-whatsapp="preview-cost"></p>
+
+      <ul class="sender__rows" data-whatsapp="preview-rows"></ul>
+
+      <p class="sender__hint" data-whatsapp="preview-more" hidden></p>
+
+      <div class="sender__actions">
+        <button
+          type="button"
+          data-whatsapp="confirm"
+          data-sending-enabled="<%= sendingEnabled ? 'true' : 'false' %>"
+          disabled
+        >
+          <span class="btn-label" data-whatsapp="confirm-label"><%= copy.previewConfirm() %></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <%# --------------------------------------------------------- the slots -%>
+  <section class="sender__panel">
+    <h2 class="sender__subtitle"><%= copy.slotsHeading() %></h2>
+    <p class="sender__hint">
+      <%= copy.slotsHint() %>
+    </p>
+
+    <ul class="sender__templates">
+      <% templates.forEach((template) => { %>
+        <li class="sender__template">
+          <div class="sender__template-head">
+            <h3 class="sender__label"><%= template.key %></h3>
+            <p class="sender__hint"><%= copy.slotsPrice({ cost: template.priceUsd }) %></p>
+          </div>
+          <p class="sender__hint"><%= template.description %></p>
+
+          <ul class="sender__slots">
+            <% template.body.forEach((slot) => { %>
+              <li class="sender__slot"><code><%= slot.slot %></code> <%= slot.label %></li>
+            <% }); %>
+            <% if (template.button) { %>
+              <li class="sender__slot"><code><%= copy.slotsButton() %></code> <%= template.button %></li>
+            <% } %>
+          </ul>
+        </li>
+      <% }); %>
+    </ul>
+  </section>
+
+  <%# ---------------------------------------------------------- test send -%>
+  <section class="sender__panel">
+    <h2 class="sender__subtitle"><%= copy.testHeading() %></h2>
+    <p class="sender__hint">
+      <%= copy.testHintBefore() %><code>Teste</code> <%= copy.testHintBetween() %>
+      <code>teste-envio</code><%= copy.testHintAfter() %>
+    </p>
+
+    <form
+      class="sender__form"
+      data-whatsapp="test-form"
+      method="post"
+      action="/admin/whatsapp"
+    >
+      <div class="sender__field">
+        <label class="sender__label" for="testTemplateKey"><%= copy.template() %></label>
+        <select id="testTemplateKey" name="templateKey">
+          <% templates.forEach((template) => { %>
+            <option value="<%= template.key %>"><%= template.key %> (<%= template.description %>)</option>
+          <% }); %>
+        </select>
+      </div>
+
+      <div class="sender__field">
+        <label class="sender__label" for="phone"><%= copy.testPhone() %></label>
+        <input id="phone" name="phone" type="tel" autocomplete="off" inputmode="tel" />
+        <p class="sender__hint"><%= copy.testPhoneHint() %></p>
+      </div>
+
+      <div class="sender__actions">
+        <button type="submit" <%= sendingEnabled ? '' : 'disabled' %>>
+          <span class="btn-label"><%= copy.testSubmit() %></span>
+        </button>
+      </div>
+    </form>
+
+    <p class="sender__error" data-whatsapp="test-error" role="alert"></p>
+    <p class="sender__result" data-whatsapp="test-result"></p>
+  </section>
+
+  <%# ----------------------------------------------------------- progress -%>
+  <section
+    class="sender__panel sender__run"
+    data-whatsapp="run"
+    data-run-id="<%= run ? run.runId : '' %>"
+    data-status="<%= run ? run.status : '' %>"
+    data-poll="live"
+    <%= run ? '' : 'hidden' %>
+  >
+    <h2 class="sender__subtitle"><%= copy.runHeading() %></h2>
+
+    <p class="sender__hint">
+      <span class="sender__status" data-whatsapp="status"><%= statusLabel %></span>
+      · <span data-whatsapp="total"><%= run ? run.total : 0 %></span> <%= copy.runRecipients() %>
+    </p>
+
+    <p class="sender__hint" data-whatsapp="spent" <%= spent === null ? 'hidden' : '' %>>
+      <%= spent === null ? '' : copy.runSpent({ cost: spent }) %>
+    </p>
+
+    <dl class="sender__grid">
+      <% COUNTS.forEach((entry) => { %>
+        <div class="sender__metric">
+          <dt><%= entry[1] %></dt>
+          <dd data-whatsapp="count-<%= entry[0] %>"><%= counts[entry[0]] || 0 %></dd>
+        </div>
+      <% }); %>
+    </dl>
+
+    <div class="sender__actions">
+      <button type="button" class="ghost" data-whatsapp="stop">
+        <span class="btn-label"><%= copy.runStop() %></span>
+      </button>
+      <button type="button" class="ghost" data-whatsapp="resume" <%= sendingEnabled ? '' : 'disabled' %>>
+        <span class="btn-label"><%= copy.runResume() %></span>
+      </button>
+      <button type="button" class="ghost" data-whatsapp="retry-interrupted">
+        <span class="btn-label"><%= copy.runRetryInterrupted() %></span>
+      </button>
+      <button type="button" class="ghost" data-whatsapp="cancel">
+        <span class="btn-label"><%= copy.runCancel() %></span>
+      </button>
+    </div>
+
+    <p class="sender__error" data-whatsapp="run-error" role="alert"></p>
+
+    <h3 class="sender__label"><%= copy.failuresHeading() %></h3>
+
+    <p class="sender__hint" data-whatsapp="failures-empty" <%= failures.length ? 'hidden' : '' %>>
+      <%= copy.failuresNone() %>
+    </p>
+
+    <table class="sender__table">
+      <thead>
+        <tr><th scope="col"><%= copy.failuresReason() %></th><th scope="col"><%= copy.failuresCount() %></th></tr>
+      </thead>
+      <tbody data-whatsapp="failures">
+        <% failures.forEach((failure) => { %>
+          <tr>
+            <th scope="row"><%= failure.errorTitle %></th>
+            <td><%= failure.count %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </section>
+</div>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/admin/whatsapp.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/admin/whatsapp/index.js"></script>

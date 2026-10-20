@@ -1,0 +1,63 @@
+# Standalone landing fallback.
+#
+# Keeps the landing page, the privacy notice and the terms online while the
+# production stack is restarted, from any machine with Docker. No database, no
+# cache, no Caddy and none of the production secrets — see docs/operations/fallback.md.
+#
+#   cp .env.fallback.example .env   # then fill in the event timing and token
+#   docker compose up -d --build
+#
+# Run it from a checkout of the same tag production runs.
+
+name: pelicanpass-fallback
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: '10m'
+    max-file: '5'
+
+services:
+  # Its own Cloudflare tunnel, never production's. Two connectors on one tunnel
+  # are load-balanced by Cloudflare, which would send half of the live traffic
+  # here while production is healthy. The tunnel's public hostname points at
+  # http://app:3000.
+  tunnel:
+    image: cloudflare/cloudflared:2026.10.2@sha256:0e56c13c7058fcef9c4f0e7d83372f82330548dbf8f8b366f3d8b506526d93b2
+    container_name: pelicanpass-fallback-tunnel
+    command: tunnel --loglevel ${TUNNEL_LOGLEVEL:-warn} --no-autoupdate run
+    # Read from the environment rather than passed on the command line, which
+    # would put a credential into the process argv.
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?the fallback tunnel token - see .env.fallback.example}
+    depends_on:
+      - app
+    restart: unless-stopped
+    logging: *logging
+
+  app:
+    build:
+      context: .
+      target: fallback
+    container_name: pelicanpass-fallback-app
+    # Named explicitly rather than env_file, so the tunnel token never reaches
+    # the app container.
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      APP_TITLE: ${APP_TITLE:-}
+      EVENT_START_AT: ${EVENT_START_AT:?the event start, with its UTC offset - see .env.fallback.example}
+      EVENT_CLOSES_AT: ${EVENT_CLOSES_AT:?the event close, with its UTC offset - see .env.fallback.example}
+      CHECKIN_OPENS_BEFORE_PARTICIPANT: ${CHECKIN_OPENS_BEFORE_PARTICIPANT:-}
+      CHECKIN_OPENS_BEFORE_VOLUNTEER: ${CHECKIN_OPENS_BEFORE_VOLUNTEER:-}
+      EVENT_TIMEZONE: ${EVENT_TIMEZONE:-}
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - 'no-new-privileges:true'
+    logging: *logging

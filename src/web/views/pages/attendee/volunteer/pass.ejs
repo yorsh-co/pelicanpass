@@ -1,0 +1,20 @@
+<script id="attendee-data" type="application/json" nonce="<%= cspNonce %>">
+  <%- JSON.stringify(initialData).replace(/</g, '\\u003c') %>
+</script>
+<%- include('../../../partials/i18n-catalogs') %>
+
+<main data-pass="main-container" class="main-container pass-container">
+  <%- include('../../../components/pass') %>
+
+  <%- include('../../../components/survey-dialog') %>
+
+  <%- include('../../../components/privacy-notice') %>
+
+  <%- include('../../../partials/footer', { showLogout: true }) %>
+</main>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/attendee/pass.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/attendee/pass/index.js"></script>

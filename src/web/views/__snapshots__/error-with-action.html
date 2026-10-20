@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Página não encontrada</title>
+
+    
+  <meta name="theme-color" content="#fafafc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0a11" media="(prefers-color-scheme: dark)" />
+  
+
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/images/icon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icon/favicon-32x32.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/images/icon/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest" crossorigin="use-credentials">
+
+    
+
+  <!-- global styles -->
+  <link rel="stylesheet" href="/css/dist/main.css" />
+
+  <!-- stored theme, applied before first paint. These pages carry no toggle of
+       their own, but must honour a choice made on the check-in flow. -->
+  
+<script nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+  // Safari in private browsing has historically thrown on localStorage rather
+  // than returning null, which would abort head parsing.
+  try {
+    const theme = localStorage.getItem('theme');
+
+    if (theme === 'light' || theme === 'dark') {
+      document.documentElement.dataset.theme = theme;
+    }
+  } catch {}
+</script>
+
+
+  <!-- page-specific styles -->
+  <link rel="stylesheet" href="/css/dist/pages/error.css" />
+
+</head>
+<body class="plain-page" data-audience="">
+
+  <div class="plain-wrapper">
+    
+<main class="error-page">
+  <header>
+  <span class="wordmark" role="img" aria-label="PelicanPass"></span>
+</header>
+
+
+  <section class="error-card">
+    <p class="error-heading">404</p>
+    <h1 class="error-subtitle">Página não encontrada</h1>
+
+    <p class="error-message">O endereço pode ter mudado &lt;ou&gt; nunca ter existido.</p>
+
+    
+    <a class="error-action" href="/">Voltar ao início</a>
+    
+  </section>
+</main>
+
+
+
+    <footer>
+  <div class="footer-top small-print">
+    <span>© 2026 PelicanPass</span>
+    <span class="dot">•</span>
+    <span class="credit">
+      por
+      <a href="https://github.com/yorsh-co/pelicanpass" target="_blank">PelicanPass</a>
+    </span>
+  </div>
+
+  <div class="footer-links small-print">
+    <a href="/privacy">Privacidade</a>
+    <span class="dot">•</span>
+    <a href="/terms">Termos</a>
+    
+    
+    <span class="dot">•</span>
+    <!--
+      The icon and the label name the theme the tap will switch *to*, not the
+      one in effect. `client/theme/theme.ts` rewrites both on load from the
+      two data labels, so the aria-label here is only what a light-themed first
+      paint happens to need.
+    -->
+    <button
+      class="theme-toggle"
+      data-theme-toggle
+      type="button"
+      aria-label="Ativar tema escuro"
+      data-label-dark="Ativar tema escuro"
+      data-label-light="Ativar tema claro"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+    </button>
+        
+    
+    <span class="footer-locales-wrap">
+      <span class="dot">•</span>
+      <details class="footer-locales" aria-label="Idiomas">
+        <summary lang="pt-BR">
+          BR<span class="visually-hidden"> português (Brasil)</span>
+          <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span>
+        </summary>
+        <ul class="footer-locales-menu">
+          
+          <li>
+            <a
+              href="/error-with-action?lang=pt-BR"
+              hreflang="pt-BR"
+              lang="pt-BR"
+              aria-current="true"
+            >
+              <span class="footer-locales-code">BR</span>
+              <span class="footer-locales-name">português (Brasil)</span>
+              
+              <span class="material-symbols-outlined" aria-hidden="true">check</span>
+              
+            </a>
+          </li>
+          
+          <li>
+            <a
+              href="/error-with-action?lang=en-XA"
+              hreflang="en-XA"
+              lang="en-XA"
+              
+            >
+              <span class="footer-locales-code">XA</span>
+              <span class="footer-locales-name">English (Pseudo-Accents)</span>
+              
+            </a>
+          </li>
+          
+        </ul>
+      </details>
+    </span>
+    
+  </div>
+</footer>
+
+  </div>
+
+  <!-- global scripts. The only script these pages load: the footer's theme
+       toggle would otherwise render here and do nothing. -->
+  <script type="module" src="/js/theme/theme.js"></script>
+
+  <!-- page-specific scripts -->
+  
+</body>
+</html>

@@ -1,0 +1,371 @@
+<%# i18n: admin-attendees %>
+<%
+/*
+ * The attendee roster.
+ *
+ * Server-rendered in full, including the filters, the search and the pager —
+ * every one of them submits the same POST form, so the whole screen reads and
+ * navigates with JavaScript disabled. Its one bundle only enhances: a row opens
+ * by clicking anywhere in it, and with the script absent the name in the first
+ * cell is a submit button that does the same thing.
+ *
+ * **Nothing here builds a URL out of an attendee.** Not a filter, not a search
+ * term, not a record ID: a URL is written to the browser's history, which
+ * outlives the session and the account. That is why the pager and the control
+ * that opens a record are buttons rather than links, and it is the only reason.
+ *
+ * `locals.` on every read: EJS throws on an undeclared name, and a route that
+ * forgot a value should degrade rather than 500. partials/admin-nav.ejs carries
+ * the same guard for the same reason.
+ *
+ * **Every value off a row goes through EJS's escaping output tag, never the raw
+ * one.** `attendee_nickname` is the one attendee-controlled string in this
+ * table — scripts/db/export-results.sql says so about the CSV, and the same
+ * value arrives here.
+ *
+ * (Naming those two delimiters literally is what broke this template the first
+ * time it rendered: EJS scans for them lexically and does not know it is inside
+ * a JavaScript comment.)
+ */
+const rows = locals.attendees || [];
+const filters = locals.filters || { q: '', role: 'participant', checkedIn: null, archived: 'hidden', page: 1 };
+const total = locals.total || 0;
+const pageCount = locals.pageCount || 1;
+const canWrite = locals.canWrite || false;
+
+const roleFilters = locals.roleFilters || {};
+const checkinFilters = locals.checkinFilters || {};
+const archivedFilters = locals.archivedFilters || {};
+
+// `null` is how the filters carry "every role"; the select needs a value.
+const roleValue = filters.role === null ? 'all' : filters.role;
+const checkinValue = filters.checkedIn === null ? '' : filters.checkedIn ? 'yes' : 'no';
+const archivedValue = filters.archived === 'hidden' ? '' : filters.archived;
+
+// Against the defaults, not against null: participants is now where the
+// roster opens, so `role !== null` would leave Limpar showing on arrival.
+const filtered = filters.q !== '' || filters.role !== 'participant'
+  || filters.checkedIn !== null || filters.archived !== 'hidden';
+%>
+<div class="admin-list">
+  <header class="admin-list__head">
+    <h1 class="admin-list__title"><%= copy.listTitle() %></h1>
+
+    <% if (canWrite) { %>
+    <a class="admin-list__new" href="/admin/attendees/new">
+      <span class="material-symbols-outlined" aria-hidden="true">add</span>
+      <span><%= copy.newAttendee() %></span>
+    </a>
+    <% } %>
+  </header>
+
+  <%# The door message switch, for administrators holding whatsapp:send. The
+      `data-door` attributes are the contract with list/index.ts, which flips
+      the switch and rewrites the state, the spend and the hint in place: this
+      page may have been rendered by a POST, so it cannot simply reload. -%>
+  <% if (locals.door) { const door = locals.door; %>
+  <%- include('../../../partials/i18n-catalogs') %>
+  <section class="admin-list__door" data-door>
+    <div class="admin-list__door-head">
+      <h2 class="admin-list__door-title"><%= copy.doorHeading() %></h2>
+      <p class="admin-list__door-state <%= door.switchOn && door.unlocked ? 'is-on' : 'is-off' %>" data-door-state>
+        <%= copy.doorState({ on: door.switchOn && door.unlocked ? 'yes' : 'no' }) %>
+      </p>
+    </div>
+    <p class="admin-list__door-hint"><%= copy.doorIntro() %></p>
+    <% if (!door.unlocked) { %>
+    <%# No spend line: with the lock closed the template and the budget may be
+        unset, and a price and a budget of nothing would read as real. -%>
+    <p class="admin-list__door-warning"><%= copy.doorLocked() %></p>
+    <% } else { %>
+    <p class="admin-list__door-hint" data-door-spend>
+      <%= copy.doorSpend({ spent: door.spentUsd, budget: door.budgetUsd, price: door.priceUsd }) %>
+    </p>
+    <p class="admin-list__door-warning" data-door-budget <%= door.availability.available === false && door.availability.reason === 'overBudget' ? '' : 'hidden' %>>
+      <%= copy.doorOverBudget() %>
+    </p>
+    <button
+      class="ghost admin-list__door-toggle"
+      type="button"
+      data-door-toggle
+      data-enabled="<%= door.switchOn ? 'true' : 'false' %>"
+    >
+      <%= door.switchOn ? copy.doorTurnOff() : copy.doorTurnOn() %>
+    </button>
+    <p class="admin-list__door-error" data-door-error role="alert" hidden></p>
+    <% } %>
+  </section>
+  <% } %>
+
+  <%# The ticket limit status, for every roster viewer once the route has
+      decided there is something to show; the Edit button and the form are
+      rendered only for holders of attendees:limit (`canEditLimit`). Like the
+      door panel, the `data-limit*` attributes are the contract with
+      list/limit-panel.ts, which redraws the panel in place from the overview a
+      save answers with. The overview rides on the section as JSON so the first
+      paint and every redraw come from the one function. -%>
+  <% if (locals.limit) { const limit = locals.limit; const limitOn = limit.status !== 'off'; %>
+  <% if (!locals.door) { %><%- include('../../../partials/i18n-catalogs') %><% } %>
+  <section class="admin-list__limit" data-limit data-limit-overview="<%= JSON.stringify(limit) %>">
+    <div class="admin-list__limit-head">
+      <h2 class="admin-list__limit-title"><%= copy.limitHeading() %></h2>
+      <p class="admin-list__limit-status" data-limit-status data-status="<%= limit.status %>"><%= copy.limitStatus({ status: limit.status }) %></p>
+      <p class="admin-list__limit-mode" data-limit-mode <%= limitOn ? '' : 'hidden' %>><%= copy.limitMode({ mode: limit.mode }) %></p>
+    </div>
+    <%- include('../../../partials/ticket-limit-meter', { limit, copy }) %>
+    <p class="admin-list__limit-hint" data-limit-off <%= limitOn ? 'hidden' : '' %>><%= copy.limitOff() %></p>
+    <p class="admin-list__limit-hint" data-limit-door-hint <%= limit.scope === 'door' ? '' : 'hidden' %>><%= copy.limitDoorHint() %></p>
+    <% if (locals.canEditLimit) { %>
+    <button
+      class="ghost admin-list__limit-edit"
+      type="button"
+      data-limit-edit
+      aria-expanded="false"
+      aria-controls="limit-form"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+      <span class="btn-label"><%= copy.limitEdit() %></span>
+    </button>
+    <form class="admin-list__limit-form" id="limit-form" data-limit-form method="post" action="/admin/attendees" novalidate hidden>
+      <fieldset class="admin-list__limit-group">
+        <legend class="admin-list__limit-legend"><%= copy.limitScopeLegend() %></legend>
+        <% for (const scope of ['off', 'total', 'door']) { %>
+        <label class="admin-list__limit-choice">
+          <input type="radio" name="limit-scope" value="<%= scope %>" <%= limit.scope === scope ? 'checked' : '' %> />
+          <span><%= copy.limitScopeOption({ scope }) %></span>
+        </label>
+        <% } %>
+      </fieldset>
+      <div class="admin-list__limit-field">
+        <label class="admin-list__limit-label" for="limit-cap"><%= copy.limitCapLabel() %></label>
+        <input
+          id="limit-cap"
+          name="limit-cap"
+          type="number"
+          inputmode="numeric"
+          min="<%= locals.limitBounds.min %>"
+          max="<%= locals.limitBounds.max %>"
+          step="1"
+          value="<%= limit.cap ?? '' %>"
+          aria-describedby="limit-cap-hint"
+          <%= limitOn ? '' : 'disabled' %>
+        />
+        <p class="admin-list__limit-hint" id="limit-cap-hint"><%= copy.limitCapHint({ min: locals.limitBounds.min, max: locals.limitBounds.max }) %></p>
+      </div>
+      <fieldset class="admin-list__limit-group" data-limit-mode-group <%= limitOn ? '' : 'disabled' %>>
+        <legend class="admin-list__limit-legend"><%= copy.limitModeLegend() %></legend>
+        <% for (const mode of ['hard', 'warn']) { %>
+        <label class="admin-list__limit-choice">
+          <input type="radio" name="limit-mode" value="<%= mode %>" <%= limit.mode === mode ? 'checked' : '' %> />
+          <span><%= copy.limitModeOption({ mode }) %></span>
+        </label>
+        <% } %>
+      </fieldset>
+      <p class="admin-list__limit-error" data-limit-error role="alert" hidden></p>
+      <div class="admin-list__limit-actions">
+        <button type="submit" data-limit-save><span class="btn-label"><%= copy.limitSave() %></span></button>
+        <button class="ghost" type="button" data-limit-cancel><%= copy.limitCancel() %></button>
+      </div>
+    </form>
+    <% } %>
+  </section>
+  <% } %>
+
+  <%# It carries no `page` field on purpose, and there are now two reasons. A
+      new search has to land on page one, and leaving `page` out is what makes
+      that happen without any code deciding it; and the pager submits `page` on
+      its own button, so a hidden field would send the value twice, which
+      parseAttendeeFilters reads as absent. -%>
+  <form
+    class="admin-list__filters"
+    id="filters"
+    method="post"
+    action="/admin/attendees"
+  >
+    <div class="admin-list__search">
+      <label class="admin-list__label" for="q"><%= shell.searchLabel() %></label>
+      <input
+        id="q"
+        name="q"
+        type="search"
+        value="<%= filters.q %>"
+        placeholder="<%= shell.searchPlaceholder() %>"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="admin-list__fields--container">
+
+        <div class="admin-list__field">
+        <label class="admin-list__label" for="role"><%= copy.roleLabel() %></label>
+        <select id="role" name="role">
+            <% for (const [value, label] of Object.entries(roleFilters)) { %>
+            <option value="<%= value %>" <%= value === roleValue ? 'selected' : '' %>><%= label %></option>
+            <% } %>
+        </select>
+        </div>
+
+        <div class="admin-list__field">
+        <label class="admin-list__label" for="checkin"><%= shell.presence() %></label>
+        <select id="checkin" name="checkin">
+            <% for (const [value, label] of Object.entries(checkinFilters)) { %>
+            <option value="<%= value %>" <%= value === checkinValue ? 'selected' : '' %>><%= label %></option>
+            <% } %>
+        </select>
+        </div>
+
+        <div class="admin-list__field">
+        <label class="admin-list__label" for="archived"><%= copy.listArchivedFilter() %></label>
+        <select id="archived" name="archived">
+            <% for (const [value, label] of Object.entries(archivedFilters)) { %>
+            <option value="<%= value %>" <%= value === archivedValue ? 'selected' : '' %>><%= label %></option>
+            <% } %>
+        </select>
+        </div>
+
+    </div>
+
+    <div class="admin-list__actions">
+      <button type="submit"><%= shell.searchSubmit() %></button>
+      <% if (filtered) { %>
+      <a class="admin-list__clear" href="/admin/attendees">
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        <span><%= copy.listClear() %></span>
+      </a>
+      <% } %>
+    </div>
+  </form>
+
+  <p class="admin-list__count" role="status">
+    <%= copy.listCount({ total, filtered: filtered ? 'yes' : 'no' }) %>
+  </p>
+
+  <%# How a row opens. Empty, because the only field it carries rides on the
+      button that submits it — the same arrangement the archive control already
+      uses for the same ID, and one fewer copy of what the table renders. -%>
+  <form id="record" method="post" action="/admin/attendees/edit"></form>
+
+  <% if (rows.length > 0) { %>
+  <%# Its own scroll container rather than a second media query. The shell's
+      `min-width: 60rem` is the only one in the codebase and its comment says
+      so; a table that scrolls sideways inside the page is the cheaper answer. -%>
+  <div class="admin-list__scroll">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th scope="col"><%= copy.listName() %></th>
+          <th scope="col"><%= copy.listCode() %></th>
+          <th scope="col"><%= copy.roleLabel() %></th>
+          <th scope="col"><%= shell.presence() %></th>
+          <th scope="col"><%= copy.listPhone() %></th>
+          <th scope="col"><%= copy.listItems() %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (const row of rows) { %>
+        <tr<%= row.archived ? ' class="admin-table__row--archived"' : '' %>>
+          <td>
+            <%# The row's one real control, and the whole row's click is the
+                bundle delegating to it. With the script absent this is still
+                the way in, which is why it is a button and not a styled cell.
+
+                The archived flag stays outside it: that is the record's state,
+                not part of the name a screen reader reads out for the control.
+
+                Read-only operators get it too. Opening a record is
+                `attendees:read`, the record itself says in so many words that
+                you may look and not edit, and the API refuses every write on
+                its own. -%>
+            <button
+              class="admin-table__open"
+              type="submit"
+              form="record"
+              name="attendeeId"
+              value="<%= row.attendeeId %>"
+            >
+              <span class="admin-table__name"><%= row.name %></span>
+              <% if (row.nickname) { %>
+              <span class="admin-table__nickname"><%= row.nickname %></span>
+              <% } %>
+            </button>
+            <% if (row.archived) { %>
+            <span class="admin-table__flag"><%= copy.listArchivedFlag() %></span>
+            <% } %>
+          </td>
+
+          <td><code class="admin-table__code ticket-code"><%= row.ticketCode %></code></td>
+
+          <td>
+            <span class="role-badge role-badge--<%= row.role %>">
+              <%= shell.role({ role: row.role }) %>
+            </span>
+            <% if (row.canRedeem) { %><span class="admin-table__flag"><%= copy.listRedeemsFlag() %></span><% } %>
+            <% if (row.canDraw) { %><span class="admin-table__flag"><%= copy.listDrawsFlag() %></span><% } %>
+          </td>
+
+          <td>
+            <% if (row.checkedIn) { %>
+            <%= row.checkinNumber === null ? shell.present() : `#${row.checkinNumber}` %>
+            <% } else { %>
+            <span class="admin-table__muted">—</span>
+            <% } %>
+          </td>
+
+          <td><span class="admin-table__muted"><%= row.phoneMasked %>…</span></td>
+
+          <td>
+            <% if (row.items.length === 0) { %>
+            <span class="admin-table__muted">—</span>
+            <% } %>
+            <% for (const item of row.items) { %>
+            <span class="admin-table__item<%= item.redeemed ? ' admin-table__item--redeemed' : '' %>">
+              <%= item.label %>: <%= item.value %>
+            </span>
+            <% } %>
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <% if (pageCount > 1) { %>
+  <nav class="admin-pager" aria-label="<%= shell.pagerLabel() %>">
+    <% if (filters.page > 1) { %>
+    <button type="submit" form="filters" name="page" value="<%= filters.page - 1 %>"><%= shell.pagerPrevious() %></button>
+    <% } %>
+    <span><%= shell.pagerPosition({ page: filters.page, count: pageCount }) %></span>
+    <% if (filters.page < pageCount) { %>
+    <button type="submit" form="filters" name="page" value="<%= filters.page + 1 %>"><%= shell.pagerNext() %></button>
+    <% } %>
+  </nav>
+  <% } %>
+
+  <%# Three empty states, because they call for three different actions. The
+      third only exists because listAttendees answers with the real total past
+      the last page; without that this would claim there were no matches. -%>
+  <% } else if (total > 0) { %>
+  <p class="admin-list__empty">
+    <%= shell.pagerOutOfRange() %>
+    <button type="submit" form="filters" name="page" value="1"><%= shell.pagerBackToFirst() %></button>.
+  </p>
+
+  <% } else if (filtered) { %>
+  <p class="admin-list__empty">
+    <%= copy.listNoMatches() %>
+    <a href="/admin/attendees"><%= copy.listClearFilters() %></a>.
+  </p>
+
+  <% } else { %>
+  <p class="admin-list__empty">
+    <%= copy.listEmpty() %><% if (canWrite) { %>
+    <a href="/admin/attendees/new"><%= copy.listCreateFirst() %></a>.<% } %>
+  </p>
+  <% } %>
+</div>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/admin/attendees.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/admin/attendees/list/index.js"></script>

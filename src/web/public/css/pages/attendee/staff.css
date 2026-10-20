@@ -1,0 +1,522 @@
+/*
+ * The volunteer scanning surface.
+ *
+ * Deliberately not the pass. The pass is the reward and carries the brand
+ * gradient; this is a work tool used for four hours straight in one hand, so it
+ * sits on the neutral canvas with the camera and the buttons taking the room.
+ *
+ * Everything about the scanner itself is already styled by
+ * `components/qr.css`, which ships in main.css on every page — this file is the
+ * band, the review card and the item buttons.
+ */
+
+.staff-container {
+  gap: var(--space-4);
+}
+
+.staff-head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/*
+ * The way back to the volunteer's own pass. Shaped like `.pass-staff-link`
+ * going the other way, but quieter: that one is an invitation on the reward
+ * screen, this one is a way out of a work tool and must not compete with the
+ * band beneath it.
+ */
+.staff-pass-link {
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.staff-pass-link:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.staff-pass-link .material-symbols-outlined {
+  font-size: 20px;
+}
+
+/* the band */
+
+.staff-band-block {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.staff-band-label {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/*
+ * The word is what a volunteer reads against the attendee's screen, and the
+ * colour is decoration — it carries no information the word does not. Its shape
+ * is `components/band.css`, shared with the pass; these values are this page's,
+ * darkened to sit on a white card rather than on the pass's gradient.
+ */
+.staff-band-block {
+  --band-vermelho: #c62348;
+  --band-laranja: #a85a12;
+  --band-amarelo: #8a6300;
+  --band-verde: #0a7150;
+  --band-azul: #1256a8;
+  --band-roxo: #6b34c9;
+  --band-rosa: #b32570;
+  --band-marrom: #7a5233;
+
+  /*
+   * The rest of the block's paint, for the shape in `components/band.css`. A
+   * stale band is more dangerous on this screen than on the pass — an attendee
+   * showing a frozen one gets refused and reloads, while a volunteer comparing
+   * against one refuses everybody — so the overlay is bordered here rather than
+   * the quieter glass the pass uses.
+   */
+  --band-retry-bg: var(--surface);
+  --band-retry-fg: var(--warn);
+  --band-retry-border: var(--warn);
+  --band-retry-bg-hover: var(--error-soft);
+
+  --band-clock-fg: var(--text-muted);
+
+  /* The same token the ring's own track uses on this page. */
+  --band-pending-bg: var(--surface-sunken);
+}
+
+/*
+ * The volunteer's clock sits under the word rather than beside it, which is the
+ * only thing this page adds to the shared `.band-clock`.
+ */
+.staff-clock {
+  margin-top: var(--space-1);
+}
+
+/*
+ * The same drain the attendee's pass shows, from the same window: the band says
+ * which word, this says how long is left of it. Size and paint only — the shape
+ * is `components/window-ring.css`, shared with the pass precisely because these
+ * two are held up against each other.
+ *
+ * No stale rule, for the same reason `.staff-clock` has none. A ring drained to
+ * empty *is* the staleness signal here: it cannot keep looking healthy the way
+ * a clock running off the device's own time can.
+ */
+.staff-window {
+  --ring-track: var(--surface-sunken);
+  --ring-arc: var(--accent);
+
+  margin-top: var(--space-2);
+}
+
+/* the review */
+
+.staff-review {
+  padding: var(--space-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.staff-review.processing {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.staff-review-head {
+  /*
+   * The volunteer marker's paint, for the shape in `components/role-badge.css`.
+   * Accent on the white card rather than the glass the pass uses, for the same
+   * reason nothing else on this page is painted for a gradient.
+   */
+  --role-badge-bg: var(--accent-soft);
+  --role-badge-fg: var(--accent);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/*
+ * The identifier a volunteer checks against the phone in front of them: a
+ * check-in number for a participant, a first name for a volunteer. Sized to be
+ * readable at arm's length across a counter.
+ */
+.staff-review-identifier {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  overflow-wrap: anywhere;
+}
+
+/* the items */
+
+.staff-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+/*
+ * One slide per item, at a full-width target. A volunteer is holding a t-shirt
+ * in the other hand — which is what makes the target large, and also what makes
+ * a stray tap easy, so the row is dragged rather than pressed.
+ *
+ * The track. `overflow` clips the fill to the radius; `position` is what both
+ * the fill and the thumb are placed against.
+ */
+.staff-item-btn {
+  position: relative;
+  overflow: hidden;
+
+  width: 100%;
+  min-height: 3.25rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text);
+  text-align: start;
+}
+
+/*
+ * The thumb's lane. `THUMB_PX` in `modules/ui/slide-confirm.ts` is this
+ * measurement — the thumb travels the row's width less its own, so the two have
+ * to agree.
+ *
+ * Keyed on the thumb rather than on `:not(:disabled)`: a row disabled by a
+ * successful slide keeps its lane until `handOver` removes the thumb, so the
+ * label does not jump sideways between the two.
+ */
+.staff-item-btn:has(.staff-item-thumb) {
+  padding-inline-start: 3.5rem;
+}
+
+.staff-item-btn:not(:disabled) {
+  /*
+   * The line the whole gesture rests on. Without it a touch device pans the
+   * page instead of reporting the drag, and nothing works on a phone.
+   */
+  touch-action: none;
+
+  /* Safari still offers the long-press callout on a button `global.css` has
+     already made unselectable. */
+  -webkit-touch-callout: none;
+}
+
+/*
+ * The slot the chip comes out of, uncovered as it travels.
+ *
+ * Recessed rather than tinted: a colour washing across the row reads as a
+ * progress bar reporting something, which is the opposite of what is happening
+ * — the volunteer is moving a control, and what they leave behind should look
+ * like the groove it sat in.
+ *
+ * `width` is transitioned even though it is derived from a custom property:
+ * the resolved length changes, so it interpolates. Registering `--slide` with
+ * `@property` to animate the number itself would have made the snap-back
+ * Firefox 128+ for no gain.
+ */
+.staff-item-btn::before {
+  content: '';
+
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(var(--slide, 0) * 100%);
+
+  background: var(--surface-sunken);
+  box-shadow: inset 0 1px 2px rgb(20 20 28 / 8%);
+  transition: width var(--duration-base) var(--ease-out);
+}
+
+/*
+ * The chip. The part with a body, so it is obvious which bit is the handle —
+ * the row does not move, this does.
+ *
+ * `--shadow-sm` carries the elevation in the light theme and the border carries
+ * it in the dark one, where a black shadow on a near-black canvas is invisible.
+ * The token already resolves that; see `base/variables.css`.
+ *
+ * Full height rather than a knob inset on all four sides: an inset would have
+ * to be carried by the resting `left` and by the travel as well, for a look
+ * that is no better on a 3.25rem row.
+ */
+.staff-item-thumb {
+  position: absolute;
+  inset-block: 0;
+  left: calc(var(--slide, 0) * (100% - 3.5rem));
+
+  z-index: 1;
+
+  width: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+
+  color: var(--text-muted);
+  transition: left var(--duration-base) var(--ease-out);
+}
+
+/*
+ * Armed: releasing now records the handover. The chip changes rather than the
+ * row, so the thing that answers is the thing under the finger — and the glyph
+ * swaps at the same instant, so the threshold does not rest on hue alone.
+ */
+.staff-item-btn.is-armed .staff-item-thumb {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--text-on-brand);
+}
+
+.staff-item-thumb .material-symbols-outlined {
+  font-size: 20px;
+}
+
+/*
+ * Direction at rest, confirmation once a release would commit. The colour
+ * change alone would not carry the threshold for anyone who does not separate
+ * those two hues, and the fill is the same shape either side of it.
+ */
+.staff-item-btn:not(.is-armed) .staff-item-thumb-ok,
+.staff-item-btn.is-armed .staff-item-thumb-go {
+  display: none;
+}
+
+/* Attached to the finger while it is down; eased only on the way back. */
+.staff-item-btn.is-sliding::before,
+.staff-item-btn.is-sliding .staff-item-thumb {
+  transition: none;
+}
+
+/*
+ * Above the fill, which is painted on the track itself.
+ *
+ * The thumb is exempt. It is absolutely positioned, and this rule ties it on
+ * specificity — both are (0,1,0), the `>` and the `*` contributing nothing —
+ * so source order alone was settling it in this rule's favour. That turned the
+ * overlay back into a flex item: it took 3.5rem of the row on top of the lane
+ * already reserved for it, and `left` began offsetting it from a flow position
+ * it should never have had.
+ *
+ * Nothing is lost by the exemption. The thumb is positioned and follows
+ * `::before` in tree order, so it already paints above the fill.
+ */
+.staff-item-btn > *:not(.staff-item-thumb) {
+  position: relative;
+}
+
+.staff-item-name {
+  font-weight: var(--weight-semibold);
+  margin-left: var(--space-3);
+}
+
+.staff-item-state {
+  flex-shrink: 0;
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/*
+ * Said once, under the list. A tap does nothing now, and a volunteer who does
+ * not know that reads it as the app having frozen.
+ */
+.staff-slide-hint {
+  margin-top: var(--space-2);
+  text-align: center;
+}
+
+/*
+ * Already collected and never entitled are both untappable and read
+ * differently on purpose — the volunteer has a different sentence for each.
+ */
+.staff-item-btn:disabled {
+  background: var(--surface-sunken);
+  border-color: var(--border);
+  opacity: 0.7;
+}
+
+/* the outcome */
+
+.staff-outcome {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-weight: var(--weight-semibold);
+}
+
+.staff-outcome[data-kind='redeemed'] {
+  background: var(--accent-soft);
+  color: var(--success);
+}
+
+/*
+ * A duplicate is an answer, not a fault. Warned rather than errored: the app
+ * did exactly what it should, and the volunteer needs to read it as
+ * information about the attendee.
+ */
+.staff-outcome[data-kind='duplicate'],
+.staff-outcome[data-kind='not_entitled'] {
+  background: var(--error-soft);
+  color: var(--error);
+}
+
+.staff-review-close {
+  margin-top: var(--space-4);
+}
+
+/* the typed fallback */
+
+.staff-lookup {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-4);
+}
+
+.staff-lookup summary {
+  cursor: pointer;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.staff-lookup-form {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.staff-lookup-form input {
+  flex: 1;
+  font-family: var(--font-ticket);
+  min-width: 0;
+  text-transform: uppercase;
+}
+
+.staff-lookup-submit {
+  flex-shrink: 0;
+  width: auto;
+  padding-inline: var(--space-4);
+}
+
+.staff-lookup .small-print {
+  margin-top: var(--space-1);
+}
+
+/*
+ * Three pieces of the scanner's chrome live in `checkin.css` or are scoped to
+ * `.qr-step`, neither of which this page has. They are ported rather than
+ * shared: `components/qr.css` is the common part, and these are the check-in
+ * page's own arrangement of it.
+ *
+ * `setupQr` shows and hides the start button by toggling `.show` on it, and
+ * without these two rules that toggle styles nothing — the button sat over the
+ * live camera feed.
+ */
+.qr-start-btn {
+  display: none;
+}
+
+.qr-start-btn.show {
+  display: inline-flex;
+}
+
+/*
+ * The controls have to ride *over* the camera, not behind it. The full-screen
+ * wrapper is `position: fixed` at `--z-overlay`, so anything left in normal
+ * flow is covered — including the hint, which is where a refused scan reports
+ * itself. Without this the volunteer scans, the pass is rejected, and the
+ * explanation is painted underneath the viewfinder.
+ */
+body[data-camera='on'] .step-controls {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: calc(var(--z-overlay) + 1);
+
+  margin: 0;
+  padding: var(--space-8) var(--space-5)
+    calc(var(--space-5) + env(safe-area-inset-bottom));
+
+  background: var(--scrim-gradient);
+  text-align: center;
+}
+
+body[data-camera='on'] .step-controls,
+body[data-camera='on'] .hint-div {
+  color: var(--text-on-brand);
+}
+
+/*
+ * The shared scanner styles hang visibility off `.show`, which the check-in
+ * step toggles to reveal its inline preview. This surface has no inline
+ * preview — the wrapper stays collapsed at `height: 0; opacity: 0` — so the
+ * full-screen state has to restore the opacity itself, or the camera runs
+ * behind a completely transparent overlay.
+ */
+body[data-camera='on'] .qr-reader-wrapper,
+body[data-camera='on'] .qr-reader {
+  opacity: 1;
+}
+
+/*
+ * The other half of that statement: with no inline preview, the wrapper has no
+ * job outside camera mode at all. Collapsed is not enough — `height: 0` still
+ * leaves its 1px border and the container's `--space-4` gap sitting between the
+ * review card and the controls.
+ *
+ * Safe in both directions because `data-camera` is the first thing set on the
+ * way in (`qr.ts`, before the scanner is constructed) and the last thing
+ * cleared on the way out, so nothing ever measures this while it is `none`.
+ */
+body:not([data-camera='on']) .qr-reader-wrapper {
+  display: none;
+}
+
+/* The camera owns the screen while it runs; everything else stands down. */
+body[data-camera='on'] .staff-band-block,
+body[data-camera='on'] .staff-review,
+body[data-camera='on'] .staff-lookup,
+body[data-camera='on'] .staff-head,
+body[data-camera='on'] footer {
+  display: none;
+}
+
+body[data-page='staff'] .footer-logout-wrap {
+  display: inline-flex;
+}

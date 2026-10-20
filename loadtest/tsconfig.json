@@ -1,0 +1,13 @@
+{
+  // k6 scripts: run by k6's own TypeScript support, not by Node. k6 globals
+  // (__ENV, open) only; no DOM, no Node.
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "types": ["k6"],
+    "tsBuildInfoFile": "../node_modules/.cache/tsconfig.loadtest.tsbuildinfo"
+  },
+  "include": ["**/*.ts"],
+  // Node's test runner runs these; the root tsconfig checks them.
+  "exclude": ["**/*.test.ts"]
+}

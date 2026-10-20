@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1339" viewBox="0 0 900 1339" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" text-anchor="middle">
+  <rect width="900" height="1339" fill="#fff" rx="36"/>
+  <rect x="30" y="30" width="840" height="1279" fill="#f1f3f5" rx="24"/>
+
+  <!-- Walkways -->
+  <g fill="#cfd5dc">
+    <rect x="390" y="450" width="120" height="580"/>
+    <rect x="320" y="680" width="80" height="80"/>
+    <rect x="500" y="590" width="80" height="60"/>
+    <rect x="500" y="830" width="80" height="60"/>
+  </g>
+
+  <!-- Auditório e palco -->
+  <rect x="110" y="70" width="680" height="390" fill="#e1e6ec" stroke="#9aa5b1" stroke-width="6" rx="16"/>
+  <rect x="230" y="96" width="440" height="110" fill="#5b3fa8" rx="12"/>
+  <text x="450" y="166" fill="#fff" font-size="40" font-weight="700">Palco</text>
+  <text x="450" y="290" fill="#1f2933" font-size="40" font-weight="700">Auditório</text>
+  <g fill="#9aa5b1">
+    <circle cx="190" cy="350" r="10"/>
+    <circle cx="240" cy="350" r="10"/>
+    <circle cx="290" cy="350" r="10"/>
+    <circle cx="340" cy="350" r="10"/>
+    <circle cx="390" cy="350" r="10"/>
+    <circle cx="440" cy="350" r="10"/>
+    <circle cx="490" cy="350" r="10"/>
+    <circle cx="540" cy="350" r="10"/>
+    <circle cx="590" cy="350" r="10"/>
+    <circle cx="640" cy="350" r="10"/>
+    <circle cx="690" cy="350" r="10"/>
+    <circle cx="190" cy="390" r="10"/>
+    <circle cx="240" cy="390" r="10"/>
+    <circle cx="290" cy="390" r="10"/>
+    <circle cx="340" cy="390" r="10"/>
+    <circle cx="390" cy="390" r="10"/>
+    <circle cx="440" cy="390" r="10"/>
+    <circle cx="490" cy="390" r="10"/>
+    <circle cx="540" cy="390" r="10"/>
+    <circle cx="590" cy="390" r="10"/>
+    <circle cx="640" cy="390" r="10"/>
+    <circle cx="690" cy="390" r="10"/>
+    <circle cx="190" cy="430" r="10"/>
+    <circle cx="240" cy="430" r="10"/>
+    <circle cx="290" cy="430" r="10"/>
+    <circle cx="340" cy="430" r="10"/>
+    <circle cx="390" cy="430" r="10"/>
+    <circle cx="440" cy="430" r="10"/>
+    <circle cx="490" cy="430" r="10"/>
+    <circle cx="540" cy="430" r="10"/>
+    <circle cx="590" cy="430" r="10"/>
+    <circle cx="640" cy="430" r="10"/>
+    <circle cx="690" cy="430" r="10"/>
+  </g>
+
+  <!-- Praça de alimentação -->
+  <rect x="50" y="570" width="270" height="300" fill="#ffe0a3" stroke="#d98e04" stroke-width="6" rx="16"/>
+  <text x="185" y="650" fill="#5c3600" font-size="34" font-weight="700">Praça de</text>
+  <text x="185" y="696" fill="#5c3600" font-size="34" font-weight="700">alimentação</text>
+  <g fill="#f5b942">
+    <circle cx="110" cy="790" r="26"/>
+    <circle cx="185" cy="790" r="26"/>
+    <circle cx="260" cy="790" r="26"/>
+  </g>
+
+  <!-- Banheiros -->
+  <rect x="580" y="540" width="270" height="170" fill="#bfe3f5" stroke="#2b7ea8" stroke-width="6" rx="16"/>
+  <text x="715" y="640" fill="#0b3a55" font-size="34" font-weight="700">Banheiros</text>
+
+  <!-- Informações / apoio -->
+  <rect x="574" y="780" width="282" height="170" fill="#c9ecd0" stroke="#2f9e4f" stroke-width="6" rx="16"/>
+  <text x="715" y="856" fill="#124a22" font-size="34" font-weight="700">Informações /</text>
+  <text x="715" y="901" fill="#124a22" font-size="34" font-weight="700">apoio</text>
+
+  <!-- Entrada e check-in -->
+  <rect x="130" y="1030" width="640" height="150" fill="#0f766e" rx="16"/>
+  <text x="450" y="1120" fill="#fff" font-size="40" font-weight="700">Entrada e check-in</text>
+  <path d="M450 1210 l45 50 h-90 z" fill="#0f766e"/>
+  <text x="450" y="1295" fill="#52606d" font-size="28">Mapa de exemplo</text>
+</svg>

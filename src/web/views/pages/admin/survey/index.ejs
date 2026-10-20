@@ -1,0 +1,143 @@
+<%# i18n: admin-survey %>
+<%
+/*
+ * The questionnaire's control room: whether it is open and why, each audience's
+ * `.env` switch and answer count, the downloads, and the override.
+ *
+ * `data-survey` attributes are the contract with `pages/admin/survey/index.ts`,
+ * which saves the override and reloads. Everything else is server-rendered.
+ *
+ * `locals.` on every read: EJS throws on an undeclared name, and a route that
+ * forgot a value should degrade rather than 500.
+ */
+const overview = locals.overview;
+const canOverride = locals.canOverride === true;
+const choice = overview.override === null ? 'automatic' : overview.override;
+
+const REASONS = {
+  disabled: copy.reasonDisabled(),
+  override: copy.reasonOverride(),
+  schedule: copy.reasonSchedule(),
+};
+
+const AUDIENCES = [
+  ['participant', copy.audienceParticipant()],
+  ['volunteer', copy.audienceVolunteer()],
+];
+
+const CHOICES = [
+  ['automatic', copy.overrideAutomatic()],
+  ['open', copy.overrideOpen()],
+  ['closed', copy.overrideClosed()],
+];
+%>
+<%- include('../../../partials/i18n-catalogs') %>
+
+<div class="survey-admin">
+  <header class="survey-admin__head">
+    <h1 class="survey-admin__title"><%= copy.heading() %></h1>
+    <p class="survey-admin__lead"><%= copy.intro() %></p>
+  </header>
+
+  <%# ---------------------------------------------------------------- state -%>
+  <section class="survey-admin__panel">
+    <p
+      class="survey-admin__state <%= overview.state.open ? 'is-open' : 'is-closed' %>"
+    >
+      <%= overview.state.open ? copy.stateOpen() : copy.stateClosed() %>
+    </p>
+    <p class="survey-admin__hint"><%= REASONS[overview.state.reason] %></p>
+
+    <% if (locals.opensAt) { %>
+    <ul class="survey-admin__schedule">
+      <li><%= copy.scheduleOpens({ at: locals.opensAt }) %></li>
+      <li>
+        <%= locals.closesAt ? copy.scheduleCloses({ at: locals.closesAt }) : copy.scheduleNoClose() %>
+      </li>
+    </ul>
+    <% } %>
+  </section>
+
+  <%# ------------------------------------------------------------ audiences -%>
+  <section class="survey-admin__panel">
+    <%# Its own scroll container, as the roster's table is: below ~440px the
+        columns are wider than the panel, and the shell clips sideways overflow. -%>
+    <div class="survey-admin__scroll">
+      <table class="survey-admin__table">
+        <thead>
+          <tr>
+            <th scope="col"><%= copy.columnAudience() %></th>
+            <th scope="col"><%= copy.columnSwitch() %></th>
+            <th scope="col"><%= copy.columnResponses() %></th>
+            <th scope="col"><%= copy.columnDownload() %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% AUDIENCES.forEach(([key, label]) => {
+            const audience = overview.audiences[key];
+            const downloadable = audience.hasQuestions || audience.responses > 0;
+          %>
+          <tr>
+            <th scope="row"><%= label %></th>
+            <td><%= audience.enabled ? copy.switchOn() : copy.switchOff() %></td>
+            <td><%= copy.responses({ count: audience.responses }) %></td>
+            <td>
+              <% if (downloadable) { %>
+              <a
+                class="survey-admin__download"
+                href="/admin/survey/export.csv?audience=<%= key %>"
+                download
+              >
+                <span class="material-symbols-outlined" aria-hidden="true">download</span>
+                <%= copy.download() %>
+              </a>
+              <% } else { %>
+              <span class="survey-admin__muted"><%= copy.noQuestions() %></span>
+              <% } %>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="survey-admin__note"><%= copy.volunteerNote() %></p>
+  </section>
+
+  <%# ------------------------------------------------------------- override -%>
+  <% if (canOverride) { %>
+  <section class="survey-admin__panel">
+    <h2 class="survey-admin__subtitle"><%= copy.overrideHeading() %></h2>
+    <p class="survey-admin__hint"><%= copy.overrideHint() %></p>
+
+    <form class="survey-admin__form" data-survey="override">
+      <fieldset class="survey-admin__choices">
+        <legend class="visually-hidden"><%= copy.overrideHeading() %></legend>
+        <% CHOICES.forEach(([value, label]) => { %>
+        <label class="survey-admin__choice">
+          <input
+            type="radio"
+            name="override"
+            value="<%= value %>"
+            <% if (value === choice) { %>checked<% } %>
+          />
+          <%= label %>
+        </label>
+        <% }) %>
+      </fieldset>
+
+      <div class="survey-admin__actions">
+        <button type="submit" data-survey="save"><%= copy.overrideSave() %></button>
+      </div>
+
+      <p class="survey-admin__error" data-survey="error" role="alert" hidden></p>
+    </form>
+  </section>
+  <% } %>
+</div>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/admin/survey.css" />
+
+<%- contentFor('scripts') %>
+<script type="module" src="/js/pages/admin/survey/index.js"></script>

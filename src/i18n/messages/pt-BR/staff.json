@@ -1,0 +1,142 @@
+{
+  "staff.band.label": {
+    "defaultMessage": "palavra chave",
+    "description": "Label above the rotating word on the volunteer's screen, which is compared with the word on the attendee's pass."
+  },
+  "staff.band.retry": {
+    "defaultMessage": "Atualizar",
+    "description": "Replaces the band word when it stops refreshing. A stale band on this screen is the dangerous one: a volunteer comparing against it would reject a legitimate pass, so the word is replaced rather than left looking current."
+  },
+  "staff.itemValue": {
+    "defaultMessage": "{item} · {value}",
+    "description": "An item with the attendee's choice for it, such as a T-shirt size. item is the item's name; value comes from the attendee's registration."
+  },
+  "staff.lookup.failed": {
+    "defaultMessage": "Ingresso não encontrado. Confira o código",
+    "description": "The typed ticket code matches no attendee."
+  },
+  "staff.lookup.help": {
+    "defaultMessage": "Digite um código de ingresso",
+    "description": "Label of the manual lookup's ticket code field."
+  },
+  "staff.lookup.inputLabel": {
+    "defaultMessage": "Código do ingresso",
+    "description": "Screen-reader label of the manual lookup's ticket code field."
+  },
+  "staff.lookup.rateLimited": {
+    "defaultMessage": "Muitas buscas em pouco tempo. Espere um pouco antes de tentar novamente",
+    "description": "The lookup's miss budget is spent. Not a fault and not a server problem: it clears itself in a few minutes, so unlike the server error it does not send the volunteer away from their counter."
+  },
+  "staff.lookup.submit": {
+    "defaultMessage": "Buscar",
+    "description": "Submit button of the manual lookup."
+  },
+  "staff.lookup.summary": {
+    "defaultMessage": "Sem câmera? Busque pelo código do ingresso",
+    "description": "Expander that opens the manual lookup by ticket code."
+  },
+  "staff.outcome.duplicate": {
+    "defaultMessage": "{item}: O item já foi retirado",
+    "description": "The item had already been collected. item is the item's name."
+  },
+  "staff.outcome.notEntitled": {
+    "defaultMessage": "{item}: Indisponível",
+    "description": "The attendee is not entitled to the item. item is the item's name."
+  },
+  "staff.outcome.redeemed": {
+    "defaultMessage": "{item}: Retirado",
+    "description": "Confirmation after an item is handed over. item is the item's name."
+  },
+  "staff.redeemFailed": {
+    "defaultMessage": "Algo deu errado. Tente novamente",
+    "description": "Recording a redemption failed for a reason worth retrying."
+  },
+  "staff.redeemForbidden": {
+    "defaultMessage": "Sua estação não tem acesso a este item. Atualize a página",
+    "description": "Refused because the item is not this station's. The button should not have been tappable, so the volunteer's stations changed while the card was open; reloading picks up the new ones."
+  },
+  "staff.redemption.notEntitled": {
+    "defaultMessage": "indisponível",
+    "description": "State of an item the attendee is not entitled to."
+  },
+  "staff.redemption.otherStation": {
+    "defaultMessage": "outra estação",
+    "description": "State of an item another station hands over. Says where to send them rather than that something is wrong: the attendee will get it, just not here."
+  },
+  "staff.redemption.pending": {
+    "defaultMessage": "a retirar",
+    "description": "State of an item the attendee has not collected yet, matching the word on the attendee's own pass."
+  },
+  "staff.redemption.redeemed": {
+    "defaultMessage": "retirado",
+    "description": "State of an item already collected, matching the word on the attendee's own pass."
+  },
+  "staff.review.close": {
+    "defaultMessage": "Fechar",
+    "description": "Closes the redemption card for the attendee just scanned."
+  },
+  "staff.review.slideHint": {
+    "defaultMessage": "Deslize a linha para confirmar a retirada",
+    "description": "Said once under the item list, because a tap no longer does anything. Hidden from assistive technology: the keyboard and screen-reader path confirms on activation and has nothing to slide."
+  },
+  "staff.scanner.cameraAccessError": {
+    "defaultMessage": "Sem acesso à câmera. Use o campo de busca abaixo",
+    "description": "The camera could not be opened; points to the manual lookup below."
+  },
+  "staff.scanner.cameraAccessRequest": {
+    "defaultMessage": "Permita o acesso à câmera",
+    "description": "Shown while the browser asks for camera permission."
+  },
+  "staff.scanner.defaultHint": {
+    "defaultMessage": "Aponte para o ingresso",
+    "description": "Hint under the scanner while it waits for a pass. Addressed to a volunteer mid-shift with a queue in front of them: short, and says what to do rather than what happened. The attendee copy is warm; this is not, it is a work tool."
+  },
+  "staff.scanner.error.forbidden": {
+    "defaultMessage": "Você não tem permissão para validar retiradas",
+    "description": "The volunteer's account may not record redemptions."
+  },
+  "staff.scanner.error.internal": {
+    "defaultMessage": "Problema no servidor. Chame o suporte",
+    "description": "A server fault. It is not the attendee's problem and re-scanning will not clear it, so the volunteer fetches whoever runs the admin laptop."
+  },
+  "staff.scanner.error.notFound": {
+    "defaultMessage": "Ingresso não encontrado",
+    "description": "A scanned pass matches no attendee."
+  },
+  "staff.scanner.error.rateLimited": {
+    "defaultMessage": "Muitas leituras. Espere um pouco antes de tentar novamente",
+    "description": "Too many scans in a short time; it clears by itself."
+  },
+  "staff.scanner.error.validation": {
+    "defaultMessage": "Ingresso vencido ou inválido. Peça para atualizar a tela ({seconds, number}s)",
+    "description": "A scanned pass was expired or malformed. Passes rotate, so the attendee refreshing their screen fixes it; seconds is how long one pass lasts."
+  },
+  "staff.scanner.header": {
+    "defaultMessage": "Ler o ingresso",
+    "description": "Heading over the staff QR scanner, where a volunteer scans an attendee's pass."
+  },
+  "staff.scanner.help": {
+    "defaultMessage": "Se não funcionar, use o campo de busca abaixo",
+    "description": "Fallback instruction under the scanner: the manual lookup below it works without a camera."
+  },
+  "staff.scanner.processing": {
+    "defaultMessage": "Conferindo…",
+    "description": "Shown while a scanned pass is being checked."
+  },
+  "staff.scanner.success": {
+    "defaultMessage": "Ingresso validado",
+    "description": "Shown when a scanned pass is accepted."
+  },
+  "staff.scanner.unknownError": {
+    "defaultMessage": "Algo deu errado. Tente novamente",
+    "description": "Any other scanner failure."
+  },
+  "staff.serverError": {
+    "defaultMessage": "Problema no servidor. Dirija-se à mesa de suporte",
+    "description": "A fault on our side rather than a problem with the pass. Re-scanning fixes a bad read and fixes nothing here, so the volunteer should stop trying and fetch someone."
+  },
+  "staff.slowResponse": {
+    "defaultMessage": "Servidor indisponível. Tente novamente em instantes",
+    "description": "A scan or a redemption timed out, or the server was too busy to take it. A timed-out redemption may still have been recorded; tapping again is safe, as the server records an item only once."
+  }
+}

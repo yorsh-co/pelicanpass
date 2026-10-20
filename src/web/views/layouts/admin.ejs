@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="<%= locale %>" data-release="<%= locals.releaseId || 'dev' %>">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title><%= title %></title>
+
+  <!-- keeps the browser chrome on the same palette as the page -->
+  <meta name="theme-color" content="#fafafc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0a11" media="(prefers-color-scheme: dark)" />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/images/icon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icon/favicon-32x32.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/images/icon/apple-touch-icon.png">
+  <%# No `rel="manifest"` here, unlike the other two layouts. A tailnet-only
+      desk tool is not something anyone installs to a home screen, and the
+      standalone display mode would take the browser chrome away from a surface
+      whose operators rely on it.
+
+      The tailnet listener does match /site.webmanifest all the same — see the
+      note on that matcher in Caddyfile — because layouts/plain renders
+      /admin/login and does carry the link. -%>
+
+  <%#
+    EVERY ASSET BELOW HAS TO SIT UNDER A PREFIX THE TAILNET LISTENER MATCHES.
+
+    `/admin` answers only on the :8080 listener, whose matcher is pinned in
+    Caddyfile:66 — /admin, /admin/*, /api/v1/admin*, /css/*, /js/*, /assets/*
+    and /favicon.ico. An admin asset under any other prefix (/vendor/*,
+    /fonts/*) is served fine in development, where the request never reaches
+    that listener, and 404s over the tailnet where the surface actually runs.
+
+    Adding one means extending that matcher in the same change.
+  -%>
+  <!-- global styles -->
+  <link rel="stylesheet" href="/css/dist/main.css" />
+
+  <!-- stored theme, applied before first paint. The toggle lives in the rail
+       rather than the public footer, but the stored choice is the same one. -->
+  <%- include('../partials/theme-boot') %>
+
+  <!-- the shell's own styles, linked once here so each screen adds only its own -->
+  <link rel="stylesheet" href="/css/dist/pages/admin.css" />
+
+  <!-- page-specific styles -->
+  <%- defineContent('styles') %>
+</head>
+<%#
+  The administrator shell.
+
+  A third layout beside main.ejs and plain.ejs rather than a reuse of either.
+  plain.ejs wraps its body in .plain-wrapper — 46rem, sized for long-form
+  reading — and carries the public footer's privacy and terms links, which are
+  attendee-facing. main.ejs paints a full-viewport boot screen that only
+  JavaScript removes and hides <main> under <noscript>, both wrong for a desk
+  tool reached over a tailnet.
+
+  Deliberately absent for the same reason: the boot screen, and any <noscript>
+  block that hides content. The rail is built to work without JavaScript;
+  hiding <main> would take that away.
+
+  The Cloudflare challenge gate used to be on that list, on the grounds that
+  /admin is tailnet-only and a challenge cannot reach it. It is carried now:
+  this surface answers on the public hostname behind Cloudflare Access
+  (docs/infrastructure/cloudflare-rules.md), and the gate is what a lapsed cf_clearance meets.
+  Without it raiseChallengeGate() logs `no gate on this layout` and the
+  volunteer sees nothing at all.
+
+  `data-nodeenv` is what client/modules/log/logger.ts reads to pick its
+  threshold. plain.ejs never rendered it, so every debug and info line on the
+  admin surface was dropped even in development.
+-%>
+<body class="admin-page" data-nodeenv="<%= nodeEnv %>">
+
+  <a class="admin-skip" href="#conteudo"><%= shell.skipLink() %></a>
+
+  <%# First in the DOM on purpose: with JavaScript off this renders as a plain
+      stacked list above the content and every link still works. The drawer is
+      an enhancement, not a requirement. -%>
+  <%- include('../partials/admin-nav') %>
+
+  <main class="admin-main" id="conteudo">
+    <%- body %>
+  </main>
+
+  <%# Here rather than per screen: every editor that saves data will want
+      modules/ui/toast.ts, and it needs this markup to write into. -%>
+  <%- include('../components/toast') %>
+
+  <%# edge-challenge recovery. The blocked copy is overridden because the
+      shared string tells the reader to call a volunteer, and here the reader
+      is one. -%>
+  <%- include('../components/challenge-gate', {
+    challengeBlocked: chrome.challengeBlockedAdmin(),
+  }) %>
+
+  <!-- global scripts -->
+  <script type="module" src="/js/theme/theme.js"></script>
+  <%# Installs window.onerror and unhandledrejection. Loaded on every page
+      of both surfaces rather than imported by one, which is why it is its
+      own bundle entry — see ENTRY_PATTERNS in scripts/build-client.ts. -%>
+  <script type="module" src="/js/telemetry/index.js"></script>
+  <script type="module" src="/js/pages/admin/shell/index.js"></script>
+
+  <!-- page-specific scripts -->
+  <%- defineContent('scripts') %>
+</body>
+</html>

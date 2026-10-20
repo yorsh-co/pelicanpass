@@ -1,0 +1,499 @@
+# Production stack.
+#
+# Deliberately a standalone file rather than an override layered onto
+# compose.yml with `-f`. Compose *merges* service `volumes:` rather than
+# replacing them, so an override cannot remove the development bind mount —
+# production would silently keep serving a writable copy of the repo. A separate
+# file makes that impossible.
+#
+#   docker compose -f compose.prod.yml up -d
+#   docker compose -f compose.prod.yml --profile tools run --rm --build migrate
+#
+# Requires an env file carrying NODE_ENV=production. logger.ts only loads
+# pino-pretty outside production and that package is not in the pruned image;
+# env.nodeEnv defaults to production when unset, so the failure mode is safe,
+# but set it explicitly.
+
+name: pelicanpass-prod
+
+# Caps what a container's stdout can cost the host. Docker's json-file driver is
+# unbounded by default, and a chatty evening on a 40 GB disk is not a hypothetical:
+# pino-http logs a line per request and the door is the busiest surface here.
+#
+# Container logs are removed with the container, so this is not the durable record —
+# `warn` and above also goes to a rotating file on the `logs` volume, which survives a
+# recreate. See logger.ts.
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: '10m'
+    max-file: '5'
+
+# The edge network's addresses, named once and read in three places: the
+# network's ipam, the Tailscale sidecar's pinned address, and the Caddyfile's
+# trusted_proxies and remote_ip gates via the `proxy` environment. Keeping them
+# on one anchor is what stops those from disagreeing.
+#
+# Overridable from .env only because a host may already hold the range; see the
+# Network section of .env.example for the constraints an override must meet.
+x-edge-subnet: &edge-subnet ${EDGE_SUBNET:-172.30.0.0/24}
+x-vpn-ip: &vpn-ip ${VPN_IP:-172.30.0.250}
+
+services:
+  tunnel:
+    image: cloudflare/cloudflared:2026.10.2@sha256:0e56c13c7058fcef9c4f0e7d83372f82330548dbf8f8b366f3d8b506526d93b2
+    container_name: pelicanpass-tunnel
+    command: tunnel --loglevel ${TUNNEL_LOGLEVEL} --no-autoupdate run
+    # Read from the environment rather than passed on the command line, which
+    # would put a credential into the process argv.
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
+    networks:
+      - edge
+      - egress
+    depends_on:
+      - proxy
+    restart: unless-stopped
+    logging: *logging
+    # cloudflared is already non-root and keeps no state, so nothing needs to be
+    # writable and no capability is needed to dial out.
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - 'no-new-privileges:true'
+    # Ceilings, not reservations: several times the peak seen under a 20-way
+    # check-in run, so a leak or a runaway child is stopped before it takes the
+    # host's memory or pid table, without touching normal traffic.
+    mem_limit: 256m
+    pids_limit: 128
+
+  vpn:
+    image: tailscale/tailscale:v1.104.1@sha256:87c55d6be56ad85b3d8bceca5f87f73de288c609131460dd1be1874c250cc41d
+    container_name: pelicanpass-vpn
+    hostname: ${TS_HOSTNAME}
+    environment:
+      TS_AUTHKEY: ${TS_AUTHKEY}
+      TS_STATE_DIR: /var/lib/tailscale
+      TS_SERVE_CONFIG: /config/serve.json
+      # Not a typo for 1. tailscaled documents "0 is default, 1 or higher are
+      # increasingly verbose" and says nothing about going lower, but -1 is
+      # honoured and cuts a boot from ~55 log lines to ~8. containerboot's own
+      # `boot:` lines are unaffected, and so are real errors.
+      #
+      # It also silences the ipn state transitions and health warnings, so drop
+      # this first when the node will not come up. Undocumented, so an image
+      # upgrade could stop honouring it.
+      TS_TAILSCALED_EXTRA_ARGS: --verbose=-1
+    volumes:
+      - vpn:/var/lib/tailscale
+      - ./tailscale:/config:ro
+    networks:
+      egress:
+      edge:
+        # Pinned so the Caddy admin listener can name the only peer allowed to
+        # reach it. High in the range because Docker's dynamic allocator starts
+        # at the bottom, so this cannot collide with proxy or tunnel.
+        ipv4_address: *vpn-ip
+    depends_on:
+      - proxy
+    restart: unless-stopped
+    # Userspace networking, so no NET_ADMIN and no /dev/net/tun. containerboot
+    # keeps its socket and scratch files in /tmp and links the socket under
+    # /var/run/tailscale for the `tailscale` CLI; the node's state is the `vpn`
+    # volume.
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/run/tailscale
+    cap_drop:
+      - ALL
+    security_opt:
+      - 'no-new-privileges:true'
+    # Ceilings, not reservations: several times the peak seen under a 20-way
+    # check-in run, so a leak or a runaway child is stopped before it takes the
+    # host's memory or pid table, without touching normal traffic.
+    mem_limit: 256m
+    pids_limit: 128
+    logging: *logging
+
+  proxy:
+    image: caddy:2.11.7@sha256:f2a1290d0463aad60660d4ec134943f183ee2a5f6c3eb7bf32dd984f2f020772
+    container_name: pelicanpass-proxy
+    # The public vhost's site address in the Caddyfile. Named explicitly rather
+    # than env_file: the proxy has no business holding the tunnel token, the
+    # Tailscale auth key, the Turnstile secret or any database credential.
+    #
+    # `:?` and not a bare ${SITE_HOST}, because Caddy will not catch this. An
+    # empty value leaves the site address as `http://`, which adapts cleanly to
+    # a catch-all on :80 — the public vhost would answer any Host header rather
+    # than refuse to start. Compose stops first, on unset *or* empty.
+    environment:
+      SITE_HOST: ${SITE_HOST:?the public hostname, bare - see .env.example}
+      EDGE_SUBNET: *edge-subnet
+      VPN_IP: *vpn-ip
+      SERVER_NAME: ${SERVER_NAME:-unnamed}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    networks:
+      - edge
+      - web
+    depends_on:
+      - app
+    restart: unless-stopped
+    logging: *logging
+    # The image runs Caddy as root. 65532 is the uid cloudflared uses too. Caddy
+    # needs NET_BIND_SERVICE for :80 and :8080: the binary carries it as a file
+    # capability, and with no-new-privileges that only works if it is also in
+    # the container's bounding set, which is what cap_add does.
+    #
+    # /data and /config hold Caddy's autosaved config and lock files. No site
+    # uses TLS here (Cloudflare terminates it), so nothing in them has to
+    # outlive the container.
+    user: '65532:65532'
+    read_only: true
+    tmpfs:
+      - /data:uid=65532,gid=65532
+      - /config:uid=65532,gid=65532
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    security_opt:
+      - 'no-new-privileges:true'
+    # Ceilings, not reservations: several times the peak seen under a 20-way
+    # check-in run, so a leak or a runaway child is stopped before it takes the
+    # host's memory or pid table, without touching normal traffic.
+    mem_limit: 256m
+    pids_limit: 256
+
+  app:
+    build:
+      context: .
+      target: prod
+      # The Dockerfile's `release` stage runs `git describe` against this to stamp
+      # the release that /readyz, the startup alert, the logs and client error
+      # reports all name. Requires a clone: in a git worktree `.git` is a file.
+      additional_contexts:
+        git-dir: ./.git
+    container_name: pelicanpass-app
+    # Named, not `env_file: .env`: the server holds only what src/config/env.ts
+    # reads. The superuser, migrator, tunnel and Tailscale credentials are in
+    # .env too and none of them may reach a process that takes requests.
+    #
+    # Required keys are bare, so an unset one fails env.ts at boot. Optional keys
+    # default to empty, which every reader in config/read-env.ts treats as
+    # unset. A new setting must be added here as well as to env.ts, or the
+    # container never sees it.
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      APP_URL: ${APP_URL}
+      EVENT_ID: ${EVENT_ID}
+      PASS_SECRET: ${PASS_SECRET}
+      ADMIN_PASSWORD_PEPPER: ${ADMIN_PASSWORD_PEPPER}
+      CHECKIN_QR_TOKEN: ${CHECKIN_QR_TOKEN}
+      TURNSTILE_SITE_KEY: ${TURNSTILE_SITE_KEY}
+      TURNSTILE_SECRET: ${TURNSTILE_SECRET}
+      TURNSTILE_ADMIN_SITE_KEY: ${TURNSTILE_ADMIN_SITE_KEY}
+      TURNSTILE_ADMIN_SECRET: ${TURNSTILE_ADMIN_SECRET}
+      PORT: ${PORT:-}
+      NODE_ENV: ${NODE_ENV:-}
+      LOG_LEVEL: ${LOG_LEVEL:-}
+      LOG_FILE_DIR: ${LOG_FILE_DIR:-}
+      ALERT_ENABLED: ${ALERT_ENABLED:-}
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL:-}
+      DISCORD_WEBHOOK_URL_CRITICAL: ${DISCORD_WEBHOOK_URL_CRITICAL:-}
+      ALERT_DEDUP_TTL: ${ALERT_DEDUP_TTL:-}
+      LOAD_SHED_ENABLED: ${LOAD_SHED_ENABLED:-}
+      LOAD_SHED_MAX_LAG_MS: ${LOAD_SHED_MAX_LAG_MS:-}
+      LOAD_SHED_MAX_POOL_WAITING: ${LOAD_SHED_MAX_POOL_WAITING:-}
+      LOAD_SHED_RETRY_AFTER_SECONDS: ${LOAD_SHED_RETRY_AFTER_SECONDS:-}
+      WHATSAPP_ENABLED: ${WHATSAPP_ENABLED:-}
+      WHATSAPP_PHONE_NUMBER_ID: ${WHATSAPP_PHONE_NUMBER_ID:-}
+      WHATSAPP_ACCESS_TOKEN: ${WHATSAPP_ACCESS_TOKEN:-}
+      WHATSAPP_GRAPH_VERSION: ${WHATSAPP_GRAPH_VERSION:-}
+      WHATSAPP_DEFAULT_COUNTRY_CODE: ${WHATSAPP_DEFAULT_COUNTRY_CODE:-}
+      WHATSAPP_SEND_INTERVAL_MS: ${WHATSAPP_SEND_INTERVAL_MS:-}
+      WHATSAPP_REQUEST_TIMEOUT: ${WHATSAPP_REQUEST_TIMEOUT:-}
+      WHATSAPP_MAX_ATTEMPTS: ${WHATSAPP_MAX_ATTEMPTS:-}
+      WHATSAPP_DOOR_ENABLED: ${WHATSAPP_DOOR_ENABLED:-}
+      WHATSAPP_DOOR_TEMPLATE: ${WHATSAPP_DOOR_TEMPLATE:-}
+      WHATSAPP_DOOR_TEMPLATE_VOLUNTEER: ${WHATSAPP_DOOR_TEMPLATE_VOLUNTEER:-}
+      WHATSAPP_BUDGET_USD: ${WHATSAPP_BUDGET_USD:-}
+      WHATSAPP_WEBHOOK_ENABLED: ${WHATSAPP_WEBHOOK_ENABLED:-}
+      WHATSAPP_APP_SECRET: ${WHATSAPP_APP_SECRET:-}
+      WHATSAPP_WEBHOOK_VERIFY_TOKEN: ${WHATSAPP_WEBHOOK_VERIFY_TOKEN:-}
+      WHATSAPP_WEBHOOK_PATH_SECRET: ${WHATSAPP_WEBHOOK_PATH_SECRET:-}
+      TELEMETRY_EVENT_RETENTION: ${TELEMETRY_EVENT_RETENTION:-}
+      ADMIN_URL: ${ADMIN_URL:-}
+      APP_TITLE: ${APP_TITLE:-}
+      TRUSTED_IPS: ${TRUSTED_IPS:-}
+      RATE_LIMIT_OVERRIDES: ${RATE_LIMIT_OVERRIDES:-}
+      PASS_BAND_ENABLED: ${PASS_BAND_ENABLED:-}
+      PASS_WELCOME_SCHEDULE: ${PASS_WELCOME_SCHEDULE:-}
+      CHECKIN_SESSION_TTL: ${CHECKIN_SESSION_TTL:-}
+      ATTENDEE_SESSION_TTL: ${ATTENDEE_SESSION_TTL:-}
+      ADMIN_SESSION_TTL: ${ADMIN_SESSION_TTL:-}
+      ADMIN_SESSION_MAX_AGE: ${ADMIN_SESSION_MAX_AGE:-}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      REDIS_PORT: ${REDIS_PORT:-6379}
+      TURNSTILE_ADMIN_ENFORCE: ${TURNSTILE_ADMIN_ENFORCE:-}
+      CF_ACCESS_TEAM_DOMAIN: ${CF_ACCESS_TEAM_DOMAIN:-}
+      CF_ACCESS_AUD: ${CF_ACCESS_AUD:-}
+      LANDING_ENABLED: ${LANDING_ENABLED:-}
+      EVENT_START_AT: ${EVENT_START_AT:-}
+      EVENT_CLOSES_AT: ${EVENT_CLOSES_AT:-}
+      CHECKIN_OPENS_BEFORE_PARTICIPANT: ${CHECKIN_OPENS_BEFORE_PARTICIPANT:-}
+      CHECKIN_OPENS_BEFORE_VOLUNTEER: ${CHECKIN_OPENS_BEFORE_VOLUNTEER:-}
+      EVENT_TIMEZONE: ${EVENT_TIMEZONE:-}
+      LANDING_BYPASS_TOKEN: ${LANDING_BYPASS_TOKEN:-}
+      SURVEY_PARTICIPANT_ENABLED: ${SURVEY_PARTICIPANT_ENABLED:-}
+      SURVEY_VOLUNTEER_ENABLED: ${SURVEY_VOLUNTEER_ENABLED:-}
+      SURVEY_OPENS_AT: ${SURVEY_OPENS_AT:-}
+      SURVEY_CLOSES_AT: ${SURVEY_CLOSES_AT:-}
+    networks:
+      - web
+      - app-egress
+      - data
+    depends_on:
+      - db
+      - cache
+    restart: unless-stopped
+    # No user override, no bind mount, no command override: the image's own
+    # USER node, entrypoint and baked-in bundle are the point of the prod stage.
+    read_only: true
+    tmpfs:
+      - /tmp
+    # The one writable path. `read_only` above still holds everywhere else — a
+    # volume mount is an exception to it, not a hole in it.
+    #
+    # Docker seeds an empty named volume from the image's own directory, which
+    # is why the Dockerfile creates /var/log/pelicanpass owned by node. Without
+    # that the volume arrives owned by root and the unprivileged process cannot
+    # write to it.
+    #
+    # Only `warn` and above lands here; everything goes to stdout. logger.ts
+    # explains the split.
+    volumes:
+      - logs:/var/log/pelicanpass
+    cap_drop:
+      - ALL
+    security_opt:
+      - 'no-new-privileges:true'
+    # Sized from load-test session 2026-10-19T2007Z-prod-server-04fb5a3: peak 401 MiB
+    # and 15 PIDs. See docs/infrastructure/container-containment.md.
+    mem_limit: 1g
+    pids_limit: 128
+    # Four times the other services' cap. The request log is the only record of
+    # successful requests, which teardown reduces to its anonymous traffic
+    # summary; at about 550 bytes a line on disk, 200 MB holds roughly 350,000
+    # requests, several times what the load test models for the whole event.
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '20'
+
+  # One-shot schema migrations. Behind a profile so `up` never starts it, which
+  # also means `docker compose build` never rebuilds it: run it with `--build`,
+  # or it applies the migrations its last image held.
+  migrate:
+    build:
+      context: .
+      target: migrate
+    container_name: pelicanpass-migrate
+    # Named, not `env_file: .env`: only what `npm run migrate` and the operator
+    # CLIs under scripts/admin and scripts/db read. None of them loads
+    # src/config/env.ts, so the server's secrets are not needed here, and the
+    # superuser, tunnel and Tailscale credentials never are.
+    #
+    # POSTGRES_USER is a role *name*: the migrations grant privileges to it, and
+    # its password stays out. The read-only role is here with its password
+    # because scripts/survey/export-csv.ts connects as it, and it reads survey
+    # answers the application role cannot, so the server must not hold it.
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_MIGRATOR_USER: ${POSTGRES_MIGRATOR_USER}
+      POSTGRES_MIGRATOR_PASSWORD: ${POSTGRES_MIGRATOR_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_READONLY_USER: ${POSTGRES_READONLY_USER}
+      POSTGRES_READONLY_PASSWORD: ${POSTGRES_READONLY_PASSWORD}
+      ADMIN_PASSWORD_PEPPER: ${ADMIN_PASSWORD_PEPPER}
+      EVENT_ID: ${EVENT_ID}
+    networks:
+      - data
+    depends_on:
+      - db
+    profiles:
+      - tools
+    restart: 'no'
+    # `FROM build` has no USER, so the image would run as root. npm needs a home
+    # to write its logs to, hence the tmpfs on it.
+    user: node
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /home/node:uid=1000,gid=1000
+    cap_drop:
+      - ALL
+    security_opt:
+      - 'no-new-privileges:true'
+    # Ceilings, not reservations: several times the peak seen under a 20-way
+    # check-in run, so a leak or a runaway child is stopped before it takes the
+    # host's memory or pid table, without touching normal traffic.
+    mem_limit: 512m
+    pids_limit: 128
+    logging: *logging
+
+  cache:
+    image: redis:8.10.2@sha256:c94085d298b738be22c9ccdc0ac3761fa6649df7dd82ad1d42367f3cb9714935
+    container_name: pelicanpass-cache
+    command: redis-server --requirepass ${REDIS_PASSWORD:?the Redis password - see .env.example}
+    volumes:
+      - cache:/data
+    networks:
+      - data
+    restart: unless-stopped
+    logging: *logging
+    # The entrypoint only drops to `redis` when it starts as root, so start as
+    # that user: nothing then needs a capability. /data is the volume, which
+    # the image's own directory seeds with redis ownership.
+    user: redis
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - 'no-new-privileges:true'
+    # Ceilings, not reservations: several times the peak seen under a 20-way
+    # check-in run, so a leak or a runaway child is stopped before it takes the
+    # host's memory or pid table, without touching normal traffic.
+    mem_limit: 512m
+    pids_limit: 128
+
+  db:
+    image: postgres:16.15-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+    container_name: pelicanpass-db
+    # Named explicitly rather than env_file: the database has no business
+    # holding the tunnel token, the Turnstile secret or the Redis password.
+    #
+    # POSTGRES_USER here is the image's *bootstrap superuser*, which is a
+    # different job from the role the application connects as. Pointing it at
+    # pelicanpass_app would create pelicanpass_app as a superuser and defeat the
+    # entire point, so the two are separate variables.
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_SUPERUSER}
+      POSTGRES_PASSWORD: ${POSTGRES_SUPERUSER_PASSWORD}
+      # Read only by 01-roles.sh below, which creates the least-privilege roles.
+      APP_ROLE: ${POSTGRES_USER}
+      APP_ROLE_PASSWORD: ${POSTGRES_PASSWORD}
+      MIGRATOR_ROLE: ${POSTGRES_MIGRATOR_USER}
+      MIGRATOR_ROLE_PASSWORD: ${POSTGRES_MIGRATOR_PASSWORD}
+      READONLY_ROLE: ${POSTGRES_READONLY_USER}
+      READONLY_ROLE_PASSWORD: ${POSTGRES_READONLY_PASSWORD}
+    command: >
+      postgres
+      -c shared_buffers=2GB
+      -c effective_cache_size=6GB
+      -c work_mem=32MB
+      -c max_connections=100
+    shm_size: 1g
+    volumes:
+      - data:/var/lib/postgresql/data
+      # Runs once on a freshly initialised data directory, which is the normal
+      # case on a new host: the roles exist before the migrator first connects.
+      - ./scripts/db/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - data
+    restart: unless-stopped
+    logging: *logging
+    # The entrypoint starts as root, fixes the data directory's ownership and
+    # drops to `postgres`: those five capabilities are what that takes, and
+    # nothing else. The socket directory and /tmp are scratch.
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /run/postgresql
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    security_opt:
+      - 'no-new-privileges:true'
+    # shared_buffers alone is 2 GB and the backends sit on top of it, so this is
+    # sized from the configuration above rather than from an idle reading. It
+    # leaves room on a 7 GB host for the rest of the stack.
+    mem_limit: 4g
+    pids_limit: 256
+
+# Membership is bidirectional — these isolate groups, not directions. tunnel
+# and vpn reach proxy and each other, and nothing else; proxy bridges edge/web;
+# app bridges web/data. Postgres and Redis are reachable from app alone, which
+# is what removes cloudflared's route to the database.
+#
+# Only `egress` and `app-egress` have a gateway. `edge`, `web` and `data` are
+# internal, so a service that sits on those alone has no route to the internet:
+# that is what keeps `proxy`, the process in front of both the public vhost and
+# the admin vhost, from calling out if it is compromised. The three services
+# that must dial out each get an outbound network, and `app` gets its own: the
+# Access gate trusts `X-Admin-Gate` because only `proxy` and the `data` peers
+# can reach `app:3000`, and a network shared with `tunnel` or `vpn` would let a
+# compromised connector forge it. `tunnel` and `vpn` reach Cloudflare and the
+# Tailscale control plane and its relays through `egress`; `app` reaches the
+# hosts below through `app-egress`.
+networks:
+  # Pinned rather than left to Docker's default pool: the Caddyfile names this
+  # subnet in `trusted_proxies` and in the 403 gate, and that only works if the
+  # value is a fact rather than whatever the pool happened to hand out. It comes
+  # from the x-edge-subnet anchor at the top of this file, which the Caddyfile
+  # also reads, so there is nothing else to keep in step.
+  edge:
+    internal: true
+    driver_opts:
+      com.docker.network.bridge.name: br-ppedge
+    ipam:
+      config:
+        - subnet: *edge-subnet
+  # Internal since `app` reaches the internet through `app-egress` instead, which is
+  # what lets `proxy` be cut off without breaking the two outbound calls app
+  # makes: TurnstileValidator reaches challenges.cloudflare.com, and the Access
+  # gate fetches the team's signing keys from <team>.cloudflareaccess.com (the
+  # WhatsApp sender also calls graph.facebook.com). Dropping `app` from `app-egress`
+  # breaks captcha verification and locks every administrator out of the public
+  # path.
+  web:
+    internal: true
+    driver_opts:
+      com.docker.network.bridge.name: br-ppweb
+  # The outbound route of `tunnel` and `vpn`. `app` is not on it.
+  egress:
+    driver_opts:
+      com.docker.network.bridge.name: br-ppegress
+  # The outbound route of `app`, and of nothing else.
+  app-egress:
+    driver_opts:
+      com.docker.network.bridge.name: br-ppappegress
+  # Removes egress for db and cache entirely.
+  data:
+    internal: true
+    driver_opts:
+      com.docker.network.bridge.name: br-ppdata
+
+volumes:
+  cache:
+  data:
+  # `warn` and above, as rotating NDJSON. Named rather than a bind mount so it is
+  # not tied to a host path, and so `down -v` takes it with the rest of the event's
+  # data — it holds IPs and actor ids and is inventoried in data-retention.md.
+  logs:
+  vpn:

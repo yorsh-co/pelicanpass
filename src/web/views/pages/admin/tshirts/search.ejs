@@ -1,0 +1,161 @@
+<%# i18n: admin-tshirts %>
+<%
+/*
+ * The t-shirt desk: finding somebody entitled to a shirt, to hand it over.
+ *
+ * Server-rendered in full, like the volunteer lookup it is modelled on: the
+ * search, the status choice, the pager and every result card submit a POST
+ * form, so this screen works with JavaScript disabled.
+ *
+ * **Nothing here builds a URL out of an attendee**, and no phone or
+ * verification code is rendered: this screen may show several people at once,
+ * and the code is the last four digits of the phone. The record page shows it,
+ * for one person.
+ *
+ * Styled by `lookup.css`, whose cards, segments and pager it reuses, plus the
+ * few rules `tshirts.css` adds.
+ *
+ * `locals.` on every read: EJS throws on an undeclared name, and a route that
+ * forgot a value should degrade rather than 500.
+ *
+ * **Every value off a row goes through the escaping output tag, never the raw
+ * one.** `attendee_nickname` is the one attendee-controlled string here.
+ *
+ * (Do not name EJS's delimiters literally in this comment. The scanner is
+ * lexical and does not know it is inside a JavaScript comment, which cost the
+ * roster template a compile error the first time it rendered.)
+ */
+const results = locals.results || [];
+const filters = locals.filters || { q: '', status: 'pending', page: 1 };
+const statusFilters = locals.statusFilters || {};
+const searched = locals.searched || false;
+const total = locals.total || 0;
+const pageCount = locals.pageCount || 1;
+%>
+<div class="lookup">
+  <header class="lookup__head">
+    <h1 class="lookup__title"><%= copy.searchTitle() %></h1>
+    <p class="lookup__lead">
+      <%= copy.searchLede() %>
+    </p>
+  </header>
+
+  <%# No `page` field, for the reasons the lookup's search form gives. -%>
+  <form class="lookup__search" id="filters" method="post" action="/admin/tshirts">
+    <label class="lookup__label" for="q"><%= shell.searchLabel() %></label>
+    <div class="lookup__field">
+      <input
+        id="q"
+        name="q"
+        type="search"
+        value="<%= filters.q %>"
+        placeholder="<%= shell.searchPlaceholder() %>"
+        autocomplete="off"
+      />
+      <button type="submit"><%= shell.searchSubmit() %></button>
+    </div>
+
+    <%# Radios rather than submit buttons, for the lookup's reason: the value
+        rides on every submission of the form, the pager's included. -%>
+    <fieldset class="lookup__roles">
+      <legend class="lookup__label"><%= copy.searchStatus() %></legend>
+      <div class="lookup__segments">
+        <% for (const [value, label] of Object.entries(statusFilters)) { %>
+        <label class="lookup__role">
+          <input type="radio" name="status" value="<%= value %>" <%= value === filters.status ? 'checked' : '' %> />
+          <span><%= label %></span>
+        </label>
+        <% } %>
+      </div>
+    </fieldset>
+  </form>
+
+  <% if (!searched) { %>
+  <p class="lookup__empty">
+    <span class="material-symbols-outlined" aria-hidden="true">person_search</span>
+    <%= copy.searchIdle() %>
+  </p>
+
+  <% } else if (results.length === 0 && total === 0) { %>
+  <p class="lookup__empty">
+    <%= copy.searchMiss({ query: filters.q }) %>
+    <span class="lookup__hint"><%= copy.searchMissHint() %></span>
+  </p>
+
+  <% } else if (results.length === 0) { %>
+  <p class="lookup__empty">
+    <%= shell.pagerOutOfRange() %>
+    <button type="submit" form="filters" name="page" value="1"><%= shell.pagerBackToFirst() %></button>.
+  </p>
+
+  <% } else { %>
+  <p class="lookup__count" role="status">
+    <%= copy.searchCount({ total }) %>
+  </p>
+
+  <%# How a record opens. Empty, because the only field it carries rides on the
+      card that submits it. -%>
+  <form id="record" method="post" action="/admin/tshirts/record"></form>
+
+  <ul class="lookup__results">
+    <% for (const row of results) { %>
+    <li>
+      <%# The whole card submits, and it is a button rather than a link because
+          the ID it carries would otherwise be written to the browser's
+          history. -%>
+      <button
+        class="lookup-card"
+        type="submit"
+        form="record"
+        name="attendeeId"
+        value="<%= row.attendeeId %>"
+      >
+        <span class="lookup-card__name"><%= row.name %></span>
+        <% if (row.nickname) { %>
+        <span class="lookup-card__nickname"><%= row.nickname %></span>
+        <% } %>
+
+        <span class="lookup-card__meta">
+          <code class="lookup-card__code ticket-code"><%= row.ticketCode %></code>
+          <span class="role-badge role-badge--<%= row.role %>">
+            <%= shell.role({ role: row.role }) %>
+          </span>
+          <% if (row.checkedIn) { %>
+          <span class="lookup-card__present">
+            <%= row.checkinNumber === null ? shell.present() : `#${row.checkinNumber}` %>
+          </span>
+          <% } else { %>
+          <span class="lookup-card__absent"><%= copy.searchAbsent() %></span>
+          <% } %>
+        </span>
+
+        <span class="lookup-card__meta">
+          <span class="tshirt-size"><%= row.size %></span>
+          <% if (row.redeemedAt) { %>
+          <span class="tshirt-state tshirt-state--redeemed"><%= copy.searchRedeemedAt({ time: row.redeemedAt }) %></span>
+          <% } else { %>
+          <span class="tshirt-state"><%= copy.searchPending() %></span>
+          <% } %>
+        </span>
+      </button>
+    </li>
+    <% } %>
+  </ul>
+
+  <% if (pageCount > 1) { %>
+  <nav class="lookup-pager" aria-label="<%= shell.pagerLabel() %>">
+    <% if (filters.page > 1) { %>
+    <button type="submit" form="filters" name="page" value="<%= filters.page - 1 %>"><%= shell.pagerPrevious() %></button>
+    <% } %>
+    <span><%= shell.pagerPosition({ page: filters.page, count: pageCount }) %></span>
+    <% if (filters.page < pageCount) { %>
+    <button type="submit" form="filters" name="page" value="<%= filters.page + 1 %>"><%= shell.pagerNext() %></button>
+    <% } %>
+  </nav>
+  <% } %>
+  <% } %>
+</div>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/admin/lookup.css" />
+<link rel="stylesheet" href="/css/dist/pages/admin/tshirts.css" />

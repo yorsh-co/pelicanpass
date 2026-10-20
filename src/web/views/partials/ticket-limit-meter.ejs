@@ -1,0 +1,40 @@
+<%# i18n: admin-attendees %>
+<%#
+  The ticket limit's meter, shared by the roster's panel and the record form's
+  banner so the two cannot drift.
+
+  Takes `limit` (a TicketLimitOverview) and `copy` (the admin-attendees
+  catalog). Renders the bar and the usage line; the width of the fill is set by
+  the page's script, which redraws this same markup from the same overview,
+  because the page's CSP does not allow an inline style attribute.
+
+  Hidden, not omitted, when there is no limit: the roster's panel redraws in
+  place and may need the bar after the administrator switches the limit on.
+-%>
+<%
+const meterOn = limit.status !== 'off' && limit.cap !== null;
+const meterCap = meterOn ? limit.cap : 0;
+const meterScope = limit.scope === 'door' ? 'door' : 'total';
+const meterDetail = meterOn
+  ? (limit.status === 'over'
+      ? copy.limitOver({ scope: meterScope, excess: Math.max(0, limit.used - meterCap) })
+      : copy.limitLeft({ scope: meterScope, remaining: Math.max(0, meterCap - limit.used) }))
+  : '';
+-%>
+<div
+  class="limit-meter"
+  data-limit-meter
+  data-status="<%= limit.status %>"
+  role="meter"
+  aria-label="<%= copy.limitMeterLabel() %>"
+  aria-valuemin="0"
+  aria-valuemax="<%= meterCap %>"
+  aria-valuenow="<%= Math.min(limit.used, meterCap) %>"
+  aria-valuetext="<%= meterOn ? copy.limitMeterText({ used: limit.used, cap: meterCap, detail: meterDetail }) : '' %>"
+  <%= meterOn ? '' : 'hidden' %>
+>
+  <span class="limit-meter__fill" data-limit-fill></span>
+</div>
+<p class="limit-meter__usage" data-limit-usage data-status="<%= limit.status %>" <%= meterOn ? '' : 'hidden' %>>
+  <%= meterOn ? copy.limitUsage({ used: limit.used, cap: meterCap, detail: meterDetail }) : '' %>
+</p>

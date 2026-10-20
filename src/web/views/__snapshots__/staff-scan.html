@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="pt-BR" data-release="test-release">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Retiradas | PelicanPass</title>
+
+  <!-- keeps the browser chrome on the same palette as the page -->
+  <meta name="theme-color" content="#fafafc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0a11" media="(prefers-color-scheme: dark)" />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/images/icon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icon/favicon-32x32.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/images/icon/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest" crossorigin="use-credentials">
+
+    <link
+    rel="preload"
+    as="image"
+    href="/assets/images/bg/bg.webp"
+    type="image/webp"
+    fetchpriority="high"
+  />
+
+  <!-- global styles -->
+  <link rel="stylesheet" href="/css/dist/main.css" />
+
+  <!-- stored theme, applied before first paint -->
+  
+<script nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+  // Safari in private browsing has historically thrown on localStorage rather
+  // than returning null, which would abort head parsing.
+  try {
+    const theme = localStorage.getItem('theme');
+
+    if (theme === 'light' || theme === 'dark') {
+      document.documentElement.dataset.theme = theme;
+    }
+  } catch {}
+</script>
+
+
+  <!-- preload -->
+  <link rel="preconnect" href="https://challenges.cloudflare.com" />
+
+  <!-- page-specific styles -->
+  <link rel="stylesheet" href="/css/dist/pages/attendee/staff.css" />
+
+</head>
+<body data-step data-page data-nodeenv="test" data-audience="volunteer">
+
+  <!-- no JS warning -->
+  <noscript>
+    <style nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+      main { display: none; }
+    </style>
+    <div class="no-js-warning">
+      <p>Esta aplicação precisa de JavaScript para funcionar corretamente. Por favor, ative o JavaScript no seu navegador.</p>
+    </div>
+  </noscript>
+
+  <!-- boot screen -->
+  <div id="app-boot" data-main="boot-screen" class="app-boot show">
+  <div class="boot-content">
+    <div id="boot-motif-right">
+      <img
+        class="motif"
+        src="/assets/images/motifs/star-sm.svg"
+        alt=""
+      />
+    </div>
+    <div id="boot-motif-left">
+      <img
+        class="motif"
+        src="/assets/images/motifs/star-sm.svg"
+        alt=""
+      />
+    </div>
+    <div id="boot-motif-centre">
+      <img
+        class="motif"
+        src="/assets/images/motifs/star-with-discs.svg"
+        alt=""
+      />
+    </div>
+    <div class="logo">
+      <img
+        class="boot-wordmark"
+        src="/assets/images/logo/wordmark-primary.svg"
+        alt="PelicanPass"
+      />
+    </div>
+  </div>
+</div>
+
+
+  <!-- main injection -->
+  <div class="main-wrapper">
+    
+<script type="application/json" data-i18n="staff" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"staff.band.label":[{"type":0,"value":"palavra chave"}],"staff.band.retry":[{"type":0,"value":"Atualizar"}],"staff.itemValue":[{"type":1,"value":"item"},{"type":0,"value":" · "},{"type":1,"value":"value"}],"staff.lookup.failed":[{"type":0,"value":"Ingresso não encontrado. Confira o código"}],"staff.lookup.help":[{"type":0,"value":"Digite um código de ingresso"}],"staff.lookup.inputLabel":[{"type":0,"value":"Código do ingresso"}],"staff.lookup.rateLimited":[{"type":0,"value":"Muitas buscas em pouco tempo. Espere um pouco antes de tentar novamente"}],"staff.lookup.submit":[{"type":0,"value":"Buscar"}],"staff.lookup.summary":[{"type":0,"value":"Sem câmera? Busque pelo código do ingresso"}],"staff.outcome.duplicate":[{"type":1,"value":"item"},{"type":0,"value":": O item já foi retirado"}],"staff.outcome.notEntitled":[{"type":1,"value":"item"},{"type":0,"value":": Indisponível"}],"staff.outcome.redeemed":[{"type":1,"value":"item"},{"type":0,"value":": Retirado"}],"staff.redeemFailed":[{"type":0,"value":"Algo deu errado. Tente novamente"}],"staff.redeemForbidden":[{"type":0,"value":"Sua estação não tem acesso a este item. Atualize a página"}],"staff.redemption.notEntitled":[{"type":0,"value":"indisponível"}],"staff.redemption.otherStation":[{"type":0,"value":"outra estação"}],"staff.redemption.pending":[{"type":0,"value":"a retirar"}],"staff.redemption.redeemed":[{"type":0,"value":"retirado"}],"staff.review.close":[{"type":0,"value":"Fechar"}],"staff.review.slideHint":[{"type":0,"value":"Deslize a linha para confirmar a retirada"}],"staff.scanner.cameraAccessError":[{"type":0,"value":"Sem acesso à câmera. Use o campo de busca abaixo"}],"staff.scanner.cameraAccessRequest":[{"type":0,"value":"Permita o acesso à câmera"}],"staff.scanner.defaultHint":[{"type":0,"value":"Aponte para o ingresso"}],"staff.scanner.error.forbidden":[{"type":0,"value":"Você não tem permissão para validar retiradas"}],"staff.scanner.error.internal":[{"type":0,"value":"Problema no servidor. Chame o suporte"}],"staff.scanner.error.notFound":[{"type":0,"value":"Ingresso não encontrado"}],"staff.scanner.error.rateLimited":[{"type":0,"value":"Muitas leituras. Espere um pouco antes de tentar novamente"}],"staff.scanner.error.validation":[{"type":0,"value":"Ingresso vencido ou inválido. Peça para atualizar a tela ("},{"type":2,"value":"seconds","style":null},{"type":0,"value":"s)"}],"staff.scanner.header":[{"type":0,"value":"Ler o ingresso"}],"staff.scanner.help":[{"type":0,"value":"Se não funcionar, use o campo de busca abaixo"}],"staff.scanner.processing":[{"type":0,"value":"Conferindo…"}],"staff.scanner.success":[{"type":0,"value":"Ingresso validado"}],"staff.scanner.unknownError":[{"type":0,"value":"Algo deu errado. Tente novamente"}],"staff.serverError":[{"type":0,"value":"Problema no servidor. Dirija-se à mesa de suporte"}],"staff.slowResponse":[{"type":0,"value":"Servidor indisponível. Tente novamente em instantes"}]}</script>
+<script type="application/json" data-i18n="qr" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"qr.cameraButton":[{"type":0,"value":"Ativar câmera"}],"qr.closeButton":[{"type":0,"value":"Fechar câmera"}],"qr.switchCameraButton":[{"type":0,"value":"Trocar câmera"}],"qr.torchButton":[{"type":0,"value":"Lanterna"}]}</script>
+<script type="application/json" data-i18n="chrome" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"chrome.challenge.blocked":[{"type":0,"value":"Não foi possível completar a verificação. Dirija-se à mesa de suporte"}],"chrome.challenge.blockedAdmin":[{"type":0,"value":"Não foi possível completar a verificação. Dirija-se à mesa de suporte"}],"chrome.challenge.continue":[{"type":0,"value":"Continuar"}],"chrome.challenge.expired":[{"type":0,"value":"Verificação de segurança expirada"}],"chrome.challenge.expiredAccess":[{"type":0,"value":"Sessão expirada. Entre novamente para continuar"}],"chrome.challenge.reauth":[{"type":0,"value":"Entrar novamente"}],"chrome.challenge.retry":[{"type":0,"value":"Tentar novamente"}],"chrome.cookieBanner.link":[{"type":0,"value":"como cuidamos dos seus dados"}],"chrome.cookieBanner.text":[{"type":0,"value":"Usamos cookies necessários para o funcionamento do aplicativo. Veja"}],"chrome.footer.copyright":[{"type":0,"value":"© "},{"type":2,"value":"year","style":{"type":0,"tokens":[{"stem":"group-off","options":[]}],"parsedOptions":{"useGrouping":false}}},{"type":0,"value":" "},{"type":1,"value":"eventName"}],"chrome.footer.creditPrefix":[{"type":0,"value":"por"}],"chrome.footer.languages":[{"type":0,"value":"Idiomas"}],"chrome.footer.logout":[{"type":0,"value":"Sair"}],"chrome.footer.privacy":[{"type":0,"value":"Privacidade"}],"chrome.footer.terms":[{"type":0,"value":"Termos"}],"chrome.footer.themeToDark":[{"type":0,"value":"Ativar tema escuro"}],"chrome.footer.themeToLight":[{"type":0,"value":"Ativar tema claro"}],"chrome.item.drink":[{"type":0,"value":"Bebida"}],"chrome.item.lunch":[{"type":0,"value":"Almoço"}],"chrome.item.meal":[{"type":0,"value":"Lanche"}],"chrome.item.tshirt":[{"type":0,"value":"Camiseta"}],"chrome.item.tshirtVolunteer":[{"type":0,"value":"Camiseta voluntário"}],"chrome.noscript":[{"type":0,"value":"Esta aplicação precisa de JavaScript para funcionar corretamente. Por favor, ative o JavaScript no seu navegador."}],"chrome.passLink":[{"type":0,"value":"Meu ingresso"}],"chrome.role.volunteer":[{"type":0,"value":"Voluntário"}],"chrome.title.checkin":[{"type":0,"value":"Check-in | "},{"type":1,"value":"appTitle"}],"chrome.title.privacy":[{"type":0,"value":"Privacidade — "},{"type":1,"value":"appTitle"}],"chrome.title.raffle":[{"type":0,"value":"Gerador de números | "},{"type":1,"value":"appTitle"}],"chrome.title.staff":[{"type":0,"value":"Retiradas | "},{"type":1,"value":"appTitle"}],"chrome.title.terms":[{"type":0,"value":"Termos de Uso — "},{"type":1,"value":"appTitle"}],"chrome.wordmarkAlt":[{"type":0,"value":"PelicanPass"}]}</script>
+
+
+<main data-staff="main-container" class="main-container staff-container">
+  <div class="staff-head">
+    <header>
+  <span class="wordmark" role="img" aria-label="PelicanPass"></span>
+</header>
+
+
+    <!--
+      The way back to the volunteer's pass.
+
+      A link rather than a button: it is navigation, it works without
+      JavaScript, and long-pressing it opens the pass in a second tab, which is
+      worth having for someone who wants both screens.
+    -->
+    <a data-staff="passLink" class="staff-pass-link" href="/pass">
+      <span class="material-symbols-outlined" aria-hidden="true">
+        confirmation_number
+      </span>
+      <span data-staff="copy-passLink">Meu ingresso</span>
+    </a>
+  </div>
+
+  
+    <!--
+      The band deriving the same value from the same secret and the same
+      thirty-second window as the attendee's pass.
+    -->
+    <div data-staff="bandBlock" class="staff-band-block band-block">
+      <p data-staff="copy-bandLabel" class="staff-band-label">palavra chave</p>
+      <!--
+        The same ring the attendee's pass draws, from the same window, with the
+        word and the clock inside it. The two are read against each other, so the
+        shape is shared — `components/window-ring.css`, not a second copy here.
+
+        `aria-hidden` on the graphic only: on the block it would silence the
+        band's own `aria-live`. The clock carries none, unlike the band — a screen
+        reader announcing every second would be unusable.
+      -->
+      <div data-staff="windowBar" class="staff-window window-ring">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle class="window-ring-track" cx="50" cy="50" r="46" pathLength="1" />
+          <circle class="window-ring-arc" cx="50" cy="50" r="46" pathLength="1" />
+        </svg>
+
+        <div class="window-ring-face">
+          <div class="band-slot">
+            <p
+              data-staff="band"
+              class="band"
+              aria-live="polite"
+            >
+              &nbsp;
+            </p>
+          </div>
+
+          <p data-staff="clock" class="band-clock staff-clock">&nbsp;</p>
+        </div>
+      </div>
+
+      <!--
+        Covers the whole block once the band has been stale long enough to mean
+        it. A stale band is worse on this screen than on the pass — a volunteer
+        comparing against one refuses everybody — so nothing behind this is left
+        readable. Shown by the stylesheet from the block's state class, which is
+        why it carries no `hidden`.
+      -->
+      <button data-staff="bandRetry" class="band-retry" type="button">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+        <span data-staff="copy-bandRetry">Atualizar</span>
+      </button>
+    </div>
+  
+
+  <!--
+    The review. One card whether it was opened by a scan or by a typed code, so
+    there is a single path for "we know who this is".
+  -->
+  <section data-staff="review" class="staff-review" hidden aria-live="polite">
+    <div class="staff-review-head">
+      <p data-staff="reviewIdentifier" class="staff-review-identifier"></p>
+      <span data-staff="reviewBadge" class="role-badge" hidden></span>
+    </div>
+
+    <ul data-staff="reviewItems" class="staff-items"></ul>
+
+    <!--
+      How to hand something over, said once rather than on every row. Shown by
+      `renderReview` only when there is a row that can actually be slid.
+
+      `aria-hidden` deliberately: a keyboard or screen-reader activation
+      confirms outright, so sliding is not the instruction for that path.
+    -->
+    <p
+      data-staff="slideHint"
+      class="staff-slide-hint small-print"
+      aria-hidden="true"
+      hidden
+    >
+      <span data-staff="copy-slideHint">Deslize a linha para confirmar a retirada</span>
+    </p>
+
+    <div data-staff="reviewOutcome" class="staff-outcome" hidden></div>
+
+    <button data-staff="reviewClose" class="ghost staff-review-close" type="button">
+      <span data-staff="copy-reviewClose">Fechar</span>
+    </button>
+  </section>
+
+  <!--
+    The scanner. Structure copied from the check-in page's QR step, because
+    `components/qr.css` styles it by class and `modules/qr.ts` drives it by
+    element — the shapes are load-bearing, not decorative.
+  -->
+  <!--
+    No `show` class, unlike the check-in step. There the wrapper doubles as an
+    inline 300px preview before the camera starts; here the scanner is only ever
+    full-screen, so an empty bordered box sitting on the page the rest of the
+    time is just something for the review card to hide behind. `staff.css`
+    restores the opacity the shared rules hang off `.show` for camera mode.
+  -->
+  <div data-staff="qr-reader-wrapper" class="qr-reader-wrapper">
+    <div id="staff-qr-reader" data-staff="qr-reader-div" class="qr-reader"></div>
+
+    <div class="qr-reader-icon" aria-hidden="true">
+      <span class="material-symbols-outlined on-processing">
+        qr_code_scanner
+      </span>
+    </div>
+
+    <div class="qr-viewfinder" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+
+    <button data-staff="qr-close-btn" class="ghost qr-close" type="button">
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      <span class="visually-hidden">Fechar câmera</span>
+    </button>
+
+    <!--
+      The way out of a camera that will not focus, will not open, or is covered
+      by a case. Hidden until the running feed proves there is a second camera
+      to reach; `modules/qr.ts` reveals it.
+    -->
+    <button
+      data-staff="qr-switch-btn"
+      class="ghost qr-switch"
+      type="button"
+      hidden
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">
+        cameraswitch
+      </span>
+      <span data-staff="copy-switchCameraButton" class="visually-hidden">Trocar câmera</span>
+    </button>
+  </div>
+
+  <div class="step-controls">
+    <button data-staff="start-camera-btn" class="qr-start-btn show" type="button">
+      <span class="material-symbols-outlined btn-label" aria-hidden="true">
+        qr_code_scanner
+      </span>
+      <span data-staff="copy-cameraButton" class="btn-label">Ativar câmera</span>
+      <span class="btn-spinner"></span>
+    </button>
+
+    <button
+      data-staff="qr-torch-btn"
+      class="ghost qr-torch"
+      type="button"
+      aria-pressed="false"
+      hidden
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">
+        flashlight_on
+      </span>
+      <span data-staff="copy-torchButton">Lanterna</span>
+    </button>
+
+    <div data-staff="qr-hint-div" class="hint-div" aria-live="polite"></div>
+  </div>
+
+  <!--
+    The typed fallback, for a camera that will not open or a pass that will not
+    load. Not a fallback for a Redis outage: it mints a review handle like any
+    other, and without Redis there is no session to reach this page with.
+  -->
+  <details data-staff="lookup" class="staff-lookup">
+    <summary data-staff="copy-lookupSummary">Sem câmera? Busque pelo código do ingresso</summary>
+
+    <form data-staff="lookupForm" class="staff-lookup-form">
+      <label class="visually-hidden" for="staff-lookup-input">
+        Código do ingresso
+      </label>
+
+      <input
+        id="staff-lookup-input"
+        data-staff="lookupInput"
+        type="text"
+        inputmode="text"
+        pattern="[a-z0-9]{6}"
+        autocomplete="off"
+        autocapitalize="none"
+        enterkeyhint="search"
+      />
+
+      <button
+        type="submit"
+        data-staff="lookupSubmit"
+        class="staff-lookup-submit"
+      >
+        <span data-staff="copy-lookupSubmit" class="btn-label">Buscar</span>
+        <span class="btn-spinner"></span>
+      </button>
+    </form>
+
+    <p data-staff="copy-lookupHelp" class="small-print">Digite um código de ingresso</p>
+  </details>
+
+  <footer>
+  <div class="footer-top small-print">
+    <span>© 2026 PelicanPass</span>
+    <span class="dot">•</span>
+    <span class="credit">
+      por
+      <a href="https://github.com/yorsh-co/pelicanpass" target="_blank">PelicanPass</a>
+    </span>
+  </div>
+
+  <div class="footer-links small-print">
+    <a href="/privacy">Privacidade</a>
+    <span class="dot">•</span>
+    <a href="/terms">Termos</a>
+    
+    
+    <span class="footer-logout-wrap">
+      <span class="dot">•</span>
+      <button class="footer-logout" data-footer="logout" type="button">
+        Sair
+      </button>
+    </span>
+    
+    <span class="dot">•</span>
+    <!--
+      The icon and the label name the theme the tap will switch *to*, not the
+      one in effect. `client/theme/theme.ts` rewrites both on load from the
+      two data labels, so the aria-label here is only what a light-themed first
+      paint happens to need.
+    -->
+    <button
+      class="theme-toggle"
+      data-theme-toggle
+      type="button"
+      aria-label="Ativar tema escuro"
+      data-label-dark="Ativar tema escuro"
+      data-label-light="Ativar tema claro"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+    </button>
+        
+    
+    <span class="footer-locales-wrap">
+      <span class="dot">•</span>
+      <details class="footer-locales" aria-label="Idiomas">
+        <summary lang="pt-BR">
+          BR<span class="visually-hidden"> português (Brasil)</span>
+          <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span>
+        </summary>
+        <ul class="footer-locales-menu">
+          
+          <li>
+            <a
+              href="/staff-scan?lang=pt-BR"
+              hreflang="pt-BR"
+              lang="pt-BR"
+              aria-current="true"
+            >
+              <span class="footer-locales-code">BR</span>
+              <span class="footer-locales-name">português (Brasil)</span>
+              
+              <span class="material-symbols-outlined" aria-hidden="true">check</span>
+              
+            </a>
+          </li>
+          
+          <li>
+            <a
+              href="/staff-scan?lang=en-XA"
+              hreflang="en-XA"
+              lang="en-XA"
+              
+            >
+              <span class="footer-locales-code">XA</span>
+              <span class="footer-locales-name">English (Pseudo-Accents)</span>
+              
+            </a>
+          </li>
+          
+        </ul>
+      </details>
+    </span>
+    
+  </div>
+</footer>
+
+</main>
+
+  </div>
+
+  <!-- toast -->
+  <div data-main="toast" role="status" aria-live="polite" aria-atomic="true">
+  <span data-toast="icon" class="material-symbols-outlined" aria-hidden="true"></span>
+  <div data-toast="msg-container"><span data-toast="msg"></span></div>
+</div>
+
+
+  <!-- edge-challenge recovery -->
+  <!--
+  Raised by modules/ui/challenge-gate.ts when Cloudflare challenges a fetch.
+
+  Both messages ship rendered and hidden and the script reveals one. The
+  strings come from the shared chrome catalog, except the blocked one: that
+  message names who to ask for help, and on the administrator screens the
+  reader is the volunteer the attendee copy tells them to call. Callers that
+  need the other wording pass `challengeBlocked`.
+
+  `warning` is used rather than a lock or a clock because the icon subset is
+  frozen at 21 glyphs (docs/infrastructure/asset-delivery.md) — an icon outside it renders as
+  its own name, silently.
+-->
+
+<div
+  id="app-challenge"
+  data-main="challenge"
+  class="app-challenge"
+  role="alertdialog"
+  aria-labelledby="challenge-title"
+  aria-modal="true"
+  hidden
+>
+  <div class="challenge-content">
+    <span class="material-symbols-outlined" aria-hidden="true">warning</span>
+
+    <!--
+      The label wraps both variants rather than sitting on either. A `hidden`
+      element contributes nothing to the accessible name, so this resolves to
+      whichever message the script revealed.
+    -->
+    <div id="challenge-title">
+      <p data-challenge="expired" hidden>Verificação de segurança expirada</p>
+
+      <p data-challenge="blocked" hidden>Não foi possível completar a verificação. Dirija-se à mesa de suporte</p>
+
+            <p data-challenge="expired-access" hidden>
+        Sessão expirada. Entre novamente para continuar
+      </p>
+    </div>
+
+    <button
+      type="button"
+      data-challenge="continue"
+      data-label-expired="Continuar"
+      data-label-blocked="Tentar novamente"
+      data-label-reauth="Entrar novamente"
+    ></button>
+  </div>
+</div>
+
+
+  <!-- global scripts -->
+  <script type="module" src="/js/theme/theme.js"></script>
+    <script type="module" src="/js/telemetry/index.js"></script>
+
+  <!-- page-specific scripts -->
+  <script type="module" src="/js/pages/attendee/staff/index.js"></script>
+
+</body>
+</html>

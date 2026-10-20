@@ -1,0 +1,36 @@
+<%# i18n: checkin %>
+<%# Drawn instead of the entry flow when a ticket link (?t=) or poster QR code
+    (?k=) is opened from another site. A cross-site navigation must not write
+    session state, so the token waits in this form until the attendee taps and
+    the browser posts it back from this origin (see routes/checkin-entry.ts).
+
+    layouts/plain for the reason given over pages/landing.ejs, and no script:
+    the form has to work whatever the bundle does. The page carries the token
+    the visitor already holds and nothing about any attendee. %>
+<main class="landing">
+  <div class="landing-content">
+    <div class="logo">
+      <img
+        class="boot-wordmark"
+        src="/assets/images/logo/wordmark-primary.svg"
+        alt="<%= chrome.wordmarkAlt() %>"
+      />
+    </div>
+    <h1 class="landing-title"><%= copy.continueTitle() %></h1>
+    <p class="landing-lede"><%= copy.continueBody() %></p>
+
+    <form method="post" action="/checkin">
+      <input type="hidden" name="<%= tokenField %>" value="<%= token %>" />
+      <% if (locals.audience) { %>
+      <input type="hidden" name="audience" value="<%= audience %>" />
+      <% } %>
+      <button type="submit" class="landing-action">
+        <%= copy.continueAction() %>
+      </button>
+    </form>
+  </div>
+</main>
+
+<%# Asset block last, for the reason spelled out in pages/error.ejs. %>
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/landing.css" />

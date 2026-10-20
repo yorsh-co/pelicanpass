@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="pt-BR" data-release="test-release">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Voluntários | PelicanPass</title>
+
+  <!-- keeps the browser chrome on the same palette as the page -->
+  <meta name="theme-color" content="#fafafc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0a11" media="(prefers-color-scheme: dark)" />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/images/icon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icon/favicon-32x32.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/images/icon/apple-touch-icon.png">
+  
+    <!-- global styles -->
+  <link rel="stylesheet" href="/css/dist/main.css" />
+
+  <!-- stored theme, applied before first paint. The toggle lives in the rail
+       rather than the public footer, but the stored choice is the same one. -->
+  
+<script nonce="dGVzdC1ub25jZS0wMDAwMDA=">
+  // Safari in private browsing has historically thrown on localStorage rather
+  // than returning null, which would abort head parsing.
+  try {
+    const theme = localStorage.getItem('theme');
+
+    if (theme === 'light' || theme === 'dark') {
+      document.documentElement.dataset.theme = theme;
+    }
+  } catch {}
+</script>
+
+
+  <!-- the shell's own styles, linked once here so each screen adds only its own -->
+  <link rel="stylesheet" href="/css/dist/pages/admin.css" />
+
+  <!-- page-specific styles -->
+  <link rel="stylesheet" href="/css/dist/pages/admin/attendees.css" />
+<link rel="stylesheet" href="/css/dist/pages/admin/redemptions.css" />
+<link rel="stylesheet" href="/css/dist/pages/admin/volunteers.css" />
+
+</head>
+<body class="admin-page" data-nodeenv="test">
+
+  <a class="admin-skip" href="#conteudo">Pular para o conteúdo</a>
+
+    
+<div class="admin-rail" data-admin-shell="rail">
+  <div class="admin-rail__head">
+    <a class="wordmark admin-rail__title" role="img" aria-label="PelicanPass" href="/admin"></a>
+    <!--<a class="admin-rail__title" href="/admin">Administração</a>-->
+
+        <button
+      class="admin-rail__menu"
+      data-admin-shell="menu"
+      type="button"
+      aria-expanded="false"
+      aria-controls="admin-rail-panel"
+      aria-label="Abrir menu"
+      data-label-open="Abrir menu"
+      data-label-close="Fechar menu"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+    </button>
+  </div>
+
+    <div class="admin-rail__panel" id="admin-rail-panel">
+  <nav class="admin-rail__nav" id="admin-rail-nav" aria-label="Ferramentas">
+    <ul class="admin-rail__list">
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/metrics"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">monitoring</span>
+          <span class="admin-rail__label">metrics</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/volunteers"
+          aria-current="page"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">how_to_reg</span>
+          <span class="admin-rail__label">volunteers</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/attendees"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">group</span>
+          <span class="admin-rail__label">attendees</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/redemptions"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">redeem</span>
+          <span class="admin-rail__label">redemptions</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/lookup"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">person_search</span>
+          <span class="admin-rail__label">lookup</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/tshirts"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">checkroom</span>
+          <span class="admin-rail__label">tshirts</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/survey"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+          <span class="admin-rail__label">survey</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/pass"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">id_card</span>
+          <span class="admin-rail__label">pass</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+        <a
+          class="admin-rail__link"
+          href="/admin/whatsapp"
+          
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">send</span>
+          <span class="admin-rail__label">whatsapp</span>
+        </a>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+                <span class="admin-rail__link admin-rail__link--planned">
+          <span class="material-symbols-outlined" aria-hidden="true">download</span>
+          <span class="admin-rail__label">exports</span>
+          <span class="admin-rail__soon">em breve</span>
+        </span>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+                <span class="admin-rail__link admin-rail__link--planned">
+          <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
+          <span class="admin-rail__label">import</span>
+          <span class="admin-rail__soon">em breve</span>
+        </span>
+        
+      </li>
+      
+      <li class="admin-rail__item">
+        
+                <span class="admin-rail__link admin-rail__link--planned">
+          <span class="material-symbols-outlined" aria-hidden="true">admin_panel_settings</span>
+          <span class="admin-rail__label">admins</span>
+          <span class="admin-rail__soon">em breve</span>
+        </span>
+        
+      </li>
+      
+    </ul>
+  </nav>
+
+  <div class="admin-rail__foot">
+    <p class="admin-rail__user">operadora</p>
+
+    <div class="admin-rail__actions">
+            <button class="ghost admin-rail__logout" data-admin-shell="logout" type="button">
+        <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+        <span class="btn-label">Sair</span>
+      </button>
+
+      <!--
+        The icon and the label name the theme the tap will switch *to*, not the
+        one in effect. `client/theme/theme.ts` rewrites both on load, so the
+        values here are only what a light-themed first paint happens to need.
+      -->
+      <button
+        class="theme-toggle"
+        data-theme-toggle
+        type="button"
+        aria-label="Ativar tema escuro"
+        data-label-dark="Ativar tema escuro"
+        data-label-light="Ativar tema claro"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+      </button>
+
+            
+      
+      <details class="footer-locales small-print" aria-label="Idiomas">
+        <summary lang="pt-BR">
+          BR<span class="visually-hidden"> português (Brasil)</span>
+          <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span>
+        </summary>
+        <ul class="footer-locales-menu">
+          
+          <li>
+            <a
+              href="/admin-volunteers-detail?lang=pt-BR"
+              hreflang="pt-BR"
+              lang="pt-BR"
+              aria-current="true"
+            >
+              <span class="footer-locales-code">BR</span>
+              <span class="footer-locales-name">português (Brasil)</span>
+              
+              <span class="material-symbols-outlined" aria-hidden="true">check</span>
+              
+            </a>
+          </li>
+          
+          <li>
+            <a
+              href="/admin-volunteers-detail?lang=en-XA"
+              hreflang="en-XA"
+              lang="en-XA"
+              
+            >
+              <span class="footer-locales-code">XA</span>
+              <span class="footer-locales-name">English (Pseudo-Accents)</span>
+              
+            </a>
+          </li>
+          
+        </ul>
+      </details>
+      
+    </div>
+  </div>
+  </div>
+</div>
+
+
+  <main class="admin-main" id="conteudo">
+    
+
+<script type="application/json" data-i18n="admin-volunteers" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"admin-volunteers.error.failed":[{"type":0,"value":"Não foi possível salvar. Tente de novo."}],"admin-volunteers.error.forbidden":[{"type":0,"value":"Você não tem mais permissão para editar voluntários."}],"admin-volunteers.error.notFound":[{"type":0,"value":"Este voluntário não foi encontrado neste evento."}],"admin-volunteers.filter.search":[{"type":0,"value":"Buscar"}],"admin-volunteers.filter.searchPlaceholder":[{"type":0,"value":"Nome, apelido ou código"}],"admin-volunteers.filter.team":[{"type":0,"value":"Equipe"}],"admin-volunteers.filter.teamAll":[{"type":0,"value":"Todas"}],"admin-volunteers.filter.teamNone":[{"type":0,"value":"Sem equipe"}],"admin-volunteers.filter.tierAll":[{"type":0,"value":"Todos"}],"admin-volunteers.filter.tierChip":[{"type":1,"value":"label"},{"type":0,"value":" ("},{"type":2,"value":"count","style":null},{"type":0,"value":")"}],"admin-volunteers.filter.tierLabel":[{"type":0,"value":"Acesso"}],"admin-volunteers.history.by":[{"type":0,"value":"por "},{"type":1,"value":"name"}],"admin-volunteers.history.change":[{"type":1,"value":"before"},{"type":0,"value":" → "},{"type":1,"value":"after"}],"admin-volunteers.history.empty":[{"type":0,"value":"Nenhuma alteração feita por esta tela."}],"admin-volunteers.history.field":[{"type":5,"value":"field","options":{"canRedeem":{"value":[{"type":0,"value":"Retiradas"}]},"redeemScopes":{"value":[{"type":0,"value":"Estações"}]},"canDraw":{"value":[{"type":0,"value":"Gerador de N°"}]},"showAdminLink":{"value":[{"type":0,"value":"Link do admin"}]},"team":{"value":[{"type":0,"value":"Equipe"}]},"teamRole":{"value":[{"type":0,"value":"Função"}]},"checkinTime":{"value":[{"type":0,"value":"Horário de chegada"}]},"other":{"value":[]}}}],"admin-volunteers.history.heading":[{"type":0,"value":"Histórico"}],"admin-volunteers.history.no":[{"type":0,"value":"Não"}],"admin-volunteers.history.removedAdmin":[{"type":0,"value":"conta removida"}],"admin-volunteers.history.yes":[{"type":0,"value":"Sim"}],"admin-volunteers.legend.access":[{"type":5,"value":"tier","options":{"edit":{"value":[{"type":0,"value":"Cadastra e edita participantes"}]},"lookup":{"value":[{"type":0,"value":"Consulta participantes e marca presença"}]},"tshirt":{"value":[{"type":0,"value":"Entrega camisetas no balcão de camisetas"}]},"redeem":{"value":[{"type":0,"value":"Entrega itens no seu posto"}]},"raffle":{"value":[{"type":0,"value":"Gera os números das interações"}]},"none":{"value":[{"type":0,"value":"Nenhuma das anteriores; no máximo consulta sem marcar presença ou o link para o /admin"}]},"other":{"value":[{"type":0,"value":"Nenhuma das anteriores"}]}}}],"admin-volunteers.legend.grant":[{"type":5,"value":"tier","options":{"edit":{"value":[{"type":0,"value":"Conta admin vinculada com attendees:read e attendees:write"}]},"lookup":{"value":[{"type":0,"value":"Conta admin vinculada com attendees:read e checkin:write"}]},"tshirt":{"value":[{"type":0,"value":"Conta admin vinculada com tshirt:redeem"}]},"redeem":{"value":[{"type":0,"value":"can_redeem com ao menos um posto"}]},"raffle":{"value":[{"type":0,"value":"can_draw"}]},"none":{"value":[{"type":0,"value":"Qualquer outro voluntário"}]},"other":{"value":[{"type":0,"value":"Qualquer outro voluntário"}]}}}],"admin-volunteers.legend.heading":[{"type":0,"value":"Níveis de acesso"}],"admin-volunteers.legend.lede":[{"type":0,"value":"A etiqueta mostra o nível mais alto que se aplica ao voluntário; ele também pode ter os níveis abaixo."}],"admin-volunteers.list.adminLink":[{"type":0,"value":"Link do admin"}],"admin-volunteers.list.clear":[{"type":0,"value":"Limpar filtros"}],"admin-volunteers.list.code":[{"type":0,"value":"Código"}],"admin-volunteers.list.count":[{"type":6,"value":"count","options":{"=0":{"value":[{"type":0,"value":"Nenhum voluntário"}]},"=1":{"value":[{"type":7},{"type":0,"value":" voluntário"}]},"other":{"value":[{"type":7},{"type":0,"value":" voluntários"}]}},"offset":0,"pluralType":"cardinal"}],"admin-volunteers.list.empty":[{"type":0,"value":"Nenhum voluntário cadastrado neste evento."}],"admin-volunteers.list.heading":[{"type":0,"value":"Voluntários do evento"}],"admin-volunteers.list.noMatches":[{"type":0,"value":"Nenhum voluntário corresponde aos filtros."}],"admin-volunteers.list.noTeam":[{"type":0,"value":"Sem equipe"}],"admin-volunteers.list.raffle":[{"type":0,"value":"Gerador de N°"}],"admin-volunteers.list.stations":[{"type":0,"value":"Estações"}],"admin-volunteers.page.lede":[{"type":0,"value":"O que cada voluntário pode fazer e a que equipe pertence. Cada alteração fica registrada no histórico."}],"admin-volunteers.page.title":[{"type":0,"value":"Voluntários"}],"admin-volunteers.record.accountDisabled":[{"type":0,"value":"desativada"}],"admin-volunteers.record.accountHeading":[{"type":0,"value":"Conta de administração"}],"admin-volunteers.record.accountNone":[{"type":0,"value":"Nenhuma conta vinculada."}],"admin-volunteers.record.accountNote":[{"type":0,"value":"Esta vinculação não se altera aqui: ela é feita pela importação de permissões de voluntários."}],"admin-volunteers.record.accountUser":[{"type":0,"value":"Usuário: "},{"type":1,"value":"username"}],"admin-volunteers.record.canDraw":[{"type":0,"value":"Pode usar o gerador de números"}],"admin-volunteers.record.canRedeem":[{"type":0,"value":"Pode registrar retiradas"}],"admin-volunteers.record.checkinTime":[{"type":0,"value":"Horário de chegada"}],"admin-volunteers.record.close":[{"type":0,"value":"Voltar à lista"}],"admin-volunteers.record.otherHeading":[{"type":0,"value":"Outros acessos"}],"admin-volunteers.record.redeemHeading":[{"type":0,"value":"Retiradas"}],"admin-volunteers.record.save":[{"type":0,"value":"Salvar"}],"admin-volunteers.record.showAdminLink":[{"type":0,"value":"Mostrar o link do admin no passe"}],"admin-volunteers.record.stations":[{"type":0,"value":"Estações"}],"admin-volunteers.record.stationsEmpty":[{"type":0,"value":"Sem estações, não pode registrar retiradas."}],"admin-volunteers.record.stationsOff":[{"type":0,"value":"Ligue \"Pode registrar retiradas\" para escolher as estações."}],"admin-volunteers.record.team":[{"type":0,"value":"Equipe"}],"admin-volunteers.record.teamHeading":[{"type":0,"value":"Equipe"}],"admin-volunteers.record.teamRole":[{"type":0,"value":"Função"}],"admin-volunteers.tier":[{"type":5,"value":"tier","options":{"edit":{"value":[{"type":0,"value":"Cadastro"}]},"raffle":{"value":[{"type":0,"value":"Gerador de N°"}]},"lookup":{"value":[{"type":0,"value":"Consulta"}]},"tshirt":{"value":[{"type":0,"value":"Camisetas"}]},"redeem":{"value":[{"type":0,"value":"Retiradas"}]},"none":{"value":[{"type":0,"value":"Voluntário"}]},"other":{"value":[{"type":0,"value":"Voluntário"}]}}}],"admin-volunteers.toast.saved":[{"type":0,"value":"Permissões salvas."}],"admin-volunteers.toast.unchanged":[{"type":0,"value":"Nada mudou: as permissões já estavam assim."}]}</script>
+<script type="application/json" data-i18n="admin-errors" nonce="dGVzdC1ub25jZS0wMDAwMDA=">{"admin-errors.attendeeArchived":[{"type":0,"value":"Este participante está arquivado e o ingresso não pode ser utilizado no check-in."}],"admin-errors.attendeeNotFound":[{"type":0,"value":"Participante não encontrado."}],"admin-errors.audienceInvalid":[{"type":0,"value":"Público inválido."}],"admin-errors.invalidAttendee":[{"type":0,"value":"Participante inválido."}],"admin-errors.itemAlreadyRedeemed":[{"type":0,"value":"Não é possível remover "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"item"}]}}},{"type":0,"value":": já foi retirado."}],"admin-errors.itemNotEntitled":[{"type":0,"value":"Este participante não tem direito a "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"item"}]}}},{"type":0,"value":"."}],"admin-errors.itemNotRedeemed":[{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"O lanche"}]},"drink":{"value":[{"type":0,"value":"A bebida"}]},"tshirt":{"value":[{"type":0,"value":"A camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"A camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"O almoço"}]},"other":{"value":[{"type":0,"value":"O item"}]}}},{"type":0,"value":" ainda não foi retirado."}],"admin-errors.leaveNotConfirmed":[{"type":0,"value":"Ação cancelada. Toque novamente para sair."}],"admin-errors.listChanged":[{"type":0,"value":"A lista mudou. Revise antes de enviar."}],"admin-errors.nameInvalid":[{"type":0,"value":"Informe o nome completo, com no máximo 120 caracteres."}],"admin-errors.optionNotAllowed":[{"type":0,"value":"Escolha uma opção da lista para "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"item"}]}}},{"type":0,"value":"."}],"admin-errors.pauseBeforeRetry":[{"type":0,"value":"Pause o envio antes de reenviar envios interrompidos."}],"admin-errors.phoneInvalid":[{"type":0,"value":"Informe o telefone com DDD, entre 10 e 11 dígitos."}],"admin-errors.phoneMissing":[{"type":0,"value":"Informe o telefone."}],"admin-errors.previewExpired":[{"type":0,"value":"A prévia expirou. Gere uma nova."}],"admin-errors.previewMissing":[{"type":0,"value":"Gere uma prévia antes de enviar."}],"admin-errors.reasonInvalid":[{"type":0,"value":"Escolha um motivo da lista."}],"admin-errors.redemptionChanged":[{"type":0,"value":"O status da retirada mudou enquanto a página estava aberta. Confira e tente novamente."}],"admin-errors.requestInProgress":[{"type":0,"value":"Ainda processando o envio anterior. Tente novamente em alguns instantes."}],"admin-errors.roleInvalid":[{"type":0,"value":"Escolha entre \"participante\" e \"voluntário\"."}],"admin-errors.roleLocked":[{"type":0,"value":"O tipo de ingresso não pode ser alterado depois que check-in foi realizado."}],"admin-errors.runFinished":[{"type":0,"value":"Este envio já terminou."}],"admin-errors.runInProgress":[{"type":0,"value":"Já existe um envio em andamento."}],"admin-errors.runInvalid":[{"type":0,"value":"Envio inválido."}],"admin-errors.runNotFound":[{"type":0,"value":"Envio não encontrado."}],"admin-errors.runNotPaused":[{"type":0,"value":"Este envio não está pausado."}],"admin-errors.runNotRunning":[{"type":0,"value":"Este envio não está em andamento."}],"admin-errors.scheduleChanged":[{"type":0,"value":"Outro administrador mudou a programação enquanto a página estava aberta. Recarregue para ver a versão atual."}],"admin-errors.scheduleDuplicateTime":[{"type":0,"value":"Duas frases configuradas para o mesmo horário. Cada troca precisa de um horário diferente."}],"admin-errors.scheduleInvalid":[{"type":0,"value":"A programação enviada é inválida. Recarregue a página e tente novamente."}],"admin-errors.scheduleTextMissing":[{"type":0,"value":"Os campos de texto não podem estar vazios."}],"admin-errors.scheduleTextTooLong":[{"type":0,"value":"O texto personalizado pode ter no máximo "},{"type":2,"value":"max","style":null},{"type":0,"value":" caracteres."}],"admin-errors.scheduleTimeInvalid":[{"type":0,"value":"Uma das datas é inválida ou fora do horário programado do evento."}],"admin-errors.scheduleTooLong":[{"type":0,"value":"Limite de frases ultrapassado. Remova algumas e tente novamente."}],"admin-errors.sendingDisabled":[{"type":0,"value":"O envio pelo WhatsApp está desativado neste servidor."}],"admin-errors.templateAudienceMismatch":[{"type":0,"value":"Este modelo não pode ser enviado a esse público."}],"admin-errors.templateInvalid":[{"type":0,"value":"Modelo inválido."}],"admin-errors.testPhoneInvalid":[{"type":0,"value":"Telefone inválido: informe DDD e número."}],"admin-errors.ticketCodeFormat":[{"type":0,"value":"O código deve ter seis letras ou números."}],"admin-errors.ticketCodePrefix":[{"type":0,"value":"O prefixo do código não corresponde ao tipo de ingresso."}],"admin-errors.ticketCodeTaken":[{"type":0,"value":"Esse código de ingresso já está em uso."}],"admin-errors.ticketLimitCap":[{"type":0,"value":"O limite deve ser um número inteiro entre "},{"type":2,"value":"min","style":null},{"type":0,"value":" e "},{"type":2,"value":"max","style":null},{"type":0,"value":"."}],"admin-errors.ticketLimitMode":[{"type":0,"value":"Escolha o que acontece ao atingir o limite: bloquear ou apenas avisar."}],"admin-errors.ticketLimitReached":[{"type":0,"value":"O limite de ingressos foi atingido."}],"admin-errors.ticketLimitScope":[{"type":0,"value":"Escolha o que o limite conta: desativado, todos os participantes ou apenas os ingressos criados na porta."}],"admin-errors.volunteerOnlyItem":[{"type":0,"value":"Somente voluntários podem ter direito a "},{"type":5,"value":"item","options":{"meal":{"value":[{"type":0,"value":"lanche"}]},"drink":{"value":[{"type":0,"value":"bebida"}]},"tshirt":{"value":[{"type":0,"value":"camiseta"}]},"tshirt_volunteer":{"value":[{"type":0,"value":"camiseta de voluntário"}]},"lunch":{"value":[{"type":0,"value":"almoço"}]},"other":{"value":[{"type":0,"value":"este item"}]}}},{"type":0,"value":"."}],"admin-errors.whatsappDoorLocked":[{"type":0,"value":"O envio de ingressos por WhatsApp está desativado nas configurações do servidor."}]}</script>
+
+
+<div class="admin-form volunteer-record">
+  <header class="admin-form__head">
+    <div class="admin-form__headline">
+      <h1 class="admin-form__title">Carla Maia</h1>
+      <a class="redemption-record__close" href="/admin/volunteers">
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        <span class="visually-hidden">Voltar à lista</span>
+      </a>
+    </div>
+    
+    <p class="redemption-record__nickname">Cacá</p>
+    
+    <p class="redemption-record__meta">
+      <span
+        class="access-chip"
+        data-volunteer="tier"
+        
+      >Voluntário</span>
+      <code class="admin-table__code ticket-code">EV26-0100</code>
+    </p>
+  </header>
+
+  <form
+    class="admin-form__form"
+    data-volunteer="form"
+    data-attendee-id="5f0c1f0e-2b6a-4a57-9a53-0d2f6a1b7c01"
+    novalidate
+  >
+    <fieldset class="admin-form__group">
+      <legend class="admin-form__legend">Retiradas</legend>
+
+      <div class="admin-form__toggle">
+        <input
+          id="can-redeem"
+          type="checkbox"
+          name="canRedeem"
+          data-volunteer="canRedeem"
+          checked
+        />
+        <label for="can-redeem">Pode registrar retiradas</label>
+      </div>
+
+      <fieldset class="volunteer-record__stations" data-volunteer="stations" >
+        <legend class="admin-form__label">Estações</legend>
+        
+        <div class="admin-form__toggle">
+          <input
+            id="station-lunch"
+            type="checkbox"
+            name="redeemScopes"
+            value="lunch"
+            checked
+          />
+          <label for="station-lunch">Almoço</label>
+        </div>
+        
+        <div class="admin-form__toggle">
+          <input
+            id="station-tshirt"
+            type="checkbox"
+            name="redeemScopes"
+            value="tshirt"
+            
+          />
+          <label for="station-tshirt">Camiseta</label>
+        </div>
+        
+      </fieldset>
+
+            <p class="admin-form__hint" data-volunteer="hint" aria-live="polite">
+        
+      </p>
+    </fieldset>
+
+    <fieldset class="admin-form__group">
+      <legend class="admin-form__legend">Outros acessos</legend>
+
+      <div class="admin-form__toggle">
+        <input id="can-draw" type="checkbox" name="canDraw"  />
+        <label for="can-draw">Pode usar o gerador de números</label>
+      </div>
+
+      <div class="admin-form__toggle">
+        <input id="show-admin-link" type="checkbox" name="showAdminLink"  />
+        <label for="show-admin-link">Mostrar o link do admin no passe</label>
+      </div>
+    </fieldset>
+
+    <fieldset class="admin-form__group">
+      <legend class="admin-form__legend">Equipe</legend>
+
+      <div class="admin-form__field">
+        <label class="admin-form__label" for="team">Equipe</label>
+        <input id="team" type="text" name="team" maxlength="40" autocomplete="off" value="Recepção" />
+      </div>
+
+      <div class="admin-form__field">
+        <label class="admin-form__label" for="team-role">Função</label>
+        <input id="team-role" type="text" name="teamRole" maxlength="40" autocomplete="off" value="Líder" />
+      </div>
+
+      <div class="admin-form__field">
+        <label class="admin-form__label" for="checkin-time">Horário de chegada</label>
+        <input id="checkin-time" type="time" name="checkinTime" step="60" value="08:00" />
+      </div>
+    </fieldset>
+
+    <p class="admin-form__error" data-volunteer="error" role="alert"></p>
+
+    <div class="admin-form__actions">
+      <button type="submit" data-volunteer="save">Salvar</button>
+    </div>
+  </form>
+
+  <section class="admin-form__aside" aria-labelledby="volunteer-account">
+    <h2 class="admin-form__subtitle" id="volunteer-account">Conta de administração</h2>
+    
+    <p class="redemption-record__hint">Nenhuma conta vinculada.</p>
+    
+    <p class="admin-form__hint">Esta vinculação não se altera aqui: ela é feita pela importação de permissões de voluntários.</p>
+  </section>
+
+  <section class="admin-form__aside" aria-labelledby="volunteer-history">
+    <h2 class="admin-form__subtitle" id="volunteer-history">Histórico</h2>
+
+    
+    <ol class="volunteer-record__history">
+      
+      <li class="volunteer-record__entry">
+        <p class="volunteer-record__entry-head">
+          <time>17/10/2026 09:00</time>
+          <span>por operadora</span>
+        </p>
+        <dl class="volunteer-record__diffs">
+          
+          <div>
+            <dt>team</dt>
+            <dd>— → Recepção</dd>
+          </div>
+          
+        </dl>
+      </li>
+      
+    </ol>
+    
+  </section>
+
+  <form id="record" method="post" action="/admin/volunteers/record" hidden>
+    <input type="hidden" name="attendeeId" value="5f0c1f0e-2b6a-4a57-9a53-0d2f6a1b7c01" />
+  </form>
+</div>
+
+  </main>
+
+    <div data-main="toast" role="status" aria-live="polite" aria-atomic="true">
+  <span data-toast="icon" class="material-symbols-outlined" aria-hidden="true"></span>
+  <div data-toast="msg-container"><span data-toast="msg"></span></div>
+</div>
+
+
+    <!--
+  Raised by modules/ui/challenge-gate.ts when Cloudflare challenges a fetch.
+
+  Both messages ship rendered and hidden and the script reveals one. The
+  strings come from the shared chrome catalog, except the blocked one: that
+  message names who to ask for help, and on the administrator screens the
+  reader is the volunteer the attendee copy tells them to call. Callers that
+  need the other wording pass `challengeBlocked`.
+
+  `warning` is used rather than a lock or a clock because the icon subset is
+  frozen at 21 glyphs (docs/infrastructure/asset-delivery.md) — an icon outside it renders as
+  its own name, silently.
+-->
+
+<div
+  id="app-challenge"
+  data-main="challenge"
+  class="app-challenge"
+  role="alertdialog"
+  aria-labelledby="challenge-title"
+  aria-modal="true"
+  hidden
+>
+  <div class="challenge-content">
+    <span class="material-symbols-outlined" aria-hidden="true">warning</span>
+
+    <!--
+      The label wraps both variants rather than sitting on either. A `hidden`
+      element contributes nothing to the accessible name, so this resolves to
+      whichever message the script revealed.
+    -->
+    <div id="challenge-title">
+      <p data-challenge="expired" hidden>Verificação de segurança expirada</p>
+
+      <p data-challenge="blocked" hidden>Não foi possível completar a verificação. Dirija-se à mesa de suporte</p>
+
+            <p data-challenge="expired-access" hidden>
+        Sessão expirada. Entre novamente para continuar
+      </p>
+    </div>
+
+    <button
+      type="button"
+      data-challenge="continue"
+      data-label-expired="Continuar"
+      data-label-blocked="Tentar novamente"
+      data-label-reauth="Entrar novamente"
+    ></button>
+  </div>
+</div>
+
+
+  <!-- global scripts -->
+  <script type="module" src="/js/theme/theme.js"></script>
+    <script type="module" src="/js/telemetry/index.js"></script>
+  <script type="module" src="/js/pages/admin/shell/index.js"></script>
+
+  <!-- page-specific scripts -->
+  <script type="module" src="/js/pages/admin/volunteers/detail/index.js"></script>
+
+</body>
+</html>

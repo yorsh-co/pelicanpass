@@ -1,0 +1,158 @@
+{
+  "admin-pass.add": {
+    "defaultMessage": "Adicionar frase programada",
+    "description": "Button that adds an empty row to the welcome schedule editor."
+  },
+  "admin-pass.column.at": {
+    "defaultMessage": "A partir de",
+    "description": "Column heading: the date and time from which a row's phase shows on the pass."
+  },
+  "admin-pass.column.phase": {
+    "defaultMessage": "Fase",
+    "description": "Column heading: which welcome text the pass shows."
+  },
+  "admin-pass.current": {
+    "defaultMessage": "Agora: {phase}",
+    "description": "The phase the schedule sets right now. {phase} is one of the phase names, such as Chegada."
+  },
+  "admin-pass.customLabel": {
+    "defaultMessage": "Personalizado: “{text}”",
+    "description": "A custom phase where a phase name is shown, as in the current phase or the next switch. {text} is the line the administrator wrote. Personalizado is the custom phase's name and must match it."
+  },
+  "admin-pass.defaults.empty": {
+    "defaultMessage": "Vazio: o ingresso do participante mostra a frase padrão o evento todo.",
+    "description": "Shown when the server configuration sets no welcome schedule. Chegada is the arrival phase's name and must match it."
+  },
+  "admin-pass.defaults.heading": {
+    "defaultMessage": "Padrão definido nas configurações do servidor",
+    "description": "Heading of the read-only list of the schedule in the server configuration. `.env` is the file's name and stays as is."
+  },
+  "admin-pass.defaults.hint": {
+    "defaultMessage": "Vale enquanto não houver programação salva aqui. Mudá-lo exige acesso ao servidor.",
+    "description": "Under the .env schedule's heading: it is the fallback, and only someone with access to the host can change it."
+  },
+  "admin-pass.editor.empty": {
+    "defaultMessage": "Nenhuma troca: o ingresso do participante mostra a frase padrão o evento todo.",
+    "description": "Shown in the editor when it has no rows. Saving an empty schedule is allowed and means the arrival text for the whole event. Chegada is the arrival phase's name."
+  },
+  "admin-pass.editor.fromDefaults": {
+    "defaultMessage": "O editor segue as configurações do servidor. Depois de salvar, sua programação passa a valer.",
+    "description": "Shown above the editor while no schedule is saved here: the rows are a copy of the server configuration's, and saving makes them take over. `.env` stays as is."
+  },
+  "admin-pass.editor.heading": {
+    "defaultMessage": "Programação",
+    "description": "Heading of the welcome schedule editor."
+  },
+  "admin-pass.editor.hint": {
+    "defaultMessage": "Horários no fuso do evento ({timeZone}). A ordem das linhas não importa: as frase serão reordenadas depois de salvar.",
+    "description": "Under the editor's heading. {timeZone} is an IANA time zone name such as America/Sao_Paulo, kept as is."
+  },
+  "admin-pass.failed": {
+    "defaultMessage": "Não foi possível salvar. Tente novamente.",
+    "description": "Error when saving the welcome schedule fails for any reason not otherwise named."
+  },
+  "admin-pass.forbidden": {
+    "defaultMessage": "Sua conta não pode mudar a programação das frases que aparecem no ingresso.",
+    "description": "Error when an administrator without the pass:write permission tries to save the welcome schedule."
+  },
+  "admin-pass.heading": {
+    "defaultMessage": "Frase do ingresso",
+    "description": "Heading of the screen that schedules the welcome line on the attendee's pass."
+  },
+  "admin-pass.intro": {
+    "defaultMessage": "A frase embaixo do nome no ingresso do participante muda ao longo do evento. Defina aqui quando cada frase aparece: os ingressos dos participantes atualizam automaticamente dentro de 30 segundos.",
+    "description": "Line under the screen's heading."
+  },
+  "admin-pass.invalid.duplicateTime": {
+    "defaultMessage": "Duas linhas estão no mesmo horário. Cada frase precisa ser programada para um horário diferente.",
+    "description": "Shown before sending when two rows in the editor have the same date and time."
+  },
+  "admin-pass.invalid.missingText": {
+    "defaultMessage": "O campo de texto não pode estar vazio.",
+    "description": "Shown before sending when a custom row in the editor has no text."
+  },
+  "admin-pass.invalid.missingTime": {
+    "defaultMessage": "Preencha a data e o horário de todas as linhas.",
+    "description": "Shown before sending when a row in the editor has no date and time."
+  },
+  "admin-pass.legend.custom": {
+    "defaultMessage": "O texto escrito na própria linha, exatamente como está.",
+    "description": "In the list of what each phase shows, the entry for the custom phase: its text is the one typed on its row, not a fixed one."
+  },
+  "admin-pass.legend.heading": {
+    "defaultMessage": "O que cada fase mostra",
+    "description": "Heading of the list pairing each phase name with the text it puts on the pass."
+  },
+  "admin-pass.legend.note": {
+    "defaultMessage": "Antes da primeira troca, o passe mostra a frase padrão. Enquanto a frase programado é a do questionário de feedback, quem já respondeu vê um agradecimento, e quem não tem o questionário aberto vê a frase padrão. Uma frase personalizada aparece para todos.",
+    "description": "Explains the rules the schedule does not control. Chegada, Questionário, Agradecimento, Padrão and Personalizado are the phase names and must match them."
+  },
+  "admin-pass.next": {
+    "defaultMessage": "Próxima frase programada: {phase} em {at}",
+    "description": "The schedule's next switch. {phase} is a phase name; {at} is a date and time in the event's time zone."
+  },
+  "admin-pass.next.none": {
+    "defaultMessage": "Nenhuma frase programada daqui em diante.",
+    "description": "Shown when the schedule in force has no switch after now."
+  },
+  "admin-pass.phase.arrival": {
+    "defaultMessage": "Boas-vindas",
+    "description": "Name of the arrival phase: the welcome shown as people arrive, and before the first scheduled switch."
+  },
+  "admin-pass.phase.custom": {
+    "defaultMessage": "Personalizado",
+    "description": "Name of the custom phase: a line the administrator writes on the schedule row itself, shown on the pass exactly as written."
+  },
+  "admin-pass.phase.default": {
+    "defaultMessage": "Padrão",
+    "description": "Name of the default phase: the general welcome during the event."
+  },
+  "admin-pass.phase.survey": {
+    "defaultMessage": "Feedback",
+    "description": "Name of the survey phase: the line pointing to the questionnaire."
+  },
+  "admin-pass.phase.thanks": {
+    "defaultMessage": "Agradecimento",
+    "description": "Name of the thanks phase: the closing line once feedback is in."
+  },
+  "admin-pass.preview": {
+    "defaultMessage": "“{text}”",
+    "description": "The text a phase puts on the pass, quoted. {text} is that text."
+  },
+  "admin-pass.remove": {
+    "defaultMessage": "Remover",
+    "description": "Accessible name of the button that removes one row from the editor. Read by screen readers; the button shows only an icon."
+  },
+  "admin-pass.reset": {
+    "defaultMessage": "Voltar à configuração do servidor",
+    "description": "Button that discards the schedule saved here so passes follow the server configuration again. `.env` stays as is."
+  },
+  "admin-pass.reset.confirm": {
+    "defaultMessage": "Confirmar: voltar à configuração do servidor",
+    "description": "The reset button's label once pressed, asking for a second press to discard the saved schedule. It reverts to the reset label after a few seconds. `.env` stays as is."
+  },
+  "admin-pass.reset.done": {
+    "defaultMessage": "Os ingressos voltaram a seguir a configuração do servidor",
+    "description": "Toast on the reloaded screen once the saved schedule is discarded. `.env` stays as is."
+  },
+  "admin-pass.save": {
+    "defaultMessage": "Salvar programação",
+    "description": "Button that saves the welcome schedule."
+  },
+  "admin-pass.saved": {
+    "defaultMessage": "Programação salva.",
+    "description": "Toast on the reloaded screen once the welcome schedule is saved."
+  },
+  "admin-pass.source.admin": {
+    "defaultMessage": "Seguindo a programação salva aqui.",
+    "description": "Which schedule the passes follow: the one saved on this screen."
+  },
+  "admin-pass.source.env": {
+    "defaultMessage": "Seguindo a configuração do servidor",
+    "description": "Which schedule the passes follow: the server configuration's. `.env` stays as is."
+  },
+  "admin-pass.text": {
+    "defaultMessage": "Texto da frase",
+    "description": "Accessible name and placeholder of the text box on a custom row: the line the pass shows from that row's time."
+  }
+}

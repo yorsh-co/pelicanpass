@@ -1,0 +1,175 @@
+<%# i18n: admin-lookup %>
+<%
+/*
+ * The volunteer quick lookup: finding somebody by name.
+ *
+ * Server-rendered in full. The search, the pager and every result card submit
+ * a POST form, so this whole screen works with JavaScript disabled — only the
+ * record page's confirm button needs a script.
+ *
+ * **Nothing here builds a URL out of an attendee**, which on this screen is the
+ * point rather than a detail: it is read on volunteers' personal phones, and a
+ * browser history entry outlives the session, the tailnet grant and the
+ * account, and syncs off the device. A searched name is a name typed at a door.
+ *
+ * Cards rather than a table. The roster needs an overflow wrapper because it
+ * carries seven columns; this carries four fields and is read on a phone held
+ * in one hand at a door, below the shell's only breakpoint.
+ *
+ * `locals.` on every read: EJS throws on an undeclared name, and a route that
+ * forgot a value should degrade rather than 500.
+ *
+ * **Every value off a row goes through the escaping output tag, never the raw
+ * one.** `attendee_nickname` is the one attendee-controlled string here.
+ *
+ * (Do not name EJS's delimiters literally in this comment. The scanner is
+ * lexical and does not know it is inside a JavaScript comment, which cost the
+ * roster template a compile error the first time it rendered.)
+ */
+const results = locals.results || [];
+const filters = locals.filters || { q: '', role: 'participant', page: 1 };
+const roleFilters = locals.roleFilters || {};
+
+// `null` is how the filters carry "every role"; the control needs a value.
+const roleValue = filters.role === null ? 'all' : filters.role;
+const roleLabel = roleFilters[roleValue] || '';
+const searched = locals.searched || false;
+const total = locals.total || 0;
+const pageCount = locals.pageCount || 1;
+%>
+<div class="lookup">
+  <header class="lookup__head">
+    <h1 class="lookup__title"><%= copy.searchTitle() %></h1>
+    <p class="lookup__lead">
+      <%= copy.searchLede() %>
+    </p>
+  </header>
+
+  <%# It carries no `page` field on purpose, and there are now two reasons. A
+      new search has to land on page one, and leaving `page` out is what makes
+      that happen through parseAttendeeFilters' own default rather than through
+      code deciding it; and the pager submits `page` on its own button, so a
+      hidden field would send the value twice, which that parser reads as
+      absent. -%>
+  <form class="lookup__search" id="filters" method="post" action="/admin/lookup">
+    <label class="lookup__label" for="q"><%= shell.searchLabel() %></label>
+    <div class="lookup__field">
+      <input
+        id="q"
+        name="q"
+        type="search"
+        value="<%= filters.q %>"
+        placeholder="<%= shell.searchPlaceholder() %>"
+        autocomplete="off"
+      />
+      <button type="submit"><%= shell.searchSubmit() %></button>
+    </div>
+
+    <%# Radios rather than submit buttons, and the reason is the same one the
+        comment above gives for page. A radio's value rides on every submission
+        of this form, so the pager keeps the scope without a hidden field --
+        and a hidden field beside a same-named button would send the value
+        twice, which the parser reads as absent. The cost is that changing the
+        scope takes effect on the next Buscar rather than immediately, which is
+        what keeps this page free of a script. -%>
+    <fieldset class="lookup__roles">
+      <legend class="lookup__label"><%= copy.searchRoles() %></legend>
+      <%# The segments need a row of their own: a legend is not an ordinary
+          flex item, so the three cannot simply be the fieldset's children. -%>
+      <div class="lookup__segments">
+        <% for (const [value, label] of Object.entries(roleFilters)) { %>
+        <label class="lookup__role">
+          <input type="radio" name="role" value="<%= value %>" <%= value === roleValue ? 'checked' : '' %> />
+          <span><%= label %></span>
+        </label>
+        <% } %>
+      </div>
+    </fieldset>
+  </form>
+
+  <% if (!searched) { %>
+  <p class="lookup__empty">
+    <span class="material-symbols-outlined" aria-hidden="true">person_search</span>
+    <%= copy.searchIdle() %>
+    <span class="lookup__hint"><%= copy.searchScope({ scope: roleLabel }) %></span>
+  </p>
+
+  <% } else if (results.length === 0 && total === 0) { %>
+  <p class="lookup__empty">
+    <%= copy.searchMiss({ query: filters.q }) %>
+    <%# The scope is named on the miss, not only on the prompt: somebody who
+        searched a colleague and got nothing should read the filter rather than
+        conclude the person was never registered. -%>
+    <% if (roleValue !== 'all') { %>
+    <span class="lookup__hint"><%= copy.searchMissScope({ scope: roleLabel }) %></span>
+    <% } %>
+    <span class="lookup__hint"><%= copy.searchMissHint() %></span>
+  </p>
+
+  <% } else if (results.length === 0) { %>
+  <p class="lookup__empty">
+    <%= shell.pagerOutOfRange() %>
+    <button type="submit" form="filters" name="page" value="1"><%= shell.pagerBackToFirst() %></button>.
+  </p>
+
+  <% } else { %>
+  <p class="lookup__count" role="status">
+    <%= copy.searchCount({ total }) %>
+  </p>
+
+  <%# How a record opens. Empty, because the only field it carries rides on the
+      card that submits it. -%>
+  <form id="record" method="post" action="/admin/lookup/record"></form>
+
+  <ul class="lookup__results">
+    <% for (const row of results) { %>
+    <li>
+      <%# The whole card submits. On a phone the tap target is the card, not a
+          word inside it, and it is a button rather than a link because the ID
+          it carries would otherwise be written to the phone's history. -%>
+      <button
+        class="lookup-card"
+        type="submit"
+        form="record"
+        name="attendeeId"
+        value="<%= row.attendeeId %>"
+      >
+        <span class="lookup-card__name"><%= row.name %></span>
+        <% if (row.nickname) { %>
+        <span class="lookup-card__nickname"><%= row.nickname %></span>
+        <% } %>
+
+        <span class="lookup-card__meta">
+          <code class="lookup-card__code ticket-code"><%= row.ticketCode %></code>
+          <span class="role-badge role-badge--<%= row.role %>">
+            <%= shell.role({ role: row.role }) %>
+          </span>
+          <% if (row.checkedIn) { %>
+          <span class="lookup-card__present">
+            <%= row.checkinNumber === null ? shell.present() : `#${row.checkinNumber}` %>
+          </span>
+          <% } else { %>
+          <span class="lookup-card__absent"><%= copy.searchAbsent() %></span>
+          <% } %>
+        </span>
+      </button>
+    </li>
+    <% } %>
+  </ul>
+
+  <% if (pageCount > 1) { %>
+  <nav class="lookup-pager" aria-label="<%= shell.pagerLabel() %>">
+    <% if (filters.page > 1) { %>
+    <button type="submit" form="filters" name="page" value="<%= filters.page - 1 %>"><%= shell.pagerPrevious() %></button>
+    <% } %>
+    <span><%= shell.pagerPosition({ page: filters.page, count: pageCount }) %></span>
+    <% if (filters.page < pageCount) { %>
+    <button type="submit" form="filters" name="page" value="<%= filters.page + 1 %>"><%= shell.pagerNext() %></button>
+    <% } %>
+  </nav>
+  <% } %>
+  <% } %>
+</div>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/css/dist/pages/admin/lookup.css" />

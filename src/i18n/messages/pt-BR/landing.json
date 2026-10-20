@@ -1,0 +1,42 @@
+{
+  "landing.action": {
+    "defaultMessage": "Faça seu check-in",
+    "description": "Button revealed the moment check-in opens."
+  },
+  "landing.closed.body": {
+    "defaultMessage": "Até a próxima!",
+    "description": "Line under the heading of the page that replaces the whole site once the event is over. Passes, check-in and the questionnaire are no longer available; it is read by anyone opening an old link, including after the event's data has been deleted."
+  },
+  "landing.closed.title": {
+    "defaultMessage": "Obrigado por participar!",
+    "description": "Heading of the page that replaces the whole site once the event is over."
+  },
+  "landing.days": {
+    "defaultMessage": "{days, plural, one {dia} other {dias}}",
+    "description": "Unit word beside the number of whole days left, which is shown separately just before it. Hidden once less than a day is left. days is that number."
+  },
+  "landing.lede": {
+    "defaultMessage": "O check-in abre em...",
+    "description": "Headline of the countdown page shown before check-in opens."
+  },
+  "landing.opensAt": {
+    "defaultMessage": "{date}, às {time}",
+    "description": "When check-in opens, in the event's timezone. date is the weekday and day; time is the time of day, already formatted."
+  },
+  "landing.reopening": {
+    "defaultMessage": "O check-in estará disponível em instantes.",
+    "description": "Shown in place of the countdown when it reaches zero while the app is temporarily served by the standalone fallback. The page reloads itself until the real check-in is back. Must read true both at the moment check-in first opens and hours into the event, so it promises neither an opening nor a return."
+  },
+  "landing.unit.hours": {
+    "defaultMessage": "horas",
+    "description": "Label under the hours tile of the countdown. Kept terse: the whole countdown is hidden from assistive technology."
+  },
+  "landing.unit.minutes": {
+    "defaultMessage": "min",
+    "description": "Label under the minutes tile of the countdown. Kept terse, like the other tile labels."
+  },
+  "landing.unit.seconds": {
+    "defaultMessage": "seg",
+    "description": "Label under the seconds tile of the countdown. Kept terse, like the other tile labels."
+  }
+}

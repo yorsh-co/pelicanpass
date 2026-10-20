@@ -1,0 +1,76 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*
+ * Inherited from `body` rather than set on `*`. Form controls are the only
+ * elements that do not inherit `font-family` by default, so they are the only
+ * ones that have to be named.
+ */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+/*
+ * `hidden` has to win, and only `!important` makes it.
+ *
+ * The UA stylesheet's `[hidden] { display: none }` loses to *any* author
+ * `display`, regardless of specificity — origin beats specificity. So a rule
+ * like `body[data-camera='on'] .qr-torch { display: inline-flex }` silently
+ * un-hides an element that JavaScript has set `hidden` on, and the attribute
+ * looks like it is doing nothing.
+ *
+ * That is exactly what happened to the torch button: it reports its capability
+ * at runtime and hides itself when the camera has no torch, and on iOS Safari —
+ * where no camera does — it was on screen anyway, doing nothing when tapped.
+ */
+[hidden] {
+  display: none !important;
+}
+
+/*
+ * A single focus treatment for the whole app. There was none outside the
+ * privacy page, and `components/form.css` cleared the default outline on inputs
+ * without replacing it — so keyboard focus was invisible everywhere it mattered.
+ */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/*
+ * The app has roughly a dozen keyframe animations, an infinite shimmer, WAAPI
+ * shakes and a brightness(10) boot flash, and honoured this preference nowhere.
+ * Scoped to the two properties rather than `all` so layout transitions that
+ * depend on `transitionend` firing still resolve.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

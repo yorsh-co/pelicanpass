@@ -1,0 +1,221 @@
+footer {
+  flex-shrink: 0;
+  margin-top: var(--space-4);
+
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+
+  animation: fadeIn var(--duration-slow) var(--ease-out) 0.4s backwards;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-1);
+
+  /* Four items rather than three once "Sair" is in the row. */
+  flex-wrap: wrap;
+}
+
+/* Held together so the separator never wraps away from the toggle it leads. */
+.footer-locales-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.footer-locales {
+  position: relative;
+}
+
+/* As tall as the theme toggle beside it, and without the native marker. */
+.footer-locales summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125rem;
+  min-height: 2.25rem;
+  padding-inline: var(--space-2) var(--space-1);
+
+  border-radius: var(--radius-full);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.05em;
+  list-style: none;
+  cursor: pointer;
+
+  transition: background var(--duration-base) var(--ease-out);
+}
+
+.footer-locales summary::-webkit-details-marker {
+  display: none;
+}
+
+.footer-locales summary:hover {
+  background: var(--surface-hover);
+}
+
+.footer-locales summary .material-symbols-outlined {
+  font-size: 1rem;
+  transition: rotate var(--duration-base) var(--ease-out);
+}
+
+.footer-locales[open] summary .material-symbols-outlined {
+  rotate: 180deg;
+}
+
+/*
+ * Opens upward: the footer is the last thing on every page. Anchored to the
+ * toggle's right edge, which is the end of a centred row, so the panel stays
+ * inside a 320px viewport.
+ */
+.footer-locales-menu {
+  position: absolute;
+  bottom: calc(100% + var(--space-1));
+  right: 0;
+  z-index: 1;
+
+  min-width: 12rem;
+  margin: 0;
+  padding: var(--space-1);
+  list-style: none;
+  text-align: start;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+}
+
+/*
+ * Two classes deep to outrank landing.css, whose `footer .small-print a` would
+ * otherwise put the on-gradient muted colour on the panel.
+ */
+.footer-locales .footer-locales-menu a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+
+  border-radius: calc(var(--radius-sm) - var(--space-1));
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+}
+
+.footer-locales .footer-locales-menu a:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.footer-locales .footer-locales-menu a[aria-current] {
+  font-weight: var(--weight-semibold);
+}
+
+.footer-locales-code {
+  min-width: 1.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.footer-locales-name {
+  flex: 1;
+}
+
+.footer-locales-menu .material-symbols-outlined {
+  font-size: 1.125rem;
+}
+
+footer .dot {
+  opacity: 0.5;
+}
+
+/*
+ * The theme toggle rides in the links row rather than floating over the page.
+ *
+ * It was `position: fixed` in the bottom-left corner, which held a permanent
+ * hole open in every layout and needed two rules of its own to get out of the
+ * way of the check-in CTA and the camera. In the footer both come for free:
+ * `qr.css` and `checkin.css` already hide `footer` wholesale under
+ * `[data-camera='on']` and `[data-keyboard='open']`.
+ *
+ * Most of what follows undoes components/button.css, whose bare `button`
+ * selector is full-width and accent-filled.
+ */
+.theme-toggle {
+  width: 2.25rem;
+  height: 2.25rem;
+  min-height: 0;
+  padding: 0;
+
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-muted);
+}
+
+/* The row is `--text-xs`; the icon's default 24px would tower over the links
+   beside it. */
+.theme-toggle .material-symbols-outlined {
+  font-size: 1.25rem;
+}
+
+.theme-toggle:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+footer .credit a {
+  font-weight: 700;
+}
+
+/*
+ * Hidden here and opted into per page and per step — `pass.css` and
+ * `checkin.css` carry the reveals — because leaving the flow is not offered on
+ * every screen: the check-in flow has nothing to leave until a ticket has been
+ * entered, and by the success step there is nothing left to abandon.
+ */
+.footer-logout-wrap {
+  display: none;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/*
+ * Reads as one of the links beside it, not as a control: everything below
+ * either undoes components/button.css — whose bare `button` selector is
+ * full-width and accent-filled — or repeats `.small-print a`.
+ */
+.footer-logout {
+  width: auto;
+  min-height: 0;
+  padding: 0;
+
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-weight: var(--weight-semibold);
+
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+.footer-logout:hover {
+  background: none;
+  color: var(--text);
+}

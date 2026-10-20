@@ -1,0 +1,1641 @@
+/*
+ * The attendee pass.
+ *
+ * This screen did not exist: the attendee page was an empty <div>, so finishing
+ * the flow landed on a blank page while the arrival number, the t-shirt size
+ * and the meal sat unused in a JS store one line away.
+ *
+ * It is the last surface carrying `--brand-backdrop` — the landing page and the
+ * boot screen open with it, and the check-in success card is where this one
+ * starts, repeating this layout so the hand-off reads as one object rather than
+ * as a cut.
+ * Everything between them is neutral canvas, which is what lets this one read
+ * as the reward rather than as more chrome.
+ */
+.pass-container {
+  justify-content: space-between;
+  padding-top: var(--space-3);
+}
+
+/*
+ * Tall phones wider than any iPhone (20:9 Android at ~440–490px) take the full
+ * width: `--content-max` would otherwise centre the pass with dead strips
+ * either side. The aspect bound keeps tablets, landscape and desktop capped.
+ * Mirrored on `.checkin-container` so the success card hands off at this size.
+ */
+@media (min-width: 27rem) and (max-aspect-ratio: 3 / 5) {
+  .pass-container {
+    max-width: none;
+  }
+}
+
+.pass {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  /*margin-top: var(--space-4);*/
+  padding: var(--space-5);
+
+  border-radius: var(--radius-lg);
+  background: var(--brand-backdrop);
+  color: var(--text-on-brand);
+
+  box-shadow: var(--shadow-lg);
+
+  /* The card's inset, which the tabs bleed through to reach its edges. */
+  --pass-pad: var(--space-5);
+}
+
+/*
+ * The two faces. `flex: 1` is load-bearing rather than cosmetic: the front's
+ * `margin-top: auto` spacers push against this, and without it they have no
+ * slack now that they hang off a face rather than off `.pass` itself.
+ *
+ * Only one is ever in the document's flow — the other carries `hidden`, which
+ * the reset backs with `display: none !important`.
+ */
+.pass-face {
+  flex: 1;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+ * The back is one column of things to look at, centred, with the button at the
+ * bottom where the thumb already is.
+ */
+.pass-back {
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.pass-head {
+  /*
+   * The volunteer marker's paint, for the shape in `components/role-badge.css`.
+   * Glass on the gradient, the same pair the band overlay and the window ring
+   * take on this card.
+   */
+  --role-badge-bg: var(--camera-control-bg);
+  --role-badge-fg: var(--text-on-brand);
+
+  /* How far the tabs reach below the wordmark's own height. */
+  --tab-drop: var(--space-3);
+
+  /*
+   * The wordmark and the front tab share the first cell, so the tab can lie
+   * over it; the right column holds the access tab, or a plain volunteer's
+   * chip.
+   */
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+}
+
+.pass-head > header {
+  grid-area: 1 / 1;
+  position: relative;
+  z-index: 2;
+
+  /* Room for the front tab's edge and gap beyond the wordmark. */
+  padding-inline-end: var(--space-2);
+  padding-block-end: var(--tab-drop);
+
+  /* Clicks fall through to the front tab beneath. */
+  pointer-events: none;
+}
+
+.pass-head > .role-badge {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+/*
+ * The tabs. Two shapes of one idea: the inactive tab paints its own corner of
+ * the card and is cut off from the body by a canvas-coloured border on its
+ * inner sides, which reads as the gap and the notch between the two; the
+ * active tab has no border and shares the body's paint, so it reads as joined.
+ * No masks and no measuring: the borders are the whole effect.
+ */
+.pass-tab {
+  grid-column: 3;
+  grid-row: 1;
+
+  /* Bleed through the card's padding to its top and right edges. */
+  margin: calc(-1 * var(--pass-pad)) calc(-1 * var(--pass-pad)) 0 0;
+  padding: calc(var(--pass-pad) + var(--space-1)) var(--pass-pad)
+    calc(var(--tab-drop) + var(--space-1)) var(--space-3);
+
+  /* The global button is a full-width accent block. */
+  width: auto;
+  min-height: 0;
+  max-width: 62vw;
+
+  border: 0 solid var(--canvas);
+  border-width: 0 0 var(--space-1) var(--space-1);
+  border-radius: 0 var(--radius-lg) 0 var(--radius-md);
+  background: var(--access-stripe);
+  color: var(--access-ink);
+
+  --role-badge-bg: var(--access-ink);
+  --role-badge-fg: var(--access-stripe);
+
+  /*
+   * A hairline on the outer edge, for the tiers that dissolve into the canvas:
+   * near-black on a dark one, yellow on a light one. A shadow rather than an
+   * outline, which is the focus ring's.
+   */
+  box-shadow: 0 0 0 1px light-dark(rgb(0 0 0 / 22%), rgb(255 255 255 / 30%));
+}
+
+/* The neutral tab's chip is glass, as the plain volunteer's is. */
+.pass:not([data-access]) .pass-tab {
+  --role-badge-bg: var(--camera-control-bg);
+  --role-badge-fg: var(--text-on-brand);
+}
+
+.pass-tab:hover {
+  background: var(--access-stripe);
+  color: var(--access-ink);
+}
+
+/*
+ * The global ring sits 2px outside the box, where the card's edge and the
+ * page's would clip it, and its `border-radius` would square the tab's corner.
+ * Drawn inside the tab, in the tab's ink.
+ */
+.pass-tab:focus-visible,
+.pass-front-tab:focus-visible {
+  outline-offset: -4px;
+  outline-color: var(--access-ink);
+}
+
+.pass-tab:focus-visible {
+  border-radius: 0 var(--radius-lg) 0 var(--radius-md);
+}
+
+.pass-front-tab:focus-visible {
+  border-radius: var(--radius-lg) 0 var(--radius-md) 0;
+  outline-color: var(--text-on-brand);
+}
+
+.pass-tab .role-badge {
+  /* The longest label overflows a 320px row beside the wordmark: wrap it. */
+  flex-shrink: 1;
+  padding-inline: var(--space-2);
+  white-space: normal;
+  text-align: center;
+}
+
+/*
+ * On the narrowest phones the longest label's longest word, RETIRADAS, is
+ * most of what the row has left beside the wordmark. The wordmark keeps its
+ * size and its gap to the tab; the tab's padding and the chip's type give.
+ */
+@media (max-width: 24rem) {
+  .pass-tab {
+    padding-inline: var(--space-1);
+  }
+
+  .pass-tab .role-badge {
+    padding-inline: var(--space-1);
+    font-size: 0.6875rem;
+    letter-spacing: 0.02em;
+  }
+}
+
+/*
+ * The front tab: laid over the wordmark, and drawn only on the actions face,
+ * where it is the inactive one.
+ */
+.pass-front-tab {
+  /*
+   * From the card's left edge to the access tab, whatever the wordmark's
+   * width. The right margin pulls its box over the access tab's left border,
+   * so its canvas border lands on that border's pixels: the divider keeps its
+   * place when the tabs swap.
+   */
+  grid-area: 1 / 1 / 2 / 3;
+  position: relative;
+  z-index: 1;
+  margin: calc(-1 * var(--pass-pad)) calc(-1 * var(--space-1)) 0
+    calc(-1 * var(--pass-pad));
+  align-self: stretch;
+  justify-self: stretch;
+
+  width: auto;
+  min-height: 0;
+  padding: 0;
+
+  border: 0 solid var(--canvas);
+  border-width: 0 var(--space-1) var(--space-1) 0;
+  border-radius: var(--radius-lg) 0 var(--radius-md) 0;
+  background: var(--brand-backdrop);
+  color: var(--text-on-brand);
+  box-shadow: 0 0 0 1px light-dark(rgb(0 0 0 / 22%), rgb(255 255 255 / 30%));
+}
+
+.pass-front-tab:hover {
+  background: var(--brand-backdrop);
+}
+
+/*
+ * The actions face: the tabs swap. The body takes the tier colour and the
+ * access tab, now active, joins it; the wordmark side turns into the inactive
+ * tab.
+ */
+.pass[data-face='actions'] {
+  background: var(--access-stripe);
+  color: var(--access-ink);
+}
+
+.pass[data-face='actions'] .pass-tab {
+  /* The border stays, so the chip does not move; it takes the tab's paint. */
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.pass-head header {
+  margin-bottom: 0;
+  justify-content: flex-start;
+}
+
+/* The wordmark mask takes its colour from here rather than from `--text`. */
+.pass .wordmark {
+  color: var(--text-on-brand);
+}
+
+/*
+ * The name and the welcome under it.
+ *
+ * Two elements rather than one sentence: the name is the attendee's own and is
+ * what the edit control acts on, so it carries the weight and the welcome
+ * reads as the line beneath it.
+ */
+.pass-name {
+  margin-top: var(--space-6);
+}
+
+.pass-name-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  /* The name takes the room it needs and the button stays beside it. */
+  min-width: 0;
+}
+
+.pass-name-value {
+  min-width: 0;
+
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+
+  /*
+   * The name here is attendee-chosen. It is capped at 24 characters, which
+   * still allows 24 without a space in them, and this is the pass — nothing may
+   * push the check-in number off the screen.
+   */
+  overflow-wrap: anywhere;
+}
+
+.pass-welcome {
+  margin-top: var(--space-1);
+
+  font-size: var(--text-base);
+  color: var(--text-on-brand-muted);
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+
+/* Punctuation, not copy: keeps the markup down to the two stored values. */
+.pass-team-role::before {
+  content: ' · ';
+}
+
+/*
+ * The edit control.
+ *
+ * Overrides the global button rather than reusing it: that one is a
+ * full-width `--accent` block, which on `--brand-backdrop` reads as a second,
+ * competing surface. Sized to the 44px tap target the rest of the app uses
+ * while the glyph itself stays small beside the name.
+ */
+.pass-name-edit {
+  flex-shrink: 0;
+
+  width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0;
+
+  background: none;
+  color: var(--text-on-brand-muted);
+}
+
+.pass-name-edit:hover {
+  background: var(--camera-control-bg);
+  color: var(--text-on-brand);
+}
+
+.pass-name-edit .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.pass-name-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/*
+ * Input and its two actions on one row, replacing the name line it sits in
+ * place of. The input takes the room the buttons leave rather than the full
+ * width — a 24-character cap does not need a field wide enough for a sentence.
+ */
+.pass-name-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pass-name-form input {
+  flex: 1 1 auto;
+  /* Without this a long value sets the flex base and pushes the buttons out. */
+  min-width: 0;
+  max-width: 14rem;
+
+  padding: var(--space-2) var(--space-3);
+
+  border-color: transparent;
+  background: var(--camera-control-bg);
+  color: var(--text-on-brand);
+
+  -webkit-text-fill-color: var(--text-on-brand);
+}
+
+.pass-name-form input:focus {
+  border-color: var(--text-on-brand);
+  background: var(--camera-control-bg);
+}
+
+.pass-name-form .hint-div {
+  color: var(--text-on-brand-muted);
+  font-size: var(--text-xs);
+  text-align: start;
+  margin-top: 0;
+}
+
+/*
+ * Confirm and dismiss, as glyphs. Both were already in the frozen subset, so
+ * unlike `edit` these cost nothing. They keep the same 2.75rem tap target as
+ * the edit button — the row is reachable one-handed and the two sit next to
+ * each other, which is exactly where a mis-tap is expensive.
+ */
+.pass-name-action {
+  flex-shrink: 0;
+
+  width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0;
+
+  background: var(--camera-control-bg);
+  color: var(--text-on-brand);
+}
+
+.pass-name-action:hover {
+  background: var(--camera-control-bg);
+  color: var(--text-on-brand);
+}
+
+.pass-name-action .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.pass-name-form.processing {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/*
+ * The hero. `checkin_number` is assigned atomically at completion and was shown
+ * to nobody; it is the most screenshot-worthy thing this app can produce and it
+ * costs nothing to surface.
+ */
+.pass-number-block {
+  margin-top: auto;
+  padding-block: var(--space-5);
+}
+
+/*
+ * A volunteer has no number, so the chips take the auto margin instead. The
+ * padding is its floor, as the number block's own padding is on a participant's
+ * pass: a volunteer carrying every chip, both staff links and the questionnaire
+ * fills the card, and the margin alone then drops to nothing.
+ */
+.pass-number-block[hidden] + .pass-chips {
+  margin-top: auto;
+  padding-top: var(--space-6);
+}
+
+/*
+ * A volunteer with no chips: the list is not displayed, so the next row takes
+ * the margin and the foot still sits at the bottom of the card.
+ */
+.pass-number-block[hidden] + .pass-chips:empty + * {
+  margin-top: auto;
+}
+
+.pass-number-label {
+  font-size: var(--text-xs);
+  color: var(--text-on-brand-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pass-number {
+  font-size: var(--text-hero);
+  font-weight: var(--weight-bold);
+  line-height: 1;
+
+  /*
+   * `-0.02em`, not the `-0.04em` this carried under Inter: Libre Franklin's
+   * digits are ~7% wider and more tightly fitted, so the old value closed the
+   * gaps to a collision at 6rem.
+   *
+   * There was a `font-variant-numeric: tabular-nums` here as well. Libre
+   * Franklin ships no `tnum` feature and its digits are proportional, so it did
+   * nothing — and nothing is lost: an attendee only ever sees their own number,
+   * so there is no second number for it to line up with.
+   *
+   * Duplicated by `.success-number` in `checkin.css`, deliberately, so the hero
+   * does not move on hand-off. Change both or neither.
+   */
+  letter-spacing: -0.02em;
+}
+
+/*
+ * The number and what it is for, side by side.
+ *
+ * Wraps rather than squeezes: `--text-hero` is `clamp(3.5rem, 22vw, 6rem)`, so
+ * a four-digit number on a 360px screen leaves the column too little room, and
+ * dropping it under the number reads better than breaking both words.
+ */
+.pass-number-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/*
+ * Same size, colour and tracking as `.pass-number-label` above the number, so
+ * the small lines read as one frame around the hero rather than as three
+ * unrelated bits of text.
+ *
+ * The hairline is `--camera-control-bg`, not `--border`: that one is a
+ * `light-dark()` surface colour and disappears against `--brand-backdrop`,
+ * which is why the badge, the chips and the nickname input all reach for the
+ * same token.
+ */
+.pass-number-details {
+  list-style: none;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+
+  padding-inline-start: var(--space-3);
+  border-inline-start: 1px solid var(--camera-control-bg);
+
+  font-size: var(--text-xs);
+  color: var(--text-on-brand-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* redemption chips */
+.pass-chips {
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.pass-chips:empty {
+  display: none;
+}
+
+/*
+ * Each chip is the control that turns the pass over to its QR.
+ *
+ * Overrides the global button the same way `.pass-name-edit` does: that one is
+ * a full-width `--accent` slab, which on `--brand-backdrop` reads as a second,
+ * competing surface. Everything else here is the chip it has always been.
+ */
+.pass-chip {
+  width: 100%;
+  min-height: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+
+  background: var(--camera-control-bg);
+  color: var(--text-on-brand);
+  font-size: var(--text-sm);
+  /* The global button is semibold; the chip's own name owns that weight here. */
+  font-weight: 400;
+  text-align: start;
+}
+
+.pass-chip:hover {
+  background: var(--camera-control-bg);
+  color: var(--text-on-brand);
+}
+
+/*
+ * A collected chip is disabled, and `button:disabled`'s own `0.5` would stack
+ * with `.is-redeemed` below into something barely readable.
+ */
+.pass-chip:disabled {
+  opacity: 1;
+}
+
+.pass-chip-glyph {
+  flex-shrink: 0;
+  font-size: 20px;
+  color: var(--text-on-brand-muted);
+}
+
+.pass-chip-name {
+  /* Takes the slack, so the state and its glyph stay together at the end. */
+  flex: 1;
+  min-width: 0;
+
+  font-weight: var(--weight-semibold);
+}
+
+/*
+ * State is a word, not just a colour — it has to survive being read aloud and
+ * being looked at by someone who does not separate the two hues.
+ */
+.pass-chip-state {
+  flex-shrink: 0;
+
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-on-brand-muted);
+}
+
+.pass-chip.is-redeemed {
+  opacity: 0.65;
+}
+
+.pass-chip.is-redeemed .pass-chip-name {
+  text-decoration: line-through;
+}
+
+.pass-date {
+  margin-top: var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--text-on-brand-muted);
+}
+
+/* footer logout */
+body[data-page='pass'] .footer-logout-wrap {
+  display: inline-flex;
+}
+
+/*
+ * The live half — the QR a volunteer scans, and the band and clock they compare
+ * by eye when a camera will not open.
+ *
+ * It has the back of the pass to itself, so it reads down the middle rather
+ * than as a row beside the chips: the code is the only thing on this face worth
+ * looking at, and it is being held out at arm's length.
+ */
+.pass-live {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+/*
+ * A white plate under the code, always. The backdrop is mid-tone throughout and
+ * a scanner needs the quiet zone to read as paper — the SVG's own background is
+ * white, so this is really about the padding and the corner radius around it.
+ *
+ * Sized to the face rather than to a thumbnail: a phone camera reading another
+ * phone's screen across a counter, at whatever brightness the attendee left it
+ * on, is the worst scanning condition this app has.
+ */
+.pass-qr {
+  flex-shrink: 0;
+
+  width: min(62vw, 17rem);
+  aspect-ratio: 1;
+
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: #ffffff;
+}
+
+.pass-live-meta {
+  min-width: 0;
+}
+
+/* Same treatment as `.pass-number-label`, so the small lines read as one frame. */
+.pass-live-label {
+  font-size: var(--text-xs);
+  color: var(--text-on-brand-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/*
+ * Band hues, picked for legibility on the gradient rather than for fidelity to
+ * their names — this is the one place the app paints text a colour that is not
+ * a semantic token, because the colour *is* the content. The shape of the word
+ * is `components/band.css`; only these values are the pass's own.
+ */
+.pass {
+  --band-vermelho: #ff9aa8;
+  --band-laranja: #ffb27a;
+  --band-amarelo: #f7d774;
+  --band-verde: #7fe0b0;
+  --band-azul: #8fc7ff;
+  --band-roxo: #cbb2ff;
+  --band-rosa: #ffa6d4;
+  --band-marrom: #dcb79a;
+
+  /*
+   * The rest of the block's paint, for the shape in `components/band.css`. The
+   * overlay is warn-on-glass here rather than the bordered card the volunteer
+   * gets: it sits over the gradient, where a border would read as a seam.
+   */
+  --band-retry-bg: var(--camera-control-bg);
+  --band-retry-fg: var(--accent-warn);
+  --band-retry-fg-hover: var(--warn);
+
+  --band-clock-fg: var(--text-on-brand-muted);
+
+  /* The glass the retry overlay rests on, so the two read as one material. */
+  --band-pending-bg: var(--camera-control-bg);
+}
+
+/*
+ * How much of the window is left, draining as the word expires. The volunteer's
+ * screen draws the same ring from the same window, so the two sit at the same
+ * level — the band says *which* window and this says where in it.
+ *
+ * Size and paint only. The shape is `components/window-ring.css`, which also
+ * carries why the arc steps once a second with nothing animating it.
+ */
+.pass-window {
+  --ring-track: var(--camera-control-bg);
+  --ring-arc: var(--text-on-brand);
+
+  margin-top: var(--space-2);
+}
+
+/* the foot: when they checked in, and what time it is now */
+.pass-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+
+  margin-top: var(--space-5);
+}
+
+/*
+ * A descendant selector, not a child one: the two stamps are wrapped below and
+ * `>` here would hand the date back the `margin-top` from `.pass-date`, which
+ * knocks the foot out of alignment. Left loose on purpose.
+ */
+.pass-foot .pass-date {
+  margin-top: 0;
+}
+
+/*
+ * The foot's left half. Grouped rather than dropped into the row above as a
+ * third child: that row is `space-between`, which leaves a third item adrift in
+ * the middle of it with nothing to anchor it to.
+ */
+.pass-foot-meta {
+  /* Without this the date sets the flex base and pushes the button off. */
+  min-width: 0;
+
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+/*
+ * The foot's right half: the verify button, and a volunteer's map beside it.
+ * `flex-shrink: 0` so a long date wraps the meta rather than squeezing these.
+ */
+.pass-foot-actions {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/*
+ * The rule between the two, and only when there are two. A volunteer has no
+ * check-in moment — `formatCheckinAt` returns an empty string for them — and a
+ * hairline with nothing to its left is how that would show.
+ *
+ * The same hairline `.pass-number-details` carries, so the small lines across
+ * the card read as one frame.
+ */
+.pass-date:not(:empty) + .pass-front-clock {
+  padding-inline-start: var(--space-2);
+  border-inline-start: 1px solid var(--camera-control-bg);
+}
+
+/*
+ * The front face's sign of life: a volunteer sees the seconds move, and a
+ * screenshot's are frozen. A glance-level cue, not a control — which is why it
+ * is quiet, and why nothing on the card explains it.
+ *
+ * Nothing animates. `ui/front-clock.ts` rewrites the text once a second, and
+ * text is content: the reduced-motion block in `base/reset.css` caps every
+ * animation at a single iteration, which parks a looping keyframe on its last
+ * frame — a sign of life frozen for exactly the users least likely to report
+ * it. `components/window-ring.css` makes the same argument for the arc.
+ *
+ * There is deliberately no `font-variant-numeric: tabular-nums` here. Libre
+ * Franklin ships no `tnum` and its digits are proportional, so it would do
+ * nothing, exactly as it did on `.pass-number` above before it was removed.
+ * The width of `HH:MM:SS` therefore changes every second and the fix is
+ * positional rather than typographic: this is the last item of a start-aligned
+ * group, so the only edge that moves is its own.
+ */
+.pass-front-clock {
+  flex-shrink: 0;
+}
+
+/*
+ * Who the volunteer is serving, under the code they just scanned. The same
+ * hairline treatment the number details carry, so the small lines across both
+ * faces read as one frame rather than as unrelated bits of text.
+ */
+.pass-identity {
+  /* Matched to the plate above it, so its hairline reads as the code's rule. */
+  width: 100%;
+  max-width: 17rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-3);
+
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--camera-control-bg);
+
+  font-size: var(--text-xs);
+  color: var(--text-on-brand-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/*
+ * The identifier itself carries the weight: it is what the volunteer's review
+ * shows them, and it is the one thing on this face they read rather than scan.
+ */
+.pass-identity-value {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-on-brand);
+}
+
+/*
+ * The ticket code. Deliberately quiet — it is the fallback for a broken camera,
+ * not something to read before the identifier beside it.
+ */
+.pass-identity-ticket {
+  flex-shrink: 0;
+}
+
+.pass-ticket-value {
+  margin-inline-start: var(--space-1);
+  font-family: var(--font-ticket);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+/* What to do with the screen, for someone holding it out for the first time. */
+.pass-back-hint {
+  font-size: var(--text-xs);
+  color: var(--text-on-brand-muted);
+  text-wrap: balance;
+}
+
+/*
+ * The front's link row: a participant's venue map. A volunteer's staff links
+ * are on the actions face and their map is in the foot.
+ *
+ * No margin of its own, deliberately. `.pass-face` is a flex column with no
+ * `gap`, so its children space themselves — the margin stays on the links
+ * below, and this row therefore contributes nothing at all when its link is
+ * hidden, as it is for a volunteer.
+ */
+.pass-staff-links {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/*
+ * A link chip: the map on the front, and on the actions face the staff
+ * surfaces — the scanner, the raffle, the admin area. A volunteer sees only the
+ * ones they hold the permission for, and the server redirects anyone who
+ * reaches the page without it.
+ */
+.pass-staff-link {
+  /* Equal halves, so neither label's length decides the split. */
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+
+  margin-top: var(--space-4);
+  padding: var(--space-3);
+  min-height: 2.75rem;
+
+  border: 1px solid var(--camera-control-bg);
+  border-radius: var(--radius-md);
+  background: var(--camera-control-bg);
+
+  color: var(--text-on-brand);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+}
+
+/* The map chip is a button, so it has the global button hover to undo. */
+.pass-staff-link:hover {
+  background: var(--camera-control-bg);
+  color: var(--text-on-brand);
+}
+
+/*
+ * The actions face: the staff links stacked at full width, and the way back at
+ * the foot. Its paint is the tier's (see `.pass[data-face='actions']`), so the
+ * links take their ink from it: the glass the front's chips use is white at a
+ * low alpha, which vanishes on the light tiers.
+ */
+.pass-actions {
+  gap: var(--space-4);
+}
+
+.pass-actions-title {
+  margin-top: var(--space-6);
+
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+.pass-actions-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.pass-actions .pass-staff-link {
+  flex: none;
+  margin-top: 0;
+}
+
+.pass-actions .pass-staff-link,
+.pass-actions .pass-back-btn {
+  border-color: color-mix(in srgb, var(--access-ink) 55%, transparent);
+  background: color-mix(in srgb, var(--access-ink) 8%, transparent);
+  color: var(--access-ink);
+}
+
+.pass-actions .pass-staff-link:hover,
+.pass-actions .pass-back-btn:hover {
+  background: color-mix(in srgb, var(--access-ink) 8%, transparent);
+  color: var(--access-ink);
+}
+
+.pass-actions .pass-staff-link:focus-visible,
+.pass-actions .pass-back-btn:focus-visible {
+  outline-color: var(--access-ink);
+}
+
+.pass-actions .pass-back-btn {
+  align-self: center;
+  margin-top: auto;
+}
+
+/*
+ * The two controls that turn the pass over.
+ *
+ * Same treatment as the staff link above, deliberately: the chips are the way
+ * an attendee is meant to reach the code, and this is the way round them — for
+ * a pass with everything already collected, or a volunteer's, which carries no
+ * chips at all. Making it louder than the chips would invert that.
+ */
+.pass-back-btn {
+  gap: var(--space-2);
+
+  padding: var(--space-3);
+  min-height: 2.75rem;
+
+  border: 1px solid var(--camera-control-bg);
+  background: var(--camera-control-bg);
+
+  color: var(--text-on-brand);
+  font-size: var(--text-sm);
+}
+
+/* Below the chips, spaced like the staff link that follows it. */
+.pass-verify-btn {
+  background: none;
+  width: auto;
+  min-height: 0;
+  padding: 0;
+  border-radius: var(--radius-sm);
+
+  color: var(--text-on-brand);
+  font-size: var(--text-sm);
+}
+
+.pass-verify-btn:hover,
+.pass-back-btn:hover {
+  background: var(--camera-control-bg);
+  color: var(--text-on-brand);
+}
+
+.pass-verify-btn .material-symbols-outlined,
+.pass-back-btn .material-symbols-outlined {
+  font-size: 20px;
+}
+
+/*
+ * No `margin-top` of its own: the back is a centred column with its own gap,
+ * and an auto margin here would beat that centring and pin the button to the
+ * bottom of the card with the code floated above it.
+ */
+.pass-back-btn {
+  width: 100%;
+  max-width: 17rem;
+}
+
+/*
+ * The venue map, opened over the pass as a modal. Full screen rather than a
+ * card, so the drawing gets every pixel the phone has; the backdrop only shows
+ * on screens wider than `--content-max`.
+ */
+.pass-map {
+  width: 100%;
+  max-width: var(--content-max);
+  height: 100dvh;
+  max-height: none;
+
+  margin: 0 auto;
+  padding: calc(var(--space-4) + env(safe-area-inset-top)) var(--space-4)
+    calc(var(--space-4) + env(safe-area-inset-bottom));
+  border: none;
+
+  background: var(--brand-backdrop);
+  color: var(--text-on-brand);
+
+  opacity: 0;
+  translate: 0 0.5rem;
+
+  /*
+   * `display` and `overlay` are discrete, and transitioning them holds the
+   * dialog laid out and in the top layer until the fade has finished; without
+   * them it vanishes the moment it closes. A browser that cannot transition
+   * them simply closes at once.
+   */
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    translate var(--duration-base) var(--ease-out),
+    display var(--duration-base) allow-discrete,
+    overlay var(--duration-base) allow-discrete;
+}
+
+/*
+ * `display` only while open: a `display` on the closed dialog would beat the
+ * user-agent's `display: none` and leave it on the page. The transition above
+ * keeps it at `flex` for as long as the close takes.
+ *
+ * Slower in than out, so the map arrives rather than appears and gets out of
+ * the way when dismissed.
+ */
+.pass-map[open] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  opacity: 1;
+  translate: 0 0;
+  transition-duration: var(--duration-slow);
+}
+
+/* Where the opening transition starts from, as the dialog enters the top layer. */
+@starting-style {
+  .pass-map[open] {
+    opacity: 0;
+    translate: 0 0.5rem;
+  }
+}
+
+.pass-map::backdrop {
+  background: var(--scrim);
+  opacity: 0;
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    display var(--duration-base) allow-discrete,
+    overlay var(--duration-base) allow-discrete;
+}
+
+.pass-map[open]::backdrop {
+  opacity: 1;
+  transition-duration: var(--duration-slow);
+}
+
+@starting-style {
+  .pass-map[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* The pass must not scroll behind the map. */
+html:has(.pass-map[open]) {
+  overflow: hidden;
+}
+
+.pass-map-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.pass-map-title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+/* Same glass as the pass's own buttons, on a round target the thumb can find. */
+.pass-map-close {
+  flex-shrink: 0;
+
+  width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0;
+
+  border-radius: var(--radius-full);
+  background: var(--camera-control-bg);
+  color: var(--text-on-brand);
+}
+
+.pass-map-close:hover {
+  background: var(--camera-control-bg);
+  color: var(--text-on-brand);
+}
+
+/*
+ * The frame the map is zoomed inside, by `ui/map-zoom.ts`.
+ *
+ * `touch-action: none` takes pinch and pan away from the browser here, and only
+ * here: left to the browser, a pinch zooms the whole screen, header and close
+ * button included. The viewport still allows zoom, so the rest of the page is
+ * unaffected.
+ */
+.pass-map-body {
+  flex: 1;
+  min-height: 0;
+
+  overflow: hidden;
+  overscroll-behavior: contain;
+  touch-action: none;
+
+  border-radius: var(--radius-md);
+}
+
+/*
+ * The element fills the frame and the drawing is fitted inside it, so the whole
+ * map shows unzoomed whatever the screen's shape. Sized by width alone, a map
+ * taller than the frame would lose its foot to the clip, with nothing at 1×
+ * that could scroll it into view.
+ *
+ * Transformed from its top-left corner, which is the origin the zoom maths in
+ * `ui/map-zoom.ts` assumes.
+ */
+.pass-map-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+  transform-origin: 0 0;
+  touch-action: none;
+  -webkit-user-drag: none;
+}
+
+/*
+ * Only for the length of a gesture. Left on, `will-change` keeps the drawing
+ * as the bitmap it was painted at before the zoom, and a zoomed SVG stays blurry.
+ */
+.pass-map-image.is-gesturing {
+  will-change: transform;
+}
+
+.pass-map-help {
+  font-size: var(--text-sm);
+  color: var(--text-on-brand-muted);
+  text-align: center;
+  text-wrap: balance;
+}
+/*
+ * The way in to the questionnaire: the staff-link chip, on a line of its own.
+ * Empty while the link is hidden, so it takes no height.
+ */
+.pass-survey-line {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/*
+ * The questionnaire chip, set apart from the links around it: it is the only
+ * one that closes, so it is filled with the accent and rings once whenever it
+ * appears.
+ *
+ * Keyed on `data-revealed`, which `index.ts` sets as the boot screen goes, and
+ * delayed by that fade: from first paint it would ring behind the boot screen,
+ * under a skeleton that strips `box-shadow`. Leaving `display: none` restarts
+ * the animation, so it rings again when the poll reveals it. The reduced-motion
+ * reset in `base/reset.css` stills it.
+ */
+.pass-survey-link,
+.pass-survey-link:hover {
+  border-color: var(--brand-accent);
+  background: var(--brand-accent);
+  color: var(--text-on-brand-accent);
+}
+
+.pass[data-revealed] .pass-survey-link {
+  animation: pass-survey-ring 1.2s ease-out var(--duration-slow) 1;
+}
+
+/* The global ring would vanish into the fill, or into the backdrop. */
+.pass-survey-link:focus-visible {
+  outline-color: var(--text-on-brand);
+}
+
+@keyframes pass-survey-ring {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand-accent) 60%, transparent);
+  }
+  to {
+    box-shadow: 0 0 0 0.75rem transparent;
+  }
+}
+
+/*
+ * The questionnaire, over the pass.
+ *
+ * Sized and animated like the venue map, but on the neutral surface rather than
+ * the brand backdrop: its inputs, rating slider and yes/no chips are styled
+ * for the neutral canvas, and a form is read, not glanced at across a counter.
+ */
+.pass-survey {
+  width: 100%;
+  max-width: var(--content-max);
+  height: 100dvh;
+  max-height: none;
+
+  margin: 0 auto;
+  padding: calc(var(--space-4) + env(safe-area-inset-top)) var(--space-4)
+    calc(var(--space-4) + env(safe-area-inset-bottom));
+  border: none;
+
+  background: var(--surface);
+  color: var(--text);
+
+  opacity: 0;
+  translate: 0 0.5rem;
+
+  /* As for the map: the discrete properties keep it laid out while it fades. */
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    translate var(--duration-base) var(--ease-out),
+    display var(--duration-base) allow-discrete,
+    overlay var(--duration-base) allow-discrete;
+}
+
+/*
+ * The dialogs follow the pass to full width on tall, wide phones (see
+ * `.pass-container`). Declared after both base rules so it wins on order.
+ */
+@media (min-width: 27rem) and (max-aspect-ratio: 3 / 5) {
+  .pass-map,
+  .pass-survey {
+    max-width: none;
+  }
+}
+
+/* `display` only while open, for the reason given at `.pass-map[open]`. */
+.pass-survey[open] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  opacity: 1;
+  translate: 0 0;
+  transition-duration: var(--duration-slow);
+}
+
+@starting-style {
+  .pass-survey[open] {
+    opacity: 0;
+    translate: 0 0.5rem;
+  }
+}
+
+.pass-survey::backdrop {
+  background: var(--scrim);
+  opacity: 0;
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    display var(--duration-base) allow-discrete,
+    overlay var(--duration-base) allow-discrete;
+}
+
+.pass-survey[open]::backdrop {
+  opacity: 1;
+  transition-duration: var(--duration-slow);
+}
+
+@starting-style {
+  .pass-survey[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* The pass must not scroll behind the questionnaire; the questionnaire does. */
+html:has(.pass-survey[open]) {
+  overflow: hidden;
+}
+
+.pass-survey-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.pass-survey-eyebrow {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pass-survey-title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+}
+
+/* A round target the thumb can find, as the map's close is. */
+.pass-survey-close {
+  flex-shrink: 0;
+
+  width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0;
+
+  border-radius: var(--radius-full);
+  background: var(--surface-sunken);
+  color: var(--text);
+}
+
+.pass-survey-close:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.pass-survey-body {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.pass-survey-body,
+.pass-survey-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.pass-survey-intro,
+.pass-survey-anonymity,
+.pass-survey-hint,
+.pass-survey-counter {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.pass-survey-fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.pass-survey-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+
+  margin-bottom: var(--space-2);
+  padding: 0;
+
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--text);
+}
+
+.pass-survey-marker {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+}
+
+.pass-survey-hint {
+  margin-bottom: var(--space-2);
+}
+
+/*
+ * The rating: a 1-10 slider with a number box beside it, so a value can be
+ * dragged, tapped or typed.
+ *
+ * `--rating-thumb` is in px because the script parses it with `parseFloat` to
+ * work out how far the native thumb travels, which is inset by half its width at
+ * each end. The fill is inset by the same amount so it ends at the thumb
+ * centre.
+ */
+.pass-survey-rating {
+  --rating-thumb: 28px;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--space-3);
+}
+
+/* Horizontal drag is ours; a vertical swipe still scrolls the dialog. */
+.pass-survey-rating-track {
+  touch-action: pan-y;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pass-survey-rating-range {
+  appearance: none;
+  -webkit-appearance: none;
+  display: block;
+  width: 100%;
+  height: 2.75rem;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* The fill ends at the thumb centre, not at the edge of the track. */
+.pass-survey-rating-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(
+    to right,
+    var(--accent) 0
+      calc(
+        var(--rating-thumb) / 2 + var(--rating-fill, 0) *
+          (100% - var(--rating-thumb))
+      ),
+    var(--border-strong) 0
+  );
+}
+
+.pass-survey-rating-range::-moz-range-track {
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(
+    to right,
+    var(--accent) 0
+      calc(
+        var(--rating-thumb) / 2 + var(--rating-fill, 0) *
+          (100% - var(--rating-thumb))
+      ),
+    var(--border-strong) 0
+  );
+}
+
+.pass-survey-rating-range::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  width: var(--rating-thumb);
+  height: var(--rating-thumb);
+  /* Centres the thumb on the 6px track. */
+  margin-top: calc((6px - var(--rating-thumb)) / 2);
+
+  border: 3px solid var(--surface);
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.pass-survey-rating-range::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--rating-thumb);
+  height: var(--rating-thumb);
+
+  border: 3px solid var(--surface);
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+/*
+ * Until a value is chosen the thumb rests grey at the centre, showing the line
+ * is there to be dragged, and there is no fill: the inset in the fill formula
+ * would otherwise show half a thumb of accent at the left end.
+ */
+.pass-survey-rating[data-unset]
+  .pass-survey-rating-range::-webkit-slider-thumb {
+  background: var(--text-muted);
+}
+
+.pass-survey-rating[data-unset] .pass-survey-rating-range::-moz-range-thumb {
+  background: var(--text-muted);
+}
+
+.pass-survey-rating[data-unset]
+  .pass-survey-rating-range::-webkit-slider-runnable-track {
+  background: var(--border-strong);
+}
+
+.pass-survey-rating[data-unset] .pass-survey-rating-range::-moz-range-track {
+  background: var(--border-strong);
+}
+
+/* The ring goes on the thumb: the range itself spans the whole row. */
+.pass-survey-rating-range:focus-visible {
+  outline: none;
+}
+
+.pass-survey-rating-range:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.pass-survey-rating-range:focus-visible::-moz-range-thumb {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.pass-survey-rating-input {
+  width: 3.5rem;
+  min-height: 2.75rem;
+  padding: 0 var(--space-1);
+
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  color: var(--text);
+
+  /* 1rem exactly, as for inputs: smaller makes iOS Safari zoom on focus. */
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+/* The slider is the stepper; the spin buttons would only crowd the box. */
+.pass-survey-rating-input::-webkit-inner-spin-button,
+.pass-survey-rating-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.pass-survey-rating-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+.pass-survey-rating-input:user-invalid {
+  border-color: var(--error);
+}
+
+.pass-survey-choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.pass-survey-option {
+  position: relative;
+  margin: 0;
+}
+
+.pass-survey-option span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 2.75rem;
+
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--text);
+
+  cursor: pointer;
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out);
+}
+
+.pass-survey-option input:checked + span {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+/* The radio itself is hidden, so its focus ring is drawn on the chip. */
+.pass-survey-option input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.pass-survey-text {
+  width: 100%;
+  padding: var(--space-4);
+
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  color: var(--text);
+
+  /* 1rem exactly, as for inputs: smaller makes iOS Safari zoom on focus. */
+  font: inherit;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+
+  resize: vertical;
+}
+
+.pass-survey-text:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+.pass-survey-counter {
+  margin-top: var(--space-1);
+  text-align: right;
+}
+
+/* The form's gap already spaces the error slot; its own margins doubled it. */
+.pass-survey-form .hint-div {
+  margin-block: 0;
+}

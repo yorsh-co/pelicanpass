@@ -1,0 +1,172 @@
+<%# i18n: survey %>
+<%
+  // Titles, intros, labels and hints are Markdown from src/web/content,
+  // rendered at boot, so they are written unescaped. Nothing a request carries
+  // reaches them.
+  const definition = survey.definition;
+%>
+<% if (definition) { %>
+<!--
+  Opened by the chip on the pass (`pass.ejs`), which shows only while the
+  questionnaire is open and not yet answered. A modal `<dialog>`, as the venue
+  map is: `showModal()` makes the pass behind it inert, closes on Escape and
+  hands focus back to the chip.
+-->
+<dialog
+  class="pass-survey"
+  data-pass="survey"
+  data-state="<%= survey.state %>"
+  aria-labelledby="survey-title"
+>
+  <div class="pass-survey-head">
+    <div>
+      <p class="pass-survey-eyebrow"><%= copy.heading({ eventName: copyDefaults.eventName }) %></p>
+      <h2 id="survey-title" class="pass-survey-title"><%- definition.title %></h2>
+    </div>
+
+    <button
+      type="button"
+      data-survey="close"
+      class="pass-survey-close"
+      aria-label="<%= copy.close() %>"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+    </button>
+  </div>
+
+  <div class="pass-survey-body">
+    <% if (definition.intro) { %>
+    <div class="pass-survey-intro"><%- definition.intro %></div>
+    <% } %>
+
+    <p class="pass-survey-anonymity">
+      <%= survey.audience === 'volunteer' ? copy.anonymityVolunteer() : copy.anonymityParticipant() %>
+    </p>
+
+    <form
+      class="pass-survey-form"
+      data-survey="form"
+      data-structure-version="<%= definition.structureVersion %>"
+      novalidate
+    >
+      <% definition.questions.forEach((question) => {
+        const fieldId = 'survey-' + question.id;
+        const hintId = fieldId + '-hint';
+        const marker = question.required ? copy.required() : copy.optional();
+      %>
+      <div
+        class="pass-survey-question"
+        data-question-id="<%= question.id %>"
+        data-type="<%= question.type %>"
+        data-required="<%= question.required %>"
+        <% if (question.type === 'text') { %>data-max-length="<%= question.maxLength %>"<% } %>
+      >
+        <% if (question.type === 'text') { %>
+        <label class="pass-survey-label" for="<%= fieldId %>">
+          <%- question.label %>
+          <span class="pass-survey-marker"><%= marker %></span>
+        </label>
+        <% if (question.hint) { %>
+        <p id="<%= hintId %>" class="pass-survey-hint"><%- question.hint %></p>
+        <% } %>
+        <textarea
+          id="<%= fieldId %>"
+          name="<%= question.id %>"
+          class="pass-survey-text"
+          rows="3"
+          maxlength="<%= question.maxLength %>"
+          aria-describedby="<%= fieldId %>-count<%= question.hint ? ' ' + hintId : '' %>"
+          <% if (question.required) { %>required<% } %>
+        ></textarea>
+        <p id="<%= fieldId %>-count" class="pass-survey-counter" data-survey="counter">
+          <%= copy.counter({ count: 0, max: question.maxLength }) %>
+        </p>
+        <% } else if (question.type === 'rating') { %>
+        <fieldset
+          class="pass-survey-fieldset"
+          <% if (question.hint) { %>aria-describedby="<%= hintId %>"<% } %>
+        >
+          <legend id="<%= fieldId %>-label" class="pass-survey-label">
+            <%- question.label %>
+            <span class="pass-survey-marker"><%= marker %></span>
+          </legend>
+          <% if (question.hint) { %>
+          <p id="<%= hintId %>" class="pass-survey-hint"><%- question.hint %></p>
+          <% } %>
+          <div
+            class="pass-survey-rating"
+            data-survey="rating"
+            data-unset
+            data-unset-text="<%= copy.ratingUnset() %>"
+          >
+            <div class="pass-survey-rating-track">
+              <input
+                type="range"
+                min="1"
+                max="10"
+                step="0.5"
+                value="5.5"
+                class="pass-survey-rating-range"
+                data-survey="rating-range"
+                aria-labelledby="<%= fieldId %>-label"
+                aria-valuetext="<%= copy.ratingUnset() %>"
+              />
+            </div>
+            <input
+              type="number"
+              id="<%= fieldId %>"
+              name="<%= question.id %>"
+              min="1"
+              max="10"
+              step="1"
+              inputmode="numeric"
+              class="pass-survey-rating-input"
+              data-survey="rating-input"
+              aria-label="<%= copy.ratingInput() %>"
+              <% if (question.required) { %>required<% } %>
+            />
+          </div>
+        </fieldset>
+        <% } else {
+          const options = [{ value: 'yes', label: copy.yes() }, { value: 'no', label: copy.no() }];
+        %>
+        <fieldset
+          class="pass-survey-fieldset"
+          <% if (question.hint) { %>aria-describedby="<%= hintId %>"<% } %>
+        >
+          <legend class="pass-survey-label">
+            <%- question.label %>
+            <span class="pass-survey-marker"><%= marker %></span>
+          </legend>
+          <% if (question.hint) { %>
+          <p id="<%= hintId %>" class="pass-survey-hint"><%- question.hint %></p>
+          <% } %>
+          <div class="pass-survey-choices">
+            <% options.forEach((option, index) => { %>
+            <label class="pass-survey-option">
+              <input
+                type="radio"
+                class="visually-hidden"
+                name="<%= question.id %>"
+                value="<%= option.value %>"
+                <% if (question.required && index === 0) { %>required<% } %>
+              />
+              <span><%= option.label %></span>
+            </label>
+            <% }) %>
+          </div>
+        </fieldset>
+        <% } %>
+      </div>
+      <% }) %>
+
+      <div class="hint-div" data-survey="error" aria-live="polite"></div>
+
+      <button type="submit" class="pass-survey-submit" data-survey="submit">
+        <span class="btn-label"><%= copy.submit() %></span>
+        <span class="btn-spinner"></span>
+      </button>
+    </form>
+  </div>
+</dialog>
+<% } %>

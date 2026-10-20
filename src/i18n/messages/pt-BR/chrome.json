@@ -1,0 +1,126 @@
+{
+  "chrome.challenge.blocked": {
+    "defaultMessage": "Não foi possível completar a verificação. Dirija-se à mesa de suporte",
+    "description": "Shown over the page when the security check blocked the request outright; a volunteer can help."
+  },
+  "chrome.challenge.blockedAdmin": {
+    "defaultMessage": "Não foi possível completar a verificação. Dirija-se à mesa de suporte",
+    "description": "Same as chrome.challenge.blocked, but on the administrator screens, where the reader is the volunteer and cannot be told to call one."
+  },
+  "chrome.challenge.continue": {
+    "defaultMessage": "Continuar",
+    "description": "Button that redoes an expired security check."
+  },
+  "chrome.challenge.expired": {
+    "defaultMessage": "Verificação de segurança expirada",
+    "description": "Shown over the page when the security check that protects the app has expired and must be redone."
+  },
+  "chrome.challenge.expiredAccess": {
+    "defaultMessage": "Sessão expirada. Entre novamente para continuar",
+    "description": "Shown over an administrator page when the Cloudflare Access session lapsed, so the request never reached the app. The button below it signs the volunteer in again."
+  },
+  "chrome.challenge.reauth": {
+    "defaultMessage": "Entrar novamente",
+    "description": "Button that sends a volunteer back through Cloudflare Access after their session lapsed."
+  },
+  "chrome.challenge.retry": {
+    "defaultMessage": "Tentar novamente",
+    "description": "Button that retries after the security check blocked the request."
+  },
+  "chrome.cookieBanner.link": {
+    "defaultMessage": "como cuidamos dos seus dados",
+    "description": "Second half of the cookie notice: a link to the privacy notice, read straight after chrome.cookieBanner.text."
+  },
+  "chrome.cookieBanner.text": {
+    "defaultMessage": "Usamos cookies necessários para o funcionamento do aplicativo. Veja",
+    "description": "First half of the cookie notice under the pass. It is followed directly by a link whose text is chrome.cookieBanner.link, so the two read as one sentence."
+  },
+  "chrome.footer.copyright": {
+    "defaultMessage": "© {year, number, ::group-off} {eventName}",
+    "description": "Copyright line in every page's footer. year is the current year; eventName is the event's name, filled in as given and never preceded by an article or contraction."
+  },
+  "chrome.footer.creditPrefix": {
+    "defaultMessage": "por",
+    "description": "Word before the organiser's name in the footer credit, which is a link reading the organiser's name."
+  },
+  "chrome.footer.languages": {
+    "defaultMessage": "Idiomas",
+    "description": "Accessible name of the footer's language list. The languages themselves are named in their own language and are not translated here."
+  },
+  "chrome.footer.logout": {
+    "defaultMessage": "Sair",
+    "description": "Footer button that signs the attendee out."
+  },
+  "chrome.footer.privacy": {
+    "defaultMessage": "Privacidade",
+    "description": "Footer link to the privacy notice."
+  },
+  "chrome.footer.terms": {
+    "defaultMessage": "Termos",
+    "description": "Footer link to the terms of use."
+  },
+  "chrome.footer.themeToDark": {
+    "defaultMessage": "Ativar tema escuro",
+    "description": "Accessible name of the theme button while the light theme is on. The button names the theme a tap switches to."
+  },
+  "chrome.footer.themeToLight": {
+    "defaultMessage": "Ativar tema claro",
+    "description": "Accessible name of the theme button while the dark theme is on. The button names the theme a tap switches to."
+  },
+  "chrome.item.drink": {
+    "defaultMessage": "Bebida",
+    "description": "One of the five things an attendee collects, as named on the pass chips, on the volunteer's redemption card and in the admin roster and record form. The item's key is fixed by the database; only this label is copy."
+  },
+  "chrome.item.lunch": {
+    "defaultMessage": "Almoço",
+    "description": "One of the five things an attendee collects, as named on the pass chips, on the volunteer's redemption card and in the admin roster and record form. The item's key is fixed by the database; only this label is copy. Volunteers only: participants never have lunch."
+  },
+  "chrome.item.meal": {
+    "defaultMessage": "Lanche",
+    "description": "One of the five things an attendee collects, as named on the pass chips, on the volunteer's redemption card and in the admin roster and record form. The item's key is fixed by the database; only this label is copy."
+  },
+  "chrome.item.tshirt": {
+    "defaultMessage": "Camiseta",
+    "description": "One of the five things an attendee collects, as named on the pass chips, on the volunteer's redemption card and in the admin roster and record form. The item's key is fixed by the database; only this label is copy."
+  },
+  "chrome.item.tshirtVolunteer": {
+    "defaultMessage": "Camiseta voluntário",
+    "description": "One of the five things an attendee collects, as named on the pass chips, on the volunteer's redemption card and in the admin roster and record form. The item's key is fixed by the database; only this label is copy. The volunteers' own t-shirt, distinct from the participant t-shirt; participants never have it."
+  },
+  "chrome.noscript": {
+    "defaultMessage": "Esta aplicação precisa de JavaScript para funcionar corretamente. Por favor, ative o JavaScript no seu navegador.",
+    "description": "Shown instead of the app when the browser has JavaScript turned off."
+  },
+  "chrome.passLink": {
+    "defaultMessage": "Meu ingresso",
+    "description": "Link back to the person's own pass, from the staff and raffle screens. Whoever runs those screens is also an attendee holding a pass."
+  },
+  "chrome.role.volunteer": {
+    "defaultMessage": "Voluntário",
+    "description": "Badge naming the volunteer role, on the volunteer's pass and on the redemption card a volunteer sees when scanning another volunteer."
+  },
+  "chrome.title.checkin": {
+    "defaultMessage": "Check-in | {appTitle}",
+    "description": "Browser tab title of the check-in flow. appTitle is the application's configured name."
+  },
+  "chrome.title.privacy": {
+    "defaultMessage": "Privacidade — {appTitle}",
+    "description": "Browser tab title of the privacy notice. appTitle is the application's configured name."
+  },
+  "chrome.title.raffle": {
+    "defaultMessage": "Gerador de números | {appTitle}",
+    "description": "Browser tab title of the raffle draw screen. appTitle is the application's configured name."
+  },
+  "chrome.title.staff": {
+    "defaultMessage": "Retiradas | {appTitle}",
+    "description": "Browser tab title of the volunteer's redemption scanner. appTitle is the application's configured name."
+  },
+  "chrome.title.terms": {
+    "defaultMessage": "Termos de Uso — {appTitle}",
+    "description": "Browser tab title of the terms of use. appTitle is the application's configured name."
+  },
+  "chrome.wordmarkAlt": {
+    "defaultMessage": "PelicanPass",
+    "description": "Alternative text and accessible name of the PelicanPass wordmark image, in the header, the admin rail, and the landing, closing, check-in continue and boot screens. The product name, not translated."
+  }
+}

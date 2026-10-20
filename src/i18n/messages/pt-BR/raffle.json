@@ -1,0 +1,50 @@
+{
+  "raffle.idle": {
+    "defaultMessage": "Toca em \"gerar número\" para começar",
+    "description": "Hint under the empty number, before the first draw of the evening. Read by whoever holds the microphone, in front of a room: short, and about what is happening rather than about the software."
+  },
+  "raffle.drawButton": {
+    "defaultMessage": "Gerar número",
+    "description": "The main button that draws the next number. A single verb; it is tapped repeatedly on a stage."
+  },
+  "raffle.repeatsLabel": {
+    "defaultMessage": "Permitir números repetidos",
+    "description": "Checkbox label. When on, a number already drawn can be drawn again. Off after every reload, deliberately."
+  },
+  "raffle.drawnHeading": {
+    "defaultMessage": "Gerados",
+    "description": "Heading over the list of numbers already drawn this evening."
+  },
+  "raffle.drawnEmpty": {
+    "defaultMessage": "Nenhum número gerado ainda",
+    "description": "Shown in place of the drawn list while it is empty."
+  },
+  "raffle.counters": {
+    "defaultMessage": "{drawn, plural, other {# gerados · {remaining, plural, other {# restantes}}}}",
+    "description": "Counters beside the drawn list: how many numbers are standing, and how many are left to call. Always shown together and in this order."
+  },
+  "raffle.resetLabel": {
+    "defaultMessage": "Devolver #{checkinNumber, number, ::group-off} aos restantes",
+    "description": "Accessible name of the control that puts a drawn number back into the pool. Every row's control is the same icon, so the number must be in the name or a screen reader hears the same word on every row. The number is a check-in number and is never grouped."
+  },
+  "raffle.exhausted": {
+    "defaultMessage": "Todos os números já foram gerados",
+    "description": "Error shown when every eligible number has already been called."
+  },
+  "raffle.emptyPool": {
+    "defaultMessage": "Ninguém fez check-in ainda",
+    "description": "Shown when the pool is empty because nobody has checked in yet."
+  },
+  "raffle.resetFailed": {
+    "defaultMessage": "Esse número já tinha sido devolvido",
+    "description": "Shown when putting a number back found nothing to undo, which means another operator already put it back."
+  },
+  "raffle.serverError": {
+    "defaultMessage": "Algo deu errado. Tente novamente",
+    "description": "Generic failure on the raffle screen, for a draw, a reset or the initial load. Informal second person, like the rest of the attendee surfaces."
+  },
+  "raffle.stillWorking": {
+    "defaultMessage": "Ainda processando. Tente novamente em instantes",
+    "description": "A draw or a reset took too long, the server was too busy to take it, or an earlier tap of the same draw is still running. Tapping again is safe: a draw that already went through shows the same number rather than calling another."
+  }
+}

@@ -1,0 +1,36 @@
+.env
+
+# Easily accessible ignore folder
+.ignore/
+
+# Node / NPM
+node_modules/
+
+# VS Code
+.vscode/
+
+# Client bundles, built by scripts/build-client.ts
+src/web/public/js/
+src/web/public/css/dist/
+
+# Static closing site, built by scripts/static/build.ts
+dist/
+
+# TypeScript incremental build info
+*.tsbuildinfo
+
+# Claude worktrees
+.claude/
+
+# Git worktrees
+.worktrees/
+
+# Durable warn+ logs, when LOG_FILE_DIR points here in development
+logs/
+
+# Load-test fixtures (live link tokens) and summaries, per run
+loadtest/fixtures.json
+loadtest/results/
+
+# Post-event report output: holds survey answers, never commit
+/reports/

@@ -1,0 +1,354 @@
+/*
+ * The redemptions screen and one attendee's redemption record.
+ *
+ * Linked after pages/admin/attendees.css, whose `.admin-list`, `.admin-table`
+ * and `.admin-pager` both pages reuse; this sheet adds only what they lack.
+ *
+ * **No media query**, for the reason attendees.css gives: the cards wrap on
+ * their own and the tables scroll inside `.admin-list__scroll`.
+ */
+
+/* ------------------------------------------------------------- summary */
+
+.redemptions__lede {
+  margin: var(--space-1) 0 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.redemptions__state {
+  margin: 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+/* Stale figures are dimmed, and the liveness line says why. */
+.redemptions[data-state='stale'] .redemptions__cards,
+.redemptions[data-state='stale'] .redemptions__options {
+  opacity: 0.55;
+}
+
+.redemptions[data-state='stale'] .redemptions__state {
+  color: var(--warn);
+}
+
+.redemptions__heading {
+  margin: 0 0 var(--space-3);
+
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+.redemptions__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--space-4);
+}
+
+.redemptions__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  width: 100%;
+
+  padding: var(--space-4);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.redemptions__card-title {
+  margin: 0;
+
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+}
+
+.redemptions__progress {
+  margin: 0;
+
+  color: var(--accent);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.redemptions__none {
+  margin: 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.redemptions__figures {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-1) var(--space-3);
+
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+/* Each pair is its own grid row: the label on the left, the count right-aligned
+   so the four numbers line up in a column. */
+.redemptions__figures > div {
+  display: contents;
+}
+
+.redemptions__figures dt {
+  color: var(--text-muted);
+}
+
+.redemptions__figures dd {
+  margin: 0;
+
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.redemptions__options {
+  margin-top: var(--space-4);
+}
+
+.redemptions__options > summary {
+  margin-bottom: var(--space-3);
+
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+}
+
+/* The breakdown's rows open nothing; attendees.css gives every table row a
+   pointer and a hover because the roster's do. */
+.redemptions__table tbody tr,
+.redemption-record__history tbody tr {
+  cursor: default;
+}
+
+.redemptions__table tbody tr:hover,
+.redemption-record__history tbody tr:hover {
+  background: none;
+}
+
+.redemptions__table td:nth-child(n + 3) {
+  font-variant-numeric: tabular-nums;
+}
+
+.redemptions__footnote {
+  margin: var(--space-3) 0 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.redemptions__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.redemptions__list .redemptions__heading {
+  margin: 0;
+}
+
+.redemptions__list .role-badge {
+  margin-top: var(--space-1);
+}
+
+/* -------------------------------------------------------------- record */
+
+.redemption-record {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+
+  max-width: var(--admin-content-max);
+}
+
+.redemption-record__head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-bottom: 0;
+}
+
+/* See `.lookup-record__headline`. */
+.redemption-record__headline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+
+  align-self: stretch;
+}
+
+.redemption-record__title {
+  min-width: 0;
+
+  margin: 0;
+
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+.redemption-record__close {
+  flex: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2.75rem;
+  height: 2.75rem;
+
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.redemption-record__close:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.redemption-record__nickname {
+  margin: 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.redemption-record__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.redemption-record__flag {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+
+  border: 1px solid var(--error);
+  border-radius: var(--radius-md);
+
+  color: var(--error);
+  font-size: var(--text-sm);
+}
+
+.redemption-record__hint {
+  margin: 0;
+
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.redemption-record__error {
+  margin: 0 0 var(--space-3);
+
+  color: var(--error);
+  font-size: var(--text-sm);
+}
+
+.redemption-record__error:empty {
+  display: none;
+}
+
+.redemption-record__items {
+  display: flex;
+  flex-direction: column;
+
+  margin: 0;
+  padding: 0;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  list-style: none;
+}
+
+.redemption-record__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+
+  padding: var(--space-3) var(--space-4);
+}
+
+.redemption-record__item + .redemption-record__item {
+  border-top: 1px solid var(--border);
+}
+
+.redemption-record__item-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+
+  min-width: 0;
+}
+
+.redemption-record__item-label {
+  font-weight: var(--weight-medium);
+}
+
+.redemption-record__item-option,
+.redemption-record__item-status {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* A mark as well as the colour, for the reason attendees.css gives. */
+.redemption-record__item.is-redeemed .redemption-record__item-status::before {
+  content: '✓ ';
+  color: var(--success, var(--text));
+}
+
+.redemption-record__correct {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-2);
+}
+
+.redemption-record__correct select {
+  padding: var(--space-2) var(--space-3);
+
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-sm);
+}
+
+.redemption-record__action {
+  min-height: auto;
+  width: auto;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  border-radius: var(--radius-sm);
+}
+
+/* The armed state reads as a warning, as the lookup's confirm button does. */
+.redemption-record__action.is-armed,
+.redemption-record__action.is-armed:hover {
+  border-color: var(--error);
+  background: var(--error);
+  color: var(--accent-text);
+}
+
+/* Corrections are what the history exists to show, so they stand out from the
+   counter's own records. */
+.redemption-record__outcome--marked td,
+.redemption-record__outcome--reverted td {
+  color: var(--info);
+}
