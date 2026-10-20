@@ -231,7 +231,7 @@ export const stripNonces = (
  * @param header - `Content-Security-Policy` as the fallback sent it.
  * @param hashes - Script and style hashes to authorise in place of nonces.
  */
-const hashPolicy = (
+export const hashPolicy = (
   header: string,
   hashes: { scripts: string[]; styles: string[] },
 ): string =>
@@ -250,7 +250,12 @@ const hashPolicy = (
     })
     .join('; ');
 
-const headersFile = (policy: string): string =>
+/**
+ * Builds the Cloudflare Pages `_headers` file.
+ *
+ * @param policy - `Content-Security-Policy` value to send on every route.
+ */
+export const headersFile = (policy: string): string =>
   `/*
   Content-Security-Policy: ${policy}
   Permissions-Policy: ${PERMISSIONS_POLICY}
@@ -262,6 +267,56 @@ const headersFile = (policy: string): string =>
 /site.webmanifest
   Content-Type: application/manifest+json
 `;
+
+/**
+ * Copies the files under `src/web/public` that `seeds` reference, following
+ * references inside copied CSS and JS, so only assets in use are shipped.
+ *
+ * @param outDir - Directory to copy into.
+ * @param seeds - Root-absolute paths to start from.
+ * @param skip - Root-absolute paths that are pages, not assets.
+ * @returns The size in bytes of each file written, keyed by its path relative
+ *   to `outDir`.
+ * @throws {Error} If a referenced file is not in `src/web/public`.
+ */
+export const copyReferencedAssets = async (
+  outDir: string,
+  seeds: readonly string[],
+  skip: ReadonlySet<string> = NOT_ASSETS,
+): Promise<Map<string, number>> => {
+  const queue = [...seeds];
+  const copied = new Set<string>();
+  const written = new Map<string, number>();
+
+  for (let target = queue.pop(); target !== undefined; target = queue.pop()) {
+    if (skip.has(target) || copied.has(target)) continue;
+
+    copied.add(target);
+
+    const source = path.join(PUBLIC_DIR, target);
+    const inside = path.relative(PUBLIC_DIR, source);
+
+    if (
+      inside.startsWith('..') ||
+      !existsSync(source) ||
+      !(await stat(source)).isFile()
+    ) {
+      throw new Error(`${target} is referenced but not in src/web/public`);
+    }
+
+    const destination = path.join(outDir, target);
+
+    await mkdir(path.dirname(destination), { recursive: true });
+    await cp(source, destination);
+    written.set(target.slice(1), (await stat(source)).size);
+
+    if (/\.(css|js)$/.test(target)) {
+      queue.push(...referencesOf(target, await readFile(source, 'utf8')));
+    }
+  }
+
+  return written;
+};
 
 /** Starts the fallback closed for good and hands its pages to `use`. */
 const withClosedFallback = async <T>(
@@ -376,41 +431,15 @@ export const buildStaticSite = async ({
 
   await write('site.webmanifest', JSON.stringify(manifest));
 
-  const queue = [
+  const assets = await copyReferencedAssets(outDir, [
     '/favicon.ico',
     ...manifest.icons.map((icon) => icon.src),
     ...PAGES.flatMap(({ file }) =>
       referencesOf(`/${file}`, pages.get(file) ?? ''),
     ),
-  ];
-  const copied = new Set<string>();
+  ]);
 
-  for (let target = queue.pop(); target !== undefined; target = queue.pop()) {
-    if (NOT_ASSETS.has(target) || copied.has(target)) continue;
-
-    copied.add(target);
-
-    const source = path.join(PUBLIC_DIR, target);
-    const inside = path.relative(PUBLIC_DIR, source);
-
-    if (
-      inside.startsWith('..') ||
-      !existsSync(source) ||
-      !(await stat(source)).isFile()
-    ) {
-      throw new Error(`${target} is referenced but not in src/web/public`);
-    }
-
-    const destination = path.join(outDir, target);
-
-    await mkdir(path.dirname(destination), { recursive: true });
-    await cp(source, destination);
-    written.set(target.slice(1), (await stat(source)).size);
-
-    if (/\.(css|js)$/.test(target)) {
-      queue.push(...referencesOf(target, await readFile(source, 'utf8')));
-    }
-  }
+  assets.forEach((size, file) => written.set(file, size));
 
   const policy = hashPolicy(fallbackPolicy, {
     scripts: [...hashes.scripts],
