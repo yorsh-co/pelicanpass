@@ -117,6 +117,25 @@ git-ignored: the pages, `admin/`, `404.html`, `_headers`, `_redirects`, `robots.
 `site.webmanifest`, `css/demo.css`, `js/demo/mock-api.js` and the assets they reference. `--out <dir>`
 writes elsewhere.
 
+### Regenerating README screenshots
+
+```sh
+npm run build:demo
+npm run docs:screenshots
+```
+
+`scripts/docs/screenshots.ts` serves `dist/demo/` on a local port, drives the real pages in Chromium
+and writes nine compressed PNGs to `docs/images/screenshots/`, the ones `README.md` shows: the check-in
+ticket and verification steps, the participant pass front and back, the volunteer pass, `/staff` after
+a typed code, `/raffle` after one draw, and `/admin/redemptions` and `/admin/metrics`. Phone screens
+are 390×844 at 2×, admin screens 1440×900. The demo banner is hidden, and the clock, time zone,
+`Math.random` and motion are fixed so a rerun differs by at most a few antialiased pixels. `--out <dir>`
+writes elsewhere.
+
+The browser is the one in Playwright's cache (`~/.cache/ms-playwright`), found by `playwright-core`
+at the revision it pins; the script downloads nothing. Where the cache is empty, run
+`npx playwright-core install chromium` once.
+
 ## 4. Rehearse
 
 Deploy with Direct Upload. There is no Git-integrated Pages build, which keeps build secrets out of
