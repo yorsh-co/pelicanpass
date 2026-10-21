@@ -1132,14 +1132,14 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 > {tier, select, edit {Cadastro} raffle {Gerador de N°} lookup {Consulta} tshirt {Camisetas} redeem {Retiradas} other {Voluntário}}
 
-- **Why:** Chip on the tab at the top right of a volunteer's own pass, beside the logo.
-  Tapping the tab opens the volunteer's actions (the staff links), and the chip names what their access lets them do, so a team leader can ask what it says and know what to expect of them; read aloud as the tab's name, so it is a plain word or two.
+- **Why:** Chip at the top right of a volunteer's own pass, beside the logo, in their tier's colour.
+  Tapping the chip opens the volunteer's actions (the staff links), and it names what their access lets them do, so a team leader can ask what it says and know what to expect of them; read aloud as the button's name, so it is a plain word or two.
   Shown in capital letters by the stylesheet, so the stored case is not what appears.
   tier is the highest access the volunteer holds: edit is the registration screen, raffle the number generator, redeem the collection of items, lookup the attendee search, tshirt the T-shirt desk.
   A volunteer who can both look up and redeem shows lookup.
   other is only a fallback for a tier the server does not send today, so it names the volunteer role and never claims an access.
-  A volunteer with actions but none of these tiers gets the tab with the plain volunteer chip, chrome.role.volunteer, and a volunteer with no actions at all sees that chip in the header with no tab.
-  It is the longest text the tab takes and shares a row with the logo on a 320px screen, so keep it short; it may wrap onto two lines.
+  A volunteer with actions but none of these tiers gets the plain volunteer chip, chrome.role.volunteer, as the button, and a volunteer with no actions at all sees that chip in the header as a badge that opens nothing.
+  It shares a row with the logo on a 320px screen, so keep it short: no single word may be longer than VOLUNTÁRIO, and two or more words may wrap onto two lines.
   N° is the abbreviation of número.
 - **Ref:** `pass.accessBadge`
 - **Locales:** pt-BR ✓ · en-XA (pseudo)
@@ -1156,7 +1156,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 > Suas funções
 
-- **Why:** Heading of the volunteer's actions view, the face opened by the access tab, above the links to the staff surfaces they may use.
+- **Why:** Heading of the volunteer's actions view, the face opened by the access chip, above the links to the staff surfaces they may use.
   funções are the jobs their access covers.
 - **Ref:** `pass.actionsTitle`
 - **Locales:** pt-BR ✓ · en-XA (pseudo)
@@ -1239,7 +1239,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 > Voltar ao ingresso
 
-- **Why:** Accessible name of the logo's tab on the actions view, which returns to the front of the pass.
+- **Why:** Accessible name of the invisible button over the logo on the actions view, which returns to the front of the pass.
   Never shown as text: the logo itself is what is on screen.
   Read aloud as a button.
 - **Ref:** `pass.frontTab`
