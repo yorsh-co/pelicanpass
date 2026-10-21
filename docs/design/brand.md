@@ -81,9 +81,9 @@ and the layouts' `theme-color` metas.
 
 ### Volunteer tiers
 
-The volunteer pass's access tab and chip take one fill per tier, defined in `css/components/access-tier.css`
+The volunteer pass's access chip and top edge take one fill per tier, defined in `css/components/access-tier.css`
 and read off `data-access`. The five share one lightness and chroma (OKLCH L 0.48, C 0.12) and differ only
-in hue, so they read as one family beside Harbour. The groove between a tab and the card is Abyss.
+in hue, so they read as one family beside Harbour. A tier shows as its chip and as a 6px edge along the card's top.
 
 | Tier   | Hex       | Ink       | Ratio |
 | ------ | --------- | --------- | ----- |

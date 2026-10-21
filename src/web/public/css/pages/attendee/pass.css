@@ -44,11 +44,21 @@
 
   box-shadow: var(--shadow-lg);
 
-  /* The card's inset, which the tabs bleed through to reach its edges. */
-  --pass-pad: var(--space-5);
+  /* The depth of a tier's edge along the card's top. */
+  --pass-edge: 6px;
+}
 
-  /* Abyss, the backdrop's deep end: the groove between a tab and the body. */
-  --pass-groove: #072a33;
+/*
+ * A volunteer's tier, as an edge along the card's top. An inset shadow rather
+ * than a border or a pseudo-element: it follows the card's rounded corners and
+ * takes no space, so nothing below it moves. It shows on every face, so the
+ * tier is readable whichever side is up. Without `data-access` (a participant,
+ * or a volunteer with no tier) there is no edge.
+ */
+.pass[data-access] {
+  box-shadow:
+    inset 0 var(--pass-edge) 0 var(--access-stripe),
+    var(--shadow-lg);
 }
 
 /*
@@ -87,17 +97,17 @@
   --role-badge-bg: var(--camera-control-bg);
   --role-badge-fg: var(--text-on-brand);
 
-  /* How far the tabs reach below the wordmark's own height. */
-  --tab-drop: var(--space-3);
-
   /*
    * The wordmark and the front tab share the first cell, so the tab can lie
-   * over it; the right column holds the access tab, or a plain volunteer's
-   * chip.
+   * over it; the right column holds the access chip, or a plain volunteer's
+   * badge.
    */
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
+
+  /* On the row, not the wordmark, so the chip stays centred on it. */
+  padding-block-end: var(--space-3);
 }
 
 .pass-head > header {
@@ -105,9 +115,8 @@
   position: relative;
   z-index: 2;
 
-  /* Room for the front tab's edge and gap beyond the wordmark. */
+  /* A gap to the chip beside the wordmark. */
   padding-inline-end: var(--space-2);
-  padding-block-end: var(--tab-drop);
 
   /* Clicks fall through to the front tab beneath. */
   pointer-events: none;
@@ -119,148 +128,160 @@
 }
 
 /*
- * The tabs. Two shapes of one idea: the inactive tab paints its own corner of
- * the card and is cut off from the body by an Abyss border on its inner
- * sides, which reads as a groove cut into the card; the active tab has no
- * border and shares the body's paint, so it reads as joined. The groove is
- * the brand's own deep end rather than the canvas, so it looks the same in
- * both schemes instead of a white or black gutter. No masks and no measuring:
- * the borders are the whole effect.
+ * The access chip. A button that opens the actions face, drawn as the tier's
+ * pill: the button itself is transparent and only gives the pill a tap target,
+ * in the cell a plain volunteer's badge occupies, so the head is the same size
+ * with or without actions. The pill is the inner `.role-badge`, painted in the
+ * tier's colours; its faint white ring keeps the darkest tiers from sinking
+ * into the backdrop. The chevron points at the actions it opens.
  */
 .pass-tab {
   grid-column: 3;
   grid-row: 1;
 
-  /* Bleed through the card's padding to its top and right edges. */
-  margin: calc(-1 * var(--pass-pad)) calc(-1 * var(--pass-pad)) 0 0;
-  padding: calc(var(--pass-pad) + var(--space-1)) var(--pass-pad)
-    calc(var(--tab-drop) + var(--space-1)) var(--space-3);
-
   /* The global button is a full-width accent block. */
   width: auto;
-  min-height: 0;
-  max-width: 62vw;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: var(--space-2) 0 var(--space-2) var(--space-2);
 
-  border: 0 solid var(--pass-groove);
-  border-width: 0 0 var(--space-1) var(--space-1);
-  border-radius: 0 var(--radius-lg) 0 var(--radius-md);
-  background: var(--access-stripe);
-  color: var(--access-ink);
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
 
-  --role-badge-bg: var(--access-ink);
-  --role-badge-fg: var(--access-stripe);
+  --role-badge-bg: var(--access-stripe);
+  --role-badge-fg: var(--access-ink);
 }
 
-/* The neutral tab's chip is glass, as the plain volunteer's is. */
+.pass-tab:hover {
+  background: none;
+}
+
+/* The neutral chip is glass, as the plain volunteer's badge is. */
 .pass:not([data-access]) .pass-tab {
   --role-badge-bg: var(--camera-control-bg);
   --role-badge-fg: var(--text-on-brand);
 }
 
-.pass-tab:hover {
-  background: var(--access-stripe);
-  color: var(--access-ink);
-}
-
-/*
- * The global ring sits 2px outside the box, where the card's edge and the
- * page's would clip it, and its `border-radius` would square the tab's corner.
- * Drawn inside the tab, in the tab's ink.
- */
-.pass-tab:focus-visible,
-.pass-front-tab:focus-visible {
-  outline-offset: -4px;
-  outline-color: var(--access-ink);
-}
-
-.pass-tab:focus-visible {
-  border-radius: 0 var(--radius-lg) 0 var(--radius-md);
-}
-
-.pass-front-tab:focus-visible {
-  border-radius: var(--radius-lg) 0 var(--radius-md) 0;
-  outline-color: var(--text-on-brand);
-}
-
 .pass-tab .role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+
   /* The longest label overflows a 320px row beside the wordmark: wrap it. */
   flex-shrink: 1;
-  padding-inline: var(--space-2);
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-3);
   white-space: normal;
   text-align: center;
+
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 18%);
+}
+
+/* Drawn with borders: the icon font's subset has no chevron to spare. */
+.pass-tab .role-badge::after {
+  content: '';
+  flex-shrink: 0;
+  width: 0.4em;
+  height: 0.4em;
+  margin-inline-end: 0.2em;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  transform: rotate(-45deg);
 }
 
 /*
- * On the narrowest phones the longest label's longest word, RETIRADAS, is
- * most of what the row has left beside the wordmark. The wordmark keeps its
- * size and its gap to the tab; the tab's padding and the chip's type give.
+ * The global ring sits outside the button's box and would be clipped by the
+ * card, so the ring is drawn around the pill instead.
+ */
+.pass-tab:focus-visible {
+  outline: none;
+}
+
+.pass-tab:focus-visible .role-badge {
+  outline: 2px solid var(--text-on-brand);
+  outline-offset: 2px;
+}
+
+/*
+ * On small phones the wordmark and the longest single-word label, VOLUNTÁRIO,
+ * are wider than the row. The chip's type and padding give first; below 360px
+ * that is not enough, and the wordmark and the gaps around the chip give too.
  */
 @media (max-width: 24rem) {
   .pass-tab {
-    padding-inline: var(--space-1);
+    padding-inline-start: var(--space-1);
   }
 
   .pass-tab .role-badge {
-    padding-inline: var(--space-1);
+    padding-inline: var(--space-2);
     font-size: 0.6875rem;
     letter-spacing: 0.02em;
   }
 }
 
+@media (max-width: 359px) {
+  .pass-head > header {
+    padding-inline-end: var(--space-1);
+  }
+
+  .pass-head .wordmark {
+    height: 1.625rem;
+  }
+
+  .pass-tab {
+    padding-inline-start: 0;
+  }
+}
+
 /*
- * The front tab: laid over the wordmark, and drawn only on the actions face,
- * where it is the inactive one.
+ * The actions face: the card keeps the brand backdrop and the head does not
+ * move. Only the pill changes, swapping its fill and ink to read as pressed,
+ * and the chevron turns to point back at the front. `aria-expanded` is the
+ * state `ui/pass.ts` already keeps, so the style cannot drift from it. For a
+ * neutral chip the swap gives a white pill in the backdrop's mid-tone; the
+ * selector matches the neutral chip's specificity and comes after it.
+ */
+.pass .pass-tab[aria-expanded='true'] {
+  --role-badge-bg: var(--access-ink);
+  --role-badge-fg: var(--access-stripe);
+}
+
+.pass-tab[aria-expanded='true'] .role-badge::after {
+  margin-inline: 0.2em 0;
+  transform: rotate(135deg);
+}
+
+/*
+ * The front tab: laid over the wordmark, invisible, and live only on the
+ * actions face, where it returns to the front.
  */
 .pass-front-tab {
-  /*
-   * From the card's left edge to the access tab, whatever the wordmark's
-   * width. The right margin pulls its box over the access tab's left border,
-   * so its groove lands on that border's pixels: the divider keeps its
-   * place when the tabs swap.
-   */
-  grid-area: 1 / 1 / 2 / 3;
+  grid-area: 1 / 1;
   position: relative;
   z-index: 1;
-  margin: calc(-1 * var(--pass-pad)) calc(-1 * var(--space-1)) 0
-    calc(-1 * var(--pass-pad));
   align-self: stretch;
   justify-self: stretch;
 
   width: auto;
   min-height: 0;
+  margin: 0;
   padding: 0;
 
-  border: 0 solid var(--pass-groove);
-  border-width: 0 var(--space-1) var(--space-1) 0;
-  border-radius: var(--radius-lg) 0 var(--radius-md) 0;
-  background: var(--brand-backdrop);
+  border: 0;
+  background: none;
   color: var(--text-on-brand);
 }
 
 .pass-front-tab:hover {
-  background: var(--brand-backdrop);
+  background: none;
 }
 
-/*
- * The actions face: the tabs swap. The card keeps the brand backdrop; the head
- * becomes a tier-coloured band that bleeds to the card's top and sides and
- * reaches a little below the tabs, so the access tab, now active, opens into
- * it. The wordmark side turns into the inactive tab and sits on the band, its
- * rounded corner exposing the tier colour as a concave shoulder. The negative
- * margins and the padding that matches them leave the head's content where it
- * is on the front.
- */
-.pass[data-face='actions'] .pass-head {
-  margin: calc(-1 * var(--pass-pad)) calc(-1 * var(--pass-pad))
-    calc(-1 * var(--space-4));
-  padding: var(--pass-pad) var(--pass-pad) var(--space-4);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  background: var(--access-stripe);
-}
-
-.pass[data-face='actions'] .pass-tab {
-  /* The border stays, so the chip does not move; it takes the band's paint. */
-  border-color: transparent;
+/* The global ring sits outside the box, where the card's edge would clip it. */
+.pass-front-tab:focus-visible {
+  border-radius: var(--radius-md);
+  outline-color: var(--text-on-brand);
+  outline-offset: -2px;
 }
 
 .pass-head header {
@@ -905,7 +926,7 @@ body[data-page='pass'] .footer-logout-wrap {
 /*
  * The actions face: the staff links stacked at full width, and the way back at
  * the foot. The body keeps the brand backdrop on this face, so they take the
- * same glass as the front's chips; only the head is tier-coloured.
+ * same glass as the front's chips.
  */
 .pass-actions {
   gap: var(--space-4);

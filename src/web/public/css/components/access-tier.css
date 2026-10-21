@@ -1,7 +1,7 @@
 /*
  * What a volunteer's access looks like from across a table: one fill and ink
  * per tier, read off `data-access`. Shared by the pass, where it paints the
- * tab and the band the tab opens into, and by the administrator screens' tier
+ * access chip and the card's top edge, and by the administrator screens' tier
  * chip.
  *
  * A volunteer with actions but no tier has no `data-access` and keeps the
