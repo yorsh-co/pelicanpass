@@ -265,6 +265,12 @@ const renderPages = async (): Promise<{
     releaseId: RELEASE_ID,
     navLabel: (item, shell) => NAV_LABELS[item.key](shell),
     use: [
+      // The pages are static and ?lang= needs a server, so a switcher here
+      // would link to the same file. The banner toggles the language instead.
+      (_req, res, next) => {
+        res.locals.localeLinks = [];
+        next();
+      },
       helmet({
         contentSecurityPolicy: {
           directives: cspDirectives(
