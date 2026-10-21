@@ -1,6 +1,6 @@
 # Static Demo — Implementation Plan
 
-**Status:** proposed. Nothing below is built yet.
+**Status:** implemented. The runbook is [`demo-site.md`](../operations/demo-site.md); this plan is kept as the design record.
 
 A public, interactive demo of PelicanPass as plain files on Cloudflare Pages at
 `pelicanpass.demos.yorsh.co`, for the README and a portfolio. There is no server, database,

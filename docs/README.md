@@ -11,6 +11,7 @@ Runbooks for the event: deploying, the day itself, failover and support.
 | [`deployment.md`](./operations/deployment.md)               | Production runbook: first deploy, the 16-step verification, rehearsals, the day itself, updates, rollback, teardown             |
 | [`fallback.md`](./operations/fallback.md)                   | Standalone server that keeps the public hostname answering while the stack restarts: what it serves, cut-over, the closing page |
 | [`static-site.md`](./operations/static-site.md)             | The closing page as static files on Cloudflare Pages: build, rehearsal, cut-over, zone rules afterwards, decommission           |
+| [`demo-site.md`](./operations/demo-site.md) | The public demo as static files on Cloudflare Pages: what it serves, the in-browser mock API, build, rehearsal, custom domain |
 | [`standby.md`](./operations/standby.md)                     | Warm standby on a second host: the per-minute snapshot, failover, cut-back and what a failover can lose                         |
 | [`event-day-support.md`](./operations/event-day-support.md) | Event-day support session on dev-server: what it can do, the data-controller sign-off, log stripping, rehearsal, teardown           |
 | [`db-cheatsheet.md`](./operations/db-cheatsheet.md)         | psql access, seeding, which role for what                                                                                       |
@@ -73,7 +74,7 @@ Conventions for changing the code and the copy.
 | [`admin-export-plan.md`](./development/admin-export-plan.md)           | Result exports in `/admin/exports`: shared CSV building, anonymous and pseudonymous variants, download audit |
 | [`admin-import-plan.md`](./development/admin-import-plan.md)           | Roster and volunteer-permission CSV import in `/admin/import`: preview then commit, the web and CLI write paths |
 | [`qr-scanner-speed-plan.md`](./development/qr-scanner-speed-plan.md)   | Faster QR scanning: where the time goes, the native detector with a WebAssembly fallback, focus |
-| [`static-demo-plan.md`](./development/static-demo-plan.md)             | Public demo on Cloudflare Pages: rendered fixtures, an in-browser mock API, read-only admin |
+| [`static-demo-plan.md`](./development/static-demo-plan.md)             | Design record of the public demo: rendered fixtures, an in-browser mock API, read-only admin. Implemented; see `demo-site.md` |
 
 ## Design
 
