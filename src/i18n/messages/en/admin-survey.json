@@ -1,0 +1,126 @@
+{
+  "admin-survey.audience.participant": {
+    "defaultMessage": "Participants",
+    "description": "Row name in the questionnaire screen's audience table."
+  },
+  "admin-survey.audience.volunteer": {
+    "defaultMessage": "Volunteers",
+    "description": "Row name in the questionnaire screen's audience table."
+  },
+  "admin-survey.column.audience": {
+    "defaultMessage": "Audience",
+    "description": "Column heading in the questionnaire screen's audience table."
+  },
+  "admin-survey.column.download": {
+    "defaultMessage": "Answers as CSV",
+    "description": "Column heading for each audience's download link."
+  },
+  "admin-survey.column.responses": {
+    "defaultMessage": "Answers",
+    "description": "Column heading for how many answers each audience has sent."
+  },
+  "admin-survey.column.switch": {
+    "defaultMessage": "Configuration",
+    "description": "Column heading for each audience's switch in the server configuration. `.env` is the file's name and stays as is."
+  },
+  "admin-survey.download": {
+    "defaultMessage": "Download",
+    "description": "Link that downloads one audience's answers as a CSV file."
+  },
+  "admin-survey.heading": {
+    "defaultMessage": "Feedback",
+    "description": "Heading of the questionnaire screen."
+  },
+  "admin-survey.intro": {
+    "defaultMessage": "Status of the feedback form.",
+    "description": "Line under the questionnaire screen's heading."
+  },
+  "admin-survey.noQuestions": {
+    "defaultMessage": "No questions",
+    "description": "Shown in place of the download when an audience has no questions file and no answers."
+  },
+  "admin-survey.override.automatic": {
+    "defaultMessage": "Automatic: follow the configured schedule",
+    "description": "Override choice that hands the questionnaire back to the configured schedule."
+  },
+  "admin-survey.override.closed": {
+    "defaultMessage": "Close now",
+    "description": "Override choice that closes the questionnaire for both audiences, whatever the schedule says."
+  },
+  "admin-survey.override.failed": {
+    "defaultMessage": "Could not save. Try again.",
+    "description": "Error when saving the override fails for any reason not otherwise named."
+  },
+  "admin-survey.override.forbidden": {
+    "defaultMessage": "Your login does not have permission to open or close feedback.",
+    "description": "Error when an administrator without the survey:write permission tries to save the override."
+  },
+  "admin-survey.override.heading": {
+    "defaultMessage": "Open or close manually",
+    "description": "Heading of the override control."
+  },
+  "admin-survey.override.hint": {
+    "defaultMessage": "Sets whether the feedback form is available, overriding the opening and closing times set in the server configuration.",
+    "description": "Explains the override's reach under its heading. `.env` is the file's name and stays as is."
+  },
+  "admin-survey.override.open": {
+    "defaultMessage": "Open now",
+    "description": "Override choice that opens the questionnaire for both audiences, whatever the schedule says."
+  },
+  "admin-survey.override.save": {
+    "defaultMessage": "Save",
+    "description": "Button that saves the override choice."
+  },
+  "admin-survey.override.saved": {
+    "defaultMessage": "Feedback updated.",
+    "description": "Toast on the reloaded screen once the override is saved."
+  },
+  "admin-survey.reason.disabled": {
+    "defaultMessage": "No audience is enabled in the server configuration.",
+    "description": "Why the questionnaire is closed: both audiences are switched off in the server configuration."
+  },
+  "admin-survey.reason.override": {
+    "defaultMessage": "Set manually by an administrator.",
+    "description": "Why the questionnaire is open or closed: an administrator forced it."
+  },
+  "admin-survey.reason.schedule": {
+    "defaultMessage": "Following the configured schedule.",
+    "description": "Why the questionnaire is open or closed: the configured schedule decides."
+  },
+  "admin-survey.responses": {
+    "defaultMessage": "{count, plural, one {# answer} other {# answers}}",
+    "description": "How many answers an audience has sent."
+  },
+  "admin-survey.schedule.closes": {
+    "defaultMessage": "Closes {at}",
+    "description": "When the schedule closes the questionnaire. {at} is a date and time in the event's time zone."
+  },
+  "admin-survey.schedule.noClose": {
+    "defaultMessage": "No closing time set: feedback will stay open.",
+    "description": "Shown when the schedule sets no closing time."
+  },
+  "admin-survey.schedule.opens": {
+    "defaultMessage": "Opens {at}",
+    "description": "When the schedule opens the questionnaire. {at} is a date and time in the event's time zone."
+  },
+  "admin-survey.state.closed": {
+    "defaultMessage": "Closed",
+    "description": "The questionnaire's current state."
+  },
+  "admin-survey.state.open": {
+    "defaultMessage": "Open",
+    "description": "The questionnaire's current state."
+  },
+  "admin-survey.switch.off": {
+    "defaultMessage": "Disabled",
+    "description": "An audience whose questionnaire is switched off in the server configuration."
+  },
+  "admin-survey.switch.on": {
+    "defaultMessage": "Enabled",
+    "description": "An audience whose questionnaire is switched on in the server configuration."
+  },
+  "admin-survey.volunteerNote": {
+    "defaultMessage": "Answers are anonymous.",
+    "description": "Warning beside the volunteer answers. Volunteers are few and known by name, so their anonymous answers are far easier to re-identify than a participant's."
+  }
+}

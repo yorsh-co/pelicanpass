@@ -2077,7 +2077,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Archive filter option on the roster: records that are not archived.
   The default.
 - **Ref:** `admin-shell.filter.archived.active`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · filter · archived · all
 
@@ -2085,7 +2085,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Archive filter option on the roster: archived or not.
 - **Ref:** `admin-shell.filter.archived.all`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · filter · archived · only
 
@@ -2093,7 +2093,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Archive filter option on the roster: archived records only.
 - **Ref:** `admin-shell.filter.archived.only`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · filter · checkin · any
 
@@ -2101,7 +2101,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Presence filter option on the roster: checked in or not.
 - **Ref:** `admin-shell.filter.checkin.any`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · filter · checkin · no
 
@@ -2109,7 +2109,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Presence filter option on the roster: not checked in yet.
 - **Ref:** `admin-shell.filter.checkin.no`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · filter · checkin · yes
 
@@ -2117,7 +2117,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Presence filter option on the roster: checked in.
 - **Ref:** `admin-shell.filter.checkin.yes`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · filter · role · all
 
@@ -2125,7 +2125,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Role filter option on the roster and the lookup: everyone.
 - **Ref:** `admin-shell.filter.role.all`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · filter · role · participant
 
@@ -2134,7 +2134,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Role filter option on the roster and the lookup: participants only.
   The default.
 - **Ref:** `admin-shell.filter.role.participant`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · filter · role · volunteer
 
@@ -2142,7 +2142,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Role filter option on the roster and the lookup: volunteers only.
 - **Ref:** `admin-shell.filter.role.volunteer`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · home · empty
 
@@ -2150,7 +2150,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown on the arrival screen to an administrator who holds no scope, so no section is listed.
 - **Ref:** `admin-shell.home.empty`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · home · title
 
@@ -2158,7 +2158,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the admin arrival screen.
 - **Ref:** `admin-shell.home.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · logout
 
@@ -2166,7 +2166,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Sign-out button at the foot of the rail.
 - **Ref:** `admin-shell.logout`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · menu · close
 
@@ -2175,7 +2175,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Accessible name of the rail's menu button while the drawer is open.
   Pair of admin-shell.menu.open.
 - **Ref:** `admin-shell.menu.close`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · menu · open
 
@@ -2184,7 +2184,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Accessible name of the rail's menu button while the drawer is closed, on narrow screens.
   Names what the tap does.
 - **Ref:** `admin-shell.menu.open`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · nav · admins
 
@@ -2193,7 +2193,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Section name: managing administrator accounts.
   Planned.
 - **Ref:** `admin-shell.nav.admins`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · nav · attendees
 
@@ -2201,7 +2201,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Section name: the attendee roster and editor.
 - **Ref:** `admin-shell.nav.attendees`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · nav · exports
 
@@ -2210,7 +2210,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Section name: result exports.
   Planned.
 - **Ref:** `admin-shell.nav.exports`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · nav · import
 
@@ -2220,7 +2220,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   Planned.
   An imperative, like a menu command.
 - **Ref:** `admin-shell.nav.import`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · nav · label
 
@@ -2228,7 +2228,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Accessible name of the rail's navigation landmark.
 - **Ref:** `admin-shell.nav.label`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · nav · lookup
 
@@ -2236,7 +2236,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Section name: the volunteer quick lookup, used at the door to find somebody by name.
 - **Ref:** `admin-shell.nav.lookup`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · nav · metrics
 
@@ -2244,7 +2244,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Section name: the live operations dashboard.
 - **Ref:** `admin-shell.nav.metrics`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · nav · pass
 
@@ -2252,7 +2252,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Section name: when the welcome line on the attendee's pass changes text.
 - **Ref:** `admin-shell.nav.pass`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · nav · redemptions
 
@@ -2260,7 +2260,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Section name: redemptions of t-shirts (participants' and volunteers'), meals, drinks and lunch.
 - **Ref:** `admin-shell.nav.redemptions`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · nav · soon
 
@@ -2269,7 +2269,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Tag beside a section that is planned but not built yet, on the rail and the arrival screen.
   Lowercase: it trails the section's name.
 - **Ref:** `admin-shell.nav.soon`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · nav · survey
 
@@ -2277,7 +2277,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Section name: the experience questionnaire's state, override and answer downloads.
 - **Ref:** `admin-shell.nav.survey`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · nav · tshirts
 
@@ -2285,7 +2285,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Section name: the T-shirt desk, where a purchased T-shirt is looked up and handed over.
 - **Ref:** `admin-shell.nav.tshirts`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · nav · volunteers
 
@@ -2293,7 +2293,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Section name: each volunteer's access (retiradas, gerador de números, link do admin) and team, with the history of changes.
 - **Ref:** `admin-shell.nav.volunteers`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · nav · whatsapp
 
@@ -2301,7 +2301,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Section name: the WhatsApp sender.
 - **Ref:** `admin-shell.nav.whatsapp`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · pager · backToFirst
 
@@ -2309,7 +2309,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Button after admin-shell.pager.outOfRange that runs the same search from page one.
 - **Ref:** `admin-shell.pager.backToFirst`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · pager · label
 
@@ -2317,7 +2317,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Accessible name of the pager landmark under a result list.
 - **Ref:** `admin-shell.pager.label`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · pager · next
 
@@ -2326,7 +2326,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Pager button: the next page of results.
   Feminine, agreeing with página.
 - **Ref:** `admin-shell.pager.next`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · pager · outOfRange
 
@@ -2335,7 +2335,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Shown when the requested page is past the last one, for example after records were archived.
   Followed by admin-shell.pager.backToFirst.
 - **Ref:** `admin-shell.pager.outOfRange`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · pager · position
 
@@ -2343,7 +2343,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Where the pager is: {page} is the current page and {count} the number of pages.
 - **Ref:** `admin-shell.pager.position`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · pager · previous
 
@@ -2351,7 +2351,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Pager button: the previous page of results.
 - **Ref:** `admin-shell.pager.previous`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · presence
 
@@ -2359,7 +2359,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of an attendee's check-in state: a column, a filter and a record field.
 - **Ref:** `admin-shell.presence`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · present
 
@@ -2367,7 +2367,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Marks an attendee who has checked in but holds no arrival number, which is the case for volunteers.
 - **Ref:** `admin-shell.present`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · role
 
@@ -2376,7 +2376,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** An attendee's role, on the role badge and in the role select.
   other is only a fallback.
 - **Ref:** `admin-shell.role`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · adminsWrite
 
@@ -2384,7 +2384,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** What the admins:write permission allows.
 - **Ref:** `admin-shell.scope.adminsWrite`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · attendeesImport
 
@@ -2392,7 +2392,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** What the attendees:import permission allows.
 - **Ref:** `admin-shell.scope.attendeesImport`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · attendeesLimit
 
@@ -2400,7 +2400,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** What the attendees:limit permission allows: setting how many participant tickets the attendees editor may issue, and whether reaching the cap refuses the ticket or only warns.
 - **Ref:** `admin-shell.scope.attendeesLimit`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · attendeesRead
 
@@ -2409,7 +2409,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** What the attendees:read permission allows.
   Returned by the admin identity endpoint; the scope key itself is fixed by the database.
 - **Ref:** `admin-shell.scope.attendeesRead`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · attendeesWrite
 
@@ -2417,7 +2417,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** What the attendees:write permission allows.
 - **Ref:** `admin-shell.scope.attendeesWrite`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · checkinWrite
 
@@ -2425,7 +2425,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** What the checkin:write permission allows: confirming an arrival without the QR.
 - **Ref:** `admin-shell.scope.checkinWrite`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · exportRead
 
@@ -2433,7 +2433,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** What the export:read permission allows.
 - **Ref:** `admin-shell.scope.exportRead`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · metricsRead
 
@@ -2441,7 +2441,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** What the metrics:read permission allows.
 - **Ref:** `admin-shell.scope.metricsRead`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · passWrite
 
@@ -2449,7 +2449,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** What the pass:write permission allows: rescheduling when the welcome line on every attendee's pass changes text.
 - **Ref:** `admin-shell.scope.passWrite`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · raffleRead
 
@@ -2457,7 +2457,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** What the raffle:read permission allows.
 - **Ref:** `admin-shell.scope.raffleRead`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · raffleWrite
 
@@ -2465,7 +2465,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** What the raffle:write permission allows.
 - **Ref:** `admin-shell.scope.raffleWrite`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · redemptionsRead
 
@@ -2473,7 +2473,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** What the redemptions:read permission allows.
 - **Ref:** `admin-shell.scope.redemptionsRead`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · redemptionsWrite
 
@@ -2481,7 +2481,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** What the redemptions:write permission allows.
 - **Ref:** `admin-shell.scope.redemptionsWrite`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · surveyWrite
 
@@ -2489,7 +2489,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** What the survey:write permission allows.
 - **Ref:** `admin-shell.scope.surveyWrite`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · tshirtRedeem
 
@@ -2498,7 +2498,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** What the tshirt:redeem permission allows: handing over a purchased T-shirt at the T-shirt desk.
   The record page shows the attendee's verification code.
 - **Ref:** `admin-shell.scope.tshirtRedeem`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · volunteersWrite
 
@@ -2506,7 +2506,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** What the volunteers:write permission allows: changing which counters a volunteer may redeem at, whether they may draw the raffle, the admin link on their pass, and their team and role.
 - **Ref:** `admin-shell.scope.volunteersWrite`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · scope · whatsappSend
 
@@ -2514,7 +2514,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** What the whatsapp:send permission allows.
 - **Ref:** `admin-shell.scope.whatsappSend`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · search · label
 
@@ -2522,7 +2522,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the search box on the roster and the lookup.
 - **Ref:** `admin-shell.search.label`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · search · placeholder
 
@@ -2530,7 +2530,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Placeholder of the search box: every field the search matches.
 - **Ref:** `admin-shell.search.placeholder`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · search · submit
 
@@ -2538,7 +2538,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Button that runs the search and applies the filters.
 - **Ref:** `admin-shell.search.submit`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · skipLink
 
@@ -2547,7 +2547,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** First link on every admin page, visible on keyboard focus.
   Jumps past the rail to the screen's content.
 - **Ref:** `admin-shell.skipLink`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · ticketCode
 
@@ -2555,7 +2555,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of an attendee's ticket code, on the record form and the lookup record.
 - **Ref:** `admin-shell.ticketCode`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · title · attendee
 
@@ -2564,7 +2564,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Browser tab title of one attendee's record.
   Never names the attendee: a history entry stores the title, and this keeps the name off the operator's device.
 - **Ref:** `admin-shell.title.attendee`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · title · attendeeNew
 
@@ -2573,7 +2573,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Browser tab title of the blank attendee form.
   {appTitle} is the application's name.
 - **Ref:** `admin-shell.title.attendeeNew`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · title · attendees
 
@@ -2582,7 +2582,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Browser tab title of the attendee roster.
   {appTitle} is the application's name.
 - **Ref:** `admin-shell.title.attendees`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · title · home
 
@@ -2591,7 +2591,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Browser tab title of the admin arrival screen.
   {appTitle} is the application's name.
 - **Ref:** `admin-shell.title.home`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · title · lookup
 
@@ -2600,7 +2600,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Browser tab title of the volunteer lookup, for both the search and one attendee's record.
   Never names the attendee: a history entry stores the title.
 - **Ref:** `admin-shell.title.lookup`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · title · metrics
 
@@ -2609,7 +2609,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Browser tab title of the live operations dashboard.
   {appTitle} is the application's name.
 - **Ref:** `admin-shell.title.metrics`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · title · pass
 
@@ -2618,7 +2618,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Browser tab title of the pass welcome schedule screen.
   {appTitle} is the application's name.
 - **Ref:** `admin-shell.title.pass`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · title · redemptions
 
@@ -2628,7 +2628,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   Never names the attendee.
   {appTitle} is the application's name.
 - **Ref:** `admin-shell.title.redemptions`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · title · survey
 
@@ -2637,7 +2637,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Browser tab title of the questionnaire screen.
   {appTitle} is the application's name.
 - **Ref:** `admin-shell.title.survey`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · title · tshirts
 
@@ -2647,7 +2647,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   Never names the attendee: a history entry stores the title.
   {appTitle} is the application's name.
 - **Ref:** `admin-shell.title.tshirts`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · title · volunteers
 
@@ -2657,7 +2657,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   Never names the volunteer.
   {appTitle} is the application's name.
 - **Ref:** `admin-shell.title.volunteers`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-shell · title · whatsapp
 
@@ -2666,7 +2666,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Browser tab title of the WhatsApp sender.
   {appTitle} is the application's name.
 - **Ref:** `admin-shell.title.whatsapp`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ## admin-attendees
 
@@ -2676,7 +2676,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Check-in panel of an attendee who has not checked in.
 - **Ref:** `admin-attendees.checkin.absent`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · checkin · alreadyPresent
 
@@ -2684,7 +2684,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast on the record's page when marking found the attendee already checked in.
 - **Ref:** `admin-attendees.checkin.alreadyPresent`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · checkin · at
 
@@ -2693,7 +2693,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** When the attendee checked in.
   {time} is the event-timezone date and time, already formatted.
 - **Ref:** `admin-attendees.checkin.at`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · checkin · confirm
 
@@ -2702,7 +2702,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Label of the armed check-in button: a second press checks the attendee in and draws an arrival number that cannot be taken back.
   Reverts after a few seconds.
 - **Ref:** `admin-attendees.checkin.confirm`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · checkin · failed
 
@@ -2710,7 +2710,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when confirming the check-in failed for a reason the server did not explain.
 - **Ref:** `admin-attendees.checkin.failed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · checkin · forbidden
 
@@ -2718,7 +2718,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when the operator's check-in permission was withdrawn while the record was open.
 - **Ref:** `admin-attendees.checkin.forbidden`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · checkin · heading
 
@@ -2726,7 +2726,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the panel showing the record's check-in status.
 - **Ref:** `admin-attendees.checkin.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · checkin · mark
 
@@ -2735,7 +2735,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Button that checks the attendee in without the QR.
   The first press arms it and admin-attendees.checkin.confirm replaces this label.
 - **Ref:** `admin-attendees.checkin.mark`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · checkin · markHint
 
@@ -2744,7 +2744,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Hint under the check-in button, explaining it stands in for the QR scan and verification code, and that a participant is issued the next arrival number, which cannot be taken back.
   Volunteers are not issued one.
 - **Ref:** `admin-attendees.checkin.markHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · checkin · marked
 
@@ -2752,7 +2752,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast on the record's page after the operator checked the attendee in by hand.
 - **Ref:** `admin-attendees.checkin.marked`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · checkin · notOpen
 
@@ -2760,7 +2760,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when check-in has not opened yet for the attendee's audience.
 - **Ref:** `admin-attendees.checkin.notOpen`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · checkin · number
 
@@ -2768,7 +2768,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Presence of an attendee who checked in and holds arrival number {number}.
 - **Ref:** `admin-attendees.checkin.number`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · checkin · readOnly
 
@@ -2776,7 +2776,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Replaces the check-in button for an operator without the check-in permission.
 - **Ref:** `admin-attendees.checkin.readOnly`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · checkin · unsaved
 
@@ -2784,7 +2784,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when the check-in button is pressed while the form holds unsaved edits, which opening the record again would discard.
 - **Ref:** `admin-attendees.checkin.unsaved`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · danger · archive
 
@@ -2793,7 +2793,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Archive button.
   The first press arms it and admin-attendees.danger.confirm replaces this label.
 - **Ref:** `admin-attendees.danger.archive`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · danger · archiveHint
 
@@ -2801,7 +2801,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Explains archiving before the operator presses it.
 - **Ref:** `admin-attendees.danger.archiveHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · danger · archived
 
@@ -2809,7 +2809,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast on the record's page after it was archived.
 - **Ref:** `admin-attendees.danger.archived`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · danger · confirm
 
@@ -2818,7 +2818,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Label of the armed archive button: a second press archives.
   Reverts after a few seconds.
 - **Ref:** `admin-attendees.danger.confirm`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · danger · heading
 
@@ -2826,7 +2826,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the panel holding the archive control.
 - **Ref:** `admin-attendees.danger.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · danger · restore
 
@@ -2835,7 +2835,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Restore button on an archived record.
   Acts on the first press.
 - **Ref:** `admin-attendees.danger.restore`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · danger · restoreHint
 
@@ -2843,7 +2843,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Explains restoring on an archived record.
 - **Ref:** `admin-attendees.danger.restoreHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · danger · restored
 
@@ -2851,7 +2851,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast on the record's page after it was restored from the archive.
 - **Ref:** `admin-attendees.danger.restored`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · door · failed
 
@@ -2859,7 +2859,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line in the door WhatsApp panel when flipping the switch failed.
 - **Ref:** `admin-attendees.door.failed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · door · forbidden
 
@@ -2867,7 +2867,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line in the door WhatsApp panel when the operator's whatsapp:send permission was withdrawn.
 - **Ref:** `admin-attendees.door.forbidden`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · door · heading
 
@@ -2875,7 +2875,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the roster panel that switches the door WhatsApp message on or off.
 - **Ref:** `admin-attendees.door.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · door · intro
 
@@ -2883,7 +2883,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Explanation at the top of the door WhatsApp panel on the roster.
 - **Ref:** `admin-attendees.door.intro`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · door · locked
 
@@ -2891,7 +2891,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown in the door WhatsApp panel when WHATSAPP\_DOOR\_ENABLED or WHATSAPP\_ENABLED is false in .env.
 - **Ref:** `admin-attendees.door.locked`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · door · overBudget
 
@@ -2899,7 +2899,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown in the door WhatsApp panel when the next message would pass the budget.
 - **Ref:** `admin-attendees.door.overBudget`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · door · saved
 
@@ -2908,7 +2908,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Success toast after the door WhatsApp switch was flipped.
   \`on\` is yes or no.
 - **Ref:** `admin-attendees.door.saved`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · door · spend
 
@@ -2916,7 +2916,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Spend line in the door WhatsApp panel: every message Meta accepted this event, the budget, and the price of one door message.
 - **Ref:** `admin-attendees.door.spend`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · door · state
 
@@ -2925,7 +2925,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Current position of the door WhatsApp switch.
   \`on\` is yes or no.
 - **Ref:** `admin-attendees.door.state`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · door · turnOff
 
@@ -2933,7 +2933,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Button in the door WhatsApp panel that switches the message off.
 - **Ref:** `admin-attendees.door.turnOff`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · door · turnOn
 
@@ -2941,7 +2941,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Button in the door WhatsApp panel that switches the message on.
 - **Ref:** `admin-attendees.door.turnOn`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · actionFailed
 
@@ -2949,7 +2949,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when archiving or restoring failed for a reason the server did not explain.
 - **Ref:** `admin-attendees.form.actionFailed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · archivedFlag
 
@@ -2957,7 +2957,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Banner on an archived record, naming everything archiving takes away.
 - **Ref:** `admin-attendees.form.archivedFlag`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · cancel
 
@@ -2965,7 +2965,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Link back to the roster without saving.
 - **Ref:** `admin-attendees.form.cancel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · close
 
@@ -2973,7 +2973,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Accessible name of the record's close button.
 - **Ref:** `admin-attendees.form.close`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · create
 
@@ -2981,7 +2981,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Save button on the blank form.
 - **Ref:** `admin-attendees.form.create`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · created
 
@@ -2989,7 +2989,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast on the new record's page after the blank form was saved.
 - **Ref:** `admin-attendees.form.created`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · createdWhatsappFailed
 
@@ -2997,7 +2997,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Warning toast on the new record's page when the door WhatsApp message was attempted and did not go out.
 - **Ref:** `admin-attendees.form.createdWhatsappFailed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · createdWhatsappSent
 
@@ -3005,7 +3005,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Success toast on the new record's page when the door WhatsApp message was accepted by Meta.
 - **Ref:** `admin-attendees.form.createdWhatsappSent`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · createdWhatsappSkipped
 
@@ -3014,7 +3014,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Notice toast on the new record's page when the operator asked for the door WhatsApp message and it was not sent.
   \`reason\` is a code.
 - **Ref:** `admin-attendees.form.createdWhatsappSkipped`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · forbidden
 
@@ -3022,7 +3022,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when the operator's edit permission was withdrawn while the form was open.
 - **Ref:** `admin-attendees.form.forbidden`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · itemNone
 
@@ -3030,7 +3030,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** First choice in an enabled item's dropdown: the attendee does not receive the item.
 - **Ref:** `admin-attendees.form.itemNone`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · itemOffList
 
@@ -3040,7 +3040,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   {value} is the value exactly as stored.
   Choosing another option replaces it for good.
 - **Ref:** `admin-attendees.form.itemOffList`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · itemUnavailable
 
@@ -3048,7 +3048,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** First choice in a volunteer-only item's dropdown while the record is not a volunteer; the dropdown is disabled.
 - **Ref:** `admin-attendees.form.itemUnavailable`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · items
 
@@ -3056,7 +3056,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the group of redeemable items (t-shirt sizes, meal, drink and lunch choice).
 - **Ref:** `admin-attendees.form.items`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · itemsHint
 
@@ -3064,7 +3064,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Hint under the items heading.
 - **Ref:** `admin-attendees.form.itemsHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · name
 
@@ -3072,7 +3072,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the name field.
 - **Ref:** `admin-attendees.form.name`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · phone
 
@@ -3080,7 +3080,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the phone field.
 - **Ref:** `admin-attendees.form.phone`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · phoneHint
 
@@ -3089,7 +3089,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Hint under the phone field.
   A leading + marks a foreign number with its country code; the last four digits are the check-in verification code, which is why a typo matters.
 - **Ref:** `admin-attendees.form.phoneHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · readOnly
 
@@ -3097,7 +3097,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Replaces the save button for an operator who may read but not edit.
 - **Ref:** `admin-attendees.form.readOnly`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · redeemed
 
@@ -3106,7 +3106,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Tag beside an item that was already collected.
   Lowercase: it trails the item's name.
 - **Ref:** `admin-attendees.form.redeemed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · roleLocked
 
@@ -3114,7 +3114,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Hint under the role of an attendee who has checked in, whose role can no longer change.
 - **Ref:** `admin-attendees.form.roleLocked`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · save
 
@@ -3122,7 +3122,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Save button on an existing record.
 - **Ref:** `admin-attendees.form.save`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · saveFailed
 
@@ -3130,7 +3130,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when a save or a nickname removal failed for a reason the server did not explain.
 - **Ref:** `admin-attendees.form.saveFailed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · saved
 
@@ -3138,7 +3138,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast after an existing record was saved.
 - **Ref:** `admin-attendees.form.saved`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · savedWhatsappFailed
 
@@ -3146,7 +3146,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Warning toast after saving a record when the door WhatsApp message was attempted and did not go out.
 - **Ref:** `admin-attendees.form.savedWhatsappFailed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · savedWhatsappSent
 
@@ -3154,7 +3154,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Success toast after saving a record when the door WhatsApp message was accepted by Meta.
 - **Ref:** `admin-attendees.form.savedWhatsappSent`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · savedWhatsappSkipped
 
@@ -3163,7 +3163,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Notice toast after saving a record when the operator asked for the door WhatsApp message and it was not sent.
   \`reason\` is a code.
 - **Ref:** `admin-attendees.form.savedWhatsappSkipped`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · ticketCodeEdit
 
@@ -3171,7 +3171,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Accessible name of the pencil button that unlocks the ticket code field on the blank form, for typing a code from the external sign-up system.
 - **Ref:** `admin-attendees.form.ticketCodeEdit`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · ticketCodeHint · after
 
@@ -3180,7 +3180,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Last piece of the ticket code hint, after VXXXXX.
   See admin-attendees.form.ticketCodeHint.before.
 - **Ref:** `admin-attendees.form.ticketCodeHint.after`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · ticketCodeHint · before
 
@@ -3188,7 +3188,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** First of three pieces of the ticket code hint, around the code formats DXXXXX and VXXXXX, which are rendered as code between them: "O código é gerado automaticamente pelo sistema: DXXXXX (participantes) ou VXXXXX para voluntários."
 - **Ref:** `admin-attendees.form.ticketCodeHint.before`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · ticketCodeHint · between
 
@@ -3197,7 +3197,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Second piece of the ticket code hint, between DXXXXX and VXXXXX.
   See admin-attendees.form.ticketCodeHint.before.
 - **Ref:** `admin-attendees.form.ticketCodeHint.between`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · ticketCodeLocked
 
@@ -3205,7 +3205,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Hint under an existing record's read-only ticket code.
 - **Ref:** `admin-attendees.form.ticketCodeLocked`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · ticketCodePlaceholder
 
@@ -3213,7 +3213,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Placeholder of the ticket code field on the blank form, which is locked until its pencil button is pressed.
 - **Ref:** `admin-attendees.form.ticketCodePlaceholder`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · tshirtEdit
 
@@ -3221,7 +3221,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Accessible name of the pencil button that unlocks the participant t-shirt size, which the attendee reserved in advance.
 - **Ref:** `admin-attendees.form.tshirtEdit`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · tshirtReservedHint
 
@@ -3229,7 +3229,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Hint under the locked participant t-shirt size.
 - **Ref:** `admin-attendees.form.tshirtReservedHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · volunteersOnly
 
@@ -3238,7 +3238,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Hint under a volunteer-only item's dropdown (volunteer t-shirt, lunch) while the record is a participant, when the dropdown is disabled.
   Only volunteers can be entitled to these items.
 - **Ref:** `admin-attendees.form.volunteersOnly`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · whatsapp
 
@@ -3246,7 +3246,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Checkbox label on the blank form: send the door WhatsApp template to the new attendee.
 - **Ref:** `admin-attendees.form.whatsapp`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · whatsappEditHint
 
@@ -3254,7 +3254,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Hint under the WhatsApp checkbox on an existing record: it ticks itself when the phone number is changed, each number gets the message at most once, and every message costs money.
 - **Ref:** `admin-attendees.form.whatsappEditHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · whatsappHint
 
@@ -3263,7 +3263,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Hint under the WhatsApp checkbox on the blank form.
   Reminds the operator that every message costs money and when to untick it.
 - **Ref:** `admin-attendees.form.whatsappHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · form · whatsappUnavailable
 
@@ -3272,7 +3272,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Hint under the disabled WhatsApp checkbox on the blank form, saying why it cannot be ticked.
   \`reason\` is a code: switchedOff or overBudget.
 - **Ref:** `admin-attendees.form.whatsappUnavailable`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · cancel
 
@@ -3280,7 +3280,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Button that closes the ticket limit form without saving.
 - **Ref:** `admin-attendees.limit.cancel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · capHint
 
@@ -3289,7 +3289,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Hint under the ticket limit field.
   \`min\` and \`max\` are the smallest and largest cap.
 - **Ref:** `admin-attendees.limit.capHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · capLabel
 
@@ -3297,7 +3297,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the number field holding the ticket limit.
 - **Ref:** `admin-attendees.limit.capLabel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · doorHint
 
@@ -3305,7 +3305,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Hint in the ticket limit panel when only door-generated tickets are counted: a ticket whose code the operator typed is not counted.
 - **Ref:** `admin-attendees.limit.doorHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · edit
 
@@ -3313,7 +3313,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Button that reveals the ticket limit form in the roster panel.
 - **Ref:** `admin-attendees.limit.edit`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · exceeded
 
@@ -3323,7 +3323,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   Shown alone or following the confirmation in the same toast, so it is written as a sentence of its own.
   \`used\` and \`cap\` are numbers.
 - **Ref:** `admin-attendees.limit.exceeded`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · failed
 
@@ -3331,7 +3331,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line in the ticket limit panel when saving failed for a reason the server did not name.
 - **Ref:** `admin-attendees.limit.failed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · forbidden
 
@@ -3339,7 +3339,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line in the ticket limit panel when the operator's attendees:limit permission was withdrawn.
 - **Ref:** `admin-attendees.limit.forbidden`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · formBlocked
 
@@ -3347,7 +3347,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Banner text on the new attendee form when a hard ticket limit has no room left, so creating a participant is blocked.
 - **Ref:** `admin-attendees.limit.formBlocked`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · formRestoreBlocked
 
@@ -3355,7 +3355,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Banner text on an archived attendee's page when a hard ticket limit has no room left, so restoring is blocked.
 - **Ref:** `admin-attendees.limit.formRestoreBlocked`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · heading
 
@@ -3363,7 +3363,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the roster panel that caps how many participant tickets the editor can issue.
 - **Ref:** `admin-attendees.limit.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · left
 
@@ -3372,7 +3372,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** How many tickets are left under the limit.
   \`scope\` is total or door (door counts only tickets generated at the door); \`remaining\` is a number, never negative.
 - **Ref:** `admin-attendees.limit.left`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · meterLabel
 
@@ -3380,7 +3380,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Accessible name of the ticket limit meter bar.
 - **Ref:** `admin-attendees.limit.meterLabel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · meterText
 
@@ -3389,7 +3389,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Spoken value of the ticket limit meter for screen readers, such as "38 de 50, 12 ingressos restantes".
   \`detail\` is already translated.
 - **Ref:** `admin-attendees.limit.meterText`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · mode
 
@@ -3398,7 +3398,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Badge saying what reaching the ticket limit does.
   \`mode\` is hard (refuses new tickets) or warn (only warns).
 - **Ref:** `admin-attendees.limit.mode`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · modeLegend
 
@@ -3406,7 +3406,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Legend of the radio group choosing what happens when the ticket limit is reached.
 - **Ref:** `admin-attendees.limit.modeLegend`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · modeOption
 
@@ -3415,7 +3415,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Radio labels for what reaching the ticket limit does.
   \`mode\` is hard (refuses) or warn (allows and warns).
 - **Ref:** `admin-attendees.limit.modeOption`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · off
 
@@ -3423,7 +3423,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Line in the ticket limit panel when the limit is switched off.
 - **Ref:** `admin-attendees.limit.off`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · over
 
@@ -3432,7 +3432,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** How many tickets are above the limit.
   \`scope\` is total or door; \`excess\` is a positive number.
 - **Ref:** `admin-attendees.limit.over`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · save
 
@@ -3440,7 +3440,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Button that saves the ticket limit.
 - **Ref:** `admin-attendees.limit.save`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · saved
 
@@ -3448,7 +3448,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Success toast after the ticket limit was saved.
 - **Ref:** `admin-attendees.limit.saved`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · scopeLegend
 
@@ -3456,7 +3456,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Legend of the radio group choosing what the ticket limit counts.
 - **Ref:** `admin-attendees.limit.scopeLegend`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · scopeOption
 
@@ -3465,7 +3465,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Radio labels for what the ticket limit counts.
   \`scope\` is off (no limit), total (every participant) or door (only tickets generated by the editor).
 - **Ref:** `admin-attendees.limit.scopeOption`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · status
 
@@ -3474,7 +3474,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Status pill of the ticket limit panel.
   \`status\` is a code: off, ok (below 90% of the cap), near (90% or more), reached (at the cap) or over (above it).
 - **Ref:** `admin-attendees.limit.status`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · limit · usage
 
@@ -3483,7 +3483,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Usage line of the ticket limit panel and the form banner: tickets counted, the cap, and a detail string saying how many are left or over.
   \`detail\` is already translated.
 - **Ref:** `admin-attendees.limit.usage`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · list · archivedFilter
 
@@ -3491,7 +3491,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the roster's archive filter.
 - **Ref:** `admin-attendees.list.archivedFilter`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · list · archivedFlag
 
@@ -3500,7 +3500,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Tag beside an archived attendee's name.
   Lowercase: it trails the name.
 - **Ref:** `admin-attendees.list.archivedFlag`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · list · clear
 
@@ -3509,7 +3509,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Link that resets every roster filter.
   Shown only while a filter is set.
 - **Ref:** `admin-attendees.list.clear`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · list · clearFilters
 
@@ -3517,7 +3517,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Link after admin-attendees.list.noMatches that resets every filter.
 - **Ref:** `admin-attendees.list.clearFilters`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · list · code
 
@@ -3525,7 +3525,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Roster column: the ticket code.
 - **Ref:** `admin-attendees.list.code`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · list · count
 
@@ -3535,7 +3535,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   {total} is the number of matching records; filtered is yes while a filter is set.
   The suffix does not agree in number with a single result.
 - **Ref:** `admin-attendees.list.count`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · list · createFirst
 
@@ -3543,7 +3543,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Link after admin-attendees.list.empty to the blank record form, for operators who may edit.
 - **Ref:** `admin-attendees.list.createFirst`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · list · drawsFlag
 
@@ -3552,7 +3552,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Tag beside a volunteer who may run the raffle.
   Lowercase: it trails the role badge.
 - **Ref:** `admin-attendees.list.drawsFlag`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · list · empty
 
@@ -3560,7 +3560,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Empty roster with no filter set: the event has no attendees yet.
 - **Ref:** `admin-attendees.list.empty`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · list · items
 
@@ -3568,7 +3568,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Roster column: the items the attendee is entitled to, and whether each was collected.
 - **Ref:** `admin-attendees.list.items`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · list · name
 
@@ -3576,7 +3576,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Roster column: the attendee's name and nickname.
 - **Ref:** `admin-attendees.list.name`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · list · noMatches
 
@@ -3585,7 +3585,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Empty roster while a filter is set.
   Followed by admin-attendees.list.clearFilters.
 - **Ref:** `admin-attendees.list.noMatches`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · list · phone
 
@@ -3593,7 +3593,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Roster column: the phone number, masked.
 - **Ref:** `admin-attendees.list.phone`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · list · redeemsFlag
 
@@ -3602,7 +3602,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Tag beside a volunteer who may record redemptions.
   Lowercase: it trails the role badge.
 - **Ref:** `admin-attendees.list.redeemsFlag`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · list · title
 
@@ -3610,7 +3610,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the roster.
 - **Ref:** `admin-attendees.list.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · newAttendee
 
@@ -3618,7 +3618,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the blank record form, and the roster link that opens it.
 - **Ref:** `admin-attendees.newAttendee`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · nickname · heading
 
@@ -3626,7 +3626,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the record's nickname panel.
 - **Ref:** `admin-attendees.nickname.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · nickname · hint
 
@@ -3634,7 +3634,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Hint under a nickname: staff may clear it but never set one.
 - **Ref:** `admin-attendees.nickname.hint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · nickname · none
 
@@ -3642,7 +3642,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown when the attendee has not chosen a nickname.
 - **Ref:** `admin-attendees.nickname.none`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · nickname · remove
 
@@ -3650,7 +3650,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Button that clears the attendee's nickname.
 - **Ref:** `admin-attendees.nickname.remove`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · nickname · removed
 
@@ -3658,7 +3658,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast on the record's page after the staff removed the attendee's nickname.
 - **Ref:** `admin-attendees.nickname.removed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · perms · draws
 
@@ -3666,7 +3666,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The volunteer may run the raffle.
 - **Ref:** `admin-attendees.perms.draws`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · perms · heading
 
@@ -3674,7 +3674,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the read-only panel listing what a volunteer may do.
 - **Ref:** `admin-attendees.perms.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · perms · hint
 
@@ -3682,7 +3682,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Hint under the volunteer permissions: they are changed in the database, not here.
 - **Ref:** `admin-attendees.perms.hint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · perms · noDraws
 
@@ -3690,7 +3690,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The volunteer may not run the raffle.
 - **Ref:** `admin-attendees.perms.noDraws`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · perms · noRedeems
 
@@ -3698,7 +3698,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The volunteer may not record redemptions.
 - **Ref:** `admin-attendees.perms.noRedeems`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · perms · noStations
 
@@ -3706,7 +3706,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The volunteer records no item.
 - **Ref:** `admin-attendees.perms.noStations`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · perms · redeems
 
@@ -3714,7 +3714,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The volunteer may record redemptions.
 - **Ref:** `admin-attendees.perms.redeems`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · perms · stations
 
@@ -3723,7 +3723,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** The items a volunteer may record.
   {stations} is the list of item keys as stored, joined with commas.
 - **Ref:** `admin-attendees.perms.stations`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-attendees · roleLabel
 
@@ -3731,7 +3731,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of an attendee's role (participant or volunteer): a roster filter, a column and a form field.
 - **Ref:** `admin-attendees.roleLabel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ## admin-lookup
 
@@ -3741,7 +3741,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Presence of an attendee who has not checked in.
 - **Ref:** `admin-lookup.record.absent`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · archived
 
@@ -3749,7 +3749,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Banner on an archived attendee's record.
 - **Ref:** `admin-lookup.record.archived`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · checkedInContinue
 
@@ -3758,7 +3758,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Shown on a checked-in record, before the re-entry note.
   Quotes the label of the check-in page's button (checkin.scanner.presence.button) verbatim, so it must be translated identically to that label.
 - **Ref:** `admin-lookup.record.checkedInContinue`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · checkedInNote · after
 
@@ -3767,7 +3767,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Second half of the note on a checked-in record, after the path /checkin.
   See admin-lookup.record.checkedInNote.before.
 - **Ref:** `admin-lookup.record.checkedInNote.after`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · checkedInNote · before
 
@@ -3776,7 +3776,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** First half of the note on a checked-in record, before the path /checkin, which is rendered in bold between the halves.
   See admin-lookup.record.checkedInNote.after.
 - **Ref:** `admin-lookup.record.checkedInNote.before`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · close
 
@@ -3785,7 +3785,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Accessible name of the record's close button.
   Returns to an empty search.
 - **Ref:** `admin-lookup.record.close`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · codeHint
 
@@ -3793,7 +3793,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Explains the verification code under it.
 - **Ref:** `admin-lookup.record.codeHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · confirm
 
@@ -3802,7 +3802,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Label of the armed confirm button: a second press checks the attendee in and draws an arrival number that cannot be taken back.
   Reverts after a few seconds.
 - **Ref:** `admin-lookup.record.confirm`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · failed
 
@@ -3810,7 +3810,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when confirming failed for a reason the server did not explain.
 - **Ref:** `admin-lookup.record.failed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · forbidden
 
@@ -3818,7 +3818,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast when the volunteer's check-in permission was withdrawn while the record was open.
 - **Ref:** `admin-lookup.record.forbidden`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · mark
 
@@ -3827,7 +3827,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Button that checks the attendee in without the QR.
   The first press arms it and admin-lookup.record.confirm replaces this label.
 - **Ref:** `admin-lookup.record.mark`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · markHint
 
@@ -3835,7 +3835,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Hint under the confirm button.
 - **Ref:** `admin-lookup.record.markHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · marked
 
@@ -3843,7 +3843,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast on the record's page after the volunteer confirmed the attendee's presence by hand.
 - **Ref:** `admin-lookup.record.marked`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · notOpen
 
@@ -3851,7 +3851,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when check-in has not opened yet for the attendee's audience.
 - **Ref:** `admin-lookup.record.notOpen`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · presentNumber
 
@@ -3859,7 +3859,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Presence of an attendee who checked in and holds arrival number {number}.
 - **Ref:** `admin-lookup.record.presentNumber`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · readOnly
 
@@ -3867,7 +3867,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Replaces the confirm button for a volunteer without the check-in permission.
 - **Ref:** `admin-lookup.record.readOnly`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · record · showCode
 
@@ -3876,7 +3876,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Summary of the collapsed panel holding the attendee's verification code.
   Kept closed until asked for: the code is the check-in's only shared secret.
 - **Ref:** `admin-lookup.record.showCode`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · search · absent
 
@@ -3885,7 +3885,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Tag on a result card for somebody who has not checked in.
   Lowercase: it trails the role badge.
 - **Ref:** `admin-lookup.search.absent`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · search · count
 
@@ -3893,7 +3893,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Number of matching attendees above the results.
 - **Ref:** `admin-lookup.search.count`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · search · idle
 
@@ -3901,7 +3901,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown before anything was searched.
 - **Ref:** `admin-lookup.search.idle`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · search · lede
 
@@ -3909,7 +3909,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Line under the lookup heading.
 - **Ref:** `admin-lookup.search.lede`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · search · miss
 
@@ -3918,7 +3918,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** No result.
   {query} is the search as typed, trimmed and lowercased.
 - **Ref:** `admin-lookup.search.miss`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · search · missHint
 
@@ -3926,7 +3926,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Suggestion after a search with no result.
 - **Ref:** `admin-lookup.search.missHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · search · missScope
 
@@ -3935,7 +3935,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** After admin-lookup.search.miss when a role filter is set, so a volunteer reads the filter before concluding the person was never registered.
   {scope} is the filter's label, from admin-shell.filter.role.\*.
 - **Ref:** `admin-lookup.search.missScope`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · search · roles
 
@@ -3944,7 +3944,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Legend of the role choice (participants, everyone, volunteers).
   The choice applies on the next search.
 - **Ref:** `admin-lookup.search.roles`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · search · scope
 
@@ -3953,7 +3953,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Under admin-lookup.search.idle.
   {scope} is the selected role filter's label, from admin-shell.filter.role.\*.
 - **Ref:** `admin-lookup.search.scope`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-lookup · search · title
 
@@ -3961,7 +3961,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the volunteer lookup, used at the door on a phone.
 - **Ref:** `admin-lookup.search.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ## admin-whatsapp
 
@@ -3971,7 +3971,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the audience picker.
 - **Ref:** `admin-whatsapp.audience`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · audience · participant
 
@@ -3980,7 +3980,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Audience option: participants.
   A run is aimed at one audience.
 - **Ref:** `admin-whatsapp.audience.participant`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · audience · volunteer
 
@@ -3988,7 +3988,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Audience option: volunteers.
 - **Ref:** `admin-whatsapp.audience.volunteer`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · disabled · after
 
@@ -3997,7 +3997,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Ends the disabled notice after the setting name WHATSAPP\_ENABLED.
   See admin-whatsapp.disabled.before.
 - **Ref:** `admin-whatsapp.disabled.after`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · disabled · before
 
@@ -4005,7 +4005,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Continues the disabled notice up to the setting name WHATSAPP\_ENABLED, which is rendered as code; admin-whatsapp.disabled.after follows it.
 - **Ref:** `admin-whatsapp.disabled.before`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · disabled · lead
 
@@ -4013,7 +4013,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Bold opening of the notice shown when sending is switched off on this server.
 - **Ref:** `admin-whatsapp.disabled.lead`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · failure · alreadySent
 
@@ -4021,7 +4021,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Failure reason row: the recipient had already been sent this template, so the send was skipped.
 - **Ref:** `admin-whatsapp.failure.alreadySent`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · failure · interrupted
 
@@ -4029,7 +4029,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Failure reason row: the send was cut off, usually by a restart, and its outcome is unknown.
 - **Ref:** `admin-whatsapp.failure.interrupted`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · failure · invalidPhone
 
@@ -4038,7 +4038,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Failure reason row: the recipient's phone could not be turned into a WhatsApp number, so they were skipped.
   other is only a fallback.
 - **Ref:** `admin-whatsapp.failure.invalidPhone`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · failure · meta
 
@@ -4048,7 +4048,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   {code} is Meta's numeric error code.
   Refusals Meta names itself show Meta's English title instead.
 - **Ref:** `admin-whatsapp.failure.meta`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · failure · noResponse
 
@@ -4056,7 +4056,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Failure reason row: Meta did not answer, even after retries.
 - **Ref:** `admin-whatsapp.failure.noResponse`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · failures · count
 
@@ -4064,7 +4064,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Failure table column: how many sends failed for that reason.
 - **Ref:** `admin-whatsapp.failures.count`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · failures · heading
 
@@ -4072,7 +4072,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the run's failure breakdown.
 - **Ref:** `admin-whatsapp.failures.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · failures · none
 
@@ -4080,7 +4080,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown when the run has no failure.
 - **Ref:** `admin-whatsapp.failures.none`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · failures · reason
 
@@ -4088,7 +4088,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Failure table column: Meta's error title.
 - **Ref:** `admin-whatsapp.failures.reason`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · lede
 
@@ -4096,7 +4096,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Line under the sender's heading.
 - **Ref:** `admin-whatsapp.lede`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · note · read · lead
 
@@ -4104,7 +4104,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Bold opening of the second half of the delivery note, continued by admin-whatsapp.note.read.rest.
 - **Ref:** `admin-whatsapp.note.read.lead`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · note · read · rest
 
@@ -4113,7 +4113,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Continues admin-whatsapp.note.read.lead, hence the leading colon.
   Read receipts arrive only from people who keep them on, and receipts keep arriving after a run completes.
 - **Ref:** `admin-whatsapp.note.read.rest`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · note · sent · lead
 
@@ -4122,7 +4122,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Bold opening of the delivery note, continued by admin-whatsapp.note.sent.rest.
   Required on this screen: it explains the gap between sent and delivered.
 - **Ref:** `admin-whatsapp.note.sent.lead`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · note · sent · rest
 
@@ -4130,7 +4130,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Continues admin-whatsapp.note.sent.lead in the same sentence, hence the leading comma.
 - **Ref:** `admin-whatsapp.note.sent.rest`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · preview · confirm
 
@@ -4139,7 +4139,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Start button before a preview exists.
   Replaced by admin-whatsapp.preview.confirmTo.
 - **Ref:** `admin-whatsapp.preview.confirm`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · preview · confirmTo
 
@@ -4149,7 +4149,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   {template} is the template's label and {count} the new recipients.
   Not inflected for a count of one.
 - **Ref:** `admin-whatsapp.preview.confirmTo`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · preview · cost
 
@@ -4159,7 +4159,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   An upper bound: Meta bills only delivered messages, and utility messages inside an open conversation are free.
   Shows 2 to 4 decimals because a single message costs less than a cent.
 - **Ref:** `admin-whatsapp.preview.cost`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · preview · counts
 
@@ -4168,7 +4168,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Summary of a preview: who would be sent to, who already received this template, and who has no valid number.
   Not inflected for a count of one.
 - **Ref:** `admin-whatsapp.preview.counts`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · preview · failed
 
@@ -4176,7 +4176,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when a preview failed for a reason the server did not explain.
 - **Ref:** `admin-whatsapp.preview.failed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · preview · heading
 
@@ -4184,7 +4184,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the first panel: previewing who a run would reach.
 - **Ref:** `admin-whatsapp.preview.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · preview · more
 
@@ -4192,7 +4192,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Under a preview list that is cut short: {shown} rows of {total}.
 - **Ref:** `admin-whatsapp.preview.more`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · preview · submit
 
@@ -4200,7 +4200,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Button that builds the preview.
 - **Ref:** `admin-whatsapp.preview.submit`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · cancel
 
@@ -4208,7 +4208,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Ends the run for good.
 - **Ref:** `admin-whatsapp.run.cancel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · count · deferred
 
@@ -4216,7 +4216,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Run figure: sends postponed for a later attempt.
 - **Ref:** `admin-whatsapp.run.count.deferred`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · count · delivered
 
@@ -4224,7 +4224,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Run figure: messages Meta reported delivered.
 - **Ref:** `admin-whatsapp.run.count.delivered`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · count · failed
 
@@ -4232,7 +4232,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Run figure: messages that failed.
 - **Ref:** `admin-whatsapp.run.count.failed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · count · interrupted
 
@@ -4240,7 +4240,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Run figure: sends cut off when the run stopped; admin-whatsapp.run.retryInterrupted requeues them.
 - **Ref:** `admin-whatsapp.run.count.interrupted`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · count · pending
 
@@ -4248,7 +4248,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Run figure: sends still waiting.
 - **Ref:** `admin-whatsapp.run.count.pending`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · count · read
 
@@ -4257,7 +4257,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Run figure: messages Meta reported read.
   Undercounts; see admin-whatsapp.note.read.lead.
 - **Ref:** `admin-whatsapp.run.count.read`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · count · sent
 
@@ -4265,7 +4265,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Run figure: messages Meta accepted.
 - **Ref:** `admin-whatsapp.run.count.sent`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · count · skipped
 
@@ -4273,7 +4273,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Run figure: recipients skipped, for example for an invalid number.
 - **Ref:** `admin-whatsapp.run.count.skipped`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · done
 
@@ -4281,7 +4281,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast when the watched run completed.
 - **Ref:** `admin-whatsapp.run.done`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · failed
 
@@ -4289,7 +4289,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when a run control failed for a reason the server did not explain.
 - **Ref:** `admin-whatsapp.run.failed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · forbidden
 
@@ -4297,7 +4297,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when the operator's send permission was withdrawn while the page was open.
 - **Ref:** `admin-whatsapp.run.forbidden`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · heading
 
@@ -4305,7 +4305,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the third panel: the run in progress.
 - **Ref:** `admin-whatsapp.run.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · noneRequeued
 
@@ -4313,7 +4313,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast after admin-whatsapp.run.retryInterrupted when nothing was cut off.
 - **Ref:** `admin-whatsapp.run.noneRequeued`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · reason · awaitingInterrupted
 
@@ -4322,7 +4322,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Why a run is paused: every other recipient was handled, and interrupted sends are waiting for the operator to retry or leave them.
   Follows the status, lowercase.
 - **Ref:** `admin-whatsapp.run.reason.awaitingInterrupted`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · reason · circuitBreaker
 
@@ -4331,7 +4331,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Why a run stopped: several recipients in a row were refused, which usually means the template or the numbers are wrong.
   Follows the status, lowercase.
 - **Ref:** `admin-whatsapp.run.reason.circuitBreaker`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · reason · fatal
 
@@ -4341,7 +4341,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   {code} is Meta's error code, or UNKNOWN.
   Follows the status, lowercase.
 - **Ref:** `admin-whatsapp.run.reason.fatal`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · reason · operator
 
@@ -4350,7 +4350,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Why a run is paused: an operator pressed Stop.
   Follows the status in "Pausado · …", so it starts lowercase.
 - **Ref:** `admin-whatsapp.run.reason.operator`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · reason · operatorCancelled
 
@@ -4359,7 +4359,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Why a run ended: an operator cancelled it.
   Follows the status, lowercase.
 - **Ref:** `admin-whatsapp.run.reason.operatorCancelled`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · reason · restart
 
@@ -4368,7 +4368,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Why a run is paused: the server restarted mid-run, and sends in flight were marked interrupted.
   Follows the status, lowercase.
 - **Ref:** `admin-whatsapp.run.reason.restart`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · reason · unknownTemplate
 
@@ -4378,7 +4378,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   Nothing was sent for it.
   Follows the status, lowercase.
 - **Ref:** `admin-whatsapp.run.reason.unknownTemplate`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · recipients
 
@@ -4386,7 +4386,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Trails the run's recipient total, which the page refreshes in place: "Em andamento · 12 destinatários".
 - **Ref:** `admin-whatsapp.run.recipients`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · requeued
 
@@ -4396,7 +4396,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   {count} is at least one.
   Not inflected: it keeps the (s) form.
 - **Ref:** `admin-whatsapp.run.requeued`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · resume
 
@@ -4404,7 +4404,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Resumes a paused run.
 - **Ref:** `admin-whatsapp.run.resume`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · retryInterrupted
 
@@ -4412,7 +4412,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Requeues the sends that were cut off.
 - **Ref:** `admin-whatsapp.run.retryInterrupted`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · spent
 
@@ -4421,7 +4421,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Meta charges so far for this run, in US dollars: delivered messages times the template category's current rate.
   Shows 2 to 4 decimals because a single message costs less than a cent.
 - **Ref:** `admin-whatsapp.run.spent`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · startFailed
 
@@ -4429,7 +4429,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when starting the run failed for a reason the server did not explain.
 - **Ref:** `admin-whatsapp.run.startFailed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · started
 
@@ -4437,7 +4437,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast after a run started.
 - **Ref:** `admin-whatsapp.run.started`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · status
 
@@ -4446,7 +4446,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** A run's status.
   other is only a fallback for a status the server does not send today.
 - **Ref:** `admin-whatsapp.run.status`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · statusWithReason
 
@@ -4455,7 +4455,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** A run's status with the reason it stopped.
   {status} is admin-whatsapp.run.status; {reason} is the server's own stop reason.
 - **Ref:** `admin-whatsapp.run.statusWithReason`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · stop
 
@@ -4463,7 +4463,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Pauses the run.
 - **Ref:** `admin-whatsapp.run.stop`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · run · stopped
 
@@ -4471,7 +4471,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast when the watched run ended without completing.
 - **Ref:** `admin-whatsapp.run.stopped`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · slots · button
 
@@ -4479,7 +4479,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Marks the variable that fills the template's link button, in place of a {{n}} position.
 - **Ref:** `admin-whatsapp.slots.button`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · slots · heading
 
@@ -4487,7 +4487,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the panel listing each template's variables in order.
 - **Ref:** `admin-whatsapp.slots.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · slots · hint
 
@@ -4495,7 +4495,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Why the variable order matters: a mismatch fails silently here and Meta refuses the whole run.
 - **Ref:** `admin-whatsapp.slots.hint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · slots · price
 
@@ -4503,7 +4503,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Under a template's key in the slots panel: what Meta charges for one delivered message of that template's category, in US dollars.
 - **Ref:** `admin-whatsapp.slots.price`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · template
 
@@ -4511,7 +4511,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the template picker, in the preview and the test panel.
 - **Ref:** `admin-whatsapp.template`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · test · failed
 
@@ -4519,7 +4519,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when the test send failed for a reason the server did not explain.
 - **Ref:** `admin-whatsapp.test.failed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · test · heading
 
@@ -4527,7 +4527,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the second panel: sending one message to a typed number.
 - **Ref:** `admin-whatsapp.test.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · test · hint · after
 
@@ -4536,7 +4536,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Last piece of the test hint, after teste-envio, hence the closing parenthesis.
   See admin-whatsapp.test.hint.before.
 - **Ref:** `admin-whatsapp.test.hint.after`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · test · hint · before
 
@@ -4545,7 +4545,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** First of three pieces of the test hint, around the sample values Teste and teste-envio, which are rendered as code: "… valores de exemplo (Teste e teste-envio) — o link do ingresso não abre nada.
   …"
 - **Ref:** `admin-whatsapp.test.hint.before`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · test · hint · between
 
@@ -4554,7 +4554,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Second piece of the test hint, between the sample values Teste and teste-envio.
   See admin-whatsapp.test.hint.before.
 - **Ref:** `admin-whatsapp.test.hint.between`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · test · phone
 
@@ -4562,7 +4562,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the test number field.
 - **Ref:** `admin-whatsapp.test.phone`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · test · phoneHint
 
@@ -4570,7 +4570,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Hint under the test number: it is never put in a URL or logged.
 - **Ref:** `admin-whatsapp.test.phoneHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · test · refused
 
@@ -4579,7 +4579,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Test result when Meta refused the message.
   {title} is Meta's own error title, in English.
 - **Ref:** `admin-whatsapp.test.refused`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · test · refusedWithCode
 
@@ -4587,7 +4587,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** As admin-whatsapp.test.refused, with Meta's numeric error {code}.
 - **Ref:** `admin-whatsapp.test.refusedWithCode`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · test · sentNormalized
 
@@ -4595,7 +4595,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Test result when Meta accepted the message but rewrote the number to {waId}, the WhatsApp ID it delivered to.
 - **Ref:** `admin-whatsapp.test.sentNormalized`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · test · sentUnchanged
 
@@ -4603,7 +4603,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Test result when Meta accepted the message for the number as typed.
 - **Ref:** `admin-whatsapp.test.sentUnchanged`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · test · submit
 
@@ -4611,7 +4611,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Button that sends the test message.
 - **Ref:** `admin-whatsapp.test.submit`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · title
 
@@ -4619,7 +4619,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the WhatsApp sender.
 - **Ref:** `admin-whatsapp.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · variable · checkinTime
 
@@ -4628,7 +4628,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** A template variable: the volunteer's check-in time.
   Volunteer-only; templates using it can be sent to volunteers only.
 - **Ref:** `admin-whatsapp.variable.checkinTime`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · variable · entryLinkToken
 
@@ -4637,7 +4637,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** A template variable: the token that completes the attendee's entry link button.
   A credential; never shown in the preview.
 - **Ref:** `admin-whatsapp.variable.entryLinkToken`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · variable · firstName
 
@@ -4646,7 +4646,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** A template variable: the attendee's first name.
   The keys are fixed by the published privacy notice; only this label is copy.
 - **Ref:** `admin-whatsapp.variable.firstName`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · variable · lunchOption
 
@@ -4655,7 +4655,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** A template variable: the volunteer's lunch slot, or a hyphen when they have none.
   Volunteer-only; templates using it can be sent to volunteers only.
 - **Ref:** `admin-whatsapp.variable.lunchOption`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · variable · team
 
@@ -4664,7 +4664,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** A template variable: the volunteer's team.
   Volunteer-only; templates using it can be sent to volunteers only.
 - **Ref:** `admin-whatsapp.variable.team`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-whatsapp · variable · ticketCode
 
@@ -4672,7 +4672,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** A template variable: the attendee's ticket code.
 - **Ref:** `admin-whatsapp.variable.ticketCode`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ## admin-login
 
@@ -4682,7 +4682,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Too many attempts for this username, when the server did not say how long to wait.
 - **Ref:** `admin-login.error.blocked`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-login · error · blockedFor
 
@@ -4692,7 +4692,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   {minutes} is the wait, rounded up to whole minutes.
   Safe to show: the budget is keyed on the username the caller typed.
 - **Ref:** `admin-login.error.blockedFor`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-login · error · captchaRequired
 
@@ -4701,7 +4701,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** The sign-in was refused because the Turnstile check on the form was missing or not accepted.
   The widget is reset when this shows, so a second attempt has a fresh challenge.
 - **Ref:** `admin-login.error.captchaRequired`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-login · error · failed
 
@@ -4710,7 +4710,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Sign-in refused, or a field left empty.
   The server refuses an unknown user, a wrong password and a deactivated account identically, so this must not tell them apart.
 - **Ref:** `admin-login.error.failed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-login · error · offline
 
@@ -4718,7 +4718,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Any other sign-in failure, including a lost connection.
 - **Ref:** `admin-login.error.offline`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-login · heading
 
@@ -4726,7 +4726,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the administrator sign-in page.
 - **Ref:** `admin-login.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-login · lede
 
@@ -4735,7 +4735,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Line under the sign-in heading.
   The page is reachable only over the team's private network.
 - **Ref:** `admin-login.lede`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-login · noscript
 
@@ -4743,7 +4743,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown with JavaScript disabled: signing in is an API call the page's script makes.
 - **Ref:** `admin-login.noscript`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-login · password
 
@@ -4751,7 +4751,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the password field.
 - **Ref:** `admin-login.password`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-login · reveal
 
@@ -4760,7 +4760,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Accessible name of the icon button that shows the typed password.
   Fixed: whether the password is shown is announced through aria-pressed, so this must not change to "hide".
 - **Ref:** `admin-login.reveal`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-login · submit
 
@@ -4768,7 +4768,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Sign-in button.
 - **Ref:** `admin-login.submit`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-login · title
 
@@ -4777,7 +4777,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Browser tab title of the administrator sign-in page.
   {appTitle} is the application's name.
 - **Ref:** `admin-login.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-login · username
 
@@ -4786,7 +4786,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Label of the username field.
   An administrator's username is either a plain handle or an email address.
 - **Ref:** `admin-login.username`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ## admin-errors
 
@@ -4796,7 +4796,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The attendee is archived, so they cannot be checked in.
 - **Ref:** `admin-errors.attendeeArchived`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · attendeeNotFound
 
@@ -4804,7 +4804,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The attendee no longer exists, for example because another operator removed the record.
 - **Ref:** `admin-errors.attendeeNotFound`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · audienceInvalid
 
@@ -4813,7 +4813,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** The WhatsApp audience sent is not participants or volunteers.
   Only a tampered or outdated form reaches this.
 - **Ref:** `admin-errors.audienceInvalid`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · invalidAttendee
 
@@ -4822,7 +4822,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** The request did not name a valid attendee.
   Only a tampered or outdated page reaches this.
 - **Ref:** `admin-errors.invalidAttendee`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · itemAlreadyRedeemed
 
@@ -4831,7 +4831,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Refuses clearing an entitlement the attendee has already collected.
   {item} is the item, lowercase, as it reads mid-sentence; other is only a fallback.
 - **Ref:** `admin-errors.itemAlreadyRedeemed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · itemNotEntitled
 
@@ -4840,7 +4840,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Refuses marking an item as collected when the attendee is not entitled to it.
   {item} is the item, lowercase, as it reads mid-sentence; other is only a fallback.
 - **Ref:** `admin-errors.itemNotEntitled`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · itemNotRedeemed
 
@@ -4849,7 +4849,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Refuses undoing a collection that is not recorded.
   {item} is the item, capitalised at the start of the sentence; other is only a fallback.
 - **Ref:** `admin-errors.itemNotRedeemed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · leaveNotConfirmed
 
@@ -4858,7 +4858,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Warning toast shown when an armed two-press control cancels a click on a link or form that would leave the page, so the pending action is not lost silently.
   The next click leaves normally.
 - **Ref:** `admin-errors.leaveNotConfirmed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · listChanged
 
@@ -4866,7 +4866,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The recipients changed between preview and send; the operator must preview again.
 - **Ref:** `admin-errors.listChanged`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · nameInvalid
 
@@ -4874,7 +4874,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The attendee's name is empty, has no letters, or is longer than the 120-character limit.
 - **Ref:** `admin-errors.nameInvalid`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · optionNotAllowed
 
@@ -4883,7 +4883,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** An entitlement value (meal option, drink option, t-shirt size, volunteer t-shirt size, lunch) is not on the approved list and is not the value already stored.
   {item} names the field, lowercase; other is only a fallback.
 - **Ref:** `admin-errors.optionNotAllowed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · pauseBeforeRetry
 
@@ -4891,7 +4891,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Retrying interrupted sends is only allowed while the run is paused.
 - **Ref:** `admin-errors.pauseBeforeRetry`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · phoneInvalid
 
@@ -4900,7 +4900,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** The attendee's phone has too few or too many digits.
   The last four digits are the check-in verification code.
 - **Ref:** `admin-errors.phoneInvalid`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · phoneMissing
 
@@ -4908,7 +4908,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The WhatsApp test send was submitted without a phone number.
 - **Ref:** `admin-errors.phoneMissing`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · previewExpired
 
@@ -4916,7 +4916,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The preview token expired before the operator confirmed the send.
 - **Ref:** `admin-errors.previewExpired`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · previewMissing
 
@@ -4925,7 +4925,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** A send was requested without a preview.
   Only an outdated page reaches this.
 - **Ref:** `admin-errors.previewMissing`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · reasonInvalid
 
@@ -4933,7 +4933,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** A correction arrived without a reason, or with one not allowed for that correction.
 - **Ref:** `admin-errors.reasonInvalid`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · redemptionChanged
 
@@ -4941,7 +4941,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Refuses an undo because the collection was recorded again after the page was opened; the operator must look again.
 - **Ref:** `admin-errors.redemptionChanged`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · requestInProgress
 
@@ -4950,7 +4950,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** The same save is still running from an earlier tap, typically one whose answer timed out.
   Trying again once it finishes shows its result rather than repeating it.
 - **Ref:** `admin-errors.requestInProgress`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · roleInvalid
 
@@ -4958,7 +4958,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The attendee's role is neither participant nor volunteer.
 - **Ref:** `admin-errors.roleInvalid`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · roleLocked
 
@@ -4966,7 +4966,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The role cannot change once the attendee has checked in: their arrival number counts for the raffle.
 - **Ref:** `admin-errors.roleLocked`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · runFinished
 
@@ -4974,7 +4974,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The run cannot be cancelled because it has already ended.
 - **Ref:** `admin-errors.runFinished`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · runInProgress
 
@@ -4982,7 +4982,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Only one WhatsApp run may be active at a time.
 - **Ref:** `admin-errors.runInProgress`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · runInvalid
 
@@ -4991,7 +4991,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** The request did not name a valid run.
   Only a tampered or outdated page reaches this.
 - **Ref:** `admin-errors.runInvalid`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · runNotFound
 
@@ -4999,7 +4999,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The run named no longer exists for this event.
 - **Ref:** `admin-errors.runNotFound`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · runNotPaused
 
@@ -5007,7 +5007,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Resume was pressed on a run that is not paused, usually because another operator already resumed it.
 - **Ref:** `admin-errors.runNotPaused`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · runNotRunning
 
@@ -5015,7 +5015,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Stop was pressed on a run that is not running, usually because it already finished or was paused.
 - **Ref:** `admin-errors.runNotRunning`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · scheduleChanged
 
@@ -5024,7 +5024,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Refuses a save of the pass welcome schedule because someone else saved it after this page was opened.
   Nothing was changed; the operator must reload and redo their edit.
 - **Ref:** `admin-errors.scheduleChanged`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · scheduleDuplicateTime
 
@@ -5032,7 +5032,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Refuses a pass welcome schedule in which two entries start at the same date and time.
 - **Ref:** `admin-errors.scheduleDuplicateTime`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · scheduleInvalid
 
@@ -5041,7 +5041,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Refuses a pass welcome schedule whose shape is wrong, such as an unknown phase.
   Only a tampered or outdated page reaches this.
 - **Ref:** `admin-errors.scheduleInvalid`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · scheduleTextMissing
 
@@ -5049,7 +5049,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Refuses a pass welcome schedule in which a custom entry has no text, or only spaces and invisible characters.
 - **Ref:** `admin-errors.scheduleTextMissing`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · scheduleTextTooLong
 
@@ -5058,7 +5058,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Refuses a pass welcome schedule in which a custom entry's text is longer than the limit.
   {max} is the limit, a number.
 - **Ref:** `admin-errors.scheduleTextTooLong`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · scheduleTimeInvalid
 
@@ -5066,7 +5066,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Refuses a pass welcome schedule entry whose date and time is malformed, or falls in a daylight-saving gap or overlap of the event's time zone.
 - **Ref:** `admin-errors.scheduleTimeInvalid`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · scheduleTooLong
 
@@ -5074,7 +5074,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Refuses a pass welcome schedule with more entries than the server accepts.
 - **Ref:** `admin-errors.scheduleTooLong`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · sendingDisabled
 
@@ -5082,7 +5082,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Starting, resuming and test sends are refused while WHATSAPP\_ENABLED is off on this server.
 - **Ref:** `admin-errors.sendingDisabled`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · templateAudienceMismatch
 
@@ -5090,7 +5090,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The chosen template is not approved for the chosen audience.
 - **Ref:** `admin-errors.templateAudienceMismatch`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · templateInvalid
 
@@ -5099,7 +5099,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** The template sent is not a registered one.
   Only a tampered or outdated form reaches this.
 - **Ref:** `admin-errors.templateInvalid`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · testPhoneInvalid
 
@@ -5107,7 +5107,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The test send's phone number could not be read.
 - **Ref:** `admin-errors.testPhoneInvalid`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · ticketCodeFormat
 
@@ -5115,7 +5115,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** A typed ticket code has the wrong shape.
 - **Ref:** `admin-errors.ticketCodeFormat`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · ticketCodePrefix
 
@@ -5123,7 +5123,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** A typed ticket code's prefix (v for volunteers) does not match the chosen role.
 - **Ref:** `admin-errors.ticketCodePrefix`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · ticketCodeTaken
 
@@ -5131,7 +5131,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** A typed ticket code already belongs to another attendee.
 - **Ref:** `admin-errors.ticketCodeTaken`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · ticketLimitCap
 
@@ -5140,7 +5140,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** The ticket limit's cap is not a whole number in range.
   {min} and {max} are the smallest and largest cap, numbers.
 - **Ref:** `admin-errors.ticketLimitCap`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · ticketLimitMode
 
@@ -5148,7 +5148,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The ticket limit's mode is missing or is neither hard (refuses the ticket) nor warn (only warns).
 - **Ref:** `admin-errors.ticketLimitMode`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · ticketLimitReached
 
@@ -5157,7 +5157,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** A participant could not be created or restored because the hard ticket limit has no room left.
   The message carries no figures; the form's banner shows them.
 - **Ref:** `admin-errors.ticketLimitReached`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · ticketLimitScope
 
@@ -5165,7 +5165,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The ticket limit's scope is missing or is none of off, total (every participant) or door (only tickets created in the editor).
 - **Ref:** `admin-errors.ticketLimitScope`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · volunteerOnlyItem
 
@@ -5175,7 +5175,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   {item} is the item, lowercase, as it reads mid-sentence; other is only a fallback.
   To change a volunteer holding one to a participant, clear the item first.
 - **Ref:** `admin-errors.volunteerOnlyItem`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-errors · whatsappDoorLocked
 
@@ -5183,7 +5183,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The door WhatsApp switch cannot be changed because WHATSAPP\_DOOR\_ENABLED or WHATSAPP\_ENABLED is false in .env.
 - **Ref:** `admin-errors.whatsappDoorLocked`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ## admin-metrics
 
@@ -5193,7 +5193,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Status line when polls fail and no cause could be found.
 - **Ref:** `admin-metrics.disconnected`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · door · of
 
@@ -5201,7 +5201,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Joins the checked-in total to the expected total, which is rendered and refreshed separately: "42 de 700".
 - **Ref:** `admin-metrics.door.of`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · door · prefix
 
@@ -5212,7 +5212,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   other is only a fallback.
   prefix is the code's one-character key, such as x or 7.
 - **Ref:** `admin-metrics.door.prefix`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · door · prefixToggle
 
@@ -5220,7 +5220,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Summary of the collapsible list under Participantes on the door panel that breaks their check-ins down by ticket prefix.
 - **Ref:** `admin-metrics.door.prefixToggle`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · door · sparkLabel
 
@@ -5228,7 +5228,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Accessible name of the door panel's sparkline.
 - **Ref:** `admin-metrics.door.sparkLabel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · door · tip · after
 
@@ -5236,7 +5236,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** End of the door panel tooltip, after the emphasised word, hence the leading comma.
 - **Ref:** `admin-metrics.door.tip.after`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · door · tip · before
 
@@ -5245,7 +5245,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Door panel tooltip, first part, before the emphasised word in admin-metrics.door.tip.emphasis.
   The sentence ends with admin-metrics.door.tip.after.
 - **Ref:** `admin-metrics.door.tip.before`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · door · tip · emphasis
 
@@ -5253,7 +5253,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Emphasised word in the door panel tooltip, between admin-metrics.door.tip.before and .after: the rate is the current minute's.
 - **Ref:** `admin-metrics.door.tip.emphasis`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · door · title
 
@@ -5261,7 +5261,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Door panel heading: check-ins as they happen.
 - **Ref:** `admin-metrics.door.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · errors · count
 
@@ -5269,7 +5269,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** How many times one error signature occurred.
 - **Ref:** `admin-metrics.errors.count`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · errors · none
 
@@ -5277,7 +5277,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown when no error was recorded in the last 15 minutes.
 - **Ref:** `admin-metrics.errors.none`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · errors · signature
 
@@ -5286,7 +5286,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Under an error's message: its signature.
   {fingerprint} is a hash, shown as is.
 - **Ref:** `admin-metrics.errors.signature`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · errors · sparkLabel
 
@@ -5294,7 +5294,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Accessible name of the errors panel's sparkline.
 - **Ref:** `admin-metrics.errors.sparkLabel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · errors · tip · after
 
@@ -5302,7 +5302,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** End of the errors tooltip, after the emphasised term.
 - **Ref:** `admin-metrics.errors.tip.after`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · errors · tip · before
 
@@ -5310,7 +5310,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Errors tooltip, first part, before the emphasised term in admin-metrics.errors.tip.emphasis.
 - **Ref:** `admin-metrics.errors.tip.before`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · errors · tip · emphasis
 
@@ -5319,7 +5319,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Emphasised term in the errors tooltip: a signature groups one defect across many requests.
   Should match admin-metrics.errors.signature.
 - **Ref:** `admin-metrics.errors.tip.emphasis`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · errors · title
 
@@ -5327,7 +5327,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Errors panel heading.
 - **Ref:** `admin-metrics.errors.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · health · depDown
 
@@ -5335,7 +5335,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** A dependency's value when it does not answer.
 - **Ref:** `admin-metrics.health.depDown`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · health · depUnknown
 
@@ -5343,7 +5343,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** A dependency's value when the readiness check could not be reached, so whether it answers is unknown.
 - **Ref:** `admin-metrics.health.depUnknown`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · health · down
 
@@ -5351,7 +5351,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Health headline when Redis or Postgres does not answer.
 - **Ref:** `admin-metrics.health.down`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · health · duration
 
@@ -5359,7 +5359,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** A dependency's response time in milliseconds.
 - **Ref:** `admin-metrics.health.duration`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · health · lastAlert
 
@@ -5368,7 +5368,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** The most recent alert sent to Discord.
   {title} is the alert's own title, in English.
 - **Ref:** `admin-metrics.health.lastAlert`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · health · noAlerts
 
@@ -5376,7 +5376,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown when no alert has been sent since the process started.
 - **Ref:** `admin-metrics.health.noAlerts`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · health · ok
 
@@ -5384,7 +5384,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Health headline when Redis and Postgres both answer.
 - **Ref:** `admin-metrics.health.ok`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · health · tip · after
 
@@ -5392,7 +5392,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** End of the health tooltip, after the emphasised word, hence the leading comma.
 - **Ref:** `admin-metrics.health.tip.after`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · health · tip · before
 
@@ -5400,7 +5400,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Health tooltip, first part, before the emphasised word in admin-metrics.health.tip.emphasis.
 - **Ref:** `admin-metrics.health.tip.before`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · health · tip · emphasis
 
@@ -5408,7 +5408,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Emphasised word in the health tooltip: uptime is the process's, not the host's.
 - **Ref:** `admin-metrics.health.tip.emphasis`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · health · title
 
@@ -5416,7 +5416,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Health panel heading: whether the app's dependencies answer.
 - **Ref:** `admin-metrics.health.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · health · unknown
 
@@ -5424,7 +5424,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Health headline when the readiness check could not be reached, so the panel cannot say whether the dependencies answer.
 - **Ref:** `admin-metrics.health.unknown`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · health · uptime
 
@@ -5432,7 +5432,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Health row label: how long the process has been running.
 - **Ref:** `admin-metrics.health.uptime`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · health · uptimeValue
 
@@ -5440,7 +5440,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The process's uptime in whole minutes.
 - **Ref:** `admin-metrics.health.uptimeValue`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · latency · bucket
 
@@ -5448,7 +5448,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** A latency percentile as the edge of its histogram bucket: at most {ms} milliseconds.
 - **Ref:** `admin-metrics.latency.bucket`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · latency · group · checkinApi
 
@@ -5456,7 +5456,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Latency row: the check-in API.
 - **Ref:** `admin-metrics.latency.group.checkinApi`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · latency · group · checkinPages
 
@@ -5464,7 +5464,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Latency row: the check-in pages.
 - **Ref:** `admin-metrics.latency.group.checkinPages`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · latency · group · staffApi
 
@@ -5472,7 +5472,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Latency row: the staff API.
 - **Ref:** `admin-metrics.latency.group.staffApi`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · latency · group · staffPages
 
@@ -5480,7 +5480,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Latency row: the staff (redemption and raffle) pages.
 - **Ref:** `admin-metrics.latency.group.staffPages`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · latency · surface
 
@@ -5488,7 +5488,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Latency table column: which part of the app.
 - **Ref:** `admin-metrics.latency.surface`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · latency · tip · after
 
@@ -5497,7 +5497,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** End of the latency tooltip, after the emphasised term, hence the leading colon.
   The example must use the same notation as admin-metrics.latency.bucket.
 - **Ref:** `admin-metrics.latency.tip.after`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · latency · tip · before
 
@@ -5505,7 +5505,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Latency tooltip, first part, before the emphasised term in admin-metrics.latency.tip.emphasis.
 - **Ref:** `admin-metrics.latency.tip.before`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · latency · tip · emphasis
 
@@ -5513,7 +5513,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Emphasised term in the latency tooltip: the values are histogram bucket edges, not measurements.
 - **Ref:** `admin-metrics.latency.tip.emphasis`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · latency · title
 
@@ -5521,7 +5521,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Latency panel heading: response times.
 - **Ref:** `admin-metrics.latency.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · keyedOn · admin
 
@@ -5530,7 +5530,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** What one bucket of a rate limiter is keyed on, in its tooltip.
   In English: "the administrator account doing the sign-up".
 - **Ref:** `admin-metrics.limiter.keyedOn.admin`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · keyedOn · adminSession
 
@@ -5539,7 +5539,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** What one bucket of a rate limiter is keyed on, in its tooltip.
   In English: "admin session".
 - **Ref:** `admin-metrics.limiter.keyedOn.adminSession`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · keyedOn · adminUsername
 
@@ -5548,7 +5548,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** What one bucket of a rate limiter is keyed on, in its tooltip.
   In English: "admin username".
 - **Ref:** `admin-metrics.limiter.keyedOn.adminUsername`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · keyedOn · attendeeSession
 
@@ -5557,7 +5557,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** What one bucket of a rate limiter is keyed on, in its tooltip.
   In English: "attendee session, already resolved by the store".
 - **Ref:** `admin-metrics.limiter.keyedOn.attendeeSession`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · keyedOn · checkinCookie
 
@@ -5566,7 +5566,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** What one bucket of a rate limiter is keyed on, in its tooltip.
   In English: "check-in cookie, read directly (the session does not exist yet)".
 - **Ref:** `admin-metrics.limiter.keyedOn.checkinCookie`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · keyedOn · checkinSession
 
@@ -5575,7 +5575,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** What one bucket of a rate limiter is keyed on, in its tooltip.
   In English: "check-in session, already resolved by the store".
 - **Ref:** `admin-metrics.limiter.keyedOn.checkinSession`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · keyedOn · global
 
@@ -5584,7 +5584,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** What one bucket of a rate limiter is keyed on, in its tooltip.
   In English: "global, across the whole event".
 - **Ref:** `admin-metrics.limiter.keyedOn.global`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · keyedOn · ip
 
@@ -5593,7 +5593,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** What one bucket of a rate limiter is keyed on, in its tooltip.
   In English: "IP address".
 - **Ref:** `admin-metrics.limiter.keyedOn.ip`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · keyedOn · ipStrict
 
@@ -5602,7 +5602,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** What one bucket of a rate limiter is keyed on, in its tooltip.
   In English: "IP address, not listed in TRUSTED\_IPS".
 - **Ref:** `admin-metrics.limiter.keyedOn.ipStrict`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · keyedOn · ipTrusted
 
@@ -5611,7 +5611,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** What one bucket of a rate limiter is keyed on, in its tooltip.
   In English: "IP address listed in TRUSTED\_IPS".
 - **Ref:** `admin-metrics.limiter.keyedOn.ipTrusted`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · keyedOn · lookupVolunteer
 
@@ -5620,7 +5620,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** What one bucket of a rate limiter is keyed on, in its tooltip.
   In English: "the volunteer doing the lookup".
 - **Ref:** `admin-metrics.limiter.keyedOn.lookupVolunteer`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · keyedOn · verifiedAttendee
 
@@ -5629,7 +5629,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** What one bucket of a rate limiter is keyed on, in its tooltip.
   In English: "the attendee being verified".
 - **Ref:** `admin-metrics.limiter.keyedOn.verifiedAttendee`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · keyedOn · volunteerSession
 
@@ -5638,7 +5638,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** What one bucket of a rate limiter is keyed on, in its tooltip.
   In English: "the volunteer's own attendee session".
 - **Ref:** `admin-metrics.limiter.keyedOn.volunteerSession`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · adminLogin
 
@@ -5649,7 +5649,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "the admin sign-in endpoint, which cannot use the session limiter because the session does not exist yet.
   Sized for the tailnet, not a venue — no crowd behind one address here".
 - **Ref:** `admin-metrics.limiter.protects.adminLogin`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · adminLoginFailures
 
@@ -5661,7 +5661,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   Only FAILED attempts count; a correct sign-in hands the points back.
   A refusal here means ten failures in fifteen minutes — a typo repeated, or somebody trying".
 - **Ref:** `admin-metrics.limiter.protects.adminLoginFailures`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · adminSessionRoutes
 
@@ -5671,7 +5671,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   It follows "Protege:", so it starts lowercase.
   In English: "the routes that require an admin session, against a leaked or guessed ID".
 - **Ref:** `admin-metrics.limiter.protects.adminSessionRoutes`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · api
 
@@ -5683,7 +5683,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   300 rather than 60 because an in-person event does not give one attendee per address — venue wifi puts the whole room behind one.
   Not the control that stops guessing; the one that would break first".
 - **Ref:** `admin-metrics.limiter.protects.api`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · attendeeSessionRoutes
 
@@ -5693,7 +5693,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   It follows "Protege:", so it starts lowercase.
   In English: "the routes that require an attendee session, against a leaked or guessed ID".
 - **Ref:** `admin-metrics.limiter.protects.attendeeSessionRoutes`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · checkinCreation
 
@@ -5704,7 +5704,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "the two steps that CREATE the check-in session, and so run before resolveSessions.
   Pacing, not a control: rotating the cookie buys a fresh budget — only the per-IP limit cannot be rotated away".
 - **Ref:** `admin-metrics.limiter.protects.checkinCreation`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · checkinEntry
 
@@ -5715,7 +5715,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "the check-in entry path.
   Cost control, not guessing control — what stops guessing is the global failure budget and the per-attendee one, and neither keys on IP".
 - **Ref:** `admin-metrics.limiter.protects.checkinEntry`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · checkinEntryFailures
 
@@ -5726,7 +5726,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "the six-character code against brute force.
   Spending this budget forces a captcha on EVERY arrival, so a spike is usually a queue mistyping rather than an attack".
 - **Ref:** `admin-metrics.limiter.protects.checkinEntryFailures`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · checkinSessionRoutes
 
@@ -5736,7 +5736,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   It follows "Protege:", so it starts lowercase.
   In English: "the routes that require a checkin session, against a leaked or guessed ID".
 - **Ref:** `admin-metrics.limiter.protects.checkinSessionRoutes`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · clientErrorsGlobal
 
@@ -5747,7 +5747,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "the disk.
   A bad deploy makes seven hundred phones report the same error at once; this ceiling bounds the total, not the per-address one".
 - **Ref:** `admin-metrics.limiter.protects.clientErrorsGlobal`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · clientErrorsIp
 
@@ -5758,7 +5758,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "the public frontend-error endpoint.
   60 rather than 5: behind carrier NAT the whole room shares one address, and at 5/min the spike rule (\>20/min) could never fire".
 - **Ref:** `admin-metrics.limiter.protects.clientErrorsIp`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · lookupFailures
 
@@ -5769,7 +5769,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "the typed-code search, which resolves an attendee without the QR.
   A refusal here is usually a broken camera rather than abuse".
 - **Ref:** `admin-metrics.limiter.protects.lookupFailures`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · metricsPanel
 
@@ -5780,7 +5780,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "this panel itself.
   Separate from the admin limit (20/min) because a 5-second poll is already 12/min and would starve the rest of the work".
 - **Ref:** `admin-metrics.limiter.protects.metricsPanel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · redemptionsPanel
 
@@ -5791,7 +5791,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "the redemptions screen.
   Separate from the admin limit (20/min) so the 10-second refresh does not use up the budget corrections need".
 - **Ref:** `admin-metrics.limiter.protects.redemptionsPanel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · staffCounters
 
@@ -5802,7 +5802,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "the redemption counters and the raffle.
   Looser than the attendee limit because one volunteer serves many people in a row".
 - **Ref:** `admin-metrics.limiter.protects.staffCounters`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · verificationFailures
 
@@ -5813,7 +5813,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "the last four phone digits.
   Keyed on the attendee rather than a session or an IP, so discarding a cookie does not help and a room behind one NAT does not get in its own way".
 - **Ref:** `admin-metrics.limiter.protects.verificationFailures`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · web
 
@@ -5824,7 +5824,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "the rendered pages, /admin/login included.
   Each render costs a Redis session lookup, so this is a cost guard more than a security one".
 - **Ref:** `admin-metrics.limiter.protects.web`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · whatsappDoor
 
@@ -5835,7 +5835,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "the WhatsApp account against cost: every attendee created at the door with the message ticked spends one paid send.
   30 in 10 minutes is more than one person creates by hand; a refusal here still creates the attendee, without the message".
 - **Ref:** `admin-metrics.limiter.protects.whatsappDoor`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · whatsappSender
 
@@ -5846,7 +5846,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "the WhatsApp sender screen itself.
   Separate from the admin limit (20/min) because a 3-second poll is already 20/min and would starve the stop button".
 - **Ref:** `admin-metrics.limiter.protects.whatsappSender`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · whatsappWebhookGlobal
 
@@ -5857,7 +5857,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "the receipt callback in aggregate.
   Meta delivers from many addresses, so the per-IP tier alone bounds nothing".
 - **Ref:** `admin-metrics.limiter.protects.whatsappWebhookGlobal`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limiter · protects · whatsappWebhookIp
 
@@ -5868,7 +5868,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   In English: "the receipt callback.
   600 because a 700-recipient run is ~2,100 events from a few of Meta's addresses, and a 429 to Meta means redelivery rather than refusal".
 - **Ref:** `admin-metrics.limiter.protects.whatsappWebhookIp`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · badge
 
@@ -5877,7 +5877,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Badge beside a limiter: what one bucket covers, or which tier of an address pair it is.
   other is only a fallback.
 - **Ref:** `admin-metrics.limits.badge`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · keyCount
 
@@ -5885,7 +5885,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Summary of a limiter's busiest-keys list.
 - **Ref:** `admin-metrics.limits.keyCount`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · keyedOnLabel
 
@@ -5893,7 +5893,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label before what a limiter's buckets are keyed on, in its tooltip.
 - **Ref:** `admin-metrics.limits.keyedOnLabel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · keys
 
@@ -5901,7 +5901,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Limits table column: the busiest keys (addresses, sessions, usernames).
 - **Ref:** `admin-metrics.limits.keys`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · limiter
 
@@ -5909,7 +5909,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Limits table column: the limiter.
 - **Ref:** `admin-metrics.limits.limiter`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · none
 
@@ -5917,7 +5917,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown when no limiter is registered, which means the instrumentation is broken.
 - **Ref:** `admin-metrics.limits.none`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · peak
 
@@ -5925,7 +5925,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Limits table column: this minute's peak against the ceiling.
 - **Ref:** `admin-metrics.limits.peak`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · points
 
@@ -5933,7 +5933,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** How many points one key consumed this window.
 - **Ref:** `admin-metrics.limits.points`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · protectsLabel
 
@@ -5941,7 +5941,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label before what a limiter protects, in its tooltip.
 - **Ref:** `admin-metrics.limits.protectsLabel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · quota
 
@@ -5951,7 +5951,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   {points} and {seconds} are numbers, or ?
   when unknown.
 - **Ref:** `admin-metrics.limits.quota`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · quotaLabel
 
@@ -5959,7 +5959,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label before a limiter's quota, in its tooltip.
 - **Ref:** `admin-metrics.limits.quotaLabel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · refused
 
@@ -5967,7 +5967,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Limits table column: requests refused this window.
 - **Ref:** `admin-metrics.limits.refused`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · sessions
 
@@ -5975,7 +5975,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** How many distinct sessions one address carries.
 - **Ref:** `admin-metrics.limits.sessions`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · strictNote
 
@@ -5984,7 +5984,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Tooltip note on the strict row of an address pair.
   TRUSTED\_IPS is a setting name; “confiável” should match the trusted badge.
 - **Ref:** `admin-metrics.limits.strictNote`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · tip · after
 
@@ -5992,7 +5992,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** End of the limits tooltip, after the emphasised term.
 - **Ref:** `admin-metrics.limits.tip.after`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · tip · emphasis
 
@@ -6001,7 +6001,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Emphasised term in the limits tooltip: how many distinct sessions an address carries.
   Should match admin-metrics.limits.sessions.
 - **Ref:** `admin-metrics.limits.tip.emphasis`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · tip · lead
 
@@ -6009,7 +6009,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Limits tooltip, first part, before the emphasised term in admin-metrics.limits.tip.emphasis.
 - **Ref:** `admin-metrics.limits.tip.lead`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · title
 
@@ -6017,7 +6017,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Limits panel heading: every rate limiter.
 - **Ref:** `admin-metrics.limits.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · trustedNote
 
@@ -6026,7 +6026,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Tooltip note on the trusted row of an address pair.
   “restrita” should match the strict badge.
 - **Ref:** `admin-metrics.limits.trustedNote`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · limits · undescribed
 
@@ -6034,7 +6034,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown when a limiter has no description.
 - **Ref:** `admin-metrics.limits.undescribed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · outage · appDown
 
@@ -6042,7 +6042,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Status line when neither the snapshot nor the readiness check answers.
 - **Ref:** `admin-metrics.outage.appDown`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · outage · postgresDown
 
@@ -6051,7 +6051,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Status line when the readiness check reports Postgres down.
   Kept to one clause.
 - **Ref:** `admin-metrics.outage.postgresDown`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · outage · readinessRefused
 
@@ -6059,7 +6059,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Status line when the edge refused the readiness check, which is what the public hostname does by design; it says nothing about whether the app is healthy.
 - **Ref:** `admin-metrics.outage.readinessRefused`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · outage · readinessUnavailable
 
@@ -6067,7 +6067,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Status line when the readiness check answered without a report, usually because of its own rate limit.
 - **Ref:** `admin-metrics.outage.readinessUnavailable`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · outage · redisDown
 
@@ -6076,7 +6076,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Status line when the readiness check reports Redis down.
   Kept to one clause: the status line appends the age of the data.
 - **Ref:** `admin-metrics.outage.redisDown`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · outage · sessionExpired
 
@@ -6084,7 +6084,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Status line when the dependencies are fine but the snapshot refused this operator: a sign-in problem, not an outage.
 - **Ref:** `admin-metrics.outage.sessionExpired`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · perMinute
 
@@ -6092,7 +6092,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Unit after a per-minute rate on the door, redemption and error panels.
 - **Ref:** `admin-metrics.perMinute`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · redemptions · duplicate
 
@@ -6100,7 +6100,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Redemptions table column: attempts to collect an item twice.
 - **Ref:** `admin-metrics.redemptions.duplicate`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · redemptions · item
 
@@ -6108,7 +6108,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Redemptions table column: the item.
 - **Ref:** `admin-metrics.redemptions.item`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · redemptions · notEntitled
 
@@ -6116,7 +6116,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Redemptions table column: requests for an item the attendee did not register for.
 - **Ref:** `admin-metrics.redemptions.notEntitled`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · redemptions · redeemed
 
@@ -6124,7 +6124,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Redemptions table column: items handed over.
 - **Ref:** `admin-metrics.redemptions.redeemed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · redemptions · tip · duplicate
 
@@ -6133,7 +6133,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Emphasised term in the redemptions tooltip: an attempt to collect the same item twice.
   Should match admin-metrics.redemptions.duplicate.
 - **Ref:** `admin-metrics.redemptions.tip.duplicate`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · redemptions · tip · duplicateMeans
 
@@ -6141,7 +6141,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Explains admin-metrics.redemptions.tip.duplicate, which it follows.
 - **Ref:** `admin-metrics.redemptions.tip.duplicateMeans`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · redemptions · tip · lead
 
@@ -6149,7 +6149,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Redemptions tooltip, first sentence.
 - **Ref:** `admin-metrics.redemptions.tip.lead`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · redemptions · tip · notEntitled
 
@@ -6158,7 +6158,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Emphasised term in the redemptions tooltip: asking for an item not registered.
   Should match admin-metrics.redemptions.notEntitled.
 - **Ref:** `admin-metrics.redemptions.tip.notEntitled`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · redemptions · tip · notEntitledMeans
 
@@ -6166,7 +6166,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Explains admin-metrics.redemptions.tip.notEntitled, which it follows, and ends the tooltip.
 - **Ref:** `admin-metrics.redemptions.tip.notEntitledMeans`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · redemptions · title
 
@@ -6174,7 +6174,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Redemptions panel heading.
 - **Ref:** `admin-metrics.redemptions.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · refresh
 
@@ -6182,7 +6182,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Accessible name and tooltip of the refresh control beside the countdown.
 - **Ref:** `admin-metrics.refresh`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · refreshing
 
@@ -6190,7 +6190,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Status line while a new snapshot is on its way.
 - **Ref:** `admin-metrics.refreshing`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · release
 
@@ -6199,7 +6199,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Under the heading: the build the server is running.
   {release} is a release identifier, shown as is.
 - **Ref:** `admin-metrics.release`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · role
 
@@ -6208,7 +6208,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** A role's row label on the door panel, plural.
   other is only a fallback.
 - **Ref:** `admin-metrics.role`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · survey · closes
 
@@ -6217,7 +6217,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** After the questionnaire's open status on its card: when the schedule closes it.
   {at} is a date and time in the event's time zone.
 - **Ref:** `admin-metrics.survey.closes`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · survey · link
 
@@ -6225,7 +6225,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Link from the questionnaire card to the Feedback page.
 - **Ref:** `admin-metrics.survey.link`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · survey · off
 
@@ -6233,7 +6233,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** In place of an audience's answered-of-checked-in ratio on the questionnaire card when its questionnaire is switched off or has no questions.
 - **Ref:** `admin-metrics.survey.off`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · survey · status
 
@@ -6243,7 +6243,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   schedule is the configured opening and closing times, override an administrator's manual choice, disabled both audiences switched off in the server configuration.
   other is only a fallback.
 - **Ref:** `admin-metrics.survey.status`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · survey · tip
 
@@ -6252,7 +6252,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Questionnaire card tooltip.
   Totals only, by design: no rate or history.
 - **Ref:** `admin-metrics.survey.tip`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · survey · title
 
@@ -6261,7 +6261,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Questionnaire panel heading.
   Matches the Feedback section name in the navigation.
 - **Ref:** `admin-metrics.survey.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · survey · unit
 
@@ -6269,7 +6269,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Beside the questionnaire card's headline figure: the total number of answers received.
 - **Ref:** `admin-metrics.survey.unit`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · title
 
@@ -6277,7 +6277,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the live operations dashboard.
 - **Ref:** `admin-metrics.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-metrics · window · state
 
@@ -6287,7 +6287,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   none means no opening time is configured.
   other is only a fallback.
 - **Ref:** `admin-metrics.window.state`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ## admin-survey
 
@@ -6297,7 +6297,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Row name in the questionnaire screen's audience table.
 - **Ref:** `admin-survey.audience.participant`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · audience · volunteer
 
@@ -6305,7 +6305,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Row name in the questionnaire screen's audience table.
 - **Ref:** `admin-survey.audience.volunteer`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · column · audience
 
@@ -6313,7 +6313,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Column heading in the questionnaire screen's audience table.
 - **Ref:** `admin-survey.column.audience`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · column · download
 
@@ -6321,7 +6321,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Column heading for each audience's download link.
 - **Ref:** `admin-survey.column.download`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · column · responses
 
@@ -6329,7 +6329,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Column heading for how many answers each audience has sent.
 - **Ref:** `admin-survey.column.responses`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · column · switch
 
@@ -6338,7 +6338,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Column heading for each audience's switch in the server configuration.
   \`.env\` is the file's name and stays as is.
 - **Ref:** `admin-survey.column.switch`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · download
 
@@ -6346,7 +6346,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Link that downloads one audience's answers as a CSV file.
 - **Ref:** `admin-survey.download`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · heading
 
@@ -6354,7 +6354,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the questionnaire screen.
 - **Ref:** `admin-survey.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · intro
 
@@ -6362,7 +6362,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Line under the questionnaire screen's heading.
 - **Ref:** `admin-survey.intro`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · noQuestions
 
@@ -6370,7 +6370,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown in place of the download when an audience has no questions file and no answers.
 - **Ref:** `admin-survey.noQuestions`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · override · automatic
 
@@ -6378,7 +6378,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Override choice that hands the questionnaire back to the configured schedule.
 - **Ref:** `admin-survey.override.automatic`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · override · closed
 
@@ -6386,7 +6386,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Override choice that closes the questionnaire for both audiences, whatever the schedule says.
 - **Ref:** `admin-survey.override.closed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · override · failed
 
@@ -6394,7 +6394,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error when saving the override fails for any reason not otherwise named.
 - **Ref:** `admin-survey.override.failed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · override · forbidden
 
@@ -6402,7 +6402,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error when an administrator without the survey:write permission tries to save the override.
 - **Ref:** `admin-survey.override.forbidden`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · override · heading
 
@@ -6410,7 +6410,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the override control.
 - **Ref:** `admin-survey.override.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · override · hint
 
@@ -6419,7 +6419,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Explains the override's reach under its heading.
   \`.env\` is the file's name and stays as is.
 - **Ref:** `admin-survey.override.hint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · override · open
 
@@ -6427,7 +6427,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Override choice that opens the questionnaire for both audiences, whatever the schedule says.
 - **Ref:** `admin-survey.override.open`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · override · save
 
@@ -6435,7 +6435,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Button that saves the override choice.
 - **Ref:** `admin-survey.override.save`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · override · saved
 
@@ -6443,7 +6443,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast on the reloaded screen once the override is saved.
 - **Ref:** `admin-survey.override.saved`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · reason · disabled
 
@@ -6451,7 +6451,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Why the questionnaire is closed: both audiences are switched off in the server configuration.
 - **Ref:** `admin-survey.reason.disabled`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · reason · override
 
@@ -6459,7 +6459,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Why the questionnaire is open or closed: an administrator forced it.
 - **Ref:** `admin-survey.reason.override`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · reason · schedule
 
@@ -6467,7 +6467,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Why the questionnaire is open or closed: the configured schedule decides.
 - **Ref:** `admin-survey.reason.schedule`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · responses
 
@@ -6475,7 +6475,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** How many answers an audience has sent.
 - **Ref:** `admin-survey.responses`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · schedule · closes
 
@@ -6484,7 +6484,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** When the schedule closes the questionnaire.
   {at} is a date and time in the event's time zone.
 - **Ref:** `admin-survey.schedule.closes`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · schedule · noClose
 
@@ -6492,7 +6492,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown when the schedule sets no closing time.
 - **Ref:** `admin-survey.schedule.noClose`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · schedule · opens
 
@@ -6501,7 +6501,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** When the schedule opens the questionnaire.
   {at} is a date and time in the event's time zone.
 - **Ref:** `admin-survey.schedule.opens`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · state · closed
 
@@ -6509,7 +6509,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The questionnaire's current state.
 - **Ref:** `admin-survey.state.closed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · state · open
 
@@ -6517,7 +6517,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The questionnaire's current state.
 - **Ref:** `admin-survey.state.open`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · switch · off
 
@@ -6525,7 +6525,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** An audience whose questionnaire is switched off in the server configuration.
 - **Ref:** `admin-survey.switch.off`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · switch · on
 
@@ -6533,7 +6533,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** An audience whose questionnaire is switched on in the server configuration.
 - **Ref:** `admin-survey.switch.on`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-survey · volunteerNote
 
@@ -6542,7 +6542,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Warning beside the volunteer answers.
   Volunteers are few and known by name, so their anonymous answers are far easier to re-identify than a participant's.
 - **Ref:** `admin-survey.volunteerNote`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ## admin-redemptions
 
@@ -6553,7 +6553,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Label of an armed correction button: a second press saves.
   Reverts after a few seconds.
 - **Ref:** `admin-redemptions.action.confirm`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · action · failed
 
@@ -6561,7 +6561,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when a correction failed for a reason the server did not explain.
 - **Ref:** `admin-redemptions.action.failed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · action · forbidden
 
@@ -6569,7 +6569,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast when the operator's redemptions:write permission was withdrawn while the record was open.
 - **Ref:** `admin-redemptions.action.forbidden`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · action · mark
 
@@ -6578,7 +6578,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Records by hand that the item was handed over.
   The first press arms it and admin-redemptions.action.confirm replaces this label.
 - **Ref:** `admin-redemptions.action.mark`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · action · reason
 
@@ -6586,7 +6586,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the reason choice beside a correction button.
 - **Ref:** `admin-redemptions.action.reason`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · action · reasonMissing
 
@@ -6594,7 +6594,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when a correction is attempted without a reason.
 - **Ref:** `admin-redemptions.action.reasonMissing`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · action · reasonPlaceholder
 
@@ -6602,7 +6602,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Empty first option of the reason choice.
 - **Ref:** `admin-redemptions.action.reasonPlaceholder`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · action · resyncing
 
@@ -6611,7 +6611,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Error line while the record reloads after a correction's answer timed out.
   The correction may or may not have been saved; the reloaded record shows which.
 - **Ref:** `admin-redemptions.action.resyncing`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · action · revert
 
@@ -6620,7 +6620,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Undoes a recorded collection, so the item shows as still to collect.
   The first press arms it and admin-redemptions.action.confirm replaces this label.
 - **Ref:** `admin-redemptions.action.revert`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · filter · item
 
@@ -6628,7 +6628,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the item filter above the list.
 - **Ref:** `admin-redemptions.filter.item`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · filter · status
 
@@ -6636,7 +6636,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the status filter above the list.
 - **Ref:** `admin-redemptions.filter.status`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · filter · status · all
 
@@ -6644,7 +6644,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Status filter value: everybody entitled to the item, collected or not.
 - **Ref:** `admin-redemptions.filter.status.all`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · filter · status · pending
 
@@ -6653,7 +6653,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Status filter value: entitled and not yet collected.
   The default.
 - **Ref:** `admin-redemptions.filter.status.pending`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · filter · status · redeemed
 
@@ -6661,7 +6661,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Status filter value: collected.
 - **Ref:** `admin-redemptions.filter.status.redeemed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · history · actorKind
 
@@ -6671,7 +6671,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   Lowercase.
   other is only a fallback.
 - **Ref:** `admin-redemptions.history.actorKind`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · history · by
 
@@ -6679,7 +6679,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** History column head: the volunteer or administrator who recorded it.
 - **Ref:** `admin-redemptions.history.by`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · history · empty
 
@@ -6687,7 +6687,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The attendee's history is empty.
 - **Ref:** `admin-redemptions.history.empty`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · history · heading
 
@@ -6695,7 +6695,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the attendee's redemption history.
 - **Ref:** `admin-redemptions.history.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · history · item
 
@@ -6703,7 +6703,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** History column head: which item.
 - **Ref:** `admin-redemptions.history.item`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · history · outcome
 
@@ -6711,7 +6711,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** History column head: what happened.
 - **Ref:** `admin-redemptions.history.outcome`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · history · outcomeLabel
 
@@ -6721,7 +6721,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   redeemed: handed over at the counter or the T-shirt desk; duplicate: a second attempt at something already collected; not\_entitled: an attempt at something the attendee never had; marked and reverted: an administrator's corrections.
   other is only a fallback.
 - **Ref:** `admin-redemptions.history.outcomeLabel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · history · reason
 
@@ -6730,7 +6730,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** History column head: the reason given for a correction.
   Empty for a volunteer's own records and the T-shirt desk's.
 - **Ref:** `admin-redemptions.history.reason`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · history · truncated
 
@@ -6739,7 +6739,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Under the history when it was cut at its limit.
   {count} is the limit.
 - **Ref:** `admin-redemptions.history.truncated`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · history · unknownActor
 
@@ -6748,7 +6748,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Stands in for the name of a volunteer or administrator whose record no longer exists.
   other is only a fallback.
 - **Ref:** `admin-redemptions.history.unknownActor`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · history · when
 
@@ -6756,7 +6756,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** History column head: date and time.
 - **Ref:** `admin-redemptions.history.when`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · list · clear
 
@@ -6764,7 +6764,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Resets every filter and the search.
 - **Ref:** `admin-redemptions.list.clear`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · list · code
 
@@ -6772,7 +6772,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Column head: the attendee's ticket code.
 - **Ref:** `admin-redemptions.list.code`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · list · count
 
@@ -6780,7 +6780,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Number of attendees matching the filters, above the list.
 - **Ref:** `admin-redemptions.list.count`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · list · empty
 
@@ -6788,7 +6788,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The list is empty for the chosen filters.
 - **Ref:** `admin-redemptions.list.empty`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · list · heading
 
@@ -6796,7 +6796,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the per-attendee list under the filters.
 - **Ref:** `admin-redemptions.list.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · list · name
 
@@ -6804,7 +6804,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Column head: the attendee's name.
 - **Ref:** `admin-redemptions.list.name`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · list · option
 
@@ -6812,7 +6812,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Column head: the size or choice the attendee registered for.
 - **Ref:** `admin-redemptions.list.option`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · list · pending
 
@@ -6821,7 +6821,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Status cell of an attendee who has not collected the item.
   Lowercase, as the pass chip reads.
 - **Ref:** `admin-redemptions.list.pending`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · list · redeemedAt
 
@@ -6830,7 +6830,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Status cell of an attendee who collected the item.
   {time} is the local date and time, already formatted.
 - **Ref:** `admin-redemptions.list.redeemedAt`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · list · status
 
@@ -6838,7 +6838,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Column head: collected, with the time, or still to collect.
 - **Ref:** `admin-redemptions.list.status`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · page · lede
 
@@ -6846,7 +6846,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Line under the redemptions heading.
 - **Ref:** `admin-redemptions.page.lede`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · page · title
 
@@ -6854,7 +6854,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the admin redemptions screen: what has been handed out, and to whom.
 - **Ref:** `admin-redemptions.page.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · reason · misTap
 
@@ -6862,7 +6862,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Correction reason: the volunteer tapped the wrong item or tapped twice.
 - **Ref:** `admin-redemptions.reason.misTap`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · reason · offline
 
@@ -6870,7 +6870,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Correction reason: the item was handed over while the scanner or the connection was down.
 - **Ref:** `admin-redemptions.reason.offline`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · reason · other
 
@@ -6878,7 +6878,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Correction reason: anything else.
 - **Ref:** `admin-redemptions.reason.other`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · reason · wrongAttendee
 
@@ -6886,7 +6886,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Correction reason: the item was recorded against somebody other than who received it.
 - **Ref:** `admin-redemptions.reason.wrongAttendee`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · record · archived
 
@@ -6894,7 +6894,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Banner on an archived attendee's record.
 - **Ref:** `admin-redemptions.record.archived`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · record · close
 
@@ -6902,7 +6902,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Accessible name of the record's close button.
 - **Ref:** `admin-redemptions.record.close`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · record · edit
 
@@ -6910,7 +6910,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Opens the attendee's record form, where a size or choice can be changed.
 - **Ref:** `admin-redemptions.record.edit`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · record · items
 
@@ -6918,7 +6918,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the record's per-item list.
 - **Ref:** `admin-redemptions.record.items`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · record · noItems
 
@@ -6926,7 +6926,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** The attendee is entitled to nothing.
 - **Ref:** `admin-redemptions.record.noItems`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · record · pending
 
@@ -6934,7 +6934,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Status of an item the attendee has not collected.
 - **Ref:** `admin-redemptions.record.pending`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · record · readOnly
 
@@ -6942,7 +6942,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Replaces the correction controls for an operator without the redemptions:write permission.
 - **Ref:** `admin-redemptions.record.readOnly`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · record · redeemedAt
 
@@ -6951,7 +6951,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Status of a collected item.
   {time} is the local date and time, already formatted.
 - **Ref:** `admin-redemptions.record.redeemedAt`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · state · stale
 
@@ -6959,7 +6959,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Liveness line when refreshes have stopped landing.
 - **Ref:** `admin-redemptions.state.stale`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · state · updated
 
@@ -6968,7 +6968,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Liveness line of the totals.
   {time} is the local time of the last refresh, already formatted.
 - **Ref:** `admin-redemptions.state.updated`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · summary · expected
 
@@ -6976,7 +6976,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Column or figure label: how many active attendees are entitled to the item.
 - **Ref:** `admin-redemptions.summary.expected`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · summary · heading
 
@@ -6984,7 +6984,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the per-item totals panel.
 - **Ref:** `admin-redemptions.summary.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · summary · item
 
@@ -6992,7 +6992,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Column head of the per-option breakdown: which item the option belongs to.
 - **Ref:** `admin-redemptions.summary.item`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · summary · none
 
@@ -7000,7 +7000,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown in an item's card when no active attendee is entitled to it.
 - **Ref:** `admin-redemptions.summary.none`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · summary · option
 
@@ -7008,7 +7008,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Column head of the per-option breakdown: the size or choice.
 - **Ref:** `admin-redemptions.summary.option`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · summary · options
 
@@ -7016,7 +7016,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the per-option breakdown (t-shirt sizes, meal choices…), used to check stock at the counter.
 - **Ref:** `admin-redemptions.summary.options`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · summary · pendingAbsent
 
@@ -7024,7 +7024,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Column or figure label: entitled, not collected, and not checked in.
 - **Ref:** `admin-redemptions.summary.pendingAbsent`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · summary · pendingPresent
 
@@ -7032,7 +7032,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Column or figure label: entitled, not collected, and checked in — the people who can still come to the counter now.
 - **Ref:** `admin-redemptions.summary.pendingPresent`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · summary · progress
 
@@ -7041,7 +7041,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Share of the entitled attendees who collected the item.
   {share} is a fraction between 0 and 1, formatted as a percentage.
 - **Ref:** `admin-redemptions.summary.progress`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · summary · redeemed
 
@@ -7049,7 +7049,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Column or figure label: how many have collected the item.
 - **Ref:** `admin-redemptions.summary.redeemed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · summary · scope
 
@@ -7057,7 +7057,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Footnote under the totals: archived attendees are excluded from every figure.
 - **Ref:** `admin-redemptions.summary.scope`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · toast · marked
 
@@ -7065,7 +7065,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast after an administrator marked an item as collected.
 - **Ref:** `admin-redemptions.toast.marked`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-redemptions · toast · reverted
 
@@ -7073,7 +7073,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast after an administrator undid a collection.
 - **Ref:** `admin-redemptions.toast.reverted`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ## admin-tshirts
 
@@ -7083,7 +7083,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Presence of an attendee who has not checked in, on the t-shirt desk's record.
 - **Ref:** `admin-tshirts.record.absent`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · archived
 
@@ -7092,7 +7092,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Banner on an archived attendee's t-shirt record.
   No hand-over control is offered.
 - **Ref:** `admin-tshirts.record.archived`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · close
 
@@ -7101,7 +7101,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Accessible name of the record's close button.
   Returns to an empty search.
 - **Ref:** `admin-tshirts.record.close`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · codeHint
 
@@ -7109,7 +7109,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Explains the verification code under it, for the person at the desk.
 - **Ref:** `admin-tshirts.record.codeHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · confirm
 
@@ -7118,7 +7118,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Label of the armed hand-over button: a second press records the t-shirt as collected, which cannot be undone on this screen.
   Reverts after a few seconds.
 - **Ref:** `admin-tshirts.record.confirm`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · duplicate
 
@@ -7127,7 +7127,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Warning toast when the hand-over was refused as a duplicate: the shirt had already been collected.
   The record under it shows when.
 - **Ref:** `admin-tshirts.record.duplicate`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · failed
 
@@ -7135,7 +7135,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when recording the hand-over failed for a reason the server did not explain.
 - **Ref:** `admin-tshirts.record.failed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · forbidden
 
@@ -7143,7 +7143,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast when the t-shirt desk permission was withdrawn while the record was open.
 - **Ref:** `admin-tshirts.record.forbidden`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · pending
 
@@ -7151,7 +7151,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** State of a t-shirt that was not collected yet.
 - **Ref:** `admin-tshirts.record.pending`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · presentNumber
 
@@ -7159,7 +7159,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Presence of an attendee who checked in and holds arrival number {number}.
 - **Ref:** `admin-tshirts.record.presentNumber`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · redeem
 
@@ -7168,7 +7168,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Button that records the t-shirt as handed over.
   {size} is the size the attendee ordered.
 - **Ref:** `admin-tshirts.record.redeem`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · redeemHint
 
@@ -7176,7 +7176,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Hint under the hand-over button.
 - **Ref:** `admin-tshirts.record.redeemHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · redeemed
 
@@ -7184,7 +7184,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast on the record's page after the operator recorded the t-shirt as handed over.
 - **Ref:** `admin-tshirts.record.redeemed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · redeemedAt
 
@@ -7193,7 +7193,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** State of a t-shirt that was already collected.
   {time} is the date and time of the collection, in the event's time zone.
 - **Ref:** `admin-tshirts.record.redeemedAt`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · redeeming
 
@@ -7201,7 +7201,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the hand-over button while the request is in flight.
 - **Ref:** `admin-tshirts.record.redeeming`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · showCode
 
@@ -7210,7 +7210,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Summary of the collapsed panel holding the attendee's verification code.
   Kept closed until asked for: the code is the check-in's only shared secret.
 - **Ref:** `admin-tshirts.record.showCode`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · size
 
@@ -7218,7 +7218,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the t-shirt size on the record.
 - **Ref:** `admin-tshirts.record.size`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · record · status
 
@@ -7226,7 +7226,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the collection state on the record: collected, or not yet.
 - **Ref:** `admin-tshirts.record.status`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · search · absent
 
@@ -7235,7 +7235,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Tag on a result card for somebody who has not checked in.
   Lowercase: it trails the role badge.
 - **Ref:** `admin-tshirts.search.absent`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · search · count
 
@@ -7243,7 +7243,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Number of matching attendees above the results.
 - **Ref:** `admin-tshirts.search.count`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · search · idle
 
@@ -7251,7 +7251,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown before anything was searched.
 - **Ref:** `admin-tshirts.search.idle`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · search · lede
 
@@ -7259,7 +7259,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Line under the t-shirt desk heading.
 - **Ref:** `admin-tshirts.search.lede`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · search · miss
 
@@ -7268,7 +7268,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** No result.
   {query} is the search as typed, trimmed and lowercased.
 - **Ref:** `admin-tshirts.search.miss`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · search · missHint
 
@@ -7277,7 +7277,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Suggestion after a search with no result.
   The quoted names are the labels of the status choices.
 - **Ref:** `admin-tshirts.search.missHint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · search · pending
 
@@ -7285,7 +7285,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Tag on a result card for a t-shirt that was not collected yet.
 - **Ref:** `admin-tshirts.search.pending`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · search · redeemedAt
 
@@ -7294,7 +7294,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Tag on a result card for a t-shirt already collected.
   {time} is the date and time of the collection, in the event's time zone.
 - **Ref:** `admin-tshirts.search.redeemedAt`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · search · status
 
@@ -7303,7 +7303,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Legend of the status choice (not collected, collected, all).
   The choice applies on the next search.
 - **Ref:** `admin-tshirts.search.status`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · search · status · all
 
@@ -7311,7 +7311,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Status choice: everybody with a t-shirt, collected or not.
 - **Ref:** `admin-tshirts.search.status.all`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · search · status · pending
 
@@ -7320,7 +7320,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Status choice: t-shirts not yet collected.
   The default.
 - **Ref:** `admin-tshirts.search.status.pending`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · search · status · redeemed
 
@@ -7328,7 +7328,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Status choice: t-shirts already collected.
 - **Ref:** `admin-tshirts.search.status.redeemed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-tshirts · search · title
 
@@ -7336,7 +7336,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the t-shirt desk.
 - **Ref:** `admin-tshirts.search.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ## admin-pass
 
@@ -7346,7 +7346,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Button that adds an empty row to the welcome schedule editor.
 - **Ref:** `admin-pass.add`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · column · at
 
@@ -7354,7 +7354,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Column heading: the date and time from which a row's phase shows on the pass.
 - **Ref:** `admin-pass.column.at`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · column · phase
 
@@ -7362,7 +7362,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Column heading: which welcome text the pass shows.
 - **Ref:** `admin-pass.column.phase`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · current
 
@@ -7371,7 +7371,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** The phase the schedule sets right now.
   {phase} is one of the phase names, such as Chegada.
 - **Ref:** `admin-pass.current`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · customLabel
 
@@ -7381,7 +7381,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   {text} is the line the administrator wrote.
   Personalizado is the custom phase's name and must match it.
 - **Ref:** `admin-pass.customLabel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · defaults · empty
 
@@ -7390,7 +7390,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Shown when the server configuration sets no welcome schedule.
   Chegada is the arrival phase's name and must match it.
 - **Ref:** `admin-pass.defaults.empty`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · defaults · heading
 
@@ -7399,7 +7399,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Heading of the read-only list of the schedule in the server configuration.
   \`.env\` is the file's name and stays as is.
 - **Ref:** `admin-pass.defaults.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · defaults · hint
 
@@ -7407,7 +7407,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Under the .env schedule's heading: it is the fallback, and only someone with access to the host can change it.
 - **Ref:** `admin-pass.defaults.hint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · editor · empty
 
@@ -7417,7 +7417,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   Saving an empty schedule is allowed and means the arrival text for the whole event.
   Chegada is the arrival phase's name.
 - **Ref:** `admin-pass.editor.empty`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · editor · fromDefaults
 
@@ -7426,7 +7426,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Shown above the editor while no schedule is saved here: the rows are a copy of the server configuration's, and saving makes them take over.
   \`.env\` stays as is.
 - **Ref:** `admin-pass.editor.fromDefaults`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · editor · heading
 
@@ -7434,7 +7434,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the welcome schedule editor.
 - **Ref:** `admin-pass.editor.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · editor · hint
 
@@ -7443,7 +7443,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Under the editor's heading.
   {timeZone} is an IANA time zone name such as America/Sao\_Paulo, kept as is.
 - **Ref:** `admin-pass.editor.hint`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · failed
 
@@ -7451,7 +7451,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error when saving the welcome schedule fails for any reason not otherwise named.
 - **Ref:** `admin-pass.failed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · forbidden
 
@@ -7459,7 +7459,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error when an administrator without the pass:write permission tries to save the welcome schedule.
 - **Ref:** `admin-pass.forbidden`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · heading
 
@@ -7467,7 +7467,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the screen that schedules the welcome line on the attendee's pass.
 - **Ref:** `admin-pass.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · intro
 
@@ -7475,7 +7475,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Line under the screen's heading.
 - **Ref:** `admin-pass.intro`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · invalid · duplicateTime
 
@@ -7483,7 +7483,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown before sending when two rows in the editor have the same date and time.
 - **Ref:** `admin-pass.invalid.duplicateTime`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · invalid · missingText
 
@@ -7491,7 +7491,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown before sending when a custom row in the editor has no text.
 - **Ref:** `admin-pass.invalid.missingText`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · invalid · missingTime
 
@@ -7499,7 +7499,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown before sending when a row in the editor has no date and time.
 - **Ref:** `admin-pass.invalid.missingTime`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · legend · custom
 
@@ -7507,7 +7507,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** In the list of what each phase shows, the entry for the custom phase: its text is the one typed on its row, not a fixed one.
 - **Ref:** `admin-pass.legend.custom`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · legend · heading
 
@@ -7515,7 +7515,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the list pairing each phase name with the text it puts on the pass.
 - **Ref:** `admin-pass.legend.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · legend · note
 
@@ -7524,7 +7524,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Explains the rules the schedule does not control.
   Chegada, Questionário, Agradecimento, Padrão and Personalizado are the phase names and must match them.
 - **Ref:** `admin-pass.legend.note`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · next
 
@@ -7533,7 +7533,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** The schedule's next switch.
   {phase} is a phase name; {at} is a date and time in the event's time zone.
 - **Ref:** `admin-pass.next`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · next · none
 
@@ -7541,7 +7541,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown when the schedule in force has no switch after now.
 - **Ref:** `admin-pass.next.none`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · phase · arrival
 
@@ -7549,7 +7549,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Name of the arrival phase: the welcome shown as people arrive, and before the first scheduled switch.
 - **Ref:** `admin-pass.phase.arrival`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · phase · custom
 
@@ -7557,7 +7557,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Name of the custom phase: a line the administrator writes on the schedule row itself, shown on the pass exactly as written.
 - **Ref:** `admin-pass.phase.custom`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · phase · default
 
@@ -7565,7 +7565,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Name of the default phase: the general welcome during the event.
 - **Ref:** `admin-pass.phase.default`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · phase · survey
 
@@ -7573,7 +7573,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Name of the survey phase: the line pointing to the questionnaire.
 - **Ref:** `admin-pass.phase.survey`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · phase · thanks
 
@@ -7581,7 +7581,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Name of the thanks phase: the closing line once feedback is in.
 - **Ref:** `admin-pass.phase.thanks`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · preview
 
@@ -7590,7 +7590,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** The text a phase puts on the pass, quoted.
   {text} is that text.
 - **Ref:** `admin-pass.preview`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · remove
 
@@ -7599,7 +7599,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Accessible name of the button that removes one row from the editor.
   Read by screen readers; the button shows only an icon.
 - **Ref:** `admin-pass.remove`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · reset
 
@@ -7608,7 +7608,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Button that discards the schedule saved here so passes follow the server configuration again.
   \`.env\` stays as is.
 - **Ref:** `admin-pass.reset`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · reset · confirm
 
@@ -7618,7 +7618,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   It reverts to the reset label after a few seconds.
   \`.env\` stays as is.
 - **Ref:** `admin-pass.reset.confirm`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · reset · done
 
@@ -7627,7 +7627,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Toast on the reloaded screen once the saved schedule is discarded.
   \`.env\` stays as is.
 - **Ref:** `admin-pass.reset.done`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · save
 
@@ -7635,7 +7635,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Button that saves the welcome schedule.
 - **Ref:** `admin-pass.save`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · saved
 
@@ -7643,7 +7643,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Toast on the reloaded screen once the welcome schedule is saved.
 - **Ref:** `admin-pass.saved`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · source · admin
 
@@ -7651,7 +7651,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Which schedule the passes follow: the one saved on this screen.
 - **Ref:** `admin-pass.source.admin`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · source · env
 
@@ -7660,7 +7660,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Which schedule the passes follow: the server configuration's.
   \`.env\` stays as is.
 - **Ref:** `admin-pass.source.env`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-pass · text
 
@@ -7668,7 +7668,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Accessible name and placeholder of the text box on a custom row: the line the pass shows from that row's time.
 - **Ref:** `admin-pass.text`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ## admin-volunteers
 
@@ -7678,7 +7678,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when a save failed for a reason the server did not explain.
 - **Ref:** `admin-volunteers.error.failed`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · error · forbidden
 
@@ -7686,7 +7686,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when the operator's volunteers:write permission was withdrawn while the record was open.
 - **Ref:** `admin-volunteers.error.forbidden`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · error · notFound
 
@@ -7694,7 +7694,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Error line when the volunteer no longer exists in the event.
 - **Ref:** `admin-volunteers.error.notFound`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · filter · search
 
@@ -7702,7 +7702,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the search box above the list.
 - **Ref:** `admin-volunteers.filter.search`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · filter · searchPlaceholder
 
@@ -7710,7 +7710,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Placeholder of the search box above the volunteer list: the three things it matches.
 - **Ref:** `admin-volunteers.filter.searchPlaceholder`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · filter · team
 
@@ -7718,7 +7718,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the team choice above the list.
 - **Ref:** `admin-volunteers.filter.team`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · filter · teamAll
 
@@ -7726,7 +7726,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Team choice value: volunteers of every team.
 - **Ref:** `admin-volunteers.filter.teamAll`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · filter · teamNone
 
@@ -7734,7 +7734,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Team choice value: volunteers with no team set.
 - **Ref:** `admin-volunteers.filter.teamNone`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · filter · tierAll
 
@@ -7742,7 +7742,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** First access chip above the list: no filter on access.
 - **Ref:** `admin-volunteers.filter.tierAll`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · filter · tierChip
 
@@ -7751,7 +7751,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Access chip above the list.
   {label} is the access name, as admin-volunteers.tier writes it, and {count} how many volunteers hold it.
 - **Ref:** `admin-volunteers.filter.tierChip`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · filter · tierLabel
 
@@ -7759,7 +7759,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the access chips above the volunteer list.
 - **Ref:** `admin-volunteers.filter.tierLabel`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · history · by
 
@@ -7768,7 +7768,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** After the time of a change.
   {name} is the administrator who made it.
 - **Ref:** `admin-volunteers.history.by`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · history · change
 
@@ -7777,7 +7777,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** One history line's old and new value.
   {before} and {after} are written by the other history messages.
 - **Ref:** `admin-volunteers.history.change`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · history · empty
 
@@ -7785,7 +7785,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown when the volunteer's permissions were never changed from this screen.
 - **Ref:** `admin-volunteers.history.empty`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · history · field
 
@@ -7795,7 +7795,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   N° is the abbreviation of número.
   other is only a fallback.
 - **Ref:** `admin-volunteers.history.field`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · history · heading
 
@@ -7803,7 +7803,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the volunteer's list of past changes.
 - **Ref:** `admin-volunteers.history.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · history · no
 
@@ -7811,7 +7811,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** A switch's value in a history line: off.
 - **Ref:** `admin-volunteers.history.no`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · history · removedAdmin
 
@@ -7820,7 +7820,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Stands for the name in admin-volunteers.history.by when the administrator's account has since been deleted.
   Lowercase.
 - **Ref:** `admin-volunteers.history.removedAdmin`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · history · yes
 
@@ -7828,7 +7828,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** A switch's value in a history line: on.
 - **Ref:** `admin-volunteers.history.yes`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · legend · access
 
@@ -7840,7 +7840,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   other is only a fallback.
   A sentence fragment with no final period, as the entries are short lines.
 - **Ref:** `admin-volunteers.legend.access`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · legend · grant
 
@@ -7856,7 +7856,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   other is only a fallback.
   A sentence fragment with no final period.
 - **Ref:** `admin-volunteers.legend.grant`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · legend · heading
 
@@ -7864,7 +7864,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the legend above the volunteer list, which explains each access chip: what it lets a volunteer do and what grants it.
 - **Ref:** `admin-volunteers.legend.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · legend · lede
 
@@ -7874,7 +7874,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   The chip on a volunteer shows only the highest access that applies, in the order listed (the first row wins), while the volunteer may also hold the accesses listed after it, so someone who can both look up and redeem shows lookup.
   The chip is the colored access label on each row.
 - **Ref:** `admin-volunteers.legend.lede`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · list · adminLink
 
@@ -7882,7 +7882,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Small mark on a volunteer card: their pass shows the link to the administrator screen.
 - **Ref:** `admin-volunteers.list.adminLink`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · list · clear
 
@@ -7890,7 +7890,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Button in the no-match message that removes every filter.
 - **Ref:** `admin-volunteers.list.clear`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · list · code
 
@@ -7898,7 +7898,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the ticket code on a volunteer card.
 - **Ref:** `admin-volunteers.list.code`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · list · count
 
@@ -7907,7 +7907,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Line above the list, read aloud when a filter changes.
   {count} is how many volunteers are showing.
 - **Ref:** `admin-volunteers.list.count`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · list · empty
 
@@ -7915,7 +7915,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown instead of the list when the event has no volunteers.
 - **Ref:** `admin-volunteers.list.empty`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · list · heading
 
@@ -7923,7 +7923,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Visually hidden heading of the volunteer list.
 - **Ref:** `admin-volunteers.list.heading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · list · noMatches
 
@@ -7931,7 +7931,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown when the access, team and search filters leave nobody.
 - **Ref:** `admin-volunteers.list.noMatches`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · list · noTeam
 
@@ -7939,7 +7939,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Where a volunteer's team would be, when they have none.
 - **Ref:** `admin-volunteers.list.noTeam`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · list · raffle
 
@@ -7948,7 +7948,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Small mark on a volunteer card: they may use the number generator.
   N° is the abbreviation of número.
 - **Ref:** `admin-volunteers.list.raffle`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · list · stations
 
@@ -7956,7 +7956,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the stations a volunteer may record collections at, on a volunteer card.
 - **Ref:** `admin-volunteers.list.stations`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · page · lede
 
@@ -7965,7 +7965,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Line under the heading of the volunteer permissions screen.
   It says what the screen edits and that changes are recorded.
 - **Ref:** `admin-volunteers.page.lede`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · page · title
 
@@ -7973,7 +7973,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the volunteer permissions screen.
 - **Ref:** `admin-volunteers.page.title`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · accountDisabled
 
@@ -7982,7 +7982,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Tag after the linked account's username when the account is switched off.
   Lowercase.
 - **Ref:** `admin-volunteers.record.accountDisabled`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · accountHeading
 
@@ -7990,7 +7990,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the read-only block about the administrator account linked to the volunteer.
 - **Ref:** `admin-volunteers.record.accountHeading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · accountNone
 
@@ -7998,7 +7998,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Shown when the volunteer is linked to no administrator account.
 - **Ref:** `admin-volunteers.record.accountNone`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · accountNote
 
@@ -8006,7 +8006,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Note under the linked account: the account is read-only on this screen and changes through the volunteer permissions import.
 - **Ref:** `admin-volunteers.record.accountNote`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · accountUser
 
@@ -8015,7 +8015,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Line naming the linked administrator account.
   {username} is the account's username.
 - **Ref:** `admin-volunteers.record.accountUser`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · canDraw
 
@@ -8023,7 +8023,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Switch: the volunteer may draw numbers at the raffle.
 - **Ref:** `admin-volunteers.record.canDraw`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · canRedeem
 
@@ -8031,7 +8031,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Switch: the volunteer may record collections at the counters.
 - **Ref:** `admin-volunteers.record.canRedeem`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · checkinTime
 
@@ -8039,7 +8039,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the time of day the volunteer is expected on event day.
 - **Ref:** `admin-volunteers.record.checkinTime`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · close
 
@@ -8047,7 +8047,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Accessible name of the icon that leaves a volunteer's record for the list.
 - **Ref:** `admin-volunteers.record.close`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · otherHeading
 
@@ -8055,7 +8055,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the group of controls about the raffle and the admin link.
 - **Ref:** `admin-volunteers.record.otherHeading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · redeemHeading
 
@@ -8063,7 +8063,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the group of controls about collecting items.
 - **Ref:** `admin-volunteers.record.redeemHeading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · save
 
@@ -8071,7 +8071,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Button that saves the volunteer's permissions.
 - **Ref:** `admin-volunteers.record.save`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · showAdminLink
 
@@ -8080,7 +8080,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Switch: the volunteer's pass links to the administrator screen.
   A link only: that screen still asks for its own login.
 - **Ref:** `admin-volunteers.record.showAdminLink`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · stations
 
@@ -8089,7 +8089,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 - **Why:** Legend of the stations the volunteer may record collections for.
   Each is an item, named as chrome.item\* does.
 - **Ref:** `admin-volunteers.record.stations`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · stationsEmpty
 
@@ -8097,7 +8097,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Hint under the stations when the volunteer may record collections but no station is ticked: the permission grants nothing until one is.
 - **Ref:** `admin-volunteers.record.stationsEmpty`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · stationsOff
 
@@ -8107,7 +8107,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   The ticks are kept, so switching it back on restores them.
   The quoted text must match admin-volunteers.record.canRedeem.
 - **Ref:** `admin-volunteers.record.stationsOff`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · team
 
@@ -8115,7 +8115,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the volunteer's team, free text.
 - **Ref:** `admin-volunteers.record.team`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · teamHeading
 
@@ -8123,7 +8123,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Heading of the group with the volunteer's team and role.
 - **Ref:** `admin-volunteers.record.teamHeading`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · record · teamRole
 
@@ -8131,7 +8131,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Label of the volunteer's role within the team, free text.
 - **Ref:** `admin-volunteers.record.teamRole`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · tier
 
@@ -8145,7 +8145,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
   Shown in capital letters by the stylesheet.
   N° is the abbreviation of número.
 - **Ref:** `admin-volunteers.tier`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · toast · saved
 
@@ -8153,7 +8153,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Green confirmation after the volunteer's permissions were saved.
 - **Ref:** `admin-volunteers.toast.saved`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### admin-volunteers · toast · unchanged
 
@@ -8161,7 +8161,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Green confirmation after a save that matched what was already stored, so nothing was written and no history entry was added.
 - **Ref:** `admin-volunteers.toast.unchanged`
-- **Locales:** pt-BR ✓ · en missing — serves pt-BR · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ## Appendix A — Duplicates
 

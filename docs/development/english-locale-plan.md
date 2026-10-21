@@ -79,8 +79,8 @@ Branch: `docs/english-locale`.
 | código do ingresso | ticket code | |
 | código de checkin (voluntário) | check-in code | Volunteer variant of the ticket code. |
 | cadastro (voluntário) | registration | What a volunteer looks up on the check-in screen. |
-| participante | participant | Role: a person attending as a participant, as opposed to a volunteer. Addressed as "you". |
-| pessoa | attendee | Umbrella for participants and volunteers, as in `AttendeeRole`. Never use it for participants alone. |
+| participante (role) | participant | Contrasted with volunteer: role labels, filters, audiences, the participant-only ticket limit. Addressed as "you". |
+| participante (roster entry), pessoa | attendee | Anyone on the roster, volunteers included: admin roster, records, archive, lookup. Never for participants alone. |
 | voluntário | volunteer | Tier chips: Register, Numbers, Lookup, T-shirts, Pickups. |
 | staff, equipe | staff | A volunteer at a station is "staff". |
 | mesa de suporte | support desk | |
@@ -92,8 +92,8 @@ Branch: `docs/english-locale`.
 | apelido | nickname | Shown on screen as "how your name appears". |
 | chapelaria | cloakroom | |
 | retirada, retirar | pickup, collect | Verb for an attendee is "collect"; the staff screen is "Pickups". |
-| resgate | redemption | Admin term; the attendee-facing copy says pickup. |
-| gerador de números | raffle, number generator | Draw: "generate a number". "Drawn" for the list. |
+| resgate | redemption | Code and descriptions only; the copy says "pickup" on every screen, admin included. |
+| gerador de números, gerador de N° | raffle, number generator | Draw: "generate a number". "Drawn" for the list. |
 | interações | raffle | Label beside the check-in number. |
 | devolver (aos restantes) | return to the pool | |
 | camiseta | T-shirt | |
@@ -101,3 +101,16 @@ Branch: `docs/english-locale`.
 | questionário, feedback | survey, feedback | "Survey" for the form, "feedback" for the invitation. |
 | painel admin | admin panel | |
 | Entrar, Sair | Sign in, Sign out | |
+| envio (WhatsApp batch) | run | One message is a "message"; the verb is "send". |
+| modelo (WhatsApp) | template | |
+| público | audience | |
+| prévia, pré-visualizar | preview | |
+| entregues, lidos, enviados, na fila, adiados, ignorados | delivered, read, sent, queued, deferred, skipped | WhatsApp run counts. |
+| entrega, entregar (camiseta) | hand-over, hand over | T-shirt desk. |
+| horário de chegada | check-in time | |
+| situação | status | |
+| acesso, níveis de acesso | access, access levels | Volunteer tiers. |
+| frase (do ingresso), frase programada | line, scheduled line | The welcome line on a ticket. |
+| zona de risco | danger zone | |
+| limitador, cota, pico, recusadas | limiter, quota, peak, refused | Metrics. |
+| bloqueio, somente aviso | block, warn only | Ticket-limit modes. |
