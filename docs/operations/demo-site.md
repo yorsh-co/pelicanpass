@@ -35,7 +35,7 @@ For the closing page that replaces the live app after the event, see
 | Every other path                                        | `404.html`, the app's not-found page with a link back to `/`                             |
 
 Every response carries `X-Robots-Tag: noindex`. Every page opens with a banner that says the event and
-data are fictional, lists the demo codes and links to the repository.
+data are fictional, lists the demo codes and links to the read-only `/admin` panel and the repository.
 
 ## 2. How it works
 
@@ -148,7 +148,7 @@ npx wrangler pages deploy dist/demo --project-name pelicanpass-demo
 
 The first run creates the project. Open `https://pelicanpass-demo.pages.dev` **on a phone** and check:
 
-1. `/` redirects to `/checkin`, and the banner lists the demo codes.
+1. `/` redirects to `/checkin`, and the banner lists the demo codes and links to `/admin`.
 2. Check in with a participant code, the verification code and the QR step. The pass shows a check-in
    number, the QR code and a nickname field.
 3. Change the nickname and reload; it persists in the tab.

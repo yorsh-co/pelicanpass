@@ -281,6 +281,10 @@ describe(
           `${page} lacks the banner`,
         );
         assert.ok(html.includes(REPOSITORY_URL), `${page} lacks the repo link`);
+        assert.ok(
+          html.includes('href="/admin"'),
+          `${page} lacks the admin link`,
+        );
         assert.ok(html.includes('href="/css/demo.css"'), `${page} lacks css`);
 
         for (const code of [
