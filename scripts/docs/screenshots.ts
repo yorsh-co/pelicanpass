@@ -7,7 +7,8 @@
  * here is personal data.
  *
  * Stable output: the clock, time zone, locale and `Math.random` are fixed, and
- * motion is reduced. The demo banner is hidden; it is not part of the product.
+ * motion is reduced, and the rotation window's ring is held at one level. The
+ * demo banner is hidden; it is not part of the product.
  * Every step waits for the state it expects rather than for a duration,
  * because the demo's mock API answers after a random latency.
  *
@@ -79,6 +80,18 @@ const CHECKED_IN_CODE = 'b6g1j4';
 const HIDE_BANNER = `document.addEventListener('DOMContentLoaded', () => {
   const style = document.createElement('style');
   style.textContent = '.demo-banner { display: none !important; }';
+  document.head.append(style);
+});`;
+
+/**
+ * Injects a stylesheet holding the rotation window's ring at three quarters.
+ * The page drains it from `performance.now()`, which the fixed clock does not
+ * freeze, so its gap would otherwise depend on how long each capture took.
+ * `!important` outranks the inline value the page writes every second.
+ */
+const PIN_WINDOW_RING = `document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.window-ring { --window-remaining: 0.75 !important; }';
   document.head.append(style);
 });`;
 
@@ -189,6 +202,7 @@ const newContext = async (
 
   await context.addInitScript(SEED_RANDOM);
   await context.addInitScript({ content: HIDE_BANNER });
+  await context.addInitScript({ content: PIN_WINDOW_RING });
 
   return context;
 };
