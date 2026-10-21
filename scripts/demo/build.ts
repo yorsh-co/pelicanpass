@@ -160,9 +160,10 @@ export interface BuildDemoSiteResult {
  *
  * Both copies are in the markup, built from the same constants so the facts
  * cannot drift; `demo.css` shows the one matching `data-demo-lang` on `<html>`,
- * which the mock script sets before first paint. The reset and language
- * buttons are rendered hidden: the mock script shows and binds them, and
- * without that script they would do nothing.
+ * which the mock script sets before first paint, along with
+ * `data-demo-banner`, which collapses the banner to its first line. The reset,
+ * language and collapse buttons are rendered hidden: the mock script shows and
+ * binds them, and without that script they would do nothing.
  */
 const bannerHtml = (): string => {
   const list = (codes: readonly string[]): string =>
@@ -174,12 +175,12 @@ const bannerHtml = (): string => {
   return `
 <aside class="demo-banner" role="note">
   <div class="demo-banner-copy" data-demo-copy="pt" lang="pt-BR">
-    <p><strong>Demonstração.</strong> O evento e todos os dados são fictícios. <button type="button" class="demo-banner-button" data-demo-reset hidden>Reiniciar demonstração</button> <button type="button" class="demo-banner-button" data-demo-set-lang="en" hidden>English</button></p>
-    <p>Códigos de ingresso para testar: ${participants} (participante) e ${volunteers} (voluntário). Na verificação, digite <code>${DEMO_VERIFICATION_CODE}</code>; no QR Code, toque em &ldquo;Já fez check-in com um voluntário?&rdquo;. Em <a href="/staff">/staff</a>, digite um código, como <code>${staffExample}</code> ou o seu, em vez de usar a câmera. Em <a href="/admin">/admin</a>, veja o painel administrativo, somente leitura. <a href="${REPOSITORY_URL}" rel="noopener noreferrer">Código-fonte no GitHub</a>.</p>
+    <p class="demo-banner-lead"><span class="demo-banner-summary"><strong>Demonstração.</strong> O evento e todos os dados são fictícios.</span> <button type="button" class="demo-banner-button" data-demo-reset hidden>Reiniciar demonstração</button> <button type="button" class="demo-banner-button" data-demo-set-lang="en" hidden>English</button> <button type="button" class="demo-banner-button demo-banner-toggle" data-demo-banner-toggle aria-controls="demo-banner-details-pt" aria-expanded="true" hidden>Detalhes</button></p>
+    <p class="demo-banner-details" id="demo-banner-details-pt">Códigos de ingresso para testar: ${participants} (participante) e ${volunteers} (voluntário). Na verificação, digite <code>${DEMO_VERIFICATION_CODE}</code>; no QR Code, toque em &ldquo;Já fez check-in com um voluntário?&rdquo;. Em <a href="/staff">/staff</a>, digite um código, como <code>${staffExample}</code> ou o seu, em vez de usar a câmera. Em <a href="/admin">/admin</a>, veja o painel administrativo, somente leitura. <a href="${REPOSITORY_URL}" rel="noopener noreferrer">Código-fonte no GitHub</a>.</p>
   </div>
   <div class="demo-banner-copy" data-demo-copy="en" lang="en">
-    <p><strong>Demo.</strong> The event and all data are fictional. <button type="button" class="demo-banner-button" data-demo-reset hidden>Reset demo</button> <button type="button" class="demo-banner-button" data-demo-set-lang="pt" hidden>Português</button></p>
-    <p>Ticket codes to try: ${participants} (participant) and ${volunteers} (volunteer). At verification, enter <code>${DEMO_VERIFICATION_CODE}</code>; at the QR code step, tap &ldquo;Já fez check-in com um voluntário?&rdquo;. At <a href="/staff">/staff</a>, enter a code such as <code>${staffExample}</code> or your own instead of using the camera. At <a href="/admin">/admin</a>, browse the read-only admin panel. <a href="${REPOSITORY_URL}" rel="noopener noreferrer">Source code on GitHub</a>.</p>
+    <p class="demo-banner-lead"><span class="demo-banner-summary"><strong>Demo.</strong> The event and all data are fictional.</span> <button type="button" class="demo-banner-button" data-demo-reset hidden>Reset demo</button> <button type="button" class="demo-banner-button" data-demo-set-lang="pt" hidden>Português</button> <button type="button" class="demo-banner-button demo-banner-toggle" data-demo-banner-toggle aria-controls="demo-banner-details-en" aria-expanded="true" hidden>Details</button></p>
+    <p class="demo-banner-details" id="demo-banner-details-en">Ticket codes to try: ${participants} (participant) and ${volunteers} (volunteer). At verification, enter <code>${DEMO_VERIFICATION_CODE}</code>; at the QR code step, tap &ldquo;Já fez check-in com um voluntário?&rdquo;. At <a href="/staff">/staff</a>, enter a code such as <code>${staffExample}</code> or your own instead of using the camera. At <a href="/admin">/admin</a>, browse the read-only admin panel. <a href="${REPOSITORY_URL}" rel="noopener noreferrer">Source code on GitHub</a>.</p>
   </div>
 </aside>
 `;

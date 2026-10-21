@@ -19,6 +19,7 @@
 
 import { installAdminGuard, showNotice } from './admin-guard.ts';
 import { applyBannerLanguage, bindBannerLanguage } from './banner-language.ts';
+import { applyBannerState, bindBannerToggle } from './banner-state.ts';
 import { metricsSnapshot } from './metrics-snapshot.ts';
 import { findRoute } from './routes.ts';
 import {
@@ -357,6 +358,7 @@ installFetch();
 installBeacon();
 installAdminGuard();
 applyBannerLanguage();
+applyBannerState();
 routeSession();
 
 // `interactive` is announced before deferred and module scripts run, which is
@@ -365,6 +367,7 @@ const onReady = (): void => {
   seedPage();
   bindReset();
   bindBannerLanguage();
+  bindBannerToggle();
 };
 
 if (document.readyState === 'loading') {
