@@ -224,7 +224,10 @@ const settle = (page: Page): Promise<unknown> =>
  * Waits for a check-in step's hint to be shown. `ui/hint.ts` sets it after a
  * short delay and fades it in, so the step being ready says nothing about it.
  */
-const waitForHint = (page: Page, step: 'ticket' | 'verification') =>
+const waitForHint = (
+  page: Page,
+  step: 'ticket' | 'verification' | 'qr',
+) =>
   page
     .locator(
       `[data-checkin="${step}-hint-div"]:not(.changing):text-matches("[A-Za-z]")`,
@@ -308,6 +311,13 @@ export const captureScreenshots = async (outDir: string): Promise<void> => {
       '[data-checkin="verification-code-input"]',
       DEMO_VERIFICATION_CODE,
     );
+    await participant
+      .locator('[data-checkin="qr-step"]:not(.skeleton)')
+      .waitFor();
+    await participant.locator('[data-checkin="qr-presence-btn"]:enabled').waitFor();
+    await waitForHint(participant, 'qr');
+    await shoot(participant, 'checkin-presence');
+
     await participant.locator('[data-checkin="qr-presence-btn"]').click();
 
     await participant.waitForURL('**/pass');
