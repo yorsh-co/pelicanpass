@@ -1,0 +1,282 @@
+{
+  "checkin.captcha.expired": {
+    "defaultMessage": "Redo the verification",
+    "description": "The human-verification widget's result expired."
+  },
+  "checkin.captcha.missing": {
+    "defaultMessage": "Complete the verification before continuing",
+    "description": "The human-verification widget has not been completed yet."
+  },
+  "checkin.continue.action": {
+    "defaultMessage": "Continue",
+    "description": "Button of the page shown when the check-in link was opened from another site; it submits the link's token to this site and starts the check-in."
+  },
+  "checkin.continue.body": {
+    "defaultMessage": "You opened a check-in link from another site. Tap continue to go on with your check-in.",
+    "description": "Line under the heading of the page shown when the check-in link was opened from another site. Nothing has been started yet and the page shows nothing about any attendee."
+  },
+  "checkin.continue.title": {
+    "defaultMessage": "Continue to check-in",
+    "description": "Heading of the page shown when the check-in link was opened from another site (a link in a message or an app, for example) and must be confirmed with one tap before the check-in starts."
+  },
+  "checkin.flow.error": {
+    "defaultMessage": "Error",
+    "description": "Generic error hint, for a step that reports a failure without a message of its own."
+  },
+  "checkin.flow.processing": {
+    "defaultMessage": "Processing...",
+    "description": "Generic progress hint, for a step that starts work without a message of its own."
+  },
+  "checkin.flow.slowResponse": {
+    "defaultMessage": "The server is taking longer than expected to respond. Try again in a moment",
+    "description": "A step's request timed out, or the server was too busy to take it. Neutral on purpose: on the day a stall is likelier to be the network than the server, and a timed-out request may still have gone through, so the copy blames neither."
+  },
+  "checkin.init.error.notFound": {
+    "defaultMessage": "User not found. Check in again",
+    "description": "Toast after the entry link named nobody."
+  },
+  "checkin.init.error.rateLimited": {
+    "defaultMessage": "Too many attempts. Wait a moment before trying again",
+    "description": "Toast after too many attempts; it clears by itself."
+  },
+  "checkin.init.error.unauthorized": {
+    "defaultMessage": "Your session expired. Check in again",
+    "description": "Toast after the session expired."
+  },
+  "checkin.init.error.validation": {
+    "defaultMessage": "{audience, select, participant {Invalid ticket code or QR code. Enter your ticket code below} volunteer {Invalid check-in code or QR code. Enter your check-in code below} other {Invalid ticket code or QR code. Enter your ticket code below}}",
+    "description": "Toast after an entry link or QR was rejected; the person types their code instead. Participants have a ticket code, volunteers a check-in code. Worded per audience; other repeats the participant wording and is only a fallback."
+  },
+  "checkin.init.recoverableError": {
+    "defaultMessage": "Something went wrong. Reload the page",
+    "description": "The check-in page failed to draw but the session is intact, so reloading fixes it."
+  },
+  "checkin.init.unknownError": {
+    "defaultMessage": "Something went wrong. Try again",
+    "description": "Toast after being sent back to check-in for a failure with no specific message."
+  },
+  "checkin.lockout.rateLimit": {
+    "defaultMessage": "Too many attempts. Restart check-in and complete the verification",
+    "description": "Toast when too many attempts reset the flow to the start."
+  },
+  "checkin.preview.toggle": {
+    "defaultMessage": "Show or hide your details",
+    "description": "Screen-reader label of the button that expands or collapses the summary of whose ticket is being checked in."
+  },
+  "checkin.progress.arrival": {
+    "defaultMessage": "Arrival",
+    "description": "Third step of the progress indicator: confirming arrival at the venue."
+  },
+  "checkin.progress.label": {
+    "defaultMessage": "Check-in progress",
+    "description": "Accessible name of the three-step progress indicator at the top of check-in."
+  },
+  "checkin.progress.ticket": {
+    "defaultMessage": "Ticket",
+    "description": "First step of the progress indicator: typing the code."
+  },
+  "checkin.progress.verification": {
+    "defaultMessage": "Identity",
+    "description": "Second step of the progress indicator: confirming the code is the person's own."
+  },
+  "checkin.scanner.cameraAccessRequest": {
+    "defaultMessage": "Allow camera access to continue",
+    "description": "Shown while the browser asks for camera permission."
+  },
+  "checkin.scanner.defaultHint": {
+    "defaultMessage": "Scan the QR code at the entrance to confirm you have arrived",
+    "description": "Hint under the scanner while it waits for the venue's QR code."
+  },
+  "checkin.scanner.error.captchaRequired": {
+    "defaultMessage": "Complete the verification before continuing",
+    "description": "The server now requires human verification before the scan is accepted."
+  },
+  "checkin.scanner.error.notFound": {
+    "defaultMessage": "We couldn't read that QR code. Try again or use another one",
+    "description": "The scanned code matched nothing; same wording as a rejected code."
+  },
+  "checkin.scanner.error.rateLimited": {
+    "defaultMessage": "Too many attempts. Wait a moment before trying again",
+    "description": "Too many scans; it clears by itself."
+  },
+  "checkin.scanner.error.validation": {
+    "defaultMessage": "We couldn't read that QR code. Try again or use another one",
+    "description": "The scanned code is not the venue's."
+  },
+  "checkin.scanner.header": {
+    "defaultMessage": "Confirm you have arrived",
+    "description": "Heading of the step where the attendee scans the venue's QR code to confirm they are there."
+  },
+  "checkin.scanner.help": {
+    "defaultMessage": "If it does not work, ask a volunteer for help",
+    "description": "Fallback instruction under the scanner."
+  },
+  "checkin.scanner.presence.button": {
+    "defaultMessage": "Already checked in with a volunteer? Tap to continue",
+    "description": "Secondary button under the scanner's help line. For an attendee whose camera failed and whom a volunteer already marked present on the staff screen; it asks the server whether that happened. Phrased as a question followed by the action."
+  },
+  "checkin.scanner.presence.error": {
+    "defaultMessage": "Something went wrong. Try again",
+    "description": "Any failure checking whether a volunteer confirmed the attendee that has no specific message, such as a network error or too many requests. Same wording as the other steps' generic errors."
+  },
+  "checkin.scanner.presence.notYet": {
+    "defaultMessage": "Your check-in has not been confirmed yet. Confirm your arrival with the QR code",
+    "description": "Shown when the attendee taps the volunteer-confirmation button before a volunteer has marked them present. An expected outcome, not a failure; the button stays disabled for a few seconds afterwards."
+  },
+  "checkin.scanner.processing": {
+    "defaultMessage": "Reading the QR code...",
+    "description": "Shown while a scanned code is checked."
+  },
+  "checkin.scanner.success": {
+    "defaultMessage": "Your arrival is confirmed!",
+    "description": "Shown when the venue's QR code was accepted."
+  },
+  "checkin.scanner.unknownError": {
+    "defaultMessage": "We couldn't read that QR code. Try again or use another one",
+    "description": "Any other scan failure; worded like a bad read, since re-scanning is the useful next step."
+  },
+  "checkin.success.greeting": {
+    "defaultMessage": "{name}, your check-in is confirmed!",
+    "description": "Greeting on the final card. name is the attendee's first name."
+  },
+  "checkin.success.greetingFallback": {
+    "defaultMessage": "Your check-in is confirmed!",
+    "description": "Greeting on the final card when no first name is known."
+  },
+  "checkin.success.heading": {
+    "defaultMessage": "You're here!",
+    "description": "Heading on the final card before the attendee's name is known; replaced by the greeting once it is."
+  },
+  "checkin.success.help": {
+    "defaultMessage": "Tap here to open the app",
+    "description": "Link to the pass, for when the automatic move does not happen."
+  },
+  "checkin.success.numberLabel": {
+    "defaultMessage": "your check-in and cloakroom number",
+    "description": "Label above the check-in number on the final card."
+  },
+  "checkin.success.redirect": {
+    "defaultMessage": "Heading to the app...",
+    "description": "Shown just before moving on to the pass."
+  },
+  "checkin.success.success": {
+    "defaultMessage": "Check-in complete!",
+    "description": "Status line on the final card."
+  },
+  "checkin.ticket.defaultHint": {
+    "defaultMessage": "Enter the code you received on WhatsApp",
+    "description": "Hint under the code field. Codes are sent by WhatsApp."
+  },
+  "checkin.ticket.empty": {
+    "defaultMessage": "Enter the code you received on WhatsApp",
+    "description": "The code field was submitted empty."
+  },
+  "checkin.ticket.error.captchaRequired": {
+    "defaultMessage": "Invalid code. Try again",
+    "description": "The server now requires human verification. Deliberately the same wording as an invalid code; the verification widget appears alongside it."
+  },
+  "checkin.ticket.error.checkinNotOpen": {
+    "defaultMessage": "Check-in has not opened yet",
+    "description": "Check-in has not opened yet for this person's audience."
+  },
+  "checkin.ticket.error.notFound": {
+    "defaultMessage": "Invalid code. Try again",
+    "description": "The code matches nobody. Deliberately the same wording as a malformed code, so the screen does not reveal which codes exist."
+  },
+  "checkin.ticket.error.rateLimited": {
+    "defaultMessage": "Too many attempts. Wait a moment before trying again",
+    "description": "Too many code attempts; it clears by itself."
+  },
+  "checkin.ticket.error.validation": {
+    "defaultMessage": "Invalid code. Try again",
+    "description": "The server rejected the code. Deliberately the same wording as an unknown code, so the screen does not reveal which codes exist."
+  },
+  "checkin.ticket.header": {
+    "defaultMessage": "Check in",
+    "description": "Heading of the first check-in step, where the code is typed."
+  },
+  "checkin.ticket.help": {
+    "defaultMessage": "If you did not receive a code, go to the support desk",
+    "description": "Fixed line under the code field's hint, for attendees who never received a code. Sends them to the support desk on site, the only way to get one at the door."
+  },
+  "checkin.ticket.inputLabel": {
+    "defaultMessage": "Ticket code",
+    "description": "Screen-reader label of the code field."
+  },
+  "checkin.ticket.invalidCode": {
+    "defaultMessage": "Invalid code",
+    "description": "The typed code has the right length but is not a valid code."
+  },
+  "checkin.ticket.invalidFormat": {
+    "defaultMessage": "The code must be 6 characters",
+    "description": "The typed code is not six characters in a valid shape."
+  },
+  "checkin.ticket.processing": {
+    "defaultMessage": "{audience, select, participant {Looking up your ticket...} volunteer {Looking up your registration...} other {Looking up your ticket...}}",
+    "description": "Shown while the code is looked up. Participants have a ticket, volunteers a registration. Worded per audience; other repeats the participant wording and is only a fallback."
+  },
+  "checkin.ticket.success": {
+    "defaultMessage": "{audience, select, participant {Your ticket was found!} volunteer {Your registration was found!} other {Your ticket was found!}}",
+    "description": "Shown when the code matched. Worded per audience; other repeats the participant wording and is only a fallback."
+  },
+  "checkin.ticket.unknownError": {
+    "defaultMessage": "Something went wrong. Try again",
+    "description": "Any other failure on the code step."
+  },
+  "checkin.userPreview.nameLabel": {
+    "defaultMessage": "Name",
+    "description": "Label of the name in the summary of whose ticket is being checked in."
+  },
+  "checkin.userPreview.phoneLabel": {
+    "defaultMessage": "Phone",
+    "description": "Label of the masked phone number in the summary of whose ticket is being checked in."
+  },
+  "checkin.userPreview.ticketLabel": {
+    "defaultMessage": "Ticket",
+    "description": "Label of the code in the summary of whose ticket is being checked in."
+  },
+  "checkin.verification.backButton": {
+    "defaultMessage": "Back",
+    "description": "Returns from the confirmation step to the code step."
+  },
+  "checkin.verification.defaultHint": {
+    "defaultMessage": "Enter the last 4 digits of your phone number",
+    "description": "Hint under the phone-digits field; also shown again when the digits are incomplete."
+  },
+  "checkin.verification.error.captchaRequired": {
+    "defaultMessage": "Complete the verification first",
+    "description": "The server now requires human verification before the digits are checked."
+  },
+  "checkin.verification.error.notFound": {
+    "defaultMessage": "Invalid phone number. Try again",
+    "description": "The phone digits match nothing. Same wording as a rejected entry, so the screen reveals nothing about the record."
+  },
+  "checkin.verification.error.rateLimited": {
+    "defaultMessage": "Too many attempts. Wait a moment before trying again",
+    "description": "Too many digit attempts; it clears by itself."
+  },
+  "checkin.verification.error.validation": {
+    "defaultMessage": "Invalid phone number. Try again",
+    "description": "The phone digits were rejected."
+  },
+  "checkin.verification.header": {
+    "defaultMessage": "{audience, select, participant {Confirm your identity} volunteer {Confirm your identity} other {Confirm your identity}}",
+    "description": "Heading of the step that confirms the code belongs to the person holding the phone. Worded per audience; other repeats the participant wording and is only a fallback."
+  },
+  "checkin.verification.inputLabel": {
+    "defaultMessage": "Last 4 digits of your phone number",
+    "description": "Screen-reader label of the phone-digits field."
+  },
+  "checkin.verification.processing": {
+    "defaultMessage": "Confirming your identity...",
+    "description": "Shown while the phone digits are checked."
+  },
+  "checkin.verification.success": {
+    "defaultMessage": "Your identity is confirmed!",
+    "description": "Shown when the phone digits matched."
+  },
+  "checkin.verification.unknownError": {
+    "defaultMessage": "Something went wrong. Try again. If the error persists, go to the support desk",
+    "description": "Any other failure on the confirmation step."
+  }
+}

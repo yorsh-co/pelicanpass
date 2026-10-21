@@ -72,4 +72,32 @@ Branch: `docs/english-locale`.
 
 ## Glossary
 
-Filled in by phase 1.
+| pt-BR | English | Note |
+| --- | --- | --- |
+| check-in | check-in (noun, adjective), check in (verb) | The number an attendee gets is the "check-in number". |
+| ingresso | ticket | Never "pass". |
+| código do ingresso | ticket code | |
+| código de checkin (voluntário) | check-in code | Volunteer variant of the ticket code. |
+| cadastro (voluntário) | registration | What a volunteer looks up on the check-in screen. |
+| participante | participant | Role: a person attending as a participant, as opposed to a volunteer. Addressed as "you". |
+| pessoa | attendee | Umbrella for participants and volunteers, as in `AttendeeRole`. Never use it for participants alone. |
+| voluntário | volunteer | Tier chips: Register, Numbers, Lookup, T-shirts, Pickups. |
+| staff, equipe | staff | A volunteer at a station is "staff". |
+| mesa de suporte | support desk | |
+| estação | station | A staff post that serves certain items. |
+| verificação (captcha) | verification | The bot challenge. "Security check" only for the expired state. |
+| identidade | identity | Second check-in step: confirming the code is the person's own. |
+| presença | arrival | Third check-in step. "Confirm your arrival." |
+| QR Code | QR code | Lower-case "code". |
+| apelido | nickname | Shown on screen as "how your name appears". |
+| chapelaria | cloakroom | |
+| retirada, retirar | pickup, collect | Verb for an attendee is "collect"; the staff screen is "Pickups". |
+| resgate | redemption | Admin term; the attendee-facing copy says pickup. |
+| gerador de números | raffle, number generator | Draw: "generate a number". "Drawn" for the list. |
+| interações | raffle | Label beside the check-in number. |
+| devolver (aos restantes) | return to the pool | |
+| camiseta | T-shirt | |
+| palavra chave | keyword | The rotating word on a volunteer pass. |
+| questionário, feedback | survey, feedback | "Survey" for the form, "feedback" for the invitation. |
+| painel admin | admin panel | |
+| Entrar, Sair | Sign in, Sign out | |

@@ -4,7 +4,7 @@
  * Imported by browser code as well as the server, so nothing here may read the
  * environment: which locales are offered is decided by the caller.
  */
-export const LOCALES = ['pt-BR', 'en-XA'] as const;
+export const LOCALES = ['pt-BR', 'en', 'en-XA'] as const;
 
 export type Locale = (typeof LOCALES)[number];
 
@@ -27,7 +27,7 @@ export const PSEUDO_LOCALE: Locale = 'en-XA';
  * leaves this list only once every translatable message is translated;
  * `i18n:check` fails otherwise.
  */
-export const DRAFT_LOCALES: readonly Locale[] = [];
+export const DRAFT_LOCALES: readonly Locale[] = ['en'];
 
 /**
  * WhatsApp template language codes, which Meta spells with an underscore. A

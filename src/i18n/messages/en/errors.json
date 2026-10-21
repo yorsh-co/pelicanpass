@@ -1,0 +1,74 @@
+{
+  "errors.busy.heading": {
+    "defaultMessage": "Server unavailable",
+    "description": "Short phrase at the top of the server-busy card, shown while the server is turning requests away to recover from overload."
+  },
+  "errors.busy.message": {
+    "defaultMessage": "Server unavailable. Wait a few seconds and reload the page.",
+    "description": "Explains the server-busy error. The wait is short (seconds), and reloading is the remedy."
+  },
+  "errors.busy.subtitle": {
+    "defaultMessage": "Server unavailable",
+    "description": "One line naming the server-busy error."
+  },
+  "errors.fallback.heading": {
+    "defaultMessage": "Something went wrong",
+    "description": "Short phrase at the top of the card for any other error."
+  },
+  "errors.fallback.message": {
+    "defaultMessage": "Check the address and try again. If the problem persists, go to the support desk",
+    "description": "Explains any other error and where to get help at the event."
+  },
+  "errors.fallback.subtitle": {
+    "defaultMessage": "We couldn't complete your request",
+    "description": "One line naming any other error."
+  },
+  "errors.homeAction": {
+    "defaultMessage": "Back to start",
+    "description": "Button on an error page that goes to the start. It lands on check-in without a session and on the pass with one; under /admin it goes to the admin home."
+  },
+  "errors.internal.heading": {
+    "defaultMessage": "Unexpected error. Go to the support desk",
+    "description": "Short phrase at the top of the server-error card."
+  },
+  "errors.internal.message": {
+    "defaultMessage": "An internal server error occurred. Try again in a few moments",
+    "description": "Explains a server error in plain language."
+  },
+  "errors.internal.subtitle": {
+    "defaultMessage": "Something went wrong",
+    "description": "One line naming a server error."
+  },
+  "errors.notFound.heading": {
+    "defaultMessage": "404",
+    "description": "Large glyph at the top of the page-not-found card."
+  },
+  "errors.notFound.message": {
+    "defaultMessage": "The content you are trying to reach does not exist or was removed.",
+    "description": "Explains a missing page in plain language."
+  },
+  "errors.notFound.subtitle": {
+    "defaultMessage": "Page not found",
+    "description": "One line naming a missing page."
+  },
+  "errors.rateLimited.heading": {
+    "defaultMessage": "Too many attempts",
+    "description": "Short phrase at the top of the too-many-requests card. The page exists because the visitor is retrying too fast, so it has no retry button."
+  },
+  "errors.rateLimited.message": {
+    "defaultMessage": "Too many attempts in a short time. Wait a moment and try again.",
+    "description": "Explains the too-many-requests error when the wait is not known."
+  },
+  "errors.rateLimited.messageWithRetry": {
+    "defaultMessage": "Too many attempts in a short time. Wait a moment and try again. {unit, select, seconds {Try again in {count, plural, one {# second} other {# seconds}}.} minutes {Try again in {count, plural, one {# minute} other {# minutes}}.} other {Try again in {count, plural, one {# second} other {# seconds}}.}}",
+    "description": "Explains the too-many-requests error when the wait is known. unit is seconds for a wait of a minute or less, and minutes (rounded up) beyond that; count is the wait in that unit."
+  },
+  "errors.rateLimited.subtitle": {
+    "defaultMessage": "Too many attempts in a short time",
+    "description": "One line naming the too-many-requests error."
+  },
+  "errors.title": {
+    "defaultMessage": "{subtitle} — {appTitle}",
+    "description": "Browser tab title of an error page. subtitle is the error's one-line summary; appTitle is the application's configured name."
+  }
+}
