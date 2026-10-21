@@ -981,10 +981,10 @@ Joshua Porter — [joshuaporter.dev@outlook.com](mailto:joshuaporter.dev@outlook
 ## Acknowledgments
 
 - [Claude Code](https://claude.com/claude-code) — the author designed the
-  check-in flow, chose the infrastructure and planned how every feature behaves.
-  Claude Code wrote and tested most of the code for those features, in phases
-  the author planned and reviewed, designed the UI apart from the branding, and
-  helped research the choice between approaches.
+  business logic, infrastructure and features, and wrote the first prototype.
+  Claude Opus 5, Opus 5.5 and Sonnet 5.5 were then used to plan, write and test
+  most of the code, with the author reviewing each phase. Opus 5.5 designed the
+  PelicanPass branding.
 - [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 - [Libre Franklin](https://github.com/impallari/Libre-Franklin) and
   [Material Symbols](https://github.com/google/material-design-icons), both

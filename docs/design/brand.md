@@ -1,7 +1,8 @@
 # Brand
 
 The PelicanPass identity: the mark, the wordmarks, the colours and the type, and the files that
-carry them. Everything needed to redraw an asset is on this page.
+carry them. Everything needed to redraw an asset is on this page. The identity was designed by
+Claude Opus 5.5.
 
 An event deployed with its own branding replaces these files, not this guide: the guide describes the
 default every deployment ships with.
