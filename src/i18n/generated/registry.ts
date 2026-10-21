@@ -2,66 +2,87 @@
 
 import { createChromeMessages } from './chrome.messages.ts';
 import chromePtBR from './pt-BR/chrome.ts';
+import chromeEn from './en/chrome.ts';
 import chromeEnXA from './en-XA/chrome.ts';
 import { createLandingMessages } from './landing.messages.ts';
 import landingPtBR from './pt-BR/landing.ts';
+import landingEn from './en/landing.ts';
 import landingEnXA from './en-XA/landing.ts';
 import { createErrorsMessages } from './errors.messages.ts';
 import errorsPtBR from './pt-BR/errors.ts';
+import errorsEn from './en/errors.ts';
 import errorsEnXA from './en-XA/errors.ts';
 import { createCheckinMessages } from './checkin.messages.ts';
 import checkinPtBR from './pt-BR/checkin.ts';
+import checkinEn from './en/checkin.ts';
 import checkinEnXA from './en-XA/checkin.ts';
 import { createPassMessages } from './pass.messages.ts';
 import passPtBR from './pt-BR/pass.ts';
+import passEn from './en/pass.ts';
 import passEnXA from './en-XA/pass.ts';
 import { createStaffMessages } from './staff.messages.ts';
 import staffPtBR from './pt-BR/staff.ts';
+import staffEn from './en/staff.ts';
 import staffEnXA from './en-XA/staff.ts';
 import { createRaffleMessages } from './raffle.messages.ts';
 import rafflePtBR from './pt-BR/raffle.ts';
+import raffleEn from './en/raffle.ts';
 import raffleEnXA from './en-XA/raffle.ts';
 import { createQrMessages } from './qr.messages.ts';
 import qrPtBR from './pt-BR/qr.ts';
+import qrEn from './en/qr.ts';
 import qrEnXA from './en-XA/qr.ts';
 import { createSurveyMessages } from './survey.messages.ts';
 import surveyPtBR from './pt-BR/survey.ts';
+import surveyEn from './en/survey.ts';
 import surveyEnXA from './en-XA/survey.ts';
 import { createAdminShellMessages } from './admin-shell.messages.ts';
 import adminShellPtBR from './pt-BR/admin-shell.ts';
+import adminShellEn from './en/admin-shell.ts';
 import adminShellEnXA from './en-XA/admin-shell.ts';
 import { createAdminAttendeesMessages } from './admin-attendees.messages.ts';
 import adminAttendeesPtBR from './pt-BR/admin-attendees.ts';
+import adminAttendeesEn from './en/admin-attendees.ts';
 import adminAttendeesEnXA from './en-XA/admin-attendees.ts';
 import { createAdminLookupMessages } from './admin-lookup.messages.ts';
 import adminLookupPtBR from './pt-BR/admin-lookup.ts';
+import adminLookupEn from './en/admin-lookup.ts';
 import adminLookupEnXA from './en-XA/admin-lookup.ts';
 import { createAdminWhatsappMessages } from './admin-whatsapp.messages.ts';
 import adminWhatsappPtBR from './pt-BR/admin-whatsapp.ts';
+import adminWhatsappEn from './en/admin-whatsapp.ts';
 import adminWhatsappEnXA from './en-XA/admin-whatsapp.ts';
 import { createAdminLoginMessages } from './admin-login.messages.ts';
 import adminLoginPtBR from './pt-BR/admin-login.ts';
+import adminLoginEn from './en/admin-login.ts';
 import adminLoginEnXA from './en-XA/admin-login.ts';
 import { createAdminErrorsMessages } from './admin-errors.messages.ts';
 import adminErrorsPtBR from './pt-BR/admin-errors.ts';
+import adminErrorsEn from './en/admin-errors.ts';
 import adminErrorsEnXA from './en-XA/admin-errors.ts';
 import { createAdminMetricsMessages } from './admin-metrics.messages.ts';
 import adminMetricsPtBR from './pt-BR/admin-metrics.ts';
+import adminMetricsEn from './en/admin-metrics.ts';
 import adminMetricsEnXA from './en-XA/admin-metrics.ts';
 import { createAdminSurveyMessages } from './admin-survey.messages.ts';
 import adminSurveyPtBR from './pt-BR/admin-survey.ts';
+import adminSurveyEn from './en/admin-survey.ts';
 import adminSurveyEnXA from './en-XA/admin-survey.ts';
 import { createAdminRedemptionsMessages } from './admin-redemptions.messages.ts';
 import adminRedemptionsPtBR from './pt-BR/admin-redemptions.ts';
+import adminRedemptionsEn from './en/admin-redemptions.ts';
 import adminRedemptionsEnXA from './en-XA/admin-redemptions.ts';
 import { createAdminTshirtsMessages } from './admin-tshirts.messages.ts';
 import adminTshirtsPtBR from './pt-BR/admin-tshirts.ts';
+import adminTshirtsEn from './en/admin-tshirts.ts';
 import adminTshirtsEnXA from './en-XA/admin-tshirts.ts';
 import { createAdminPassMessages } from './admin-pass.messages.ts';
 import adminPassPtBR from './pt-BR/admin-pass.ts';
+import adminPassEn from './en/admin-pass.ts';
 import adminPassEnXA from './en-XA/admin-pass.ts';
 import { createAdminVolunteersMessages } from './admin-volunteers.messages.ts';
 import adminVolunteersPtBR from './pt-BR/admin-volunteers.ts';
+import adminVolunteersEn from './en/admin-volunteers.ts';
 import adminVolunteersEnXA from './en-XA/admin-volunteers.ts';
 
 import type { Locale } from '../locales.ts';
@@ -125,106 +146,127 @@ import type {
 
 const chromeCatalogs: Record<Locale, ChromeCatalog> = {
   'pt-BR': chromePtBR,
+  en: chromeEn,
   'en-XA': chromeEnXA,
 };
 
 const landingCatalogs: Record<Locale, LandingCatalog> = {
   'pt-BR': landingPtBR,
+  en: landingEn,
   'en-XA': landingEnXA,
 };
 
 const errorsCatalogs: Record<Locale, ErrorsCatalog> = {
   'pt-BR': errorsPtBR,
+  en: errorsEn,
   'en-XA': errorsEnXA,
 };
 
 const checkinCatalogs: Record<Locale, CheckinCatalog> = {
   'pt-BR': checkinPtBR,
+  en: checkinEn,
   'en-XA': checkinEnXA,
 };
 
 const passCatalogs: Record<Locale, PassCatalog> = {
   'pt-BR': passPtBR,
+  en: passEn,
   'en-XA': passEnXA,
 };
 
 const staffCatalogs: Record<Locale, StaffCatalog> = {
   'pt-BR': staffPtBR,
+  en: staffEn,
   'en-XA': staffEnXA,
 };
 
 const raffleCatalogs: Record<Locale, RaffleCatalog> = {
   'pt-BR': rafflePtBR,
+  en: raffleEn,
   'en-XA': raffleEnXA,
 };
 
 const qrCatalogs: Record<Locale, QrCatalog> = {
   'pt-BR': qrPtBR,
+  en: qrEn,
   'en-XA': qrEnXA,
 };
 
 const surveyCatalogs: Record<Locale, SurveyCatalog> = {
   'pt-BR': surveyPtBR,
+  en: surveyEn,
   'en-XA': surveyEnXA,
 };
 
 const adminShellCatalogs: Record<Locale, AdminShellCatalog> = {
   'pt-BR': adminShellPtBR,
+  en: adminShellEn,
   'en-XA': adminShellEnXA,
 };
 
 const adminAttendeesCatalogs: Record<Locale, AdminAttendeesCatalog> = {
   'pt-BR': adminAttendeesPtBR,
+  en: adminAttendeesEn,
   'en-XA': adminAttendeesEnXA,
 };
 
 const adminLookupCatalogs: Record<Locale, AdminLookupCatalog> = {
   'pt-BR': adminLookupPtBR,
+  en: adminLookupEn,
   'en-XA': adminLookupEnXA,
 };
 
 const adminWhatsappCatalogs: Record<Locale, AdminWhatsappCatalog> = {
   'pt-BR': adminWhatsappPtBR,
+  en: adminWhatsappEn,
   'en-XA': adminWhatsappEnXA,
 };
 
 const adminLoginCatalogs: Record<Locale, AdminLoginCatalog> = {
   'pt-BR': adminLoginPtBR,
+  en: adminLoginEn,
   'en-XA': adminLoginEnXA,
 };
 
 const adminErrorsCatalogs: Record<Locale, AdminErrorsCatalog> = {
   'pt-BR': adminErrorsPtBR,
+  en: adminErrorsEn,
   'en-XA': adminErrorsEnXA,
 };
 
 const adminMetricsCatalogs: Record<Locale, AdminMetricsCatalog> = {
   'pt-BR': adminMetricsPtBR,
+  en: adminMetricsEn,
   'en-XA': adminMetricsEnXA,
 };
 
 const adminSurveyCatalogs: Record<Locale, AdminSurveyCatalog> = {
   'pt-BR': adminSurveyPtBR,
+  en: adminSurveyEn,
   'en-XA': adminSurveyEnXA,
 };
 
 const adminRedemptionsCatalogs: Record<Locale, AdminRedemptionsCatalog> = {
   'pt-BR': adminRedemptionsPtBR,
+  en: adminRedemptionsEn,
   'en-XA': adminRedemptionsEnXA,
 };
 
 const adminTshirtsCatalogs: Record<Locale, AdminTshirtsCatalog> = {
   'pt-BR': adminTshirtsPtBR,
+  en: adminTshirtsEn,
   'en-XA': adminTshirtsEnXA,
 };
 
 const adminPassCatalogs: Record<Locale, AdminPassCatalog> = {
   'pt-BR': adminPassPtBR,
+  en: adminPassEn,
   'en-XA': adminPassEnXA,
 };
 
 const adminVolunteersCatalogs: Record<Locale, AdminVolunteersCatalog> = {
   'pt-BR': adminVolunteersPtBR,
+  en: adminVolunteersEn,
   'en-XA': adminVolunteersEnXA,
 };
 

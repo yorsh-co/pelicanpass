@@ -1,0 +1,74 @@
+{
+  "survey.anonymity.participant": {
+    "defaultMessage": "Your answers are anonymous.",
+    "description": "Line under the questionnaire card's heading on a participant's pass. Must not promise more than the export delivers: answers carry no name, ticket or phone."
+  },
+  "survey.anonymity.volunteer": {
+    "defaultMessage": "Your answers are anonymous.",
+    "description": "Line under the questionnaire card's heading on a volunteer's pass. Volunteers are few and known by name, so this warns rather than repeating the participant promise."
+  },
+  "survey.close": {
+    "defaultMessage": "Close",
+    "description": "Accessible name of the cross button in the questionnaire's head, which closes it without sending. Nothing typed is lost until the page reloads."
+  },
+  "survey.counter": {
+    "defaultMessage": "{count, number} of {max, number} characters",
+    "description": "Character counter under a text answer on the questionnaire card. {count} is what has been typed, {max} the question's limit."
+  },
+  "survey.error.answered": {
+    "defaultMessage": "You have already answered this survey.",
+    "description": "Toast when a submit is refused because this attendee already answered, on any device."
+  },
+  "survey.error.closed": {
+    "defaultMessage": "The survey is closed.",
+    "description": "Toast when a submit is refused because the questionnaire closed while the form was open."
+  },
+  "survey.error.generic": {
+    "defaultMessage": "We couldn't submit right now. Try again.",
+    "description": "Toast when a submit fails for any reason not covered by the other survey errors, such as a network failure."
+  },
+  "survey.error.stale": {
+    "defaultMessage": "The survey was updated. Review the questions and submit again.",
+    "description": "Toast on the pass after it reloaded itself because the questions changed after the form was loaded. The answers were not sent, so they must be given again."
+  },
+  "survey.error.unavailable": {
+    "defaultMessage": "This survey is not available.",
+    "description": "Toast when a submit is refused because the attendee's audience has no questionnaire."
+  },
+  "survey.heading": {
+    "defaultMessage": "{eventName} feedback",
+    "description": "Heading of the questionnaire card on the pass, used when the question file's own title cannot be shown. eventName is the event's name, filled in as given and never preceded by an article or contraction."
+  },
+  "survey.no": {
+    "defaultMessage": "No",
+    "description": "The \"no\" option of a yes-or-no question on the questionnaire card."
+  },
+  "survey.optional": {
+    "defaultMessage": "Optional",
+    "description": "Marker beside a question the attendee may leave blank, on the questionnaire card."
+  },
+  "survey.rating.input": {
+    "defaultMessage": "Enter a rating from 1 to 10",
+    "description": "Accessible name of the number box beside a rating question's slider, where the grade can be typed instead of dragged."
+  },
+  "survey.rating.unset": {
+    "defaultMessage": "No answer",
+    "description": "Spoken value of a rating question's slider while nothing is chosen, since the slider shows no thumb until then."
+  },
+  "survey.required": {
+    "defaultMessage": "Required",
+    "description": "Marker beside a question that must be answered, on the questionnaire card. Feminine, agreeing with \"pergunta\"."
+  },
+  "survey.submit": {
+    "defaultMessage": "Submit",
+    "description": "Submit button of the questionnaire card."
+  },
+  "survey.thanks": {
+    "defaultMessage": "Thank you! Your answers were submitted.",
+    "description": "Toast over the pass once the answers are accepted, as the questionnaire card closes."
+  },
+  "survey.yes": {
+    "defaultMessage": "Yes",
+    "description": "The \"yes\" option of a yes-or-no question on the questionnaire card."
+  }
+}
