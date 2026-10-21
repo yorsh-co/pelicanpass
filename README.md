@@ -126,6 +126,7 @@ window opens, and check-ins made before it are refused.
 <p align="center">
   <img src="docs/images/screenshots/checkin-ticket.png" alt="Check-in step one: entering the six-character ticket code" width="220">
   <img src="docs/images/screenshots/checkin-verification.png" alt="Check-in step two: confirming identity with a masked name and the last four phone digits" width="220">
+  <img src="docs/images/screenshots/checkin-presence.png" alt="Check-in step three: confirming arrival by scanning the venue QR code, with a fallback for an attendee a volunteer has already marked present" width="220">
 </p>
 
 `src/modules/checkin/checkin.flow.ts` · `src/middleware/landing.middleware.ts`

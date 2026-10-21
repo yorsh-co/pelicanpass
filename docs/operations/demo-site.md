@@ -129,11 +129,11 @@ npm run docs:screenshots
 ```
 
 `scripts/docs/screenshots.ts` serves `dist/demo/` on a local port, drives the real pages in Chromium
-and writes nine compressed PNGs to `docs/images/screenshots/`, the ones `README.md` shows: the check-in
-ticket and verification steps, the participant pass front and back, the volunteer pass, `/staff` after
+and writes ten compressed PNGs to `docs/images/screenshots/`, the ones `README.md` shows: the check-in
+ticket, verification and presence steps, the participant pass front and back, the volunteer pass, `/staff` after
 a typed code, `/raffle` after one draw, and `/admin/redemptions` and `/admin/metrics`. Phone screens
 are 390×844 at 2×, admin screens 1440×900. The demo banner is hidden, and the clock, time zone,
-`Math.random` and motion are fixed so a rerun differs by at most a few antialiased pixels. `--out <dir>`
+`Math.random`, motion and the rotation window's ring are fixed, so a rerun writes identical files. `--out <dir>`
 writes elsewhere.
 
 The browser is the one in Playwright's cache (`~/.cache/ms-playwright`), found by `playwright-core`
