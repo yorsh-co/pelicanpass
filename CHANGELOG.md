@@ -38,6 +38,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 - `npm run docs:screenshots` could capture a page before its delayed animations ran, so the footer, which fades in 0.4s after load, was missing from some screenshots and present in others; every capture now waits for running animations to finish
 - The `admin-redemptions-index` view fixture gave the item's share as `50` instead of a 0-1 ratio and carried no counts, so the snapshot and the static demo showed "5.000% retirado" and blank figures; it now has the counts and a per-option breakdown
 - The demo banner took the admin shell's rail column, so on wide screens the navigation sat in the content column and the screen below it; it now spans the whole row above both
+- The 17/10 event report gave the participant meal and drink window as 17:45-18:29; the check-in export puts it at 17:55-18:18, a span of 23 minutes
 
 ## [2.0.0] - 2026-10-20
 
