@@ -12,7 +12,7 @@
 [![Docker][docker-badge]][docker-url]
 [![License: MIT][license-badge]](#license)
 
-[About](#about-the-project) · [Engineering
+[Live demo](https://pelicanpass.demos.yorsh.co) · [About](#about-the-project) · [Engineering
 highlights](#engineering-highlights) · [Getting
 started](#getting-started) · [Documentation](#documentation)
 
@@ -47,7 +47,7 @@ started](#getting-started) · [Documentation](#documentation)
 
 ## About the project
 
-PelicanPass was originally created for a one-day youth conference with roughly 500 participants and 200 volunteers. Load-tested before the event, the host it ran on carried seven times that participant count comfortably on its busiest phase ([Capacity](#capacity)). It is a portfolio project, provided as is: see the [Disclaimer](#disclaimer).
+PelicanPass was originally created for a one-day youth conference with roughly 500 participants and 200 volunteers. Load-tested before the event, the host it ran on carried seven times that participant count comfortably on its busiest phase ([Capacity](#capacity)). It is a portfolio project, provided as is: see the [Disclaimer](#disclaimer). A [live demo](https://pelicanpass.demos.yorsh.co) with fictional data runs entirely in the browser; [`docs/operations/demo-site.md`](docs/operations/demo-site.md) describes how it is built and deployed.
 
 At the live event on 17/10/2026, 528 of 558 participants and 119 of 119 volunteers checked in and no request was refused for load. The busiest minute saw 17 check-ins and the busiest 15 minutes 92. The [event report](docs/reports/event-2026-10-17.md) has the figures, the incidents and what the data cannot show.
 

@@ -7,6 +7,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.0, were developed in a private repository and are not published.
 
+## [Unreleased]
+
+### Added
+
+- `npm run build:demo` and `scripts/demo/`, a static build of the app for Cloudflare Pages: the view fixtures rendered through the production CSP with hashes in place of nonces, a banner with the demo ticket codes, `_headers`, `_redirects`, `robots.txt` and `X-Robots-Tag: noindex`, written to `dist/demo/`
+- `src/web/client/demo/`, an in-browser mock of the attendee, staff and raffle API over a fictional roster, kept per tab in `sessionStorage` and bundled only by the demo build; the admin screens are read-only and show a notice for every mutation
+- A build test that fails when a demo bundle calls an `/api/v1` path with no mock handler or explicit refusal
+- `docs/operations/demo-site.md`, the runbook for building, rehearsing and deploying the demo, and a link to the live demo in `README.md`
+
+### Changed
+
+- The view fixtures live in `src/web/views/fixtures.ts` and the helmet CSP directives in `src/config/csp.ts`, shared by the app, the snapshot suite and the static builds; `scripts/static/` exports its header and asset helpers
+
 ## [2.0.0] - 2026-10-20
 
 ### Added
