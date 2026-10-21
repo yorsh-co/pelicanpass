@@ -46,6 +46,9 @@
 
   /* The card's inset, which the tabs bleed through to reach its edges. */
   --pass-pad: var(--space-5);
+
+  /* Abyss, the backdrop's deep end: the groove between a tab and the body. */
+  --pass-groove: #072a33;
 }
 
 /*
@@ -117,10 +120,12 @@
 
 /*
  * The tabs. Two shapes of one idea: the inactive tab paints its own corner of
- * the card and is cut off from the body by a canvas-coloured border on its
- * inner sides, which reads as the gap and the notch between the two; the
- * active tab has no border and shares the body's paint, so it reads as joined.
- * No masks and no measuring: the borders are the whole effect.
+ * the card and is cut off from the body by an Abyss border on its inner
+ * sides, which reads as a groove cut into the card; the active tab has no
+ * border and shares the body's paint, so it reads as joined. The groove is
+ * the brand's own deep end rather than the canvas, so it looks the same in
+ * both schemes instead of a white or black gutter. No masks and no measuring:
+ * the borders are the whole effect.
  */
 .pass-tab {
   grid-column: 3;
@@ -136,7 +141,7 @@
   min-height: 0;
   max-width: 62vw;
 
-  border: 0 solid var(--canvas);
+  border: 0 solid var(--pass-groove);
   border-width: 0 0 var(--space-1) var(--space-1);
   border-radius: 0 var(--radius-lg) 0 var(--radius-md);
   background: var(--access-stripe);
@@ -144,13 +149,6 @@
 
   --role-badge-bg: var(--access-ink);
   --role-badge-fg: var(--access-stripe);
-
-  /*
-   * A hairline on the outer edge, for the tiers that dissolve into the canvas:
-   * near-black on a dark one, yellow on a light one. A shadow rather than an
-   * outline, which is the focus ring's.
-   */
-  box-shadow: 0 0 0 1px light-dark(rgb(0 0 0 / 22%), rgb(255 255 255 / 30%));
 }
 
 /* The neutral tab's chip is glass, as the plain volunteer's is. */
@@ -217,7 +215,7 @@
   /*
    * From the card's left edge to the access tab, whatever the wordmark's
    * width. The right margin pulls its box over the access tab's left border,
-   * so its canvas border lands on that border's pixels: the divider keeps its
+   * so its groove lands on that border's pixels: the divider keeps its
    * place when the tabs swap.
    */
   grid-area: 1 / 1 / 2 / 3;
@@ -232,12 +230,11 @@
   min-height: 0;
   padding: 0;
 
-  border: 0 solid var(--canvas);
+  border: 0 solid var(--pass-groove);
   border-width: 0 var(--space-1) var(--space-1) 0;
   border-radius: var(--radius-lg) 0 var(--radius-md) 0;
   background: var(--brand-backdrop);
   color: var(--text-on-brand);
-  box-shadow: 0 0 0 1px light-dark(rgb(0 0 0 / 22%), rgb(255 255 255 / 30%));
 }
 
 .pass-front-tab:hover {
@@ -245,19 +242,25 @@
 }
 
 /*
- * The actions face: the tabs swap. The body takes the tier colour and the
- * access tab, now active, joins it; the wordmark side turns into the inactive
- * tab.
+ * The actions face: the tabs swap. The card keeps the brand backdrop; the head
+ * becomes a tier-coloured band that bleeds to the card's top and sides and
+ * reaches a little below the tabs, so the access tab, now active, opens into
+ * it. The wordmark side turns into the inactive tab and sits on the band, its
+ * rounded corner exposing the tier colour as a concave shoulder. The negative
+ * margins and the padding that matches them leave the head's content where it
+ * is on the front.
  */
-.pass[data-face='actions'] {
+.pass[data-face='actions'] .pass-head {
+  margin: calc(-1 * var(--pass-pad)) calc(-1 * var(--pass-pad))
+    calc(-1 * var(--space-4));
+  padding: var(--pass-pad) var(--pass-pad) var(--space-4);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   background: var(--access-stripe);
-  color: var(--access-ink);
 }
 
 .pass[data-face='actions'] .pass-tab {
-  /* The border stays, so the chip does not move; it takes the tab's paint. */
+  /* The border stays, so the chip does not move; it takes the band's paint. */
   border-color: transparent;
-  box-shadow: none;
 }
 
 .pass-head header {
@@ -901,9 +904,8 @@ body[data-page='pass'] .footer-logout-wrap {
 
 /*
  * The actions face: the staff links stacked at full width, and the way back at
- * the foot. Its paint is the tier's (see `.pass[data-face='actions']`), so the
- * links take their ink from it: the glass the front's chips use is white at a
- * low alpha, which vanishes on the light tiers.
+ * the foot. The body keeps the brand backdrop on this face, so they take the
+ * same glass as the front's chips; only the head is tier-coloured.
  */
 .pass-actions {
   gap: var(--space-4);
@@ -928,22 +930,10 @@ body[data-page='pass'] .footer-logout-wrap {
   margin-top: 0;
 }
 
-.pass-actions .pass-staff-link,
-.pass-actions .pass-back-btn {
-  border-color: color-mix(in srgb, var(--access-ink) 55%, transparent);
-  background: color-mix(in srgb, var(--access-ink) 8%, transparent);
-  color: var(--access-ink);
-}
-
-.pass-actions .pass-staff-link:hover,
-.pass-actions .pass-back-btn:hover {
-  background: color-mix(in srgb, var(--access-ink) 8%, transparent);
-  color: var(--access-ink);
-}
-
+/* The global ring is `--accent`, which is Harbour in light: lost on the card. */
 .pass-actions .pass-staff-link:focus-visible,
 .pass-actions .pass-back-btn:focus-visible {
-  outline-color: var(--access-ink);
+  outline-color: var(--text-on-brand);
 }
 
 .pass-actions .pass-back-btn {

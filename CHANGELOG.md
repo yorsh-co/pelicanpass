@@ -20,6 +20,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 
 ### Changed
 
+- The volunteer pass's tier tab is part of the card: the five tier colours are one family at a shared lightness and chroma beside Harbour, the notch between tab and body is an Abyss groove in both themes instead of a canvas-coloured gap, and the actions face keeps the brand backdrop with the tier colour as a band that the access tab opens into
 - The view fixtures live in `src/web/views/fixtures.ts` and the helmet CSP directives in `src/config/csp.ts`, shared by the app, the snapshot suite and the static builds; `scripts/static/` exports its header and asset helpers
 
 ### Fixed
