@@ -216,9 +216,19 @@ const newPage = async (context: BrowserContext): Promise<Page> => {
   return page;
 };
 
-/** Waits for web fonts, so icons and lettering are drawn before the capture. */
+/**
+ * Waits for web fonts, so icons and lettering are drawn before the capture,
+ * and for every running animation to finish. Reduced motion shortens their
+ * durations but not their delays: the footer fades in 0.4s after load, so a
+ * capture taken sooner would leave it out. A cancelled animation's `finished`
+ * rejects, and counts as settled.
+ */
 const settle = (page: Page): Promise<unknown> =>
-  page.evaluate('document.fonts.ready');
+  page.evaluate(`document.fonts.ready.then(() =>
+    Promise.all(
+      document.getAnimations().map((animation) => animation.finished.catch(() => {})),
+    ),
+  )`);
 
 /**
  * Waits for a check-in step's hint to be shown. `ui/hint.ts` sets it after a
