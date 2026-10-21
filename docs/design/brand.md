@@ -62,6 +62,10 @@ font. The viewBox sizes are load-bearing — `css/components/wordmark.css` hard-
 On a light surface the primary lockup is Harbour throughout with a Pouch beak; Shallows is a
 dark-ground colour only.
 
+`docs/images/banner.svg` is the README header: 1280 × 320, the primary lockup centred on a Harbour
+rounded rectangle (`rx` 22 % of the height), so the on-Harbour colourway reads on light and dark
+pages. It is documentation, not a web asset, and is built from the primary wordmark above.
+
 ## Colours
 
 | Role               | Name      | Hex       | Used for                                                |

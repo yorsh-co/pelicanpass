@@ -1,6 +1,6 @@
 <div align="center">
 
-# PelicanPass
+<h1><img src="docs/images/banner.svg" alt="PelicanPass" width="640"></h1>
 
 **In-person conference experience web app with participant-initiated check-in, attendee passes and volunteer tooling.**
 
