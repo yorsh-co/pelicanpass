@@ -43,6 +43,20 @@ in Portuguese.
 
 ## 2. How it works
 
+### Design decisions
+
+- **Its own Pages project at the root of its own hostname.** The pages carry about 1,000 root-absolute
+  URLs, which work unchanged when served at `/`, and the demo deploys independently on its own origin.
+- **The attendee side is interactive.** Check-in, the pass, staff redemption and the raffle are the
+  product, and snapshots alone cannot show a participant checking in.
+- **The admin side is read-only.** It shows the breadth of the tool without a second backend.
+- **State is per tab, in `sessionStorage`, with a reset.** Each visitor gets a clean event, and nothing
+  is shared or persisted.
+- **Pages render in the event-open state.** A countdown baked into static files at build time goes
+  stale; `/landing` is the one exception, counting from its fixture's clock.
+- **Production does not change.** The mock is bundled only by `npm run build:demo` and never ships in
+  `npm run build`, so the demo cannot break, or leak into, the app it demonstrates.
+
 ### Rendering
 
 `npm run build:demo` renders the view fixtures in `src/web/views/fixtures.ts` through the real Express

@@ -28,6 +28,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 
 ### Removed
 
+- `docs/development/static-demo-plan.md`, the implemented plan for the static demo; its design decisions are now in `docs/operations/demo-site.md`
 - The `star-sm.svg` and `star-with-discs.svg` motifs, `scripts/brand/motifs.ts` and the motifs section of `docs/design/brand.md`
 
 ### Fixed
