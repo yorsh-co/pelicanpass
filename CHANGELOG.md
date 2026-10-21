@@ -22,6 +22,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 ### Changed
 
 - The volunteer pass shows its tier as a chip with a chevron, in place of the tab, plus a tier-coloured edge along the card's top; the five tier colours are one family at a shared lightness and chroma beside Harbour, and the actions face keeps the brand backdrop
+- The boot screen shows the mark at the centre of the viewport with the two-tone wordmark pinned to the bottom, replacing the one-line lockup and the three star and ring motifs; the landing and closing pages open on the same mark and wordmark so the hand-off between them reads as one surface
 - The view fixtures live in `src/web/views/fixtures.ts` and the helmet CSP directives in `src/config/csp.ts`, shared by the app, the snapshot suite and the static builds; `scripts/static/` exports its header and asset helpers
 - The mark is optically centred on its grid, at x 52 rather than its bounding-box centre at 57, so it no longer reads as sitting left; every icon, the favicon and the README banner are regenerated
 

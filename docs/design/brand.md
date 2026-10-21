@@ -64,6 +64,10 @@ The wordmarks are outlined paths, never live `<text>`: an `<img>` and a CSS mask
 font. The viewBox sizes are load-bearing — `css/components/wordmark.css` hard-codes
 `aspect-ratio: 341 / 75`, and a different ratio letterboxes without any visible error.
 
+The boot screen, the landing page and the closing page do not use the primary: they show `mark.svg`
+and, at the foot of the page, `wordmark-two-tone.svg`. The primary appears on the
+check-in continue page.
+
 On a light surface the primary lockup is Harbour throughout with a Pouch beak; Shallows is a
 dark-ground colour only.
 
@@ -77,7 +81,7 @@ pages. It is documentation, not a web asset, and is built from the primary wordm
 | ------------------ | --------- | --------- | ------------------------------------------------------- |
 | Primary            | Harbour   | `#0E4A5A` | Brand backdrop, icon tile, the mark on light surfaces   |
 | Primary, deep      | Abyss     | `#072A33` | End of the backdrop gradient; text on Pouch             |
-| Secondary          | Pouch     | `#F5A524` | The beak, boot-screen motifs, accents on Harbour        |
+| Secondary          | Pouch     | `#F5A524` | The beak, accents on Harbour                            |
 | Muted ink on brand | Shallows  | `#CFE6E8` | "Pass" in the primary wordmark; `--text-on-brand-muted` |
 | Pouch, as text     | Pouch Ink | `#9A5B00` | Pouch at text weight on light surfaces                  |
 

@@ -1,7 +1,9 @@
 /*
- * The secondary wordmark, which is every surface but the boot screen. The
- * primary — the one-line, two-colour lockup — is the boot screen's alone and is
- * styled in components/boot-screen.css.
+ * The secondary wordmark, which is every surface but the few below. The primary
+ * — the one-line, two-colour lockup — is the check-in continue page's alone;
+ * the boot screen, the landing page and the closing page take `mark.svg` and
+ * `wordmark-two-tone.svg` as separate pieces. Those are styled in
+ * components/boot-screen.css and pages/landing.css.
  *
  * Single-colour artwork that used to be `fill="white"` and shipped as <img>,
  * which meant it could not follow a theme — on the light canvas it rendered
@@ -13,9 +15,9 @@
  * channel, not its fill — so it stays a cached file rather than inlined markup
  * on every page.
  *
- * This is why the primary mark cannot come through here: it carries white and
- * `--text-on-brand-muted` as two deliberate tones, and a mask flattens both to
- * one colour.
+ * This is why the two-tone artwork cannot come through here: it carries white
+ * and `--text-on-brand-muted` as two deliberate tones, and a mask flattens both
+ * to one colour.
  *
  * The `-webkit-` half is load-bearing: unprefixed `mask-image` only landed in
  * Safari 16.4, and this is an app for whatever phone an attendee walks in with.
