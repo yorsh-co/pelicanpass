@@ -31,6 +31,7 @@ import { fileURLToPath } from 'node:url';
 // Must stay first: it fills the environment `fixtures.ts` validates on load.
 import './env.ts';
 
+import * as esbuild from 'esbuild';
 import helmet from 'helmet';
 
 import { NAV_LABELS } from '../../src/middleware/admin-chrome.middleware.ts';
@@ -38,7 +39,10 @@ import { cspDirectives } from '../../src/config/csp.ts';
 import { displayTicketCode } from '../../src/constants/ticket.ts';
 import { BASE_LOCALE } from '../../src/i18n/locales.ts';
 import { siteManifest } from '../../src/web/content/site-manifest.ts';
-import { DEMO_TICKET_CODES } from '../../src/web/client/demo/roster.ts';
+import {
+  DEMO_TICKET_CODES,
+  DEMO_VERIFICATION_CODE,
+} from '../../src/web/client/demo/roster.ts';
 import { CASES, DEMO_CASES, NOW } from '../../src/web/views/fixtures.ts';
 import { createViewApp } from '../../src/web/views/render-app.ts';
 import {
@@ -79,7 +83,8 @@ interface DemoPage {
 /** Every page the demo ships, including the 404. */
 const PAGES: readonly DemoPage[] = [
   { fixture: 'checkin', file: 'checkin.html' },
-  { fixture: 'pass-participant', file: 'pass.html' },
+  { fixture: 'pass-participant-survey', file: 'pass.html' },
+  { fixture: 'pass-volunteer-survey', file: 'pass-volunteer.html' },
   { fixture: 'staff-scan', file: 'staff.html' },
   { fixture: 'raffle-draw', file: 'raffle.html' },
   { fixture: 'privacy', file: 'privacy.html' },
@@ -111,6 +116,13 @@ const DEMO_TURNSTILE_SITE_KEY = '1x00000000000000000000AA';
 /** Stylesheet the banner uses, written by this build rather than copied. */
 const DEMO_CSS_PATH = '/css/demo.css';
 
+/** The mock API's source, and where its bundle is served. */
+const MOCK_API_SOURCE = path.join(ROOT, 'src/web/client/demo/mock-api.ts');
+const MOCK_API_PATH = '/js/demo/mock-api.js';
+
+/** A ticket of someone already checked in, for the staff lookup. */
+const STAFF_EXAMPLE_CODE = 'a2d5f8';
+
 /** Files the build cannot work without; their absence means no client build. */
 const REQUIRED_BUILD_OUTPUT = ['css/dist/main.css', 'js/theme/theme.js'];
 
@@ -132,34 +144,70 @@ export interface BuildDemoSiteResult {
   bytes: number;
 }
 
-/** Banner markup inserted straight after `<body>`. Demo copy, in pt-BR. */
+/**
+ * Banner markup inserted straight after `<body>`. Demo copy, in pt-BR.
+ *
+ * The reset button is rendered hidden: the mock script shows and binds it, and
+ * without that script it would do nothing.
+ */
 const bannerHtml = (): string => {
   const list = (codes: readonly string[]): string =>
     codes.map((code) => `<code>${displayTicketCode(code)}</code>`).join(' ');
 
   return `
 <aside class="demo-banner" role="note">
-  <p><strong>Demonstração.</strong> O evento e todos os dados são fictícios.</p>
-  <p>Códigos de ingresso para testar: ${list(DEMO_TICKET_CODES.participant)} (participante) e ${list(DEMO_TICKET_CODES.volunteer)} (voluntário). Em <a href="/staff">/staff</a>, digite o código em vez de usar a câmera. <a href="${REPOSITORY_URL}" rel="noopener noreferrer">Código-fonte no GitHub</a>.</p>
+  <p><strong>Demonstração.</strong> O evento e todos os dados são fictícios. <button type="button" class="demo-banner-reset" data-demo-reset hidden>Reiniciar demonstração</button></p>
+  <p>Códigos de ingresso para testar: ${list(DEMO_TICKET_CODES.participant)} (participante) e ${list(DEMO_TICKET_CODES.volunteer)} (voluntário). Na verificação, digite <code>${DEMO_VERIFICATION_CODE}</code>; no QR Code, toque em &ldquo;Já fez check-in com um voluntário?&rdquo;. Em <a href="/staff">/staff</a>, digite um código, como <code>${displayTicketCode(STAFF_EXAMPLE_CODE)}</code> ou o seu, em vez de usar a câmera. <a href="${REPOSITORY_URL}" rel="noopener noreferrer">Código-fonte no GitHub</a>.</p>
 </aside>
 `;
 };
 
 /**
- * Adds the demo stylesheet to `<head>` and the banner after `<body>`.
+ * Where the first `<script` of a document starts, ignoring comments.
+ *
+ * @returns The offset, or -1 if the document has no script.
+ */
+const firstScriptAt = (html: string): number => {
+  const tokens = /<!--[\s\S]*?-->|<script\b/gi;
+  let token = tokens.exec(html);
+
+  while (token !== null) {
+    if (!token[0].startsWith('<!--')) return token.index;
+
+    token = tokens.exec(html);
+  }
+
+  return -1;
+};
+
+/**
+ * Adds the demo stylesheet and the mock API to `<head>` and the banner after
+ * `<body>`.
+ *
+ * The mock is a classic script, so the parser runs it on the spot, ahead of the
+ * pages' module scripts, which are deferred. It goes before the document's
+ * first script, or at the end of `<head>` for a page that has none, so that it
+ * patches `fetch` before anything else can call it.
  *
  * @param html - A page with its nonces already stripped.
  * @throws {Error} If the page has no `<head>` close or `<body>` open tag.
  */
 const addBanner = (html: string): string => {
+  const headEnd = html.search(/<\/head>/i);
   const body = /<body\b[^>]*>/i.exec(html);
 
-  if (body === null || !/<\/head>/i.test(html)) {
+  if (headEnd === -1 || body === null) {
     throw new Error('A page has no <head> or <body> to put the banner in');
   }
 
-  const at = body.index + body[0].length;
-  const withBanner = `${html.slice(0, at)}${bannerHtml()}${html.slice(at)}`;
+  const script = firstScriptAt(html);
+  const mockAt = script === -1 || script > headEnd ? headEnd : script;
+  const mock = `<script src="${MOCK_API_PATH}"></script>\n`;
+  const withMock = `${html.slice(0, mockAt)}${mock}${html.slice(mockAt)}`;
+
+  // The head, and so the mock, precedes the body tag it shifts.
+  const at = body.index + body[0].length + mock.length;
+  const withBanner = `${withMock.slice(0, at)}${bannerHtml()}${withMock.slice(at)}`;
 
   return withBanner.replace(
     /<\/head>/i,
@@ -254,6 +302,33 @@ const renderPages = async (): Promise<{
   }
 };
 
+/**
+ * Bundles the mock API into one classic script.
+ *
+ * Built here rather than by `scripts/build-client.ts`, which writes to the
+ * webroot the app serves: the mock must not reach `src/web/public/js`. The
+ * options follow the production client build (minified, `keepNames`, ES2022).
+ */
+const bundleMockApi = async (): Promise<string> => {
+  const { outputFiles } = await esbuild.build({
+    entryPoints: [MOCK_API_SOURCE],
+    bundle: true,
+    write: false,
+    format: 'iife',
+    target: 'es2022',
+    platform: 'browser',
+    minify: true,
+    keepNames: true,
+    logLevel: 'warning',
+  });
+
+  const [bundle] = outputFiles;
+
+  if (!bundle) throw new Error('esbuild produced no mock API bundle');
+
+  return bundle.text;
+};
+
 /** A Cloudflare Pages `_redirects` rule. */
 interface Redirect {
   from: string;
@@ -341,7 +416,12 @@ export const buildDemoSite = async ({
     const withBanner = addBanner(stripped.html);
 
     referencesOf(`/${file}`, withBanner)
-      .filter((ref) => ASSET_ROOT.test(ref) && ref !== DEMO_CSS_PATH)
+      .filter(
+        (ref) =>
+          ASSET_ROOT.test(ref) &&
+          ref !== DEMO_CSS_PATH &&
+          ref !== MOCK_API_PATH,
+      )
       .forEach((ref) => seeds.add(ref));
     await write(file, withBanner);
   }
@@ -358,6 +438,8 @@ export const buildDemoSite = async ({
   await mkdir(path.join(outDir, 'css'), { recursive: true });
   await cp(DEMO_CSS, path.join(outDir, DEMO_CSS_PATH));
   written.set(DEMO_CSS_PATH.slice(1), (await stat(DEMO_CSS)).size);
+
+  await write(MOCK_API_PATH.slice(1), await bundleMockApi());
 
   const policy = hashPolicy(rendered, {
     scripts: [...hashes.scripts],

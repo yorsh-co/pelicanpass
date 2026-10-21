@@ -10,7 +10,12 @@ import { fileURLToPath } from 'node:url';
 import { REPOSITORY_URL, buildDemoSite } from './build.ts';
 
 import { isValidTicketCode } from '../../src/constants/ticket.ts';
-import { DEMO_TICKET_CODES } from '../../src/web/client/demo/roster.ts';
+import {
+  DEMO_ROSTER,
+  DEMO_TICKET_CODES,
+  DEMO_VERIFICATION_CODE,
+} from '../../src/web/client/demo/roster.ts';
+import { isCovered } from '../../src/web/client/demo/routes.ts';
 import { referencesOf, stripNonces } from '../static/build.ts';
 
 const PUBLIC_DIR = fileURLToPath(
@@ -21,6 +26,7 @@ const MAIN_CSS = path.join(PUBLIC_DIR, 'css/dist/main.css');
 const PAGE_FILES = [
   'checkin.html',
   'pass.html',
+  'pass-volunteer.html',
   'staff.html',
   'raffle.html',
   'privacy.html',
@@ -51,6 +57,60 @@ const listFiles = async (dir: string): Promise<string[]> =>
         .join('/'),
     );
 
+/** The mock API's bundle, as the pages load it. */
+const MOCK_API = '/js/demo/mock-api.js';
+
+/**
+ * Where the mock's script tag sits among a page's other scripts, comments
+ * excluded: the index of the first `<script` that is not inside one.
+ */
+const firstScriptTag = (html: string): string | undefined => {
+  const tokens = /<!--[\s\S]*?-->|<script\b[^>]*>/gi;
+
+  for (const [token] of html.matchAll(tokens)) {
+    if (!token.startsWith('<!--')) return token;
+  }
+
+  return undefined;
+};
+
+/**
+ * Every `/api/v1/` path a script mentions, with `${…}` segments replaced by `*`
+ * and a trailing slash dropped, so the result is comparable to a route.
+ */
+const apiPathsIn = (js: string): string[] => {
+  const paths: string[] = [];
+  let at = js.indexOf('/api/v1/');
+
+  while (at !== -1) {
+    let path = '';
+    let i = at;
+
+    while (i < js.length && !/["'`\s?\\]/.test(js.charAt(i))) {
+      if (js.startsWith('${', i)) {
+        let depth = 1;
+
+        i += 2;
+
+        while (i < js.length && depth > 0) {
+          depth += js.charAt(i) === '{' ? 1 : js.charAt(i) === '}' ? -1 : 0;
+          i += 1;
+        }
+
+        path += '*';
+      } else {
+        path += js.charAt(i);
+        i += 1;
+      }
+    }
+
+    paths.push(path.replace(/\/$/, ''));
+    at = js.indexOf('/api/v1/', i);
+  }
+
+  return paths;
+};
+
 /** Escapes a `_redirects` source into a pattern, `*` matching any suffix. */
 const ruleMatcher = (source: string): RegExp =>
   new RegExp(
@@ -69,6 +129,17 @@ describe('roster', () => {
 
     assert.ok(codes.every(isValidTicketCode));
     assert.equal(new Set(codes).size, codes.length);
+  });
+
+  it('lists the banner codes among the attendees, unchecked in', () => {
+    for (const role of ['participant', 'volunteer'] as const) {
+      for (const code of DEMO_TICKET_CODES[role]) {
+        const entry = DEMO_ROSTER.find((person) => person.code === code);
+
+        assert.equal(entry?.role, role, code);
+        assert.equal(entry.checkedIn, false, code);
+      }
+    }
   });
 });
 
@@ -217,6 +288,65 @@ describe(
           assert.ok(html.includes(code.toUpperCase()), `${page} lacks ${code}`);
         }
       }
+    });
+
+    it('loads the mock API before any other script, as a classic script', async () => {
+      for (const page of files.filter((file) => file.endsWith('.html'))) {
+        const tag = firstScriptTag(await read(page));
+
+        assert.ok(tag, `${page} has no script`);
+        assert.ok(tag.includes(`src="${MOCK_API}"`), `${page}: ${tag}`);
+        assert.doesNotMatch(tag, /\b(?:type|defer|async)\b/, page);
+      }
+
+      assert.ok(files.includes(MOCK_API.slice(1)));
+    });
+
+    it('renders the reset button, hidden until the mock binds it', async () => {
+      for (const page of files.filter((file) => file.endsWith('.html'))) {
+        assert.match(
+          await read(page),
+          /<button[^>]*\bdata-demo-reset\b[^>]*\bhidden\b[^>]*>/,
+          page,
+        );
+      }
+    });
+
+    it('tells the visitor the verification digits', async () => {
+      assert.ok((await read('checkin.html')).includes(DEMO_VERIFICATION_CODE));
+    });
+
+    it('gives a volunteer a pass of their own, with the team line', async () => {
+      assert.match(
+        await read('pass-volunteer.html'),
+        /data-audience="volunteer"/,
+      );
+      assert.match(await read('pass.html'), /data-audience="participant"/);
+    });
+
+    it('has a handler or a refusal for every API path the bundles call', async () => {
+      const scripts = files.filter(
+        (file) =>
+          file.startsWith('js/') &&
+          file.endsWith('.js') &&
+          !file.startsWith('js/demo/'),
+      );
+      const paths = new Set<string>();
+
+      for (const file of scripts) {
+        apiPathsIn(await read(file)).forEach((found) => paths.add(found));
+      }
+
+      assert.ok(paths.size >= 20, `only ${String(paths.size)} paths found`);
+      assert.ok(paths.has('/api/v1/checkin/ticket'));
+      assert.ok(
+        [...paths].some((found) => found.includes('*')),
+        'no template-literal path found',
+      );
+
+      const uncovered = [...paths].filter((found) => !isCovered(found));
+
+      assert.deepEqual(uncovered, [], 'paths the mock does not answer');
     });
 
     it('asks crawlers to stay away', async () => {

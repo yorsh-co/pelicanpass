@@ -304,9 +304,10 @@ const notMigratedAppendix = (): string => {
     .filter(([, count]) => count > 0);
 
   // core/ is the API transport: its strings are diagnostics and operation
-  // labels, never shown as copy.
+  // labels, never shown as copy. demo/ is the static demo's fictional data
+  // and mock API, which production never bundles.
   const client = globSync('**/*.ts', { cwd: CLIENT_DIR })
-    .filter((file) => !file.startsWith('core/'))
+    .filter((file) => !file.startsWith('core/') && !file.startsWith('demo/'))
     .sort(byCodeUnit)
     .map((file): [string, number] => [
       file,

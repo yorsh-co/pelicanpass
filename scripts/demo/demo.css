@@ -33,3 +33,22 @@
   color: var(--accent);
   font-weight: 600;
 }
+
+.demo-banner-reset {
+  display: inline-block;
+  width: auto;
+  min-height: 0;
+  margin-inline-start: 0.25rem;
+  padding: 0.125rem 0.625rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 0.375rem;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.demo-banner-reset[hidden] {
+  display: none;
+}
