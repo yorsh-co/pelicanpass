@@ -165,7 +165,7 @@ const bannerHtml = (): string => {
   return `
 <aside class="demo-banner" role="note">
   <p><strong>Demonstração.</strong> O evento e todos os dados são fictícios. <button type="button" class="demo-banner-reset" data-demo-reset hidden>Reiniciar demonstração</button></p>
-  <p>Códigos de ingresso para testar: ${list(DEMO_TICKET_CODES.participant)} (participante) e ${list(DEMO_TICKET_CODES.volunteer)} (voluntário). Na verificação, digite <code>${DEMO_VERIFICATION_CODE}</code>; no QR Code, toque em &ldquo;Já fez check-in com um voluntário?&rdquo;. Em <a href="/staff">/staff</a>, digite um código, como <code>${displayTicketCode(STAFF_EXAMPLE_CODE)}</code> ou o seu, em vez de usar a câmera. <a href="${REPOSITORY_URL}" rel="noopener noreferrer">Código-fonte no GitHub</a>.</p>
+  <p>Códigos de ingresso para testar: ${list(DEMO_TICKET_CODES.participant)} (participante) e ${list(DEMO_TICKET_CODES.volunteer)} (voluntário). Na verificação, digite <code>${DEMO_VERIFICATION_CODE}</code>; no QR Code, toque em &ldquo;Já fez check-in com um voluntário?&rdquo;. Em <a href="/staff">/staff</a>, digite um código, como <code>${displayTicketCode(STAFF_EXAMPLE_CODE)}</code> ou o seu, em vez de usar a câmera. Em <a href="/admin">/admin</a>, veja o painel administrativo, somente leitura. <a href="${REPOSITORY_URL}" rel="noopener noreferrer">Código-fonte no GitHub</a>.</p>
 </aside>
 `;
 };
