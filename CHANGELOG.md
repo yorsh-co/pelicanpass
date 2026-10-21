@@ -28,7 +28,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 
 ### Removed
 
-- The `star-sm.svg` motif and its generator
+- The `star-sm.svg` and `star-with-discs.svg` motifs, `scripts/brand/motifs.ts` and the motifs section of `docs/design/brand.md`
 
 ### Fixed
 

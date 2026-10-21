@@ -23,7 +23,6 @@ import { backdropSvg, BACKDROP_SIZE } from './backdrop.ts';
 import { bannerSvg } from './banner.ts';
 import { packIco } from './ico.ts';
 import { fullBleedIcon, standaloneMark, tileIcon } from './mark.ts';
-import { starWithDiscsSvg } from './motifs.ts';
 import { MARK_SCALE } from './palette.ts';
 import {
   primaryWordmark,
@@ -43,7 +42,6 @@ const BANNER_PATH = fileURLToPath(
 const LOGO = 'assets/images/logo';
 const ICON = 'assets/images/icon';
 const BG = 'assets/images/bg';
-const MOTIFS = 'assets/images/motifs';
 
 /**
  * WebP quality of the backdrop. The gradient is smooth and spans only a few
@@ -113,7 +111,6 @@ export const buildBrand = async (
         .webp({ quality: BACKDROP_WEBP_QUALITY, effort: 6 })
         .toBuffer(),
     ],
-    [`${MOTIFS}/star-with-discs.svg`, starWithDiscsSvg()],
   ];
 
   const written = new Map<string, number>();

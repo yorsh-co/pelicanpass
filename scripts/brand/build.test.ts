@@ -42,7 +42,6 @@ describe('buildBrand', () => {
         'assets/images/icon/favicon.svg',
         'assets/images/bg/bg.png',
         'assets/images/bg/bg.webp',
-        'assets/images/motifs/star-with-discs.svg',
         'favicon.ico',
       ].sort(),
     );
@@ -103,7 +102,6 @@ describe('buildBrand', () => {
       'assets/images/logo/wordmark-two-tone.svg': '0 0 341 75',
       'assets/images/logo/mark.svg': '0 0 100 100',
       'assets/images/icon/favicon.svg': '0 0 1024 1024',
-      'assets/images/motifs/star-with-discs.svg': '0 0 615 615',
     };
 
     for (const [file, viewBox] of Object.entries(viewBoxes)) {

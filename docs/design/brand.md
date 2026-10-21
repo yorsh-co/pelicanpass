@@ -145,17 +145,6 @@ because both ends are listed above.
 1080 × 1920 with the same gradient as the CSS fallback layer under it. It appears only on the boot
 screen and the reward surfaces (the success card and the pass), as before.
 
-## Motifs
-
-Ripples rather than ornaments: open rings in brand colours, white-filled where the existing CSS
-expects white.
-
-| File                                       | Canvas    | Drawing                                                                                |
-| ------------------------------------------ | --------- | -------------------------------------------------------------------------------------- |
-| `assets/images/motifs/star-with-discs.svg` | 615 × 615 | Three concentric rings, `r` 300 / 230 / 160, Shallows stroke at 10 / 14 / 18 % opacity |
-
-The file name predates the identity and is kept so `components/boot-screen.ejs` does not change.
-
 ## Typography
 
 | Face           | Weights  | Used for                                  |
