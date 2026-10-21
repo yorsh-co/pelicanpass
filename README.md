@@ -51,6 +51,14 @@ PelicanPass was originally created for a one-day youth conference with roughly 5
 
 At the live event on 17/10/2026, 528 of 558 participants and 119 of 119 volunteers checked in and no request was refused for load. The busiest minute saw 17 check-ins and the busiest 15 minutes 92. The [event report](docs/reports/event-2026-10-17.md) has the figures, the incidents and what the data cannot show.
 
+<p align="center">
+  <img src="docs/images/screenshots/checkin-ticket.png" alt="The check-in screen asking for a six-character ticket code" width="240">
+  <img src="docs/images/screenshots/pass-front.png" alt="An attendee pass showing the arrival number and entitlements" width="240">
+  <img src="docs/images/screenshots/staff.png" alt="The staff redemption screen listing an attendee's entitlements" width="240">
+</p>
+
+<p align="center"><em>Screens from the live demo, with fictional data. The interface is in Brazilian Portuguese.</em></p>
+
 The web app's goal was to solve two recurring pain points for the event organizers, as well as maintain the features that their existing solutions already covered:
 
 - Participant-inititated check-in (avoids long check-in queues and reduces the number of required volunteers at the door), with separate participant and volunteer audiences.
@@ -115,6 +123,11 @@ from a Postgres sequence; volunteers do not draw one.
 With `LANDING_ENABLED`, a countdown holds the app until each audience's check-in
 window opens, and check-ins made before it are refused.
 
+<p align="center">
+  <img src="docs/images/screenshots/checkin-ticket.png" alt="Check-in step one: entering the six-character ticket code" width="220">
+  <img src="docs/images/screenshots/checkin-verification.png" alt="Check-in step two: confirming identity with a masked name and the last four phone digits" width="220">
+</p>
+
 `src/modules/checkin/checkin.flow.ts` · `src/middleware/landing.middleware.ts`
 
 ### Attendee pass
@@ -146,6 +159,12 @@ longer sit on the pass front. A volunteer can be linked to an administrator
 account through `attendees.admin_username`; that link is a label and grants
 nothing, since every admin gate still authenticates against `admins` on its own.
 
+<p align="center">
+  <img src="docs/images/screenshots/pass-front.png" alt="Participant pass front with arrival number and entitlement chips" width="220">
+  <img src="docs/images/screenshots/pass-back.png" alt="Participant pass back with QR code and rotating verification word" width="220">
+  <img src="docs/images/screenshots/pass-volunteer.png" alt="Volunteer pass with the access tier tab and entitlement chips" width="220">
+</p>
+
 `src/modules/pass/pass.service.ts` · `src/constants/pass.ts` ·
 `src/config/pass-welcome.ts` · `src/modules/pass/pass.welcome.ts` ·
 `src/modules/attendee/attendee.access-tier.ts` · [`docs/features/admin-scopes.md`](docs/features/admin-scopes.md#pass-access-tiers)
@@ -165,6 +184,11 @@ predicate as redemption.
 
 Both run on the volunteer's own attendee session, with permissions re-read from
 Postgres on every request, so revoking one takes effect on the next tap.
+
+<p align="center">
+  <img src="docs/images/screenshots/staff.png" alt="Staff redemption screen with entitlements and slide-to-confirm rows" width="220">
+  <img src="docs/images/screenshots/raffle.png" alt="Raffle screen showing a drawn number and the list of numbers already drawn" width="220">
+</p>
 
 `src/modules/staff/` · `src/modules/raffle/`
 
@@ -207,6 +231,14 @@ challenge, then scope-gated screens:
 
 Nav entries are paired with the same scope their route enforces, so a section
 cannot be shown that will then redirect.
+
+<p align="center">
+  <img src="docs/images/screenshots/admin-redemptions.png" alt="Admin redemptions screen with per-item totals and a searchable list of attendees" width="100%">
+</p>
+
+<p align="center">
+  <img src="docs/images/screenshots/admin-metrics.png" alt="Admin live metrics dashboard with check-ins, redemptions, health, errors and latency" width="100%">
+</p>
 
 `src/modules/admin/` · `src/constants/admin-nav.ts` · `src/constants/admin-scopes.ts` · [`docs/features/admin-scopes.md`](docs/features/admin-scopes.md) · [`docs/features/redemption-options.md`](docs/features/redemption-options.md) · [`docs/operations/deployment.md`](docs/operations/deployment.md#the-ticket-limit)
 

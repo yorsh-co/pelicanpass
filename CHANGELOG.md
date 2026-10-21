@@ -16,6 +16,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 - `src/web/client/demo/`, an in-browser mock of the attendee, staff and raffle API over a fictional roster, kept per tab in `sessionStorage` and bundled only by the demo build; the admin screens are read-only and show a notice for every mutation
 - A build test that fails when a demo bundle calls an `/api/v1` path with no mock handler or explicit refusal
 - `docs/operations/demo-site.md`, the runbook for building, rehearsing and deploying the demo, and a link to the live demo in `README.md`
+- `npm run docs:screenshots` and `scripts/docs/screenshots.ts`, which capture nine screens of the static demo with `playwright-core` into `docs/images/screenshots/`, shown in `README.md`
 
 ### Changed
 
