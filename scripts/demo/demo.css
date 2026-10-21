@@ -11,6 +11,12 @@
   line-height: 1.4;
 }
 
+/* The admin shell is a grid; a banner in the first cell would take the rail's
+   column, so it spans the row above the rail and <main>. */
+.admin-page > .demo-banner {
+  grid-column: 1 / -1;
+}
+
 .demo-banner p {
   margin: 0;
 }
