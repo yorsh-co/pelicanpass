@@ -185,8 +185,9 @@ describe(
       }
     });
 
-    it('ships no landing page and sends / to check-in', async () => {
+    it('serves the countdown at /landing and sends / to check-in', async () => {
       assert.equal(files.includes('index.html'), false);
+      assert.ok(files.includes('landing.html'), 'landing.html missing');
       assert.match(await read('_redirects'), /^\/ \/checkin 302$/m);
     });
 
