@@ -79,6 +79,20 @@ pages. It is documentation, not a web asset, and is built from the primary wordm
 The neutral canvases are unchanged: `#FAFAFC` light and `#0A0A11` dark, as in `css/base/variables.css`
 and the layouts' `theme-color` metas.
 
+### Volunteer tiers
+
+The volunteer pass's access chip and top edge take one fill per tier, defined in `css/components/access-tier.css`
+and read off `data-access`. The five share one lightness and chroma (OKLCH L 0.48, C 0.12) and differ only
+in hue, so they read as one family beside Harbour. A tier shows as its chip and as a 6px edge along the card's top.
+
+| Tier   | Hex       | Ink       | Ratio |
+| ------ | --------- | --------- | ----- |
+| edit   | `#4458A1` | `#FFFFFF` | 6.7:1 |
+| lookup | `#963D3A` | `#FFFFFF` | 6.9:1 |
+| tshirt | `#8A4C00` | `#FFFFFF` | 6.7:1 |
+| redeem | `#00724C` | `#FFFFFF` | 6.0:1 |
+| raffle | `#883F73` | `#FFFFFF` | 7.0:1 |
+
 ### In the interface
 
 The accent tokens in `css/base/variables.css` carry the palette into the app's own screens. Harbour is

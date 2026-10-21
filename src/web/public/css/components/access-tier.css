@@ -1,15 +1,17 @@
 /*
  * What a volunteer's access looks like from across a table: one fill and ink
  * per tier, read off `data-access`. Shared by the pass, where it paints the
- * tab and the card, and by the administrator screens' tier chip.
+ * access chip and the card's top edge, and by the administrator screens' tier
+ * chip.
  *
  * A volunteer with actions but no tier has no `data-access` and keeps the
  * neutral pair, the pass backdrop's own mid-tone. The neutral pair sits in
  * `:where()` so it has no specificity and every tier below overrides it, in
  * whatever order a page's own sheet arrives. The pass backdrop is the same in
- * both schemes, so these are too. Chosen to differ in hue — navy,
- * deep red, deep gold, teal, deep magenta. Ink on fill is >= 5.5:1; the
- * neutral pair, white on the backdrop's mid-tone, is 12.1:1.
+ * both schemes, so these are too. The five tiers share one lightness and
+ * chroma (OKLCH L 0.48, C 0.12) and differ only in hue, so they read as one
+ * family beside Harbour instead of five unrelated colours. Ink on fill is
+ * >= 6:1; the neutral pair, white on the backdrop's mid-tone, is 12.1:1.
  */
 :where(.pass, .access-chip) {
   --access-stripe: #0b3b48;
@@ -17,27 +19,27 @@
 }
 
 [data-access='edit'] {
-  --access-stripe: #1e2a78;
+  --access-stripe: #4458a1;
   --access-ink: #ffffff;
 }
 
 [data-access='lookup'] {
-  --access-stripe: #b91c1c;
+  --access-stripe: #963d3a;
   --access-ink: #ffffff;
 }
 
 [data-access='tshirt'] {
-  --access-stripe: #7a5600;
+  --access-stripe: #8a4c00;
   --access-ink: #ffffff;
 }
 
 [data-access='redeem'] {
-  --access-stripe: #0f766e;
+  --access-stripe: #00724c;
   --access-ink: #ffffff;
 }
 
 [data-access='raffle'] {
-  --access-stripe: #7a1456;
+  --access-stripe: #883f73;
   --access-ink: #ffffff;
 }
 
