@@ -13,14 +13,6 @@ const motif = (size: number, body: string): string =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${String(size)} ${String(size)}">${body}</svg>`;
 
 /**
- * `star-sm.svg`: one Pouch ring on a 155 × 155 canvas.
- *
- * @returns The SVG document.
- */
-export const starSmSvg = (): string =>
-  motif(155, ring(155, 70, PALETTE.pouch, 10));
-
-/**
  * `star-with-discs.svg`: three concentric Shallows rings on a 615 × 615 canvas.
  *
  * @returns The SVG document.

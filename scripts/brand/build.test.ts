@@ -37,10 +37,11 @@ describe('buildBrand', () => {
         ...Object.keys(PNG_SIZES),
         'assets/images/logo/wordmark-primary.svg',
         'assets/images/logo/wordmark-secondary.svg',
+        'assets/images/logo/wordmark-two-tone.svg',
+        'assets/images/logo/mark.svg',
         'assets/images/icon/favicon.svg',
         'assets/images/bg/bg.png',
         'assets/images/bg/bg.webp',
-        'assets/images/motifs/star-sm.svg',
         'assets/images/motifs/star-with-discs.svg',
         'favicon.ico',
       ].sort(),
@@ -99,8 +100,9 @@ describe('buildBrand', () => {
     const viewBoxes: Record<string, string> = {
       'assets/images/logo/wordmark-primary.svg': '0 0 506 121',
       'assets/images/logo/wordmark-secondary.svg': '0 0 341 75',
+      'assets/images/logo/wordmark-two-tone.svg': '0 0 341 75',
+      'assets/images/logo/mark.svg': '0 0 100 100',
       'assets/images/icon/favicon.svg': '0 0 1024 1024',
-      'assets/images/motifs/star-sm.svg': '0 0 155 155',
       'assets/images/motifs/star-with-discs.svg': '0 0 615 615',
     };
 
