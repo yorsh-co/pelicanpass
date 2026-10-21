@@ -1,9 +1,11 @@
 /**
  * The demo's stand-in for the backend, loaded before any page script.
  *
- * It replaces `window.fetch` for same-origin `/api/v1` requests, so the real
- * client runs unchanged against `./state.ts`, and replaces `navigator.sendBeacon`
- * for the error reporter. Everything else passes through to the network.
+ * It replaces `window.fetch` for same-origin `/api/v1` requests and the
+ * `/readyz` probe, so the real client runs unchanged against `./state.ts`, and
+ * replaces `navigator.sendBeacon` for the error reporter. Everything else
+ * passes through to the network. Administrator forms are cancelled with a
+ * notice by `./admin-guard.ts`, which is why the screens are read-only.
  *
  * It also does the two things the server did around the page: it writes the
  * visitor's check-in or pass into the data tag the page script reads, and it
@@ -15,6 +17,8 @@
  * includes it.
  */
 
+import { installAdminGuard, showNotice } from './admin-guard.ts';
+import { metricsSnapshot } from './metrics-snapshot.ts';
 import { findRoute } from './routes.ts';
 import {
   HANDLERS,
@@ -31,10 +35,17 @@ const STORAGE_KEY = 'pelicanpass-demo:v1';
 
 const API_PREFIX = '/api/v1/';
 const REPORT_PATH = '/api/v1/client-errors';
+const LOGOUT_PATH = '/api/v1/admin/logout';
+
+/** The readiness probe the metrics dashboard asks outside `/api/v1`. */
+const READYZ_PATH = '/readyz';
 
 /** The range of simulated network latency, in milliseconds. */
 const LATENCY_MIN_MS = 150;
 const LATENCY_MAX_MS = 400;
+
+/** How long after a refusal its notice is shown; the client reads the body first. */
+const NOTICE_DELAY_MS = 100;
 
 /** Last state this page wrote or read, for when storage is unavailable. */
 let memory: DemoState | undefined;
@@ -213,7 +224,46 @@ const answer = async (
 
   await delay(signal);
 
+  // Once the page has handled the response, so the notice replaces whatever
+  // generic failure toast the screen showed instead of being replaced by it.
+  // Reads are refused silently: the dashboards poll them. Signing out leaves
+  // the page on its own.
+  if (
+    route?.handler === 'refuse' &&
+    method !== 'GET' &&
+    url.pathname !== LOGOUT_PATH
+  ) {
+    window.setTimeout(() => {
+      void showNotice('disabled');
+    }, NOTICE_DELAY_MS);
+  }
+
   return toResponse(result);
+};
+
+/** Answers the readiness probe: both dependencies up, as the demo claims. */
+const readiness = async (init: RequestInit | undefined): Promise<Response> => {
+  await delay(init?.signal);
+
+  return toResponse({
+    state: load(),
+    status: 200,
+    body: {
+      status: 'ready',
+      release: 'demo',
+      dependencies: metricsSnapshot(Date.now()).health,
+    },
+  });
+};
+
+/** Whether the request is for the readiness probe. */
+const isReadyz = (input: RequestInfo | URL): boolean => {
+  const url = new URL(
+    input instanceof Request ? input.url : String(input),
+    window.location.href,
+  );
+
+  return url.origin === window.location.origin && url.pathname === READYZ_PATH;
 };
 
 const installFetch = (): void => {
@@ -222,7 +272,9 @@ const installFetch = (): void => {
   window.fetch = (input, init) => {
     const url = apiPath(input);
 
-    return url ? answer(url, input, init) : original(input, init);
+    if (url) return answer(url, input, init);
+
+    return isReadyz(input) ? readiness(init) : original(input, init);
   };
 };
 
@@ -299,6 +351,7 @@ const bindReset = (): void => {
 
 installFetch();
 installBeacon();
+installAdminGuard();
 routeSession();
 
 // `interactive` is announced before deferred and module scripts run, which is

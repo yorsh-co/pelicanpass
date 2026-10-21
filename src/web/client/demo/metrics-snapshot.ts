@@ -1,11 +1,25 @@
 import type { MetricsSnapshot } from '../core/api/api.admin.metrics.ts';
 
+/** The dashboard's poll interval, which is how often the figures move. */
+const POLL_MS = 5_000;
+
+/**
+ * A small non-negative offset that changes on every poll but repeats for the
+ * same instant, so the dashboard looks live without a random source.
+ *
+ * @param now - Epoch milliseconds of the request.
+ * @param salt - Varies the offset between figures.
+ */
+const wobble = (now: number, salt: number): number =>
+  (Math.floor(now / POLL_MS) * 7 + salt * 5) % 4;
+
 /**
  * The figures the metrics dashboard polls for in the demo.
  *
  * They repeat the `admin-metrics-full` view fixture, which is what the page is
  * rendered with, so the first poll confirms the numbers on screen instead of
- * replacing them. The fields the fixture leaves out (`consumed`, `lastSeen`
+ * replacing them. The latest check-in and error counts and the latencies move
+ * a little with `now`. The fields the fixture leaves out (`consumed`, `lastSeen`
  * and the alert's `severity` and `at`) are filled in plausibly.
  *
  * @param now - Epoch milliseconds the snapshot is stamped with.
@@ -24,12 +38,12 @@ export const metricsSnapshot = (now: number): MetricsSnapshot => ({
   ],
   lastAlert: {
     severity: 'warn',
-    title: 'Fila de check-in <alta>',
+    title: 'Fila de check-in acima do normal',
     at: new Date(now - 300_000).toISOString(),
   },
   series: {
-    'checkin.complete': [1, 4, 9, 3],
-    'severity.error': [0, 1, 0],
+    'checkin.complete': [1, 4, 9, 3 + wobble(now, 1)],
+    'severity.error': [0, 1, wobble(now, 2) % 2],
   },
   limiters: [
     {
@@ -48,14 +62,18 @@ export const metricsSnapshot = (now: number): MetricsSnapshot => ({
   ],
   fanout: [{ ip: '203.0.113.7', sessions: 4 }],
   latency: {
-    checkin: { p50: 12, p95: 40, count: 10 },
-    'api.checkin': { p50: 30, p95: 90, count: 8 },
+    checkin: { p50: 12 + wobble(now, 3), p95: 40 + wobble(now, 4), count: 10 },
+    'api.checkin': {
+      p50: 30 + wobble(now, 5),
+      p95: 90 + wobble(now, 6),
+      count: 8,
+    },
     staff: { p50: null, p95: null, count: 0 },
     'api.staff': { p50: 20, p95: 70, count: 5 },
   },
   health: {
     redis: { ok: true, durationMs: 2 },
-    postgres: { ok: false, durationMs: 0, error: 'timeout' },
+    postgres: { ok: true, durationMs: 3 },
   },
   topErrors: [
     {
@@ -63,7 +81,7 @@ export const metricsSnapshot = (now: number): MetricsSnapshot => ({
       occurrences: 3,
       code: 'INTERNAL_ERROR',
       route: '/api/checkin',
-      message: 'Falha <inesperada> & registrada',
+      message: 'Falha inesperada registrada',
       lastSeen: new Date(now - 600_000).toISOString(),
     },
   ],

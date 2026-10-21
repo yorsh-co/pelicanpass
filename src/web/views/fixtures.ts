@@ -1036,12 +1036,87 @@ export const CASES: ViewCase[] = [
 ];
 
 /**
+ * Plain text for the strings the snapshot cases use to exercise escaping,
+ * which would read as bugs in a demo.
+ */
+const PLAIN_TEXT: readonly (readonly [string, string])[] = [
+  ['Bruno <Lima>', 'Bruno Lima'],
+  ['Fila de check-in <alta>', 'Fila de check-in acima do normal'],
+  ['Falha <inesperada> & registrada', 'Falha inesperada registrada'],
+  ['Bom <evento>', 'Bom evento'],
+];
+
+/** Rewrites every string inside plain objects and arrays; the rest is kept. */
+const plainText = (value: unknown): unknown => {
+  if (typeof value === 'string') {
+    return PLAIN_TEXT.reduce(
+      (text, [from, to]) => text.split(from).join(to),
+      value,
+    );
+  }
+
+  if (Array.isArray(value)) return value.map(plainText);
+
+  if (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.getPrototypeOf(value) === Object.prototype
+  ) {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, entry]) => [key, plainText(entry)]),
+    );
+  }
+
+  return value;
+};
+
+/**
+ * A copy of a snapshot case for the demo, with the escaping-test strings
+ * replaced by plain text and optionally more of its locals changed. The
+ * original is untouched, as the snapshot suite asserts it.
+ *
+ * @param source - Name of the case in {@link CASES} to copy.
+ * @param name - Name of the copy.
+ * @param edit - Further changes to the plain-text locals.
+ */
+const demoVariant = (
+  source: string,
+  name: string,
+  edit: (locals: Locals) => Locals = (locals) => locals,
+): ViewCase => {
+  const base = CASES.find((entry) => entry.name === source);
+
+  if (!base) throw new Error(`Unknown view case: ${source}`);
+
+  return {
+    ...base,
+    name,
+    locals: (ctx) => edit(plainText(base.locals(ctx)) as Locals),
+  };
+};
+
+/** The metrics case with both dependencies answering, so the demo opens healthy. */
+const healthyMetrics = (locals: Locals): Locals => ({
+  ...locals,
+  snapshot: {
+    ...(locals.snapshot as Record<string, unknown>),
+    health: {
+      redis: { ok: true, durationMs: 2 },
+      postgres: { ok: true, durationMs: 3 },
+    },
+  },
+});
+
+/**
  * Cases only the demo build renders; the snapshot suite does not assert them.
  *
  * `not-found` is the 404 with plain copy, where `error-with-action` carries an
  * escaping test string.
  */
 export const DEMO_CASES: ViewCase[] = [
+  demoVariant('admin-metrics-full', 'admin-metrics-healthy', healthyMetrics),
+  demoVariant('admin-attendees-list', 'admin-attendees-demo'),
+  demoVariant('admin-pass', 'admin-pass-demo'),
   {
     name: 'not-found',
     view: 'pages/error',

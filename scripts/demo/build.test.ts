@@ -40,7 +40,9 @@ const PAGE_FILES = [
   'admin/redemptions.html',
   'admin/redemptions-detail.html',
   'admin/tshirts.html',
+  'admin/tshirts-detail.html',
   'admin/volunteers.html',
+  'admin/volunteers-detail.html',
   'admin/survey.html',
   'admin/whatsapp.html',
   'admin/pass.html',
@@ -347,6 +349,31 @@ describe(
       const uncovered = [...paths].filter((found) => !isCovered(found));
 
       assert.deepEqual(uncovered, [], 'paths the mock does not answer');
+    });
+
+    it('opens the metrics dashboard with every dependency healthy', async () => {
+      const metrics = await read('admin/metrics.html');
+
+      assert.match(metrics, /panel__status--ok/);
+      assert.doesNotMatch(metrics, /panel__status--down/);
+    });
+
+    it('has no escaping-test markers in any page text', async () => {
+      for (const page of files.filter((file) => file.endsWith('.html'))) {
+        const text = (await read(page))
+          .replace(/<(script|style)\b[\s\S]*?<\/\1>/gi, '')
+          .replace(/<!--[\s\S]*?-->/g, '');
+        const nodes = [...text.matchAll(/>([^<]*)(?=<|$)/g)].map(
+          (match) => match[1] ?? '',
+        );
+
+        assert.deepEqual(
+          nodes.filter((node) => /&lt;|&gt;/.test(node)),
+          [],
+          page,
+        );
+        assert.doesNotMatch(text.replace(/<[^>]*>/g, ''), /[<>]/, page);
+      }
     });
 
     it('asks crawlers to stay away', async () => {

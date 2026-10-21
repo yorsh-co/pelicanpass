@@ -774,6 +774,30 @@ describe('routes', () => {
 
     assert.equal(result.status, 200);
     assert.equal(result.body.data.checkins[0]?.checkedIn, 120);
+    assert.ok(Object.values(result.body.data.health).every(({ ok }) => ok));
+  });
+
+  it('moves the snapshot figures between polls, the same for one instant', () => {
+    const at = (now: number): MetricsSnapshot['latency'] =>
+      call<MetricsSnapshot>(
+        createInitialState(now),
+        'getMetricsSnapshot',
+        undefined,
+        { now },
+      ).body.data.latency;
+
+    assert.deepEqual(at(NOW), at(NOW));
+    assert.notDeepEqual(at(NOW), at(NOW + 5_000));
+  });
+
+  it('routes every administrator write method to the refusal', () => {
+    for (const method of ['POST', 'PATCH', 'PUT', 'DELETE']) {
+      assert.equal(
+        findRoute(method, '/api/v1/admin/pass/welcome-schedule')?.handler,
+        'refuse',
+        method,
+      );
+    }
   });
 
   it('refuses admin writes with a permission error, changing nothing', () => {

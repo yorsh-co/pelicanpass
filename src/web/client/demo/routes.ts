@@ -27,7 +27,7 @@ export type HandlerName =
 
 /** One endpoint the mock answers. */
 export interface Route {
-  method: 'GET' | 'POST' | 'PATCH';
+  method: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
   /**
    * The path under `/api/v1`. A trailing `/*` matches everything below it,
@@ -91,6 +91,8 @@ export const ROUTES: readonly Route[] = [
   { method: 'GET', path: '/api/v1/admin/*', handler: 'refuse' },
   { method: 'POST', path: '/api/v1/admin/*', handler: 'refuse' },
   { method: 'PATCH', path: '/api/v1/admin/*', handler: 'refuse' },
+  { method: 'PUT', path: '/api/v1/admin/*', handler: 'refuse' },
+  { method: 'DELETE', path: '/api/v1/admin/*', handler: 'refuse' },
 ];
 
 /** Whether `path` is the route's, exactly or under its trailing wildcard. */
