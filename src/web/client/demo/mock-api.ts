@@ -18,6 +18,7 @@
  */
 
 import { installAdminGuard, showNotice } from './admin-guard.ts';
+import { applyBannerLanguage, bindBannerLanguage } from './banner-language.ts';
 import { metricsSnapshot } from './metrics-snapshot.ts';
 import { findRoute } from './routes.ts';
 import {
@@ -336,22 +337,26 @@ const seedPage = (): void => {
   seedData('attendee-data', passPageData(state, Date.now()));
 };
 
-/** Binds the banner's button, which the build renders hidden. */
+/**
+ * Binds the banner's reset buttons, which the build renders hidden, one per
+ * language. The language choice lives in `localStorage`, so it survives a reset.
+ */
 const bindReset = (): void => {
-  const button = document.querySelector<HTMLButtonElement>('[data-demo-reset]');
-
-  if (!button) return;
-
-  button.hidden = false;
-  button.addEventListener('click', () => {
-    clear();
-    window.location.assign('/checkin');
-  });
+  for (const button of document.querySelectorAll<HTMLButtonElement>(
+    '[data-demo-reset]',
+  )) {
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      clear();
+      window.location.assign('/checkin');
+    });
+  }
 };
 
 installFetch();
 installBeacon();
 installAdminGuard();
+applyBannerLanguage();
 routeSession();
 
 // `interactive` is announced before deferred and module scripts run, which is
@@ -359,6 +364,7 @@ routeSession();
 const onReady = (): void => {
   seedPage();
   bindReset();
+  bindBannerLanguage();
 };
 
 if (document.readyState === 'loading') {
