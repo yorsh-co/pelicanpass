@@ -22,6 +22,10 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 
 - The view fixtures live in `src/web/views/fixtures.ts` and the helmet CSP directives in `src/config/csp.ts`, shared by the app, the snapshot suite and the static builds; `scripts/static/` exports its header and asset helpers
 
+### Fixed
+
+- The `admin-redemptions-index` view fixture gave the item's share as `50` instead of a 0-1 ratio and carried no counts, so the snapshot and the static demo showed "5.000% retirado" and blank figures; it now has the counts and a per-option breakdown
+
 ## [2.0.0] - 2026-10-20
 
 ### Added
