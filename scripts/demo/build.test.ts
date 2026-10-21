@@ -311,6 +311,31 @@ describe(
       }
     });
 
+    it('renders a collapse toggle per copy, controlling that copy, hidden until bound', async () => {
+      for (const page of files.filter((file) => file.endsWith('.html'))) {
+        const [, pt = '', en = ''] = (await read(page)).split(
+          /<div class="demo-banner-copy"/,
+        );
+
+        for (const [name, copy] of Object.entries({ pt, en })) {
+          const toggle = /<button[^>]*\bdata-demo-banner-toggle\b[^>]*>/.exec(
+            copy,
+          )?.[0];
+
+          assert.ok(toggle, `${page} ${name} lacks the toggle`);
+          assert.match(toggle, /\bhidden\b/, `${page} ${name} toggle shown`);
+          assert.ok(
+            toggle.includes(`aria-controls="demo-banner-details-${name}"`),
+            `${page} ${name} toggle controls the wrong element`,
+          );
+          assert.ok(
+            copy.includes(`id="demo-banner-details-${name}"`),
+            `${page} ${name} lacks the details it controls`,
+          );
+        }
+      }
+    });
+
     it('loads the mock API before any other script, as a classic script', async () => {
       for (const page of files.filter((file) => file.endsWith('.html'))) {
         const tag = firstScriptTag(await read(page));

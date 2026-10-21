@@ -39,7 +39,8 @@ Every response carries `X-Robots-Tag: noindex`. Every page opens with a banner t
 data are fictional, lists the demo codes and links to the read-only `/admin` panel and the repository.
 The banner is in Portuguese or English: it follows the browser's language, and its toggle button saves
 the visitor's choice in `localStorage`, so it holds across pages and resets. The rest of the page stays
-in Portuguese.
+in Portuguese. On a phone the banner starts collapsed to one line; its Details button expands it, and the
+choice is saved the same way.
 
 ## 2. How it works
 
@@ -167,8 +168,8 @@ npx wrangler pages deploy dist/demo --project-name pelicanpass-demo
 
 The first run creates the project. Open `https://pelicanpass-demo.pages.dev` **on a phone** and check:
 
-1. `/` redirects to `/checkin`, and the banner lists the demo codes and links to `/admin`. `/landing`
-   shows the countdown.
+1. `/` redirects to `/checkin`, and the banner, once expanded, lists the demo codes and links to
+   `/admin`. `/landing` shows the countdown.
 2. Check in with a participant code, the verification code and the QR step. The pass shows a check-in
    number, the QR code and a nickname field.
 3. Change the nickname and reload; it persists in the tab.
@@ -177,13 +178,14 @@ The first run creates the project. Open `https://pelicanpass-demo.pages.dev` **o
 5. `/raffle` draws a number from the checked-in pool, and its reset clears the draws.
 6. Reset the demo from the banner and check in again with the volunteer code. The volunteer pass opens.
 7. Switch the banner to English, then open another page. The banner stays in English.
-8. Press any button or submit any form in `/admin`: it shows the demo notice and changes nothing on
+8. The banner opens as one line. Expand it, then open another page. The banner stays expanded.
+9. Press any button or submit any form in `/admin`: it shows the demo notice and changes nothing on
    reload.
-9. `/admin/metrics` reports healthy.
-10. `/admin` **and** `/admin/metrics` both resolve. `admin.html` sits beside an `admin/` folder, and
+10. `/admin/metrics` reports healthy.
+11. `/admin` **and** `/admin/metrics` both resolve. `admin.html` sits beside an `admin/` folder, and
    Pages' clean-URL handling of a file and a folder with the same name is the one routing risk.
-11. An unknown path such as `/nope` shows the 404 page.
-12. The theme toggle switches between light and dark.
+12. An unknown path such as `/nope` shows the 404 page.
+13. The theme toggle switches between light and dark.
 
 Nothing is public until the custom domain is added in §5, so this can be done days ahead.
 

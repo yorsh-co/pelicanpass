@@ -2,6 +2,9 @@
 
 .demo-banner {
   box-sizing: border-box;
+  /* Pages centre <body>'s flex children; a collapsed line would otherwise size
+     the banner to its unwrapped width. */
+  align-self: stretch;
   padding: 0.5rem max(1rem, env(safe-area-inset-right)) 0.5rem
     max(1rem, env(safe-area-inset-left));
   border-bottom: 1px solid var(--border-strong);
@@ -68,4 +71,46 @@ html[data-demo-lang='en'] .demo-banner-copy[data-demo-copy='en'] {
 
 .demo-banner-button[hidden] {
   display: none;
+}
+
+/* Collapsed, set on <html> by the mock script before first paint: the banner
+   is one line, its sentence cut short so the buttons stay whole. The reset
+   button is too wide to share a phone's line and waits in the expanded banner. */
+html[data-demo-banner='collapsed'] .demo-banner-details,
+html[data-demo-banner='collapsed'] .demo-banner-lead [data-demo-reset] {
+  display: none;
+}
+
+html[data-demo-banner='collapsed'] .demo-banner-lead {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  white-space: nowrap;
+}
+
+html[data-demo-banner='collapsed'] .demo-banner-summary {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+html[data-demo-banner='collapsed'] .demo-banner-lead .demo-banner-button {
+  flex: none;
+  margin-inline-start: 0;
+}
+
+.demo-banner-toggle::after {
+  content: '';
+  display: inline-block;
+  width: 0.375em;
+  height: 0.375em;
+  margin-inline-start: 0.375em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-0.15em) rotate(-135deg);
+}
+
+.demo-banner-toggle[aria-expanded='false']::after {
+  transform: translateY(-0.3em) rotate(45deg);
 }
