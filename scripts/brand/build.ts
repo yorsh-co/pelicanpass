@@ -22,10 +22,13 @@ import sharp from 'sharp';
 import { backdropSvg, BACKDROP_SIZE } from './backdrop.ts';
 import { bannerSvg } from './banner.ts';
 import { packIco } from './ico.ts';
-import { fullBleedIcon, tileIcon } from './mark.ts';
-import { starSmSvg, starWithDiscsSvg } from './motifs.ts';
+import { fullBleedIcon, standaloneMark, tileIcon } from './mark.ts';
 import { MARK_SCALE } from './palette.ts';
-import { primaryWordmark, secondaryWordmark } from './wordmark.ts';
+import {
+  primaryWordmark,
+  secondaryWordmark,
+  twoToneWordmark,
+} from './wordmark.ts';
 
 const DEFAULT_OUT_DIR = fileURLToPath(
   new URL('../../src/web/public', import.meta.url),
@@ -39,7 +42,6 @@ const BANNER_PATH = fileURLToPath(
 const LOGO = 'assets/images/logo';
 const ICON = 'assets/images/icon';
 const BG = 'assets/images/bg';
-const MOTIFS = 'assets/images/motifs';
 
 /**
  * WebP quality of the backdrop. The gradient is smooth and spans only a few
@@ -75,6 +77,8 @@ export const buildBrand = async (
   const files: [string, Buffer | string][] = [
     [`${LOGO}/wordmark-primary.svg`, primaryWordmark()],
     [`${LOGO}/wordmark-secondary.svg`, secondaryWordmark()],
+    [`${LOGO}/wordmark-two-tone.svg`, twoToneWordmark()],
+    [`${LOGO}/mark.svg`, standaloneMark()],
     [
       `${ICON}/favicon.svg`,
       tileIcon({ scale: MARK_SCALE.appIcon, viewBox: 1024 }),
@@ -107,8 +111,6 @@ export const buildBrand = async (
         .webp({ quality: BACKDROP_WEBP_QUALITY, effort: 6 })
         .toBuffer(),
     ],
-    [`${MOTIFS}/star-sm.svg`, starSmSvg()],
-    [`${MOTIFS}/star-with-discs.svg`, starWithDiscsSvg()],
   ];
 
   const written = new Map<string, number>();

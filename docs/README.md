@@ -82,7 +82,7 @@ The visual identity.
 
 | Document                       | What it covers                                                                                 |
 | ------------------------------ | ---------------------------------------------------------------------------------------------- |
-| [`brand.md`](./design/brand.md) | The PelicanPass mark, wordmarks, colours with contrast, backdrop, motifs, type and icon files |
+| [`brand.md`](./design/brand.md) | The PelicanPass mark, wordmarks, colours with contrast, backdrop, type and icon files |
 
 ## Reports
 

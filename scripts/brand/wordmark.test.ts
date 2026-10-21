@@ -6,6 +6,7 @@ import {
   primaryWordmark,
   secondaryWordmark,
   SECONDARY_VIEWBOX,
+  twoToneWordmark,
 } from './wordmark.ts';
 
 /**
@@ -30,6 +31,7 @@ const pathsOf = (svg: string): string[] =>
 
 for (const [name, render, viewBox] of [
   ['secondary', secondaryWordmark, SECONDARY_VIEWBOX],
+  ['two-tone', twoToneWordmark, SECONDARY_VIEWBOX],
   ['primary', primaryWordmark, PRIMARY_VIEWBOX],
 ] as const) {
   describe(`${name} wordmark`, () => {
@@ -65,6 +67,33 @@ describe('secondary wordmark', () => {
     assert.ok(minY >= 0 && maxY <= SECONDARY_VIEWBOX.height);
     assert.ok(Math.abs(minX - (SECONDARY_VIEWBOX.width - maxX)) < 1);
     assert.ok(Math.abs(minY - (SECONDARY_VIEWBOX.height - maxY)) < 1);
+  });
+});
+
+describe('two-tone wordmark', () => {
+  const svg = twoToneWordmark();
+
+  it('is two paths: white "Pelican", then Shallows "Pass"', () => {
+    assert.equal(pathsOf(svg).length, 2);
+    assert.deepEqual(
+      [...svg.matchAll(/fill="([^"]+)"/g)].map((match) => match[1]),
+      ['#FFFFFF', '#CFE6E8'],
+    );
+  });
+
+  it('keeps its ink inside the viewBox', () => {
+    for (const d of pathsOf(svg)) {
+      const { minX, maxX, minY, maxY } = pathBounds(d);
+
+      assert.ok(minX >= 0 && maxX <= SECONDARY_VIEWBOX.width);
+      assert.ok(minY >= 0 && maxY <= SECONDARY_VIEWBOX.height);
+    }
+  });
+
+  it('has the same overall ink bounds as the secondary', () => {
+    const union = (markup: string) => pathBounds(pathsOf(markup).join(''));
+
+    assert.deepEqual(union(svg), union(secondaryWordmark()));
   });
 });
 

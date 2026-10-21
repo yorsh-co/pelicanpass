@@ -16,7 +16,7 @@ accent. It is three primitives — a rounded bar, a circle and one curved triang
 
 ```svg
 <!-- 100 × 100 design grid. Paint order matters: the head covers the root of the beak and the neck's rounded top. -->
-<g transform="translate(50 50) scale(S) translate(-57 -49)">
+<g transform="translate(50 50) scale(S) translate(-52 -49)">
   <rect x="22" y="24" width="16" height="64" rx="8" fill="#FFFFFF" />  <!-- neck -->
   <path d="M56 17 L92 40 Q72 66 44 50 Z" fill="#F5A524" />            <!-- beak and pouch -->
   <circle cx="42" cy="30" r="20" fill="#FFFFFF" />                     <!-- head -->
@@ -24,17 +24,20 @@ accent. It is three primitives — a rounded bar, a circle and one curved triang
 </g>
 ```
 
-`translate(-57 -49)` moves the glyph's optical centre onto the grid's centre; `S` is the only value
-that changes between uses.
+`translate(-52 -49)` moves the glyph's optical centre onto the grid's centre: the bounding box is
+centred at x 57 but the area centroid sits near x 47, because the neck and head are heavy and the
+beak is a thin triangle, so 52 splits the difference. `S` is the only value that changes between
+uses.
 
-| Use                    | Ground                                  | `S`  | Notes                                        |
-| ---------------------- | --------------------------------------- | ---- | -------------------------------------------- |
-| Lockup, beside text    | none                                    | 0.92 |                                              |
-| App icon, 32 px and up | Harbour tile, `rx="22"` on the 100 grid | 0.72 |                                              |
-| Favicon at 32 px       | Harbour tile, `rx="22"`                 | 0.78 | Slightly larger to survive the downsample    |
-| Favicon at 16 px       | Harbour tile, `rx="22"`                 | 0.82 | No eye: at 16 px it is a stray pixel         |
-| Maskable icon          | Harbour, full bleed, no corner radius   | 0.64 | Whole glyph inside the 40 % safe-zone radius |
-| `apple-touch-icon`     | Harbour, full bleed, no corner radius   | 0.72 | iOS applies its own mask                     |
+| Use                                    | Ground                                  | `S`  | Notes                                        |
+| -------------------------------------- | --------------------------------------- | ---- | -------------------------------------------- |
+| Lockup, beside text                    | none                                    | 0.92 |                                              |
+| Boot screen, landing and closing pages | none                                    | 1.1  | Standalone `mark.svg`                        |
+| App icon, 32 px and up                 | Harbour tile, `rx="22"` on the 100 grid | 0.72 |                                              |
+| Favicon at 32 px                       | Harbour tile, `rx="22"`                 | 0.78 | Slightly larger to survive the downsample    |
+| Favicon at 16 px                       | Harbour tile, `rx="22"`                 | 0.82 | No eye: at 16 px it is a stray pixel         |
+| Maskable icon                          | Harbour, full bleed, no corner radius   | 0.64 | Whole glyph inside the 40 % safe-zone radius |
+| `apple-touch-icon`                     | Harbour, full bleed, no corner radius   | 0.72 | iOS applies its own mask                     |
 
 Colourways:
 
@@ -54,10 +57,16 @@ reads in a single colour; colour, where it is used, only reinforces it.
 | ------------------------------------------- | -------------- | ------------------------------------ | --------------------------------------------------------------- |
 | `assets/images/logo/wordmark-primary.svg`   | 506 × 121      | Mark (`S` 0.92) + wordmark, one line | Two-tone: white "Pelican" and mark, Shallows "Pass", Pouch beak |
 | `assets/images/logo/wordmark-secondary.svg` | 341 × 75       | Wordmark only                        | Single colour; drawn as a CSS mask, so it takes `currentColor`  |
+| `assets/images/logo/wordmark-two-tone.svg`  | 341 × 75       | Wordmark only                        | Two-tone: white "Pelican", Shallows "Pass"                      |
+| `assets/images/logo/mark.svg`               | 100 × 100      | Mark (`S` 1.1), no ground            | On Harbour colourway: white neck and head, Pouch beak           |
 
-Both are outlined paths, never live `<text>`: an `<img>` and a CSS mask cannot load the page's web
+The wordmarks are outlined paths, never live `<text>`: an `<img>` and a CSS mask cannot load the page's web
 font. The viewBox sizes are load-bearing — `css/components/wordmark.css` hard-codes
 `aspect-ratio: 341 / 75`, and a different ratio letterboxes without any visible error.
+
+The boot screen, the landing page and the closing page do not use the primary: they show `mark.svg`
+and, at the foot of the page, `wordmark-two-tone.svg`. The primary appears on the
+check-in continue page.
 
 On a light surface the primary lockup is Harbour throughout with a Pouch beak; Shallows is a
 dark-ground colour only.
@@ -72,7 +81,7 @@ pages. It is documentation, not a web asset, and is built from the primary wordm
 | ------------------ | --------- | --------- | ------------------------------------------------------- |
 | Primary            | Harbour   | `#0E4A5A` | Brand backdrop, icon tile, the mark on light surfaces   |
 | Primary, deep      | Abyss     | `#072A33` | End of the backdrop gradient; text on Pouch             |
-| Secondary          | Pouch     | `#F5A524` | The beak, boot-screen motifs, accents on Harbour        |
+| Secondary          | Pouch     | `#F5A524` | The beak, accents on Harbour                            |
 | Muted ink on brand | Shallows  | `#CFE6E8` | "Pass" in the primary wordmark; `--text-on-brand-muted` |
 | Pouch, as text     | Pouch Ink | `#9A5B00` | Pouch at text weight on light surfaces                  |
 
@@ -135,18 +144,6 @@ because both ends are listed above.
 (`#0E4A5A 0%`, `#0B3B48 60%`, `#072A33 100%`), shipped as `assets/images/bg/bg.png` and `bg.webp` at
 1080 × 1920 with the same gradient as the CSS fallback layer under it. It appears only on the boot
 screen and the reward surfaces (the success card and the pass), as before.
-
-## Motifs
-
-Ripples rather than ornaments: open rings in brand colours, white-filled where the existing CSS
-expects white.
-
-| File                                       | Canvas    | Drawing                                                                                |
-| ------------------------------------------ | --------- | -------------------------------------------------------------------------------------- |
-| `assets/images/motifs/star-sm.svg`         | 155 × 155 | One ring, `r="70"`, Pouch stroke                                                       |
-| `assets/images/motifs/star-with-discs.svg` | 615 × 615 | Three concentric rings, `r` 300 / 230 / 160, Shallows stroke at 10 / 14 / 18 % opacity |
-
-The file names predate the identity and are kept so `components/boot-screen.ejs` does not change.
 
 ## Typography
 
