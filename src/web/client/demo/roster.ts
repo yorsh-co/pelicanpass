@@ -89,7 +89,10 @@ const participant = (
   ...options,
 });
 
-/** Builds a volunteer, who holds every item and carries no check-in number. */
+/**
+ * Builds a volunteer, who holds every item but the participant shirt and
+ * carries no check-in number.
+ */
 const volunteer = (
   code: string,
   name: string,
@@ -101,7 +104,7 @@ const volunteer = (
     | 'canDraw'
     | 'showAdminLink'
     | 'accessTier'
-    | 'tshirtSize'
+    | 'tshirtVolunteerSize'
   >,
 ): RosterEntry => ({
   code,
@@ -111,7 +114,7 @@ const volunteer = (
   mealOption: 'Sem restrição',
   drinkOption: 'Água',
   lunchOption: 'Onívoro',
-  tshirtVolunteerSize: 'M',
+  tshirtSize: null,
   ...options,
 });
 
@@ -220,7 +223,7 @@ export const DEMO_ROSTER: readonly RosterEntry[] = [
     canDraw: true,
     showAdminLink: true,
     accessTier: 'edit',
-    tshirtSize: 'M',
+    tshirtVolunteerSize: 'M',
   }),
   volunteer('v6b3k7', 'Bruno Siqueira', '5511971', {
     checkedIn: true,
@@ -228,7 +231,7 @@ export const DEMO_ROSTER: readonly RosterEntry[] = [
     canDraw: false,
     showAdminLink: false,
     accessTier: 'redeem',
-    tshirtSize: 'G',
+    tshirtVolunteerSize: 'G',
   }),
   volunteer('v9d1m4', 'Aline Peixoto', '5521986', {
     checkedIn: true,
@@ -236,7 +239,7 @@ export const DEMO_ROSTER: readonly RosterEntry[] = [
     canDraw: true,
     showAdminLink: false,
     accessTier: 'raffle',
-    tshirtSize: 'P',
+    tshirtVolunteerSize: 'P',
   }),
   volunteer('v3f8p2', 'Diego Amaral', '5531979', {
     checkedIn: true,
@@ -244,7 +247,7 @@ export const DEMO_ROSTER: readonly RosterEntry[] = [
     canDraw: false,
     showAdminLink: false,
     accessTier: 'tshirt',
-    tshirtSize: 'GG',
+    tshirtVolunteerSize: 'GG',
   }),
   volunteer('v7h5t1', 'Fernanda Quadros', '5541992', {
     checkedIn: true,
@@ -252,6 +255,6 @@ export const DEMO_ROSTER: readonly RosterEntry[] = [
     canDraw: false,
     showAdminLink: false,
     accessTier: 'none',
-    tshirtSize: 'M',
+    tshirtVolunteerSize: 'M',
   }),
 ];
