@@ -16,6 +16,7 @@ For the closing page that replaces the live app after the event, see
 | ------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `/`                                                     | `302` to `/checkin`                                                                      |
 | `/checkin`                                              | The check-in flow, in the event-open state                                               |
+| `/landing`                                              | The pre-event countdown, counting down from the fixture's own clock                      |
 | `/pass`, `/pass-volunteer`                              | The participant pass and the volunteer pass; the mock sends each session to its own      |
 | `/staff`                                                | The staff scan and redeem screen                                                         |
 | `/raffle`                                               | The raffle draw                                                                          |
@@ -129,8 +130,8 @@ npm run docs:screenshots
 ```
 
 `scripts/docs/screenshots.ts` serves `dist/demo/` on a local port, drives the real pages in Chromium
-and writes ten compressed PNGs to `docs/images/screenshots/`, the ones `README.md` shows: the check-in
-ticket, verification and presence steps, the participant pass front and back, the volunteer pass, `/staff` after
+and writes eleven compressed PNGs to `docs/images/screenshots/`, the ones `README.md` shows: the
+pre-event countdown, the check-in ticket, verification and presence steps, the participant pass front and back, the volunteer pass, `/staff` after
 a typed code, `/raffle` after one draw, and `/admin/redemptions` and `/admin/metrics`. Phone screens
 are 390×844 at 2×, admin screens 1440×900. The demo banner is hidden, and the clock, time zone,
 `Math.random`, motion and the rotation window's ring are fixed, so a rerun writes identical files. `--out <dir>`
@@ -152,7 +153,8 @@ npx wrangler pages deploy dist/demo --project-name pelicanpass-demo
 
 The first run creates the project. Open `https://pelicanpass-demo.pages.dev` **on a phone** and check:
 
-1. `/` redirects to `/checkin`, and the banner lists the demo codes and links to `/admin`.
+1. `/` redirects to `/checkin`, and the banner lists the demo codes and links to `/admin`. `/landing`
+   shows the countdown.
 2. Check in with a participant code, the verification code and the QR step. The pass shows a check-in
    number, the QR code and a nickname field.
 3. Change the nickname and reload; it persists in the tab.

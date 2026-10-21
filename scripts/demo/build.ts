@@ -3,8 +3,9 @@
  * Pages can serve with no server behind it.
  *
  * The real view engine renders the shared view fixtures (`src/web/views/
- * fixtures.ts`). There is no landing page: once check-in opens the app serves
- * `/` as the pass, so the demo sends `/` to `/checkin`. Each response goes
+ * fixtures.ts`). Once check-in opens the app serves `/` as the pass, so the demo
+ * sends `/` to `/checkin`; the pre-event countdown is served at `/landing`
+ * instead, counting down from the fixture's own clock. Each response goes
  * through helmet with the production CSP directives; the per-render nonce is
  * stripped and its hash moved into the generated `_headers`, as the closing
  * site does. Assets are copied by following the pages' references.
@@ -82,6 +83,7 @@ interface DemoPage {
 
 /** Every page the demo ships, including the 404. */
 const PAGES: readonly DemoPage[] = [
+  { fixture: 'landing', file: 'landing.html' },
   { fixture: 'checkin', file: 'checkin.html' },
   { fixture: 'pass-participant-survey', file: 'pass.html' },
   { fixture: 'pass-volunteer-survey', file: 'pass-volunteer.html' },

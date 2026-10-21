@@ -285,6 +285,12 @@ export const captureScreenshots = async (outDir: string): Promise<void> => {
     const participantContext = await newContext(browser, baseURL, MOBILE);
     const participant = await newPage(participantContext);
 
+    // The countdown measures from `Date.now()`, which the fixed clock holds, so
+    // it reads the fixture's own time to opening on every run.
+    await participant.goto('/landing');
+    await participant.locator('.landing-digit-strip').first().waitFor();
+    await shoot(participant, 'landing');
+
     await participant.goto('/checkin');
     await participant
       .locator('[data-checkin="ticket-step"]:not(.skeleton)')
