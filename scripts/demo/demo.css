@@ -17,6 +17,17 @@
   grid-column: 1 / -1;
 }
 
+/* Both languages are in the markup; the mock script sets data-demo-lang on
+   <html> before first paint, and Portuguese is the default without it. */
+.demo-banner-copy[data-demo-copy='en'],
+html[data-demo-lang='en'] .demo-banner-copy[data-demo-copy='pt'] {
+  display: none;
+}
+
+html[data-demo-lang='en'] .demo-banner-copy[data-demo-copy='en'] {
+  display: block;
+}
+
 .demo-banner p {
   margin: 0;
 }
@@ -40,7 +51,7 @@
   font-weight: 600;
 }
 
-.demo-banner-reset {
+.demo-banner-button {
   display: inline-block;
   width: auto;
   min-height: 0;
@@ -55,6 +66,6 @@
   cursor: pointer;
 }
 
-.demo-banner-reset[hidden] {
+.demo-banner-button[hidden] {
   display: none;
 }

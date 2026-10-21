@@ -287,11 +287,25 @@ describe(
         );
         assert.ok(html.includes('href="/css/demo.css"'), `${page} lacks css`);
 
-        for (const code of [
-          ...DEMO_TICKET_CODES.participant,
-          ...DEMO_TICKET_CODES.volunteer,
-        ]) {
-          assert.ok(html.includes(code.toUpperCase()), `${page} lacks ${code}`);
+        const [, pt = '', en = ''] = html.split(
+          /<div class="demo-banner-copy"/,
+        );
+
+        assert.match(pt, /^ data-demo-copy="pt" lang="pt-BR">/, `${page} pt`);
+        assert.match(en, /^ data-demo-copy="en" lang="en">/, `${page} en`);
+
+        for (const [name, copy] of Object.entries({ pt, en })) {
+          for (const needle of [
+            REPOSITORY_URL,
+            'href="/staff"',
+            'href="/admin"',
+            ...[
+              ...DEMO_TICKET_CODES.participant,
+              ...DEMO_TICKET_CODES.volunteer,
+            ].map((code) => code.toUpperCase()),
+          ]) {
+            assert.ok(copy.includes(needle), `${page} ${name} lacks ${needle}`);
+          }
         }
       }
     });
