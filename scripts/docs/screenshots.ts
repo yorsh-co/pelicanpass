@@ -343,6 +343,15 @@ export const captureScreenshots = async (outDir: string): Promise<void> => {
       .waitFor();
     await shoot(participant, 'pass-front');
 
+    // The demo opens the questionnaire to every attendee, so the chip is shown.
+    await participant.locator('[data-pass="surveyChip"]').click();
+    await participant.locator('dialog[data-pass="survey"][open]').waitFor();
+    await shoot(participant, 'pass-survey');
+    await participant.locator('[data-survey="close"]').click();
+    await participant
+      .locator('dialog[data-pass="survey"]')
+      .waitFor({ state: 'hidden' });
+
     await participant.locator('[data-pass="showQr"]').click();
     await participant.locator('[data-pass="faceBack"]').waitFor();
     await participant

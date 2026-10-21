@@ -254,6 +254,10 @@ and the answers are stored apart from the record of who answered, which
 `/admin/survey` can override it (`survey:write`) and download each audience's
 answers as CSV (`export:read`).
 
+<p align="center">
+  <img src="docs/images/screenshots/pass-survey.png" alt="The experience questionnaire, opened from the pass, with required rating questions on sliders" width="220">
+</p>
+
 `src/modules/survey/` · [`docs/features/survey.md`](docs/features/survey.md)
 
 ### WhatsApp ticket delivery
