@@ -1,0 +1,514 @@
+{
+  "admin-attendees.checkin.absent": {
+    "defaultMessage": "Not checked in yet",
+    "description": "Check-in panel of an attendee who has not checked in."
+  },
+  "admin-attendees.checkin.alreadyPresent": {
+    "defaultMessage": "Check-in had already been completed.",
+    "description": "Toast on the record's page when marking found the attendee already checked in."
+  },
+  "admin-attendees.checkin.at": {
+    "defaultMessage": "Checked in at {time}",
+    "description": "When the attendee checked in. {time} is the event-timezone date and time, already formatted."
+  },
+  "admin-attendees.checkin.confirm": {
+    "defaultMessage": "Confirm?",
+    "description": "Label of the armed check-in button: a second press checks the attendee in and draws an arrival number that cannot be taken back. Reverts after a few seconds."
+  },
+  "admin-attendees.checkin.failed": {
+    "defaultMessage": "Could not confirm check-in. Try again.",
+    "description": "Error line when confirming the check-in failed for a reason the server did not explain."
+  },
+  "admin-attendees.checkin.forbidden": {
+    "defaultMessage": "You no longer have permission to confirm check-in.",
+    "description": "Error line when the operator's check-in permission was withdrawn while the record was open."
+  },
+  "admin-attendees.checkin.heading": {
+    "defaultMessage": "Check-in",
+    "description": "Heading of the panel showing the record's check-in status."
+  },
+  "admin-attendees.checkin.mark": {
+    "defaultMessage": "Confirm check-in",
+    "description": "Button that checks the attendee in without the QR. The first press arms it and admin-attendees.checkin.confirm replaces this label."
+  },
+  "admin-attendees.checkin.markHint": {
+    "defaultMessage": "Confirm an attendee's check-in manually. Use only if you are with the attendee and they cannot complete the arrival confirmation (QR code). The check-in number is generated automatically after confirmation.",
+    "description": "Hint under the check-in button, explaining it stands in for the QR scan and verification code, and that a participant is issued the next arrival number, which cannot be taken back. Volunteers are not issued one."
+  },
+  "admin-attendees.checkin.marked": {
+    "defaultMessage": "Check-in confirmed.",
+    "description": "Toast on the record's page after the operator checked the attendee in by hand."
+  },
+  "admin-attendees.checkin.notOpen": {
+    "defaultMessage": "Check-in has not opened yet for this audience.",
+    "description": "Error line when check-in has not opened yet for the attendee's audience."
+  },
+  "admin-attendees.checkin.number": {
+    "defaultMessage": "Checked in · #{number, number, ::group-off}",
+    "description": "Presence of an attendee who checked in and holds arrival number {number}."
+  },
+  "admin-attendees.checkin.readOnly": {
+    "defaultMessage": "Your account does not have permission to confirm check-in.",
+    "description": "Replaces the check-in button for an operator without the check-in permission."
+  },
+  "admin-attendees.checkin.unsaved": {
+    "defaultMessage": "Save or discard your changes to the form before confirming check-in.",
+    "description": "Error line when the check-in button is pressed while the form holds unsaved edits, which opening the record again would discard."
+  },
+  "admin-attendees.danger.archive": {
+    "defaultMessage": "Archive",
+    "description": "Archive button. The first press arms it and admin-attendees.danger.confirm replaces this label."
+  },
+  "admin-attendees.danger.archiveHint": {
+    "defaultMessage": "Archive the attendee to block access to check-in and the app. The attendee can be restored from this same screen.",
+    "description": "Explains archiving before the operator presses it."
+  },
+  "admin-attendees.danger.archived": {
+    "defaultMessage": "Attendee archived.",
+    "description": "Toast on the record's page after it was archived."
+  },
+  "admin-attendees.danger.confirm": {
+    "defaultMessage": "Confirm?",
+    "description": "Label of the armed archive button: a second press archives. Reverts after a few seconds."
+  },
+  "admin-attendees.danger.heading": {
+    "defaultMessage": "Danger zone",
+    "description": "Heading of the panel holding the archive control."
+  },
+  "admin-attendees.danger.restore": {
+    "defaultMessage": "Restore",
+    "description": "Restore button on an archived record. Acts on the first press."
+  },
+  "admin-attendees.danger.restoreHint": {
+    "defaultMessage": "Restore the attendee to allow access to check-in and the app",
+    "description": "Explains restoring on an archived record."
+  },
+  "admin-attendees.danger.restored": {
+    "defaultMessage": "Attendee restored.",
+    "description": "Toast on the record's page after it was restored from the archive."
+  },
+  "admin-attendees.door.failed": {
+    "defaultMessage": "Could not change WhatsApp sending. Try again.",
+    "description": "Error line in the door WhatsApp panel when flipping the switch failed."
+  },
+  "admin-attendees.door.forbidden": {
+    "defaultMessage": "You no longer have permission to change WhatsApp sending.",
+    "description": "Error line in the door WhatsApp panel when the operator's whatsapp:send permission was withdrawn."
+  },
+  "admin-attendees.door.heading": {
+    "defaultMessage": "Ticket sending by WhatsApp",
+    "description": "Heading of the roster panel that switches the door WhatsApp message on or off."
+  },
+  "admin-attendees.door.intro": {
+    "defaultMessage": "Automatic sending of new tickets by WhatsApp.",
+    "description": "Explanation at the top of the door WhatsApp panel on the roster."
+  },
+  "admin-attendees.door.locked": {
+    "defaultMessage": "Sending tickets by WhatsApp is unavailable.",
+    "description": "Shown in the door WhatsApp panel when WHATSAPP_DOOR_ENABLED or WHATSAPP_ENABLED is false in .env."
+  },
+  "admin-attendees.door.overBudget": {
+    "defaultMessage": "The set budget limit has been reached: message sending was turned off.",
+    "description": "Shown in the door WhatsApp panel when the next message would pass the budget."
+  },
+  "admin-attendees.door.saved": {
+    "defaultMessage": "{on, select, yes {WhatsApp sending turned on.} no {WhatsApp sending turned off.} other {WhatsApp sending turned off.}}",
+    "description": "Success toast after the door WhatsApp switch was flipped. `on` is yes or no."
+  },
+  "admin-attendees.door.spend": {
+    "defaultMessage": "Budget used: {spent, number, ::currency/USD .00##} of {budget, number, ::currency/USD .00##} ({price, number, ::currency/USD .00##} per message)",
+    "description": "Spend line in the door WhatsApp panel: every message Meta accepted this event, the budget, and the price of one door message."
+  },
+  "admin-attendees.door.state": {
+    "defaultMessage": "{on, select, yes {On} no {Off} other {Off}}",
+    "description": "Current position of the door WhatsApp switch. `on` is yes or no."
+  },
+  "admin-attendees.door.turnOff": {
+    "defaultMessage": "Turn off",
+    "description": "Button in the door WhatsApp panel that switches the message off."
+  },
+  "admin-attendees.door.turnOn": {
+    "defaultMessage": "Turn on",
+    "description": "Button in the door WhatsApp panel that switches the message on."
+  },
+  "admin-attendees.form.actionFailed": {
+    "defaultMessage": "Something went wrong. Try again.",
+    "description": "Error line when archiving or restoring failed for a reason the server did not explain."
+  },
+  "admin-attendees.form.archivedFlag": {
+    "defaultMessage": "This attendee is archived: check-in, viewing the ticket and taking part in the raffle are not possible.",
+    "description": "Banner on an archived record, naming everything archiving takes away."
+  },
+  "admin-attendees.form.cancel": {
+    "defaultMessage": "Cancel",
+    "description": "Link back to the roster without saving."
+  },
+  "admin-attendees.form.close": {
+    "defaultMessage": "Back to the attendee list",
+    "description": "Accessible name of the record's close button."
+  },
+  "admin-attendees.form.create": {
+    "defaultMessage": "Register",
+    "description": "Save button on the blank form."
+  },
+  "admin-attendees.form.created": {
+    "defaultMessage": "Attendee registered.",
+    "description": "Toast on the new record's page after the blank form was saved."
+  },
+  "admin-attendees.form.createdWhatsappFailed": {
+    "defaultMessage": "Attendee registered successfully, but the ticket could not be sent by WhatsApp. Give the attendee the ticket code to type on the check-in screen.",
+    "description": "Warning toast on the new record's page when the door WhatsApp message was attempted and did not go out."
+  },
+  "admin-attendees.form.createdWhatsappSent": {
+    "defaultMessage": "Attendee registered and ticket sent by WhatsApp.",
+    "description": "Success toast on the new record's page when the door WhatsApp message was accepted by Meta."
+  },
+  "admin-attendees.form.createdWhatsappSkipped": {
+    "defaultMessage": "The attendee was registered without sending the ticket by WhatsApp: {reason, select, lockedByEnv {unavailable} switchedOff {turned off} overBudget {budget limit reached} phoneInvalid {invalid WhatsApp number} rateLimited {this login's send limit was reached, try again in a few minutes} alreadySent {the message was already sent to this number} attendeeCapReached {no more messages can be sent (attendee limit reached)} attendeeUnavailable {the ticket is disabled} other {sending messages is unavailable}}. Give the ticket code directly to the attendee.",
+    "description": "Notice toast on the new record's page when the operator asked for the door WhatsApp message and it was not sent. `reason` is a code."
+  },
+  "admin-attendees.form.forbidden": {
+    "defaultMessage": "You no longer have permission to edit attendees.",
+    "description": "Error line when the operator's edit permission was withdrawn while the form was open."
+  },
+  "admin-attendees.form.itemNone": {
+    "defaultMessage": "None",
+    "description": "First choice in an enabled item's dropdown: the attendee does not receive the item."
+  },
+  "admin-attendees.form.itemOffList": {
+    "defaultMessage": "{value} (not on the list)",
+    "description": "Dropdown choice for a stored value that is not on the approved list, usually from the imported roster. {value} is the value exactly as stored. Choosing another option replaces it for good."
+  },
+  "admin-attendees.form.itemUnavailable": {
+    "defaultMessage": "Unavailable",
+    "description": "First choice in a volunteer-only item's dropdown while the record is not a volunteer; the dropdown is disabled."
+  },
+  "admin-attendees.form.items": {
+    "defaultMessage": "Items",
+    "description": "Heading of the group of redeemable items (t-shirt sizes, meal, drink and lunch choice)."
+  },
+  "admin-attendees.form.itemsHint": {
+    "defaultMessage": "\"None\" means the attendee does not receive the item.",
+    "description": "Hint under the items heading."
+  },
+  "admin-attendees.form.name": {
+    "defaultMessage": "Full name",
+    "description": "Label of the name field."
+  },
+  "admin-attendees.form.phone": {
+    "defaultMessage": "Phone",
+    "description": "Label of the phone field."
+  },
+  "admin-attendees.form.phoneHint": {
+    "defaultMessage": "With area code, 10 to 11 digits. Number from another country: start with + and the country code (e.g. +44 7911 123456). The last four digits are the verification code at check-in.",
+    "description": "Hint under the phone field. A leading + marks a foreign number with its country code; the last four digits are the check-in verification code, which is why a typo matters."
+  },
+  "admin-attendees.form.readOnly": {
+    "defaultMessage": "You do not have permission to edit attendees.",
+    "description": "Replaces the save button for an operator who may read but not edit."
+  },
+  "admin-attendees.form.redeemed": {
+    "defaultMessage": "collected",
+    "description": "Tag beside an item that was already collected. Lowercase: it trails the item's name."
+  },
+  "admin-attendees.form.roleLocked": {
+    "defaultMessage": "The ticket type cannot be changed after check-in is confirmed.",
+    "description": "Hint under the role of an attendee who has checked in, whose role can no longer change."
+  },
+  "admin-attendees.form.save": {
+    "defaultMessage": "Save",
+    "description": "Save button on an existing record."
+  },
+  "admin-attendees.form.saveFailed": {
+    "defaultMessage": "Could not save. Try again.",
+    "description": "Error line when a save or a nickname removal failed for a reason the server did not explain."
+  },
+  "admin-attendees.form.saved": {
+    "defaultMessage": "Changes saved.",
+    "description": "Toast after an existing record was saved."
+  },
+  "admin-attendees.form.savedWhatsappFailed": {
+    "defaultMessage": "Changes saved successfully, but the updated link could not be sent by WhatsApp. Give the ticket code to the attendee to type on the check-in screen.",
+    "description": "Warning toast after saving a record when the door WhatsApp message was attempted and did not go out."
+  },
+  "admin-attendees.form.savedWhatsappSent": {
+    "defaultMessage": "Changes saved and ticket sent by WhatsApp.",
+    "description": "Success toast after saving a record when the door WhatsApp message was accepted by Meta."
+  },
+  "admin-attendees.form.savedWhatsappSkipped": {
+    "defaultMessage": "Changes saved without sending the link by WhatsApp: {reason, select, lockedByEnv {unavailable} switchedOff {turned off} overBudget {budget limit reached} phoneInvalid {invalid WhatsApp number} rateLimited {this login's send limit was reached, try again in a few minutes} alreadySent {the message was already sent to this number} attendeeCapReached {no more messages can be sent (attendee limit reached)} attendeeUnavailable {the ticket is disabled} other {sending messages is unavailable}}. Give the ticket code directly to the attendee.",
+    "description": "Notice toast after saving a record when the operator asked for the door WhatsApp message and it was not sent. `reason` is a code."
+  },
+  "admin-attendees.form.ticketCodeEdit": {
+    "defaultMessage": "Set the ticket code",
+    "description": "Accessible name of the pencil button that unlocks the ticket code field on the blank form, for typing a code from the external sign-up system."
+  },
+  "admin-attendees.form.ticketCodeHint.after": {
+    "defaultMessage": "for volunteers.",
+    "description": "Last piece of the ticket code hint, after VXXXXX. See admin-attendees.form.ticketCodeHint.before."
+  },
+  "admin-attendees.form.ticketCodeHint.before": {
+    "defaultMessage": "The code is generated automatically by the system:",
+    "description": "First of three pieces of the ticket code hint, around the code formats DXXXXX and VXXXXX, which are rendered as code between them: \"O código é gerado automaticamente pelo sistema: DXXXXX (participantes) ou VXXXXX para voluntários.\""
+  },
+  "admin-attendees.form.ticketCodeHint.between": {
+    "defaultMessage": "(participants) or",
+    "description": "Second piece of the ticket code hint, between DXXXXX and VXXXXX. See admin-attendees.form.ticketCodeHint.before."
+  },
+  "admin-attendees.form.ticketCodeLocked": {
+    "defaultMessage": "The ticket code cannot be changed after the attendee is registered. To change the ticket, archive this attendee and create a new one.",
+    "description": "Hint under an existing record's read-only ticket code."
+  },
+  "admin-attendees.form.ticketCodePlaceholder": {
+    "defaultMessage": "automatic",
+    "description": "Placeholder of the ticket code field on the blank form, which is locked until its pencil button is pressed."
+  },
+  "admin-attendees.form.tshirtEdit": {
+    "defaultMessage": "Edit the T-shirt option",
+    "description": "Accessible name of the pencil button that unlocks the participant t-shirt size, which the attendee reserved in advance."
+  },
+  "admin-attendees.form.tshirtReservedHint": {
+    "defaultMessage": "Reserved in advance by the participant. Tap the pencil to change it.",
+    "description": "Hint under the locked participant t-shirt size."
+  },
+  "admin-attendees.form.volunteersOnly": {
+    "defaultMessage": "Volunteers only.",
+    "description": "Hint under a volunteer-only item's dropdown (volunteer t-shirt, lunch) while the record is a participant, when the dropdown is disabled. Only volunteers can be entitled to these items."
+  },
+  "admin-attendees.form.whatsapp": {
+    "defaultMessage": "Send the ticket link by WhatsApp",
+    "description": "Checkbox label on the blank form: send the door WhatsApp template to the new attendee."
+  },
+  "admin-attendees.form.whatsappEditHint": {
+    "defaultMessage": "Select only if the registered phone number was changed.",
+    "description": "Hint under the WhatsApp checkbox on an existing record: it ticks itself when the phone number is changed, each number gets the message at most once, and every message costs money."
+  },
+  "admin-attendees.form.whatsappHint": {
+    "defaultMessage": "-",
+    "description": "Hint under the WhatsApp checkbox on the blank form. Reminds the operator that every message costs money and when to untick it."
+  },
+  "admin-attendees.form.whatsappUnavailable": {
+    "defaultMessage": "{reason, select, switchedOff {WhatsApp sending was turned off by the coordination team.} overBudget {The budget limit has been reached.} other {WhatsApp sending is unavailable.}}",
+    "description": "Hint under the disabled WhatsApp checkbox on the blank form, saying why it cannot be ticked. `reason` is a code: switchedOff or overBudget."
+  },
+  "admin-attendees.limit.cancel": {
+    "defaultMessage": "Cancel",
+    "description": "Button that closes the ticket limit form without saving."
+  },
+  "admin-attendees.limit.capHint": {
+    "defaultMessage": "Whole number from {min, number} to {max, number}.",
+    "description": "Hint under the ticket limit field. `min` and `max` are the smallest and largest cap."
+  },
+  "admin-attendees.limit.capLabel": {
+    "defaultMessage": "Ticket limit",
+    "description": "Label of the number field holding the ticket limit."
+  },
+  "admin-attendees.limit.doorHint": {
+    "defaultMessage": "Tickets registered with a hand-typed code are not counted.",
+    "description": "Hint in the ticket limit panel when only door-generated tickets are counted: a ticket whose code the operator typed is not counted."
+  },
+  "admin-attendees.limit.edit": {
+    "defaultMessage": "Edit limit",
+    "description": "Button that reveals the ticket limit form in the roster panel."
+  },
+  "admin-attendees.limit.exceeded": {
+    "defaultMessage": "Ticket limit exceeded ({used, number} / {cap, number}).",
+    "description": "Warning after creating or restoring a participant in warn mode when the ticket limit is reached or exceeded. Shown alone or following the confirmation in the same toast, so it is written as a sentence of its own. `used` and `cap` are numbers."
+  },
+  "admin-attendees.limit.failed": {
+    "defaultMessage": "Could not save the ticket limit. Try again.",
+    "description": "Error line in the ticket limit panel when saving failed for a reason the server did not name."
+  },
+  "admin-attendees.limit.forbidden": {
+    "defaultMessage": "You no longer have permission to change the ticket limit.",
+    "description": "Error line in the ticket limit panel when the operator's attendees:limit permission was withdrawn."
+  },
+  "admin-attendees.limit.formBlocked": {
+    "defaultMessage": "The ticket limit has been reached: new participants cannot be registered.",
+    "description": "Banner text on the new attendee form when a hard ticket limit has no room left, so creating a participant is blocked."
+  },
+  "admin-attendees.limit.formRestoreBlocked": {
+    "defaultMessage": "The ticket limit has been reached: this participant cannot be restored.",
+    "description": "Banner text on an archived attendee's page when a hard ticket limit has no room left, so restoring is blocked."
+  },
+  "admin-attendees.limit.heading": {
+    "defaultMessage": "Ticket limit",
+    "description": "Heading of the roster panel that caps how many participant tickets the editor can issue."
+  },
+  "admin-attendees.limit.left": {
+    "defaultMessage": "{scope, select, door {{remaining, plural, =0 {no door tickets left} one {# door ticket left} other {# door tickets left}}} total {{remaining, plural, =0 {no tickets left} one {# ticket left} other {# tickets left}}} other {{remaining, plural, =0 {no tickets left} one {# ticket left} other {# tickets left}}}}",
+    "description": "How many tickets are left under the limit. `scope` is total or door (door counts only tickets generated at the door); `remaining` is a number, never negative."
+  },
+  "admin-attendees.limit.meterLabel": {
+    "defaultMessage": "Ticket limit usage",
+    "description": "Accessible name of the ticket limit meter bar."
+  },
+  "admin-attendees.limit.meterText": {
+    "defaultMessage": "{used, number} of {cap, number}, {detail}",
+    "description": "Spoken value of the ticket limit meter for screen readers, such as \"38 de 50, 12 ingressos restantes\". `detail` is already translated."
+  },
+  "admin-attendees.limit.mode": {
+    "defaultMessage": "{mode, select, hard {Block} warn {Warn only} other {Block}}",
+    "description": "Badge saying what reaching the ticket limit does. `mode` is hard (refuses new tickets) or warn (only warns)."
+  },
+  "admin-attendees.limit.modeLegend": {
+    "defaultMessage": "When the limit is reached",
+    "description": "Legend of the radio group choosing what happens when the ticket limit is reached."
+  },
+  "admin-attendees.limit.modeOption": {
+    "defaultMessage": "{mode, select, hard {Block: prevents new tickets} warn {Warn only: allows registering and shows a warning} other {Block: prevents new tickets}}",
+    "description": "Radio labels for what reaching the ticket limit does. `mode` is hard (refuses) or warn (allows and warns)."
+  },
+  "admin-attendees.limit.off": {
+    "defaultMessage": "No ticket limit set.",
+    "description": "Line in the ticket limit panel when the limit is switched off."
+  },
+  "admin-attendees.limit.over": {
+    "defaultMessage": "{scope, select, door {{excess, plural, one {# door ticket over the limit} other {# door tickets over the limit}}} total {{excess, plural, one {# ticket over the limit} other {# tickets over the limit}}} other {{excess, plural, one {# ticket over the limit} other {# tickets over the limit}}}}",
+    "description": "How many tickets are above the limit. `scope` is total or door; `excess` is a positive number."
+  },
+  "admin-attendees.limit.save": {
+    "defaultMessage": "Save",
+    "description": "Button that saves the ticket limit."
+  },
+  "admin-attendees.limit.saved": {
+    "defaultMessage": "Ticket limit updated.",
+    "description": "Success toast after the ticket limit was saved."
+  },
+  "admin-attendees.limit.scopeLegend": {
+    "defaultMessage": "What counts toward the limit",
+    "description": "Legend of the radio group choosing what the ticket limit counts."
+  },
+  "admin-attendees.limit.scopeOption": {
+    "defaultMessage": "{scope, select, off {No limit} total {All participants} door {Only tickets generated at the door} other {No limit}}",
+    "description": "Radio labels for what the ticket limit counts. `scope` is off (no limit), total (every participant) or door (only tickets generated by the editor)."
+  },
+  "admin-attendees.limit.status": {
+    "defaultMessage": "{status, select, off {No limit} ok {Within limit} near {Near limit} reached {Limit reached} over {Over limit} other {No limit}}",
+    "description": "Status pill of the ticket limit panel. `status` is a code: off, ok (below 90% of the cap), near (90% or more), reached (at the cap) or over (above it)."
+  },
+  "admin-attendees.limit.usage": {
+    "defaultMessage": "{used, number} / {cap, number} · {detail}",
+    "description": "Usage line of the ticket limit panel and the form banner: tickets counted, the cap, and a detail string saying how many are left or over. `detail` is already translated."
+  },
+  "admin-attendees.list.archivedFilter": {
+    "defaultMessage": "Status",
+    "description": "Label of the roster's archive filter."
+  },
+  "admin-attendees.list.archivedFlag": {
+    "defaultMessage": "archived",
+    "description": "Tag beside an archived attendee's name. Lowercase: it trails the name."
+  },
+  "admin-attendees.list.clear": {
+    "defaultMessage": "Clear",
+    "description": "Link that resets every roster filter. Shown only while a filter is set."
+  },
+  "admin-attendees.list.clearFilters": {
+    "defaultMessage": "Clear filters",
+    "description": "Link after admin-attendees.list.noMatches that resets every filter."
+  },
+  "admin-attendees.list.code": {
+    "defaultMessage": "Ticket",
+    "description": "Roster column: the ticket code."
+  },
+  "admin-attendees.list.count": {
+    "defaultMessage": "{total, plural, =1 {{total, number, ::group-off} attendee{filtered, select, yes { found} no {} other {}}} other {{total, number, ::group-off} attendees{filtered, select, yes { found} no {} other {}}}}",
+    "description": "Result count above the roster. {total} is the number of matching records; filtered is yes while a filter is set. The suffix does not agree in number with a single result."
+  },
+  "admin-attendees.list.createFirst": {
+    "defaultMessage": "Register the first attendee",
+    "description": "Link after admin-attendees.list.empty to the blank record form, for operators who may edit."
+  },
+  "admin-attendees.list.drawsFlag": {
+    "defaultMessage": "number generator",
+    "description": "Tag beside a volunteer who may run the raffle. Lowercase: it trails the role badge."
+  },
+  "admin-attendees.list.empty": {
+    "defaultMessage": "No attendees registered.",
+    "description": "Empty roster with no filter set: the event has no attendees yet."
+  },
+  "admin-attendees.list.items": {
+    "defaultMessage": "Pickups",
+    "description": "Roster column: the items the attendee is entitled to, and whether each was collected."
+  },
+  "admin-attendees.list.name": {
+    "defaultMessage": "Name",
+    "description": "Roster column: the attendee's name and nickname."
+  },
+  "admin-attendees.list.noMatches": {
+    "defaultMessage": "No attendees match these filters.",
+    "description": "Empty roster while a filter is set. Followed by admin-attendees.list.clearFilters."
+  },
+  "admin-attendees.list.phone": {
+    "defaultMessage": "Phone",
+    "description": "Roster column: the phone number, masked."
+  },
+  "admin-attendees.list.redeemsFlag": {
+    "defaultMessage": "pickups",
+    "description": "Tag beside a volunteer who may record redemptions. Lowercase: it trails the role badge."
+  },
+  "admin-attendees.list.title": {
+    "defaultMessage": "Attendees",
+    "description": "Heading of the roster."
+  },
+  "admin-attendees.newAttendee": {
+    "defaultMessage": "New attendee",
+    "description": "Heading of the blank record form, and the roster link that opens it."
+  },
+  "admin-attendees.nickname.heading": {
+    "defaultMessage": "Nickname",
+    "description": "Heading of the record's nickname panel."
+  },
+  "admin-attendees.nickname.hint": {
+    "defaultMessage": "The nickname is set by the attendee.",
+    "description": "Hint under a nickname: staff may clear it but never set one."
+  },
+  "admin-attendees.nickname.none": {
+    "defaultMessage": "No nickname set.",
+    "description": "Shown when the attendee has not chosen a nickname."
+  },
+  "admin-attendees.nickname.remove": {
+    "defaultMessage": "Remove nickname",
+    "description": "Button that clears the attendee's nickname."
+  },
+  "admin-attendees.nickname.removed": {
+    "defaultMessage": "Nickname removed.",
+    "description": "Toast on the record's page after the staff removed the attendee's nickname."
+  },
+  "admin-attendees.perms.draws": {
+    "defaultMessage": "NUMBER GENERATOR",
+    "description": "The volunteer may run the raffle."
+  },
+  "admin-attendees.perms.heading": {
+    "defaultMessage": "Volunteer permissions",
+    "description": "Heading of the read-only panel listing what a volunteer may do."
+  },
+  "admin-attendees.perms.hint": {
+    "defaultMessage": "-",
+    "description": "Hint under the volunteer permissions: they are changed in the database, not here."
+  },
+  "admin-attendees.perms.noDraws": {
+    "defaultMessage": "-",
+    "description": "The volunteer may not run the raffle."
+  },
+  "admin-attendees.perms.noRedeems": {
+    "defaultMessage": "-",
+    "description": "The volunteer may not record redemptions."
+  },
+  "admin-attendees.perms.noStations": {
+    "defaultMessage": "-",
+    "description": "The volunteer records no item."
+  },
+  "admin-attendees.perms.redeems": {
+    "defaultMessage": "PICKUPS",
+    "description": "The volunteer may record redemptions."
+  },
+  "admin-attendees.perms.stations": {
+    "defaultMessage": "Pickups: {stations}",
+    "description": "The items a volunteer may record. {stations} is the list of item keys as stored, joined with commas."
+  },
+  "admin-attendees.roleLabel": {
+    "defaultMessage": "Ticket type",
+    "description": "Label of an attendee's role (participant or volunteer): a roster filter, a column and a form field."
+  }
+}
