@@ -206,6 +206,17 @@ const newPage = async (context: BrowserContext): Promise<Page> => {
 const settle = (page: Page): Promise<unknown> =>
   page.evaluate('document.fonts.ready');
 
+/**
+ * Waits for a check-in step's hint to be shown. `ui/hint.ts` sets it after a
+ * short delay and fades it in, so the step being ready says nothing about it.
+ */
+const waitForHint = (page: Page, step: 'ticket' | 'verification') =>
+  page
+    .locator(
+      `[data-checkin="${step}-hint-div"]:not(.changing):text-matches("[A-Za-z]")`,
+    )
+    .waitFor();
+
 /** Types a code into an input and submits it. */
 const submitCode = async (page: Page, selector: string, code: string) => {
   const input = page.locator(`${selector}:enabled`);
@@ -261,6 +272,7 @@ export const captureScreenshots = async (outDir: string): Promise<void> => {
     await participant
       .locator('[data-checkin="ticket-step"]:not(.skeleton)')
       .waitFor();
+    await waitForHint(participant, 'ticket');
     await shoot(participant, 'checkin-ticket');
 
     await submitCode(
@@ -274,9 +286,7 @@ export const captureScreenshots = async (outDir: string): Promise<void> => {
     await participant
       .locator('[data-checkin="verification-name"]:not(:has-text("•"))')
       .waitFor();
-    await participant
-      .locator('[data-checkin="verification-hint-div"]:text-matches("[A-Za-z]")')
-      .waitFor();
+    await waitForHint(participant, 'verification');
     await shoot(participant, 'checkin-verification');
 
     await submitCode(
