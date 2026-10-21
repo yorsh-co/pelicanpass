@@ -5,8 +5,9 @@ import { after, before, describe, it } from 'node:test';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 
-import { localeMiddleware } from './server.ts';
+import { localeMiddleware, resolveLocale } from './server.ts';
 
+import type { Request } from 'express';
 import type { Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
 
@@ -60,5 +61,25 @@ describe('localeMiddleware ?lang= redirect', () => {
     const { location } = await get('/checkin?lang=pt-BR&audience=volunteer');
 
     assert.equal(location, '/checkin?audience=volunteer');
+  });
+});
+
+describe('resolveLocale Accept-Language', () => {
+  const resolve = (...tags: string[]) =>
+    resolveLocale({
+      cookies: {},
+      acceptsLanguages: () => tags,
+    } as unknown as Request);
+
+  it('selects en for an English browser', () => {
+    assert.equal(resolve('en-US', 'en'), 'en');
+  });
+
+  it('selects pt-BR for a Portuguese browser', () => {
+    assert.equal(resolve('pt-BR', 'pt'), 'pt-BR');
+  });
+
+  it('falls back to pt-BR for an unoffered language', () => {
+    assert.equal(resolve('fr-FR'), 'pt-BR');
   });
 });

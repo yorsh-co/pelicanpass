@@ -27,7 +27,7 @@ export const PSEUDO_LOCALE: Locale = 'en-XA';
  * leaves this list only once every translatable message is translated;
  * `i18n:check` fails otherwise.
  */
-export const DRAFT_LOCALES: readonly Locale[] = ['en'];
+export const DRAFT_LOCALES: readonly Locale[] = [];
 
 /**
  * WhatsApp template language codes, which Meta spells with an underscore. A
