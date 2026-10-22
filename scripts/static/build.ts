@@ -199,8 +199,31 @@ const INLINE_ELEMENT = /<(script|style)\b([^>]*)>([\s\S]*?)<\/\1>/gi;
 const NONCE_ATTRIBUTE = /\s+nonce="[^"]*"/gi;
 
 /**
+ * Reports whether a `<script>` runs, so that CSP applies to it.
+ *
+ * A script with no `type`, an empty one, a JavaScript MIME type or `module` is
+ * executed. Any other type, such as `application/json`, makes it a data block,
+ * which the HTML spec never prepares for execution, so CSP's inline check does
+ * not reach it and it needs no hash.
+ *
+ * @param attributes - The text between `<script` and `>`.
+ */
+const isExecutable = (attributes: string): boolean => {
+  const type = /\stype\s*=\s*"([^"]*)"/i.exec(attributes)?.[1];
+
+  return (
+    type === undefined ||
+    ['', 'module', 'text/javascript', 'application/javascript'].includes(
+      type.trim().toLowerCase(),
+    )
+  );
+};
+
+/**
  * Removes every `nonce` attribute and returns the CSP hashes of the inline
- * scripts and styles the document carries.
+ * scripts and styles the document carries. Inline data blocks, such as
+ * `type="application/json"`, lose their nonce but are not hashed: see
+ * {@link isExecutable}.
  *
  * @param html - A rendered page.
  */
@@ -212,8 +235,9 @@ export const stripNonces = (
 
   for (const [, tag, attributes, body] of html.matchAll(INLINE_ELEMENT)) {
     if (tag === undefined || body === undefined) continue;
-    if (tag.toLowerCase() === 'script' && /\ssrc\s*=/i.test(attributes ?? '')) {
-      continue;
+    if (tag.toLowerCase() === 'script') {
+      if (/\ssrc\s*=/i.test(attributes ?? '')) continue;
+      if (!isExecutable(attributes ?? '')) continue;
     }
 
     (tag.toLowerCase() === 'script' ? scripts : styles).push(cspHash(body));

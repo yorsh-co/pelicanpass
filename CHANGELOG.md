@@ -22,6 +22,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 
 ### Changed
 
+- `scripts/static/build.ts` hashes only the inline scripts a browser executes: `type="application/json"` data blocks are data, so the demo's policy shrinks from 1,607 to 419 characters, well inside the 2,000 Cloudflare allows in a header value, and the demo build fails if it grows past that
 - The demo banner collapses to one line, with a Details button that expands it; it starts collapsed on viewports up to 40rem wide and saves the visitor's choice in `localStorage`
 - The volunteer pass shows its tier as a chip with a chevron, in place of the tab, plus a tier-coloured edge along the card's top; the five tier colours are one family at a shared lightness and chroma beside Harbour, and the actions face keeps the brand backdrop
 - The boot screen shows the mark at the centre of the viewport with the two-tone wordmark pinned to the bottom, replacing the one-line lockup and the three star and ring motifs; the landing and closing pages open on the same mark and wordmark so the hand-off between them reads as one surface
