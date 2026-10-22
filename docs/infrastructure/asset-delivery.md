@@ -55,10 +55,12 @@ built, and the `<link>` 404s — which is loud, so this fails safely.
 
 ## Venue map
 
-The pass opens `/assets/images/map/venue-map.svg` in a dialog
-(`components/pass.ejs`). It is a hand-written generic sample map
-(entrance and check-in, auditorium and stage, food court, restrooms, information
-desk) with system-font text: under 4 KB.
+The pass opens the venue map in a dialog (`components/pass.ejs`). There is one
+map per locale, chosen by `VENUE_MAP_SRC` in `src/constants/venue-map.ts`:
+`venue-map.svg` for pt-BR and `venue-map.en.svg` for English; `en-XA` uses
+pt-BR's, as an SVG cannot be pseudo-translated. Each is a hand-written generic
+sample map (entrance and check-in, auditorium and stage, food court, restrooms,
+information desk) with system-font text: under 4 KB.
 
 - **Format.** Use SVG for a line-drawn plan: it stays sharp under pinch-zoom and
   compresses to a few kilobytes. Use WebP only if the final art is illustrated or
@@ -66,10 +68,11 @@ desk) with system-font text: under 4 KB.
 - **Loading.** The `<img>` has its `src` at render and is not lazy, so the map is
   already cached when the dialog opens. Keep it that way; a lazy image inside a
   closed dialog would not load until someone opened it.
-- **Replacing it.** Give the new art a **new file name** and update the `src`.
-  `/assets/images/` is served with a week's `max-age`, so reusing the name keeps
-  the old map on phones that have already opened the pass. Update the
-  `pass.map.alt` string to describe the new map in the same commit.
+- **Replacing it.** Give each locale's new art a **new file name**, update
+  `VENUE_MAP_SRC`, and update `pass.map.alt` in every catalog to describe the new
+  map, all in the same commit. `/assets/images/` is served with a week's
+  `max-age`, so reusing a name keeps the old map on phones that have already
+  opened the pass.
 - **Rounded corners** belong in the art: give its background `rx`. The frame's
   `border-radius` cannot reach the drawing, which `object-fit: contain` insets
   inside a transparent box.
