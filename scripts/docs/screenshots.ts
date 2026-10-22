@@ -6,7 +6,8 @@
  * `docs/images/screenshots/`. The demo's attendees are fictional, so nothing
  * here is personal data.
  *
- * Stable output: the clock, time zone, locale and `Math.random` are fixed, and
+ * Stable output: the clock, time zone, locale (the demo's language choice is
+ * pinned to pt-BR) and `Math.random` are fixed, and
  * motion is reduced, and the rotation window's ring is held at one level. The
  * demo banner is hidden; it is not part of the product.
  * Every step waits for the state it expects rather than for a duration,
@@ -30,6 +31,7 @@ import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
 import sharp from 'sharp';
 
+import { LOCALE_STORAGE_KEY } from '../../src/web/client/demo/locale-route.ts';
 import {
   DEMO_TICKET_CODES,
   DEMO_VERIFICATION_CODE,
@@ -200,6 +202,11 @@ const newContext = async (
     reducedMotion: 'reduce',
   });
 
+  // The demo serves the tree the visitor chose, else the browser's language;
+  // pinning pt-BR keeps the captures the same whatever language this runs in.
+  await context.addInitScript({
+    content: `try { localStorage.setItem(${JSON.stringify(LOCALE_STORAGE_KEY)}, 'pt-BR'); } catch {}`,
+  });
   await context.addInitScript(SEED_RANDOM);
   await context.addInitScript({ content: HIDE_BANNER });
   await context.addInitScript({ content: PIN_WINDOW_RING });

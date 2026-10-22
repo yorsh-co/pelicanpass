@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
-import { classifyForm } from './admin-guard.ts';
+import { NOTICES, classifyForm, noticeLocale } from './admin-guard.ts';
 
 import type { FormVerdict } from './admin-guard.ts';
 
@@ -68,6 +68,26 @@ describe('classifyForm', () => {
   it('leaves forms outside the administrator area to the mock API', () => {
     for (const path of ['/checkin', '/administrator', '/api/v1/admin/x']) {
       assert.deepEqual(verdict(path), { kind: 'ignore' });
+    }
+  });
+});
+
+describe('noticeLocale', () => {
+  it('picks English for an English page and pt-BR for anything else', () => {
+    assert.equal(noticeLocale('en'), 'en');
+    assert.equal(noticeLocale('en-US'), 'en');
+    assert.equal(noticeLocale('EN'), 'en');
+    assert.equal(noticeLocale('pt-BR'), 'pt-BR');
+    assert.equal(noticeLocale(''), 'pt-BR');
+    assert.equal(noticeLocale('fr'), 'pt-BR');
+  });
+});
+
+describe('NOTICES', () => {
+  it('has both notices in both languages, none shared', () => {
+    for (const key of ['disabled', 'unavailable'] as const) {
+      assert.ok(NOTICES['pt-BR'][key] !== '' && NOTICES.en[key] !== '');
+      assert.notEqual(NOTICES.en[key], NOTICES['pt-BR'][key]);
     }
   });
 });

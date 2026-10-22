@@ -7,7 +7,13 @@ import { after, before, describe, it } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 // Before anything that loads `config/env.ts`, so the pages render as deployed.
-import { REPOSITORY_URL, buildDemoSite } from './build.ts';
+import {
+  MAX_HEADER_VALUE,
+  REPOSITORY_URL,
+  assertHeaderFits,
+  buildDemoSite,
+  localizeLinks,
+} from './build.ts';
 
 import { isValidTicketCode } from '../../src/constants/ticket.ts';
 import {
@@ -23,7 +29,7 @@ const PUBLIC_DIR = fileURLToPath(
 );
 const MAIN_CSS = path.join(PUBLIC_DIR, 'css/dist/main.css');
 
-const PAGE_FILES = [
+const PT_PAGE_FILES = [
   'checkin.html',
   'pass.html',
   'pass-volunteer.html',
@@ -47,6 +53,19 @@ const PAGE_FILES = [
   'admin/whatsapp.html',
   'admin/pass.html',
 ];
+
+const EN_PAGE_FILES = PT_PAGE_FILES.map((file) => `en/${file}`);
+const PAGE_FILES = [...PT_PAGE_FILES, ...EN_PAGE_FILES];
+
+/** The pt-BR copy of the banner and a phrase of it that English pages must not carry. */
+const PT_BANNER_PHRASES = [
+  'Demonstração',
+  'Reiniciar demonstração',
+  'Detalhes',
+];
+
+/** The path a served file answers at: `admin/pass.html` at `/admin/pass`. */
+const servedAt = (file: string): string => `/${file.replace(/\.html$/, '')}`;
 
 /** Every file under `dir`, as a posix path relative to it. */
 const listFiles = async (dir: string): Promise<string[]> =>
@@ -145,6 +164,64 @@ describe('roster', () => {
   });
 });
 
+describe('assertHeaderFits', () => {
+  it('accepts a value at the limit', () => {
+    assert.doesNotThrow(() => {
+      assertHeaderFits('X', 'a'.repeat(MAX_HEADER_VALUE));
+    });
+  });
+
+  it('throws, naming the header and the length, one character over', () => {
+    assert.throws(() => {
+      assertHeaderFits('Content-Security-Policy', 'a'.repeat(2001));
+    }, /Content-Security-Policy is 2001 characters/);
+  });
+});
+
+describe('localizeLinks', () => {
+  const page = (html: string): string => localizeLinks(html, 'en');
+
+  it('moves page links and form actions into the English tree', () => {
+    assert.equal(page('<a href="/privacy">'), '<a href="/en/privacy">');
+    assert.equal(page('<a href="/">'), '<a href="/en/">');
+    assert.equal(
+      page('<form action="/admin/lookup/record" method="post">'),
+      '<form action="/en/admin/lookup/record" method="post">',
+    );
+    assert.equal(
+      page('<a href="/checkin?audience=volunteer#x">'),
+      '<a href="/en/checkin?audience=volunteer#x">',
+    );
+  });
+
+  it('leaves assets, the API, the manifest, external links and switchers alone', () => {
+    for (const html of [
+      '<link href="/css/dist/main.css">',
+      '<link href="/assets/a.png">',
+      '<link href="/js/theme/theme.js">',
+      '<link rel="icon" href="/favicon.ico">',
+      '<link rel="manifest" href="/site.webmanifest">',
+      '<a href="/api/v1/x">',
+      '<a href="https://example.com/a">',
+      '<a href="//example.com/a">',
+      '<a href="?lang=en">',
+      '<a href="/privacy?lang=pt-BR">',
+      '<a href="/checkin?a=1&amp;lang=pt-BR">',
+      '<a href="relative">',
+      '<img src="/assets/a.png">',
+    ]) {
+      assert.equal(page(html), html);
+    }
+  });
+
+  it('leaves the pt-BR tree untouched', () => {
+    assert.equal(
+      localizeLinks('<a href="/privacy">', 'pt-BR'),
+      '<a href="/privacy">',
+    );
+  });
+});
+
 describe('production client bundle', () => {
   it('holds no demo code', () => {
     assert.equal(existsSync(path.join(PUBLIC_DIR, 'js/demo')), false);
@@ -201,9 +278,81 @@ describe(
       assert.doesNotMatch(await read('404.html'), /&lt;ou&gt;/);
     });
 
-    it('renders as deployed, with no language switcher', async () => {
-      assert.doesNotMatch(await read('pass.html'), /footer-locales/);
+    it('renders as deployed, with no development markers', async () => {
       assert.doesNotMatch(await read('pass.html'), /data-nodeenv="test"/);
+      assert.doesNotMatch(await read('en/pass.html'), /data-nodeenv="test"/);
+    });
+
+    it('writes an English tree with a page for every pt-BR page', () => {
+      for (const file of EN_PAGE_FILES) {
+        assert.ok(files.includes(file), `${file} missing`);
+      }
+    });
+
+    it('sets the page language of each tree, and never the pseudo-locale', async () => {
+      for (const file of PT_PAGE_FILES) {
+        assert.match(await read(file), /<html lang="pt-BR"/, file);
+      }
+
+      for (const file of EN_PAGE_FILES) {
+        assert.match(await read(file), /<html lang="en"/, file);
+      }
+
+      assert.ok(
+        files.every((file) => !file.startsWith('en-XA/')),
+        'a pseudo-locale tree was written',
+      );
+    });
+
+    it('translates the page itself, not only the banner', async () => {
+      assert.match(await read('en/checkin.html'), /Already checked in/i);
+      assert.doesNotMatch(await read('en/checkin.html'), /Digite o código/);
+      assert.match(await read('checkin.html'), /Digite/);
+    });
+
+    it('links each switcher to the matching page of the other tree', async () => {
+      for (const file of PT_PAGE_FILES) {
+        if (file === '404.html') continue;
+
+        const here = servedAt(file);
+        const pt = await read(file);
+        const en = await read(`en/${file}`);
+
+        for (const html of [pt, en]) {
+          assert.ok(
+            html.includes(`href="${here}?lang=pt-BR"`),
+            `${file} lacks the pt-BR switcher link`,
+          );
+          assert.ok(
+            html.includes(`href="/en${here === '/' ? '/' : here}?lang=en"`),
+            `${file} lacks the English switcher link`,
+          );
+        }
+
+        assert.match(
+          pt,
+          /<a\s[^>]*aria-current="true"[^>]*>\s*<span[^>]*>BR</,
+          file,
+        );
+        assert.match(
+          en,
+          /<a\s[^>]*aria-current="true"[^>]*>\s*<span[^>]*>US</,
+          file,
+        );
+      }
+    });
+
+    it('lets the not-found page switch tree in place', async () => {
+      for (const file of ['404.html', 'en/404.html']) {
+        const html = await read(file);
+
+        assert.ok(html.includes('href="?lang=en"'), file);
+        assert.ok(html.includes('href="?lang=pt-BR"'), file);
+      }
+    });
+
+    it('never doubles the English prefix', async () => {
+      assert.doesNotMatch(await read('en/pass.html'), /\/en\/en\//);
     });
 
     it('carries no nonce anywhere', async () => {
@@ -272,67 +421,83 @@ describe(
       }
     });
 
-    it('puts the banner on every page, after the opening body tag', async () => {
+    it('puts the banner on every page, after the opening body tag, in its language', async () => {
       for (const page of files.filter((file) => file.endsWith('.html'))) {
         const html = await read(page);
+        const english = page.startsWith('en/');
+        const prefix = english ? '/en' : '';
+        const other = english ? 'pt-BR' : 'en';
 
         assert.match(
           html,
           /<body\b[^>]*>\s*<aside class="demo-banner" role="note">/,
           `${page} lacks the banner`,
         );
-        assert.ok(html.includes(REPOSITORY_URL), `${page} lacks the repo link`);
-        assert.ok(
-          html.includes('href="/admin"'),
-          `${page} lacks the admin link`,
-        );
-        assert.ok(html.includes('href="/css/demo.css"'), `${page} lacks css`);
-
-        const [, pt = '', en = ''] = html.split(
-          /<div class="demo-banner-copy"/,
+        assert.equal(
+          html.split('<aside class="demo-banner"').length,
+          2,
+          `${page} has more than one banner`,
         );
 
-        assert.match(pt, /^ data-demo-copy="pt" lang="pt-BR">/, `${page} pt`);
-        assert.match(en, /^ data-demo-copy="en" lang="en">/, `${page} en`);
+        const banner = /<aside class="demo-banner"[\s\S]*?<\/aside>/.exec(
+          html,
+        )?.[0];
 
-        for (const [name, copy] of Object.entries({ pt, en })) {
-          for (const needle of [
-            REPOSITORY_URL,
-            'href="/staff"',
-            'href="/admin"',
-            ...[
-              ...DEMO_TICKET_CODES.participant,
-              ...DEMO_TICKET_CODES.volunteer,
-            ].map((code) => code.toUpperCase()),
-          ]) {
-            assert.ok(copy.includes(needle), `${page} ${name} lacks ${needle}`);
-          }
+        assert.ok(banner, page);
+
+        for (const needle of [
+          REPOSITORY_URL,
+          `href="${prefix}/staff"`,
+          `href="${prefix}/admin"`,
+          'href="/css/demo.css"',
+          ...[
+            ...DEMO_TICKET_CODES.participant,
+            ...DEMO_TICKET_CODES.volunteer,
+          ].map((code) => code.toUpperCase()),
+        ]) {
+          assert.ok(
+            needle === 'href="/css/demo.css"'
+              ? html.includes(needle)
+              : banner.includes(needle),
+            `${page} lacks ${needle}`,
+          );
         }
+
+        for (const phrase of PT_BANNER_PHRASES) {
+          assert.equal(
+            banner.includes(phrase),
+            !english,
+            `${page}: "${phrase}" in the wrong language`,
+          );
+        }
+
+        assert.equal(banner.includes('Demo.'), english, page);
+        assert.match(
+          banner,
+          new RegExp(`<a class="demo-banner-button" href="[^"]*lang=${other}"`),
+          `${page} lacks the language link`,
+        );
+        assert.doesNotMatch(banner, /data-demo-copy|data-demo-set-lang/, page);
       }
     });
 
-    it('renders a collapse toggle per copy, controlling that copy, hidden until bound', async () => {
+    it('renders one collapse toggle, controlling the details, hidden until bound', async () => {
       for (const page of files.filter((file) => file.endsWith('.html'))) {
-        const [, pt = '', en = ''] = (await read(page)).split(
-          /<div class="demo-banner-copy"/,
+        const html = await read(page);
+        const toggle = /<button[^>]*\bdata-demo-banner-toggle\b[^>]*>/.exec(
+          html,
+        )?.[0];
+
+        assert.ok(toggle, `${page} lacks the toggle`);
+        assert.match(toggle, /\bhidden\b/, `${page} toggle shown`);
+        assert.ok(
+          toggle.includes('aria-controls="demo-banner-details"'),
+          `${page} toggle controls the wrong element`,
         );
-
-        for (const [name, copy] of Object.entries({ pt, en })) {
-          const toggle = /<button[^>]*\bdata-demo-banner-toggle\b[^>]*>/.exec(
-            copy,
-          )?.[0];
-
-          assert.ok(toggle, `${page} ${name} lacks the toggle`);
-          assert.match(toggle, /\bhidden\b/, `${page} ${name} toggle shown`);
-          assert.ok(
-            toggle.includes(`aria-controls="demo-banner-details-${name}"`),
-            `${page} ${name} toggle controls the wrong element`,
-          );
-          assert.ok(
-            copy.includes(`id="demo-banner-details-${name}"`),
-            `${page} ${name} lacks the details it controls`,
-          );
-        }
+        assert.ok(
+          html.includes('id="demo-banner-details"'),
+          `${page} lacks the details it controls`,
+        );
       }
     });
 
@@ -423,6 +588,71 @@ describe(
     it('asks crawlers to stay away', async () => {
       assert.match(await read('_headers'), /^ {2}X-Robots-Tag: noindex$/m);
       assert.equal(await read('robots.txt'), 'User-agent: *\nDisallow: /\n');
+    });
+
+    it('never links an English page to a pt-BR page', async () => {
+      const rules = (await read('_redirects'))
+        .split('\n')
+        .filter(Boolean)
+        .map((line) => line.split(/\s+/)[0] ?? '');
+
+      for (const page of files.filter((file) => file.startsWith('en/'))) {
+        const html = await read(page);
+        const actions = [
+          ...html.matchAll(/\s(?:action|formaction)\s*=\s*"([^"]*)"/gi),
+        ].map(([, ref]) => ref ?? '');
+        const hrefs = [...html.matchAll(/\shref\s*=\s*"([^"]*)"/gi)].map(
+          ([, ref]) => ref ?? '',
+        );
+
+        for (const ref of [...hrefs, ...actions]) {
+          if (!ref.startsWith('/') || ref.startsWith('//')) continue;
+          if (/[?&]lang=/.test(ref)) continue;
+
+          const target = ref.split(/[?#]/)[0] ?? '';
+
+          if (
+            /^\/(?:assets|css|js)\//.test(target) ||
+            ['/favicon.ico', '/site.webmanifest'].includes(target)
+          ) {
+            continue;
+          }
+
+          assert.ok(
+            target === '/en' || target.startsWith('/en/'),
+            `${page} links to ${ref}`,
+          );
+        }
+      }
+
+      assert.ok(rules.includes('/en/'), 'the English root has no rule');
+    });
+
+    it('mirrors every redirect and rewrite under /en', async () => {
+      const lines = (await read('_redirects')).split('\n').filter(Boolean);
+      const plain = lines.filter((line) => !line.startsWith('/en'));
+
+      for (const line of plain) {
+        const [from = '', to = '', status = ''] = line.split(/\s+/);
+        const mirrored = from === '/' ? '/en/' : `/en${from}`;
+
+        assert.ok(
+          lines.includes(`${mirrored} /en${to} ${status}`),
+          `no English rule for ${line}`,
+        );
+      }
+
+      assert.ok(lines.includes('/en /en/checkin 302'));
+      assert.ok(lines.includes('/en/admin/login /en/admin 302'));
+    });
+
+    it('fits the policy in one header value', async () => {
+      const policy = /Content-Security-Policy: (.*)/.exec(
+        await read('_headers'),
+      )?.[1];
+
+      assert.ok(policy);
+      assert.ok(policy.length <= MAX_HEADER_VALUE, String(policy.length));
     });
 
     it('keeps the sign-in redirect and rewrites out of the page files', async () => {

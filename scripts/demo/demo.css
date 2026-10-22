@@ -20,17 +20,6 @@
   grid-column: 1 / -1;
 }
 
-/* Both languages are in the markup; the mock script sets data-demo-lang on
-   <html> before first paint, and Portuguese is the default without it. */
-.demo-banner-copy[data-demo-copy='en'],
-html[data-demo-lang='en'] .demo-banner-copy[data-demo-copy='pt'] {
-  display: none;
-}
-
-html[data-demo-lang='en'] .demo-banner-copy[data-demo-copy='en'] {
-  display: block;
-}
-
 .demo-banner p {
   margin: 0;
 }
@@ -67,6 +56,12 @@ html[data-demo-lang='en'] .demo-banner-copy[data-demo-copy='en'] {
   font: inherit;
   font-weight: 600;
   cursor: pointer;
+}
+
+/* The language button is a link to the same page in the other tree. */
+.demo-banner a.demo-banner-button {
+  color: var(--text);
+  text-decoration: none;
 }
 
 .demo-banner-button[hidden] {
