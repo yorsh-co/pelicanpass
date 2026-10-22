@@ -58,7 +58,7 @@ const formatCheckinAt = (value: string | Date | null | undefined): string => {
   const lang = document.documentElement.lang;
 
   return new Intl.DateTimeFormat(
-    dateTimeLocale(lang),
+    dateTimeLocale(lang, navigator.languages),
     checkinAtOptions(lang),
   ).format(date);
 };

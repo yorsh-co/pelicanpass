@@ -127,6 +127,7 @@ export const landingGate: RequestHandler = (req, res, next) => {
       now: Date.now(),
       audience,
       locale: res.locals.locale,
+      dateLocale: res.locals.dateLocale,
       timezone: env.landing.timezone,
       appTitle: env.appTitle,
       fallback: false,

@@ -19,6 +19,7 @@ import {
   REDEMPTION_STATUS_FILTERS,
   parseRedemptionFilters,
 } from '../../constants/redemptions.ts';
+import { dateTimeLocale } from '../../i18n/locales.ts';
 import { getCopy, getMessages, inlineCatalogs } from '../../i18n/server.ts';
 
 import { ITEM_OPTIONS_BY_ROLE } from '../../modules/admin/admin.item-options.ts';
@@ -310,6 +311,7 @@ export const CASES: ViewCase[] = [
         now: NOW,
         audience: 'participant',
         locale,
+        dateLocale: dateTimeLocale(locale),
         timezone: env.landing.timezone,
         appTitle: env.appTitle,
         fallback: false,
@@ -324,6 +326,7 @@ export const CASES: ViewCase[] = [
         now: NOW,
         audience: 'volunteer',
         locale,
+        dateLocale: dateTimeLocale(locale),
         timezone: env.landing.timezone,
         appTitle: env.appTitle,
         fallback: true,

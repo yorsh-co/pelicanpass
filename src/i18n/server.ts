@@ -174,7 +174,7 @@ export const localeMiddleware: RequestHandler = (req, res, next) => {
   const locale = resolveLocale(req);
 
   res.locals.locale = locale;
-  res.locals.dateLocale = dateTimeLocale(locale);
+  res.locals.dateLocale = dateTimeLocale(locale, req.acceptsLanguages());
   res.locals.chrome = getMessages(locale, 'chrome');
   res.locals.localeLinks = localeLinks(req.originalUrl, locale);
   res.setHeader('Content-Language', locale);

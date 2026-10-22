@@ -46,10 +46,13 @@ const formatTime = (iso: string): string => {
 
   const lang = document.documentElement.lang;
 
-  return new Intl.DateTimeFormat(lang ? dateTimeLocale(lang) : undefined, {
-    timeStyle: 'medium',
-    timeZone,
-  }).format(new Date(iso));
+  return new Intl.DateTimeFormat(
+    lang ? dateTimeLocale(lang, navigator.languages) : undefined,
+    {
+      timeStyle: 'medium',
+      timeZone,
+    },
+  ).format(new Date(iso));
 };
 
 /**

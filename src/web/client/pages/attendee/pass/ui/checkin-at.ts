@@ -1,10 +1,10 @@
 /**
  * Formatting options for the check-in moment on the pass.
  *
- * Formatted with `dateTimeLocale`, so English is day-first like pt-BR; the
- * time is always 24-hour. The month is abbreviated in English, where the
- * footer line is otherwise too long for the volunteer pass, and written out in
- * full elsewhere.
+ * Formatted with `dateTimeLocale`, so English follows the visitor's region
+ * for date order; the time is always 24-hour. The month is abbreviated in
+ * English, where the footer line is otherwise too long for the volunteer pass,
+ * and written out in full elsewhere.
  *
  * @param lang - The page's BCP 47 language tag.
  * @returns Options for `Intl.DateTimeFormat`.

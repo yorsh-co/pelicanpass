@@ -1,6 +1,5 @@
 import { splitCountdown } from '../../constants/countdown.ts';
 import { getCopy, getMessages, inlineCatalogs } from '../../i18n/catalogs.ts';
-import { dateTimeLocale } from '../../i18n/locales.ts';
 
 import type { Locale } from '../../i18n/locales.ts';
 import type { AttendeeRole } from '../../types/attendee.ts';
@@ -39,23 +38,22 @@ const formatters = new Map<
  * The date and time formatters for a locale and timezone, built once per
  * process.
  *
- * @param locale - The response's locale.
+ * @param dateLocale - The response's date locale.
  * @param timezone - The event's IANA timezone.
  */
-const formattersFor = (locale: Locale, timezone: string) => {
-  const key = `${locale}:${timezone}`;
-  const formatLocale = dateTimeLocale(locale);
+const formattersFor = (dateLocale: string, timezone: string) => {
+  const key = `${dateLocale}:${timezone}`;
   let entry = formatters.get(key);
 
   if (!entry) {
     entry = {
-      date: new Intl.DateTimeFormat(formatLocale, {
+      date: new Intl.DateTimeFormat(dateLocale, {
         timeZone: timezone,
         weekday: 'long',
         day: '2-digit',
         month: '2-digit',
       }),
-      time: new Intl.DateTimeFormat(formatLocale, {
+      time: new Intl.DateTimeFormat(dateLocale, {
         timeZone: timezone,
         hour: '2-digit',
         minute: '2-digit',
@@ -75,7 +73,9 @@ const formattersFor = (locale: Locale, timezone: string) => {
  * what someone reads when the countdown never starts because a script failed.
  *
  * @param opensAt - Epoch milliseconds the window opens at.
- * @param locale - The response's locale.
+ * @param locale - The response's locale, which picks the copy and the
+ *   `18h30` time style.
+ * @param dateLocale - The response's date locale.
  * @param timezone - The event's IANA timezone.
  * @returns Something like `sábado, 13/09, às 18h30` in pt-BR, or
  *   `Saturday 13/09, at 18:30` in English.
@@ -83,10 +83,11 @@ const formattersFor = (locale: Locale, timezone: string) => {
 export const formatOpensAt = (
   opensAt: number,
   locale: Locale,
+  dateLocale: string,
   timezone: string,
 ): string => {
   const at = new Date(opensAt);
-  const { date, time } = formattersFor(locale, timezone);
+  const { date, time } = formattersFor(dateLocale, timezone);
 
   const clockTime = time.format(at);
 
@@ -113,6 +114,9 @@ export interface LandingViewOptions {
 
   locale: Locale;
 
+  /** The response's date locale: `res.locals.dateLocale`. */
+  dateLocale: string;
+
   /** The event's IANA timezone, for the absolute open time. */
   timezone: string;
 
@@ -136,6 +140,7 @@ export const landingView = ({
   now,
   audience,
   locale,
+  dateLocale,
   timezone,
   appTitle,
   fallback,
@@ -144,7 +149,7 @@ export const landingView = ({
   title: appTitle,
   themeColor: LANDING_THEME_COLOR,
   audience,
-  opensAtLabel: formatOpensAt(opensAt, locale, timezone),
+  opensAtLabel: formatOpensAt(opensAt, locale, dateLocale, timezone),
   // Rendered rather than left to the first tick, so the page is correct
   // before any script runs and stays correct if none ever does.
   countdown: splitCountdown(opensAt - now),

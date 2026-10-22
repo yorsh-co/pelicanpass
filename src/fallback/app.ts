@@ -216,6 +216,7 @@ export const createFallbackApp = (config: FallbackConfig): Express => {
         now: Date.now(),
         audience,
         locale: BASE_LOCALE,
+        dateLocale: res.locals.dateLocale,
         timezone: config.timezone,
         appTitle: config.appTitle,
         fallback: true,

@@ -14,26 +14,43 @@ describe('supportedLocales', () => {
 });
 
 describe('dateTimeLocale', () => {
-  it('formats every English tag in British conventions', () => {
-    for (const tag of ['en', 'en-US', 'en-XA']) {
-      assert.equal(dateTimeLocale(tag), 'en-GB');
-    }
+  it('defaults English to British, on the 24-hour clock', () => {
+    assert.equal(dateTimeLocale('en', []), 'en-GB-u-hc-h23');
+    assert.equal(dateTimeLocale('en'), 'en-GB-u-hc-h23');
+    assert.equal(dateTimeLocale('en', ['en']), 'en-GB-u-hc-h23');
+  });
+
+  it("follows the visitor's first English region", () => {
+    assert.equal(dateTimeLocale('en', ['en-US']), 'en-US-u-hc-h23');
+    assert.equal(
+      dateTimeLocale('en', ['pt-BR', 'en-AU', 'en-US']),
+      'en-AU-u-hc-h23',
+    );
+  });
+
+  it('ignores tags that do not parse', () => {
+    assert.equal(dateTimeLocale('en', ['*', 'en-US']), 'en-US-u-hc-h23');
+  });
+
+  it('treats the pseudo-locale as English', () => {
+    assert.equal(dateTimeLocale('en-XA'), 'en-GB-u-hc-h23');
+    assert.equal(dateTimeLocale('en-XA', ['en-US']), 'en-US-u-hc-h23');
   });
 
   it('leaves other locales unchanged', () => {
     assert.equal(dateTimeLocale('pt-BR'), 'pt-BR');
+    assert.equal(dateTimeLocale('pt-BR', ['en-US']), 'pt-BR');
   });
 
-  it('writes English dates day-first and times in 24 hours', () => {
-    const format = new Intl.DateTimeFormat(dateTimeLocale('en'), {
-      dateStyle: 'short',
-      timeStyle: 'short',
-      timeZone: 'America/Sao_Paulo',
-    });
+  it('orders the date by region and always writes 24 hours', () => {
+    const format = (preferred: string[]) =>
+      new Intl.DateTimeFormat(dateTimeLocale('en', preferred), {
+        dateStyle: 'short',
+        timeStyle: 'short',
+        timeZone: 'America/Sao_Paulo',
+      }).format(new Date('2026-11-14T13:30:00Z'));
 
-    assert.equal(
-      format.format(new Date('2026-11-14T13:30:00Z')),
-      '14/11/2026, 10:30',
-    );
+    assert.equal(format([]), '14/11/2026, 10:30');
+    assert.equal(format(['en-US']), '11/14/26, 10:30');
   });
 });

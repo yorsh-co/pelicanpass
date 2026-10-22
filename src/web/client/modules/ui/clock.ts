@@ -13,7 +13,7 @@ import { dateTimeLocale } from '../../../../i18n/locales.ts';
  * The page's `lang` is fixed for its lifetime, so reading it once is enough.
  */
 const format = new Intl.DateTimeFormat(
-  dateTimeLocale(document.documentElement.lang),
+  dateTimeLocale(document.documentElement.lang, navigator.languages),
   {
     hour: '2-digit',
     minute: '2-digit',

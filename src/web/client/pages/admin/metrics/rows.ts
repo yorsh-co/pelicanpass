@@ -192,12 +192,15 @@ export const renderSurvey = (
   if (closes) {
     const closing =
       overview.state.open && overview.closesAt !== null
-        ? new Intl.DateTimeFormat(lang ? dateTimeLocale(lang) : undefined, {
-            dateStyle: 'short',
-            timeStyle: 'short',
-            // An empty attribute means the route had no zone to give.
-            timeZone: zone === '' ? undefined : zone,
-          }).format(overview.closesAt)
+        ? new Intl.DateTimeFormat(
+            lang ? dateTimeLocale(lang, navigator.languages) : undefined,
+            {
+              dateStyle: 'short',
+              timeStyle: 'short',
+              // An empty attribute means the route had no zone to give.
+              timeZone: zone === '' ? undefined : zone,
+            },
+          ).format(overview.closesAt)
         : null;
 
     closes.hidden = closing === null;
