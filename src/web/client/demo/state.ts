@@ -16,7 +16,12 @@
 
 import { metricsSnapshot } from './metrics-snapshot.ts';
 import { passQr } from './pass-qr.ts';
-import { DEMO_QR_TOKEN, DEMO_ROSTER, DEMO_VOLUNTEER_TEAM } from './roster.ts';
+import {
+  DEMO_QR_TOKEN,
+  DEMO_ROSTER,
+  DEMO_VOLUNTEER_TEAM,
+  entryIn,
+} from './roster.ts';
 
 import {
   BAND_COLOURS,
@@ -35,6 +40,7 @@ import { QR_TOKEN_PATTERN } from '../../../constants/qr-token.ts';
 import { isValidTicketCode } from '../../../constants/ticket.ts';
 import { firstName, maskName, maskPhone } from '../../../shared/utils/mask.ts';
 
+import type { DemoLocale } from './locale-route.ts';
 import type { RosterEntry } from './roster.ts';
 import type { HandlerName } from './routes.ts';
 import type { RedemptionItem } from '../../../constants/pass.ts';
@@ -123,6 +129,9 @@ export interface DemoRequest {
 
   /** Epoch milliseconds. */
   now: number;
+
+  /** The language of the page making the request. */
+  locale: DemoLocale;
 
   /** Uniform in `[0, 1)`, like `Math.random`. */
   random: () => number;
@@ -786,6 +795,7 @@ const passOf = (
 const profileOf = (
   person: RosterEntry,
   record: AttendeeRecord,
+  locale: DemoLocale,
 ): PassProfile => {
   const volunteer = person.role === 'volunteer';
   const at = (item: RedemptionItem): string | null =>
@@ -802,8 +812,8 @@ const profileOf = (
     canDraw: person.canDraw,
     showAdminLink: person.showAdminLink,
     accessTier: person.accessTier,
-    team: volunteer ? DEMO_VOLUNTEER_TEAM.team : null,
-    teamRole: volunteer ? DEMO_VOLUNTEER_TEAM.teamRole : null,
+    team: volunteer ? DEMO_VOLUNTEER_TEAM[locale].team : null,
+    teamRole: volunteer ? DEMO_VOLUNTEER_TEAM[locale].teamRole : null,
     mealOption: person.mealOption,
     mealRedeemedAt: at('meal'),
     drinkOption: person.drinkOption,
@@ -829,16 +839,18 @@ const profileOf = (
 export const passPageData = (
   state: DemoState,
   now: number,
+  locale: DemoLocale,
 ): { data: { profile: PassProfile; pass: AttendeePass } } | null => {
   const current = signedIn(state);
 
   if (!current) return null;
 
-  const { person, record } = current;
+  const { record } = current;
+  const person = entryIn(current.person, locale);
 
   return {
     data: {
-      profile: profileOf(person, record),
+      profile: profileOf(person, record, locale),
       pass: passOf(person, record, now),
     },
   };
@@ -852,17 +864,21 @@ export const getPass: Handler = (state, req) => {
     ? success(
         state,
         'PASS_ISSUED',
-        passOf(current.person, current.record, req.now),
+        passOf(entryIn(current.person, req.locale), current.record, req.now),
       )
     : unauthorized(state);
 };
 
 /** `GET /api/v1/attendee/status` */
-export const getStatus: Handler = (state) => {
+export const getStatus: Handler = (state, req) => {
   const current = signedIn(state);
 
   return current
-    ? success(state, 'PASS_STATUS', statusOf(current.person, current.record))
+    ? success(
+        state,
+        'PASS_STATUS',
+        statusOf(entryIn(current.person, req.locale), current.record),
+      )
     : unauthorized(state);
 };
 
@@ -953,7 +969,12 @@ export const getStaffBand: Handler = (state, req) => {
  * A participant is named by their check-in number, a volunteer by first name.
  * Every item is in the volunteer's scope: the demo has one counter.
  */
-const openReview = (state: DemoState, person: RosterEntry): DemoResult => {
+const openReview = (
+  state: DemoState,
+  roster: RosterEntry,
+  locale: DemoLocale,
+): DemoResult => {
+  const person = entryIn(roster, locale);
   const record = state.records[person.code];
 
   if (!record) return fail(state, 404, 'NOT_FOUND', 'Attendee not found');
@@ -1002,7 +1023,7 @@ export const verifyPass: Handler = (state, req) => {
     return fail(state, 400, 'VALIDATION_ERROR', 'Pass expired');
   }
 
-  return openReview(state, person);
+  return openReview(state, person, req.locale);
 };
 
 /** `POST /api/v1/staff/lookup` */
@@ -1016,7 +1037,7 @@ export const lookupAttendee: Handler = (state, req) => {
   const person = registered(query);
 
   return person
-    ? openReview(state, person)
+    ? openReview(state, person, req.locale)
     : fail(state, 404, 'NOT_FOUND', 'Attendee not found');
 };
 
@@ -1173,7 +1194,7 @@ export const dropReport: Handler = (state) => ({ state, status: 204 });
 
 /** `GET /api/v1/admin/metrics/snapshot` */
 export const getMetricsSnapshot: Handler = (state, req) =>
-  success(state, 'METRICS_SNAPSHOT', metricsSnapshot(req.now));
+  success(state, 'METRICS_SNAPSHOT', metricsSnapshot(req.now, req.locale));
 
 /** Every endpoint's handler, by the name `routes.ts` gives it. */
 export const HANDLERS: Record<HandlerName, Handler> = {

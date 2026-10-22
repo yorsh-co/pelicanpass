@@ -1,4 +1,14 @@
+import type { DemoLocale } from './locale-route.ts';
 import type { MetricsSnapshot } from '../core/api/api.admin.metrics.ts';
+
+const ALERT_TITLE: Record<DemoLocale, string> = {
+  'pt-BR': 'Fila de check-in acima do normal',
+  en: 'Check-in queue above normal',
+};
+const ERROR_MESSAGE: Record<DemoLocale, string> = {
+  'pt-BR': 'Falha inesperada registrada',
+  en: 'Unexpected failure logged',
+};
 
 /** The dashboard's poll interval, which is how often the figures move. */
 const POLL_MS = 5_000;
@@ -23,8 +33,12 @@ const wobble = (now: number, salt: number): number =>
  * and the alert's `severity` and `at`) are filled in plausibly.
  *
  * @param now - Epoch milliseconds the snapshot is stamped with.
+ * @param locale - The page's language, which the alert is written in.
  */
-export const metricsSnapshot = (now: number): MetricsSnapshot => ({
+export const metricsSnapshot = (
+  now: number,
+  locale: DemoLocale,
+): MetricsSnapshot => ({
   generatedAt: new Date(now).toISOString(),
   release: 'demo',
   uptimeSeconds: 7200,
@@ -38,7 +52,7 @@ export const metricsSnapshot = (now: number): MetricsSnapshot => ({
   ],
   lastAlert: {
     severity: 'warn',
-    title: 'Fila de check-in acima do normal',
+    title: ALERT_TITLE[locale],
     at: new Date(now - 300_000).toISOString(),
   },
   series: {
@@ -81,7 +95,7 @@ export const metricsSnapshot = (now: number): MetricsSnapshot => ({
       occurrences: 3,
       code: 'INTERNAL_ERROR',
       route: '/api/checkin',
-      message: 'Falha inesperada registrada',
+      message: ERROR_MESSAGE[locale],
       lastSeen: new Date(now - 600_000).toISOString(),
     },
   ],

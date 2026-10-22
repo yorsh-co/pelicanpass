@@ -2,6 +2,7 @@
 
 import type { AccessTier } from '../../../constants/access-tier.ts';
 import type { AttendeeRole } from '../../../types/attendee.ts';
+import type { DemoLocale } from './locale-route.ts';
 
 /**
  * Fictional ticket codes the demo accepts.
@@ -29,16 +30,38 @@ export const DEMO_VERIFICATION_CODE = '1234';
 export const DEMO_QR_TOKEN = 'PelicanPassDemo26';
 
 /**
- * Team and role shown on every volunteer's pass.
+ * Team and role shown on every volunteer's pass, in each demo language.
  *
  * The pass page renders this line on the server, from the
  * `pass-volunteer-survey` view fixture, so the demo's one volunteer page can
- * only show one pair and the roster agrees with it.
+ * only show one pair per language and the roster agrees with it.
  */
-export const DEMO_VOLUNTEER_TEAM = {
-  team: 'Recepção',
-  teamRole: 'Líder',
-} as const;
+export const DEMO_VOLUNTEER_TEAM: Record<
+  DemoLocale,
+  { team: string; teamRole: string }
+> = {
+  'pt-BR': { team: 'Recepção', teamRole: 'Líder' },
+  en: { team: 'Reception', teamRole: 'Lead' },
+};
+
+/**
+ * The English wording of every redemption option in {@link DEMO_ROSTER}.
+ *
+ * The roster is written in Portuguese; the English demo looks each option up
+ * here. T-shirt sizes are the same in both languages and are not listed.
+ */
+const ENGLISH_OPTIONS: Readonly<Record<string, string>> = {
+  Vegetariano: 'Vegetarian',
+  Vegano: 'Vegan',
+  'Sem restrição': 'No restrictions',
+  'Sem lactose': 'Lactose-free',
+  'Sem glúten': 'Gluten-free',
+  Onívoro: 'Omnivore',
+  'Suco de laranja': 'Orange juice',
+  Água: 'Water',
+  Café: 'Coffee',
+  Refrigerante: 'Soda',
+};
 
 /** One fictional attendee, as registered. */
 export interface RosterEntry {
@@ -66,6 +89,30 @@ export interface RosterEntry {
   showAdminLink: boolean;
   accessTier: AccessTier | null;
 }
+
+/**
+ * An attendee as the page's language shows them: the options in English on an
+ * English page, the entry itself for pt-BR.
+ *
+ * @param person - The attendee as registered, in Portuguese.
+ * @param locale - The page's language.
+ */
+export const entryIn = (
+  person: RosterEntry,
+  locale: DemoLocale,
+): RosterEntry => {
+  if (locale !== 'en') return person;
+
+  const english = (option: string | null): string | null =>
+    option === null ? null : (ENGLISH_OPTIONS[option] ?? option);
+
+  return {
+    ...person,
+    mealOption: english(person.mealOption),
+    drinkOption: english(person.drinkOption),
+    lunchOption: english(person.lunchOption),
+  };
+};
 
 /** Builds a participant; they hold the shirt, meal and drink, never the volunteer items. */
 const participant = (

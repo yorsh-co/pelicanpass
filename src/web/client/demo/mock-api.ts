@@ -20,7 +20,7 @@
  * includes it.
  */
 
-import { installAdminGuard, showNotice } from './admin-guard.ts';
+import { installAdminGuard, noticeLocale, showNotice } from './admin-guard.ts';
 import { applyBannerState, bindBannerToggle } from './banner-state.ts';
 import { applyLocaleRoute } from './apply-locale-route.ts';
 import { localizedPath, stripTree, treeOf, urlInTree } from './locale-route.ts';
@@ -34,6 +34,7 @@ import {
   sessionRole,
 } from './state.ts';
 
+import type { DemoLocale } from './locale-route.ts';
 import type { DemoRequest, DemoResult, DemoState } from './state.ts';
 
 /** Where the state is kept; bumped with {@link DemoState.version}. */
@@ -191,6 +192,10 @@ const apiPath = (input: RequestInfo | URL): URL | null => {
     : null;
 };
 
+/** The language of the page the mock is answering for. */
+const pageLocale = (): DemoLocale =>
+  noticeLocale(document.documentElement.lang);
+
 /** Answers one API request from the state, after the simulated latency. */
 const answer = async (
   url: URL,
@@ -208,6 +213,7 @@ const answer = async (
     body: parseBody(init?.body),
     headers: headerRecord(new Headers(init?.headers ?? source?.headers)),
     now: Date.now(),
+    locale: pageLocale(),
     random: Math.random,
     uuid: () => window.crypto.randomUUID(),
   };
@@ -257,7 +263,7 @@ const readiness = async (init: RequestInit | undefined): Promise<Response> => {
     body: {
       status: 'ready',
       release: 'demo',
-      dependencies: metricsSnapshot(Date.now()).health,
+      dependencies: metricsSnapshot(Date.now(), pageLocale()).health,
     },
   });
 };
@@ -362,7 +368,7 @@ const seedPage = (): void => {
   const state = load();
 
   seedData('checkin-data', checkinPageData(state));
-  seedData('attendee-data', passPageData(state, Date.now()));
+  seedData('attendee-data', passPageData(state, Date.now(), pageLocale()));
 };
 
 /**

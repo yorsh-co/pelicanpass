@@ -5,6 +5,7 @@ import {
   DEMO_QR_TOKEN,
   DEMO_ROSTER,
   DEMO_VERIFICATION_CODE,
+  entryIn,
 } from './roster.ts';
 import { ROUTES, findRoute, isCovered } from './routes.ts';
 import {
@@ -14,6 +15,7 @@ import {
   sessionRole,
 } from './state.ts';
 
+import type { DemoLocale } from './locale-route.ts';
 import type { HandlerName } from './routes.ts';
 import type { DemoRequest, DemoResult, DemoState } from './state.ts';
 import type { ApiErrorDetails } from '../core/api/api.error.ts';
@@ -69,6 +71,7 @@ const request = (
   body,
   headers: {},
   now: NOW,
+  locale: 'pt-BR',
   random: () => 0,
   uuid: () => '00000000-0000-4000-8000-000000000001',
   ...extra,
@@ -147,6 +150,74 @@ describe('roster', () => {
     );
   });
 });
+
+/* eslint-disable no-restricted-syntax -- fictional sample data, not interface copy. */
+describe('sample data language', () => {
+  const profileIn = (code: string, locale: DemoLocale) => {
+    const data = passPageData(signedIn(code), NOW, locale);
+
+    assert.ok(data);
+
+    return data.data;
+  };
+
+  it('keeps the Portuguese options and team on a pt-BR page', () => {
+    const { profile, pass } = profileIn(VOLUNTEER, 'pt-BR');
+
+    assert.equal(profile.team, 'Recepção');
+    assert.equal(profile.teamRole, 'Líder');
+    assert.equal(profile.mealOption, 'Sem restrição');
+    assert.equal(profile.drinkOption, 'Água');
+    assert.equal(profile.lunchOption, 'Onívoro');
+    assert.deepEqual(
+      pass.items.map((item) => item.value),
+      ['M', 'Onívoro', null, 'Sem restrição', 'Água'],
+    );
+  });
+
+  it('translates the options and team on an English page', () => {
+    const { profile } = profileIn(VOLUNTEER, 'en');
+
+    assert.equal(profile.team, 'Reception');
+    assert.equal(profile.teamRole, 'Lead');
+    assert.equal(profile.mealOption, 'No restrictions');
+    assert.equal(profile.drinkOption, 'Water');
+    assert.equal(profile.lunchOption, 'Omnivore');
+    assert.equal(profileIn(PARTICIPANT, 'en').profile.mealOption, 'Vegetarian');
+    assert.equal(
+      profileIn(PARTICIPANT, 'en').profile.drinkOption,
+      'Orange juice',
+    );
+  });
+
+  it('has an English wording for every option in the roster', () => {
+    for (const person of DEMO_ROSTER) {
+      const english = entryIn(person, 'en');
+
+      for (const key of ['mealOption', 'drinkOption', 'lunchOption'] as const) {
+        if (person[key] === null) continue;
+
+        assert.notEqual(english[key], person[key], `${person.code} ${key}`);
+      }
+    }
+  });
+
+  it('words the metrics alert in the page language', () => {
+    const titleIn = (locale: DemoLocale): string | undefined =>
+      call<MetricsSnapshot>(
+        createInitialState(NOW),
+        'getMetricsSnapshot',
+        undefined,
+        {
+          locale,
+        },
+      ).body.data.lastAlert?.title;
+
+    assert.equal(titleIn('pt-BR'), 'Fila de check-in acima do normal');
+    assert.equal(titleIn('en'), 'Check-in queue above normal');
+  });
+});
+/* eslint-enable no-restricted-syntax */
 
 describe('check-in', () => {
   it('walks ticket, verification and presence to a signed-in pass', () => {
@@ -384,9 +455,9 @@ describe('the pass', () => {
   });
 
   it('seeds the page with the signed-in profile, or nothing', () => {
-    assert.equal(passPageData(createInitialState(NOW), NOW), null);
+    assert.equal(passPageData(createInitialState(NOW), NOW, 'pt-BR'), null);
 
-    const seed = passPageData(signedIn(PARTICIPANT), NOW);
+    const seed = passPageData(signedIn(PARTICIPANT), NOW, 'pt-BR');
 
     assert.equal(seed?.data.profile.attendeeFirstName, 'Marina');
     assert.equal(seed.data.profile.checkinNumber, ARRIVED_PARTICIPANTS + 1);
@@ -402,7 +473,7 @@ describe('the pass', () => {
     assert.equal(set.status, 200);
     assert.equal(set.body.data.nickname, 'Mari Pelicano');
     assert.equal(
-      passPageData(set.state, NOW)?.data.profile.attendeeNickname,
+      passPageData(set.state, NOW, 'pt-BR')?.data.profile.attendeeNickname,
       'Mari Pelicano',
     );
 

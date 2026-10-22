@@ -553,6 +553,30 @@ describe(
       assert.match(await read('pass.html'), /data-audience="participant"/);
     });
 
+    it('shows English sample data on the English pages only', async () => {
+      const samples =
+        /Vegetariano|Sem restrição|Suco de laranja|Onívoro|Recepção|Líder|operadora|Fila de check-in/;
+      const pages = files.filter((file) => file.endsWith('.html'));
+      const textOf = async (tree: string[]): Promise<string> =>
+        (await Promise.all(tree.map(read))).join('\n');
+      const english = await textOf(pages.filter((f) => f.startsWith('en/')));
+      const portuguese = await textOf(
+        pages.filter((f) => !f.startsWith('en/')),
+      );
+
+      assert.doesNotMatch(english, samples);
+      assert.match(portuguese, /Vegetariano/);
+      assert.match(portuguese, /Recepção/);
+      assert.match(portuguese, /operadora/);
+      assert.match(portuguese, /Fila de check-in acima do normal/);
+      assert.match(await read('en/pass-volunteer.html'), /Reception/);
+      assert.match(
+        await read('en/admin/metrics.html'),
+        /Check-in queue above normal/,
+      );
+      assert.match(await read('en/admin/metrics.html'), />operator</);
+    });
+
     it('has a handler or a refusal for every API path the bundles call', async () => {
       const scripts = files.filter(
         (file) =>
