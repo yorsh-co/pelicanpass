@@ -7,6 +7,7 @@ import express from 'express';
 
 import { localeMiddleware, resolveLocale } from './server.ts';
 
+import type { LocaleLink } from './server.ts';
 import type { Request } from 'express';
 import type { Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
@@ -19,6 +20,9 @@ before(async () => {
 
   app.use(cookieParser());
   app.use(localeMiddleware);
+  app.get('/locale-links', (_req, res) => {
+    res.json(res.locals.localeLinks);
+  });
 
   server = app.listen(0, '127.0.0.1');
   await new Promise((resolve) => server.once('listening', resolve));
@@ -81,5 +85,32 @@ describe('resolveLocale Accept-Language', () => {
 
   it('falls back to pt-BR for an unoffered language', () => {
     assert.equal(resolve('fr-FR'), 'pt-BR');
+  });
+});
+
+describe('localeMiddleware switcher codes', () => {
+  it("labels each locale with its tag's region, or its language", async () => {
+    const links = await new Promise<LocaleLink[]>((resolve, reject) => {
+      request({ host: '127.0.0.1', port, path: '/locale-links' }, (res) => {
+        let body = '';
+
+        res.setEncoding('utf8');
+        res.on('data', (chunk: string) => {
+          body += chunk;
+        });
+        res.on('end', () => {
+          resolve(JSON.parse(body) as LocaleLink[]);
+        });
+      })
+        .on('error', reject)
+        .end();
+    });
+    const codes = Object.fromEntries(
+      links.map(({ locale, code }) => [locale, code]),
+    );
+
+    assert.equal(codes['pt-BR'], 'BR');
+    assert.equal(codes.en, 'EN');
+    assert.ok(codes['en-XA'] === undefined || codes['en-XA'] === 'XA');
   });
 });

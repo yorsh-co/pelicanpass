@@ -336,7 +336,7 @@ describe(
         );
         assert.match(
           en,
-          /<a\s[^>]*aria-current="true"[^>]*>\s*<span[^>]*>US</,
+          /<a\s[^>]*aria-current="true"[^>]*>\s*<span[^>]*>EN</,
           file,
         );
       }

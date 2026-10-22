@@ -106,7 +106,7 @@ const currentKey = locals.navKey || '';
       <% const currentLocale = locals.localeLinks.find((link) => link.current); %>
       <details class="footer-locales small-print" aria-label="<%= chrome.footerLanguages() %>">
         <summary lang="<%= currentLocale.locale %>">
-          <%= currentLocale.region %><span class="visually-hidden"> <%= currentLocale.label %></span>
+          <%= currentLocale.code %><span class="visually-hidden"> <%= currentLocale.label %></span>
           <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span>
         </summary>
         <ul class="footer-locales-menu">
@@ -118,7 +118,7 @@ const currentKey = locals.navKey || '';
               lang="<%= link.locale %>"
               <% if (link.current) { %>aria-current="true"<% } %>
             >
-              <span class="footer-locales-code"><%= link.region %></span>
+              <span class="footer-locales-code"><%= link.code %></span>
               <span class="footer-locales-name"><%= link.label %></span>
               <% if (link.current) { %>
               <span class="material-symbols-outlined" aria-hidden="true">check</span>
