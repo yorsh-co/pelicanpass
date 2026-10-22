@@ -37,7 +37,7 @@ const LIMIT_OFF = { scope: 'off', cap: null, mode: 'hard', used: 0, remaining: n
 const coverage = locals.surveyCoverage || null;
 const survey = s.survey || null;
 const surveyRows = coverage ? coverage.rows : [];
-const surveyWhen = new Intl.DateTimeFormat(locale, { dateStyle: 'short', timeStyle: 'short', timeZone: locals.timezone || undefined });
+const surveyWhen = new Intl.DateTimeFormat(dateLocale, { dateStyle: 'short', timeStyle: 'short', timeZone: locals.timezone || undefined });
 const surveyClosesAt = survey && survey.state.open && survey.closesAt !== null ? surveyWhen.format(survey.closesAt) : '';
 
 const ITEM_LABELS = { tshirt_volunteer: chrome.itemTshirtVolunteer(), lunch: chrome.itemLunch(), tshirt: chrome.itemTshirt(), meal: chrome.itemMeal(), drink: chrome.itemDrink() };
@@ -89,7 +89,7 @@ const healthState = !healthKnown ? 'unknown' : healthy ? 'ok' : 'down';
       <p class="metrics__meta">
         <span class="metrics__release"><%= copy.release({ release: s.release || 'dev' }) %></span>
         <span class="metrics__sep" aria-hidden="true">·</span>
-        <span data-metrics="generated"><%= new Date(s.generatedAt).toLocaleString(locale) || '' %></span>
+        <span data-metrics="generated"><%= new Date(s.generatedAt).toLocaleString(dateLocale) || '' %></span>
       </p>
     </div>
 

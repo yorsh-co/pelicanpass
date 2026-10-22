@@ -186,11 +186,12 @@ export const renderSurvey = (
 
   const closes = cell(host, 'closes');
   const zone = host.dataset.timezone;
+  const dateLocale = document.documentElement.dataset.dateLocale;
 
   if (closes) {
     const closing =
       overview.state.open && overview.closesAt !== null
-        ? new Intl.DateTimeFormat(document.documentElement.lang || undefined, {
+        ? new Intl.DateTimeFormat(dateLocale, {
             dateStyle: 'short',
             timeStyle: 'short',
             // An empty attribute means the route had no zone to give.

@@ -57,3 +57,42 @@ export const supportedLocales = (nodeEnv: string): readonly Locale[] =>
         (locale) => locale !== PSEUDO_LOCALE && !DRAFT_LOCALES.includes(locale),
       )
     : LOCALES;
+
+/**
+ * The first English tag with a region in a preference list, as a region code.
+ *
+ * Tags that do not parse, such as `*`, are skipped.
+ */
+const preferredEnglishRegion = (preferred: readonly string[]) => {
+  for (const tag of preferred) {
+    try {
+      const { language, region } = new Intl.Locale(tag);
+
+      if (language === 'en' && region) return region;
+    } catch {
+      // Not a language tag, such as `*`.
+    }
+  }
+
+  return undefined;
+};
+
+/**
+ * The locale dates and times are formatted in. English orders dates as the
+ * visitor's English region does, British day-first by default, and always
+ * writes the time on the 24-hour clock.
+ *
+ * @param locale - A BCP 47 tag, typically the page's or response's locale.
+ * @param preferred - The visitor's languages in preference order, such as
+ *   `req.acceptsLanguages()`. Browser code does not call this: it reads the
+ *   server's result from `<html data-date-locale>`.
+ * @returns Any non-English tag unchanged; for English,
+ *   `en-<REGION>-u-hc-h23`.
+ */
+export const dateTimeLocale = (
+  locale: string,
+  preferred: readonly string[] = [],
+): string =>
+  new Intl.Locale(locale).language === 'en'
+    ? `en-${preferredEnglishRegion(preferred) ?? 'GB'}-u-hc-h23`
+    : locale;

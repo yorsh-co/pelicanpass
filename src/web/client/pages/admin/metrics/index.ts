@@ -210,7 +210,7 @@ const render = (snapshot: MetricsSnapshot): void => {
   setText(
     'generated',
     new Date(snapshot.generatedAt).toLocaleString(
-      document.documentElement.lang,
+      document.documentElement.dataset.dateLocale,
     ),
   );
   setText(

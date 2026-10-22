@@ -8,14 +8,18 @@
  *
  * Built once at module scope: it is called twice a second across those two
  * screens, and constructing the formatter is the expensive half of the work.
- * The page's `lang` is fixed for its lifetime, so reading it once is enough.
+ * The page's date locale, rendered by the server on `<html data-date-locale>`,
+ * is fixed for its lifetime, so reading it once is enough.
  */
-const format = new Intl.DateTimeFormat(document.documentElement.lang, {
-  hour: '2-digit',
-  minute: '2-digit',
-  second: '2-digit',
-  hourCycle: 'h23',
-});
+const format = new Intl.DateTimeFormat(
+  document.documentElement.dataset.dateLocale,
+  {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hourCycle: 'h23',
+  },
+);
 
 /**
  * Writes the device's current time into an element.
