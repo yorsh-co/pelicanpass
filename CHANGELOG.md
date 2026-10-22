@@ -22,6 +22,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 
 ### Changed
 
+- The footer credits Yorsh, linking to the repository, from a fixed `CREDIT` constant (`src/constants/credit.ts`) rather than `COPY_DEFAULTS`, so a per-event copy setting cannot replace the authorship credit; the copyright line still names the event
 - `npm run docs:screenshots` captures every screen in each demo locale, into `docs/images/screenshots/en/` and `docs/images/screenshots/pt-BR/`; `README.md` shows the English ones
 - The language switcher labels English `EN` rather than `US`: it shows the locale's own region, or its language when it names none
 - The demo serves every page in pt-BR and in English, the English copies under `/en/`, switched by the footer, the admin menu or the banner; the choice is kept per visitor in `localStorage`, and a first visit follows the browser language. A script at the top of every page sends the visitor to the matching tree, including from the app's own root-absolute links, and `_redirects` is mirrored under `/en`; the banner is written in the page's language only

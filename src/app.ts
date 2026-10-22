@@ -10,6 +10,7 @@ import crypto from 'crypto';
 import { cspDirectives } from './config/csp.ts';
 import { env } from './config/env.ts';
 import { COPY_DEFAULTS } from './constants/copy-defaults.ts';
+import { CREDIT } from './constants/credit.ts';
 import { BASE_LOCALE } from './i18n/locales.ts';
 import { getMessages } from './i18n/server.ts';
 import apiRoutes from './api/index.ts';
@@ -62,6 +63,7 @@ app.use((_req, res, next) => {
   res.locals.locale = BASE_LOCALE;
   res.locals.chrome = getMessages(BASE_LOCALE, 'chrome');
   res.locals.copyDefaults = COPY_DEFAULTS;
+  res.locals.credit = CREDIT;
   res.locals.localeLinks = [];
 
   next();

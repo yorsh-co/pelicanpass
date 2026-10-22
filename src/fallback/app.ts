@@ -10,6 +10,7 @@ import { pinoHttp } from 'pino-http';
 import type { Express, Response } from 'express';
 
 import { COPY_DEFAULTS } from '../constants/copy-defaults.ts';
+import { CREDIT } from '../constants/credit.ts';
 import { toAudienceRole } from '../constants/audience.ts';
 import { getMessages } from '../i18n/catalogs.ts';
 import { BASE_LOCALE } from '../i18n/locales.ts';
@@ -102,6 +103,7 @@ export const createFallbackApp = (config: FallbackConfig): Express => {
     res.locals.locale = BASE_LOCALE;
     res.locals.chrome = chrome;
     res.locals.copyDefaults = COPY_DEFAULTS;
+    res.locals.credit = CREDIT;
     res.locals.localeLinks = [];
 
     next();

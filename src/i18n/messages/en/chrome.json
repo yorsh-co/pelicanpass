@@ -41,7 +41,7 @@
   },
   "chrome.footer.creditPrefix": {
     "defaultMessage": "by",
-    "description": "Word before the organiser's name in the footer credit, which is a link reading the organiser's name."
+    "description": "Word before the author's name in the footer credit, which is a link reading the author's name."
   },
   "chrome.footer.languages": {
     "defaultMessage": "Languages",
