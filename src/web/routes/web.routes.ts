@@ -62,6 +62,7 @@ import {
   WELCOME_TEXT_MAX_LENGTH,
 } from '../../constants/pass.ts';
 import { TICKET_INPUT_PATTERN } from '../../constants/ticket.ts';
+import { VENUE_MAP_SRC } from '../../constants/venue-map.ts';
 import {
   NICKNAME_INPUT_PATTERN,
   NICKNAME_MAX_LENGTH,
@@ -1964,6 +1965,7 @@ router.get(
           'survey',
         ]),
         copy: getCopy(res.locals.locale, ['pass', 'survey']),
+        venueMapSrc: VENUE_MAP_SRC[res.locals.locale],
         survey: surveyView(
           profile.attendeeRole,
           res.locals.locale,

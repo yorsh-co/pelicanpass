@@ -568,6 +568,19 @@ describe(
       assert.match(await read('pass.html'), /data-audience="participant"/);
     });
 
+    it("opens the venue map of the page's language", async () => {
+      for (const file of ['pass.html', 'pass-volunteer.html']) {
+        assert.match(
+          await read(file),
+          /src="\/assets\/images\/map\/venue-map\.svg"/,
+        );
+        assert.match(
+          await read(`en/${file}`),
+          /src="\/assets\/images\/map\/venue-map\.en\.svg"/,
+        );
+      }
+    });
+
     it('shows English sample data on the English pages only', async () => {
       const samples =
         /Vegetariano|Sem restrição|Suco de laranja|Frango|Recepção|Líder|operadora|Fila de check-in/;
