@@ -64,7 +64,7 @@
     "description": "State of an item another station hands over. Says where to send them rather than that something is wrong: the attendee will get it, just not here."
   },
   "staff.redemption.pending": {
-    "defaultMessage": "to collect",
+    "defaultMessage": "collect",
     "description": "State of an item the attendee has not collected yet, matching the word on the attendee's own pass."
   },
   "staff.redemption.redeemed": {

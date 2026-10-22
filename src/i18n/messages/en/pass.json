@@ -28,7 +28,7 @@
     "description": "Replaces the band word when it stops refreshing. A label and an action rather than a state: the volunteer in front of the attendee needs the screen fixed, not diagnosed."
   },
   "pass.chip.ariaLabel": {
-    "defaultMessage": "{name}, to collect — show your ticket to collect items",
+    "defaultMessage": "{name}, collect — show your ticket to collect items",
     "description": "Accessible name of an item chip not yet collected. name is the chip's visible name. The chip's glyph is hidden from assistive technology, so this says what tapping it does; resgatar repeats the chip's visible state."
   },
   "pass.chip.name": {
@@ -36,7 +36,7 @@
     "description": "An item chip's name with the attendee's choice for it, such as a T-shirt size. item is the item's name; value comes from the attendee's registration."
   },
   "pass.chip.pending": {
-    "defaultMessage": "to collect",
+    "defaultMessage": "collect",
     "description": "State of an item chip the attendee has not collected yet. The staff screen uses the matching word."
   },
   "pass.chip.redeemed": {
