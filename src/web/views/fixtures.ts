@@ -8,6 +8,7 @@
 import { env } from '../../config/env.ts';
 import { parseAttendeeFilters } from '../../constants/attendee-filters.ts';
 import { TICKET_INPUT_PATTERN } from '../../constants/ticket.ts';
+import { VENUE_MAP_SRC } from '../../constants/venue-map.ts';
 import {
   NICKNAME_INPUT_PATTERN,
   NICKNAME_MAX_LENGTH,
@@ -286,6 +287,7 @@ const passPage = (
   initialData: passData(role, ctx.locale),
   messages: messagesOf(ctx, ['pass', 'chrome', 'survey']),
   copy: getCopy(ctx.locale, ['pass', 'survey']),
+  venueMapSrc: VENUE_MAP_SRC[ctx.locale],
   survey: survey
     ? { audience: role, definition: surveyFor(role, ctx.locale), state: 'open' }
     : { audience: role, definition: null, state: 'hidden' },
