@@ -44,6 +44,7 @@ const catalog: ChromeCatalog = {
   'chrome.footer.languages': [{ type: 0, value: 'Languages' }],
   'chrome.footer.logout': [{ type: 0, value: 'Sign out' }],
   'chrome.footer.privacy': [{ type: 0, value: 'Privacy' }],
+  'chrome.footer.source': [{ type: 0, value: 'Source code on GitHub' }],
   'chrome.footer.terms': [{ type: 0, value: 'Terms' }],
   'chrome.footer.themeToDark': [{ type: 0, value: 'Switch to dark theme' }],
   'chrome.footer.themeToLight': [{ type: 0, value: 'Switch to light theme' }],

@@ -54,6 +54,7 @@ const catalog: ChromeCatalog = {
   'chrome.footer.languages': [{ type: 0, value: 'Idiomas' }],
   'chrome.footer.logout': [{ type: 0, value: 'Sair' }],
   'chrome.footer.privacy': [{ type: 0, value: 'Privacidade' }],
+  'chrome.footer.source': [{ type: 0, value: 'Código-fonte no GitHub' }],
   'chrome.footer.terms': [{ type: 0, value: 'Termos' }],
   'chrome.footer.themeToDark': [{ type: 0, value: 'Ativar tema escuro' }],
   'chrome.footer.themeToLight': [{ type: 0, value: 'Ativar tema claro' }],

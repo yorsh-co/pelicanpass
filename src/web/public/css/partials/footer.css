@@ -177,6 +177,35 @@ footer .dot {
   color: var(--text);
 }
 
+/*
+ * The repository link rides beside the toggle and takes its box, colour and
+ * hover, so the two read as one pair of icon controls. The admin rail reuses
+ * it. The mark is an inline SVG, sized here because it has no font-size.
+ */
+.footer-source {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+/* Smaller than the toggle's 1.25rem glyph box: the mark fills its viewBox,
+   while the moon fills about three quarters of its em. 1rem is also the mark's
+   native 16px grid. */
+.footer-source svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.footer-source:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
 footer .credit a {
   font-weight: 700;
 }

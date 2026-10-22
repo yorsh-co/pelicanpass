@@ -441,7 +441,12 @@ footer .small-print a:hover {
   color: var(--text-on-brand-muted);
 }
 
-.theme-toggle:hover {
+.footer-source {
+  color: var(--text-on-brand-muted);
+}
+
+.theme-toggle:hover,
+.footer-source:hover {
   background: var(--camera-control-bg);
   color: var(--text-on-brand);
 }

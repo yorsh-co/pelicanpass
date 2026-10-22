@@ -55,6 +55,10 @@
     "defaultMessage": "Privacy",
     "description": "Footer link to the privacy notice."
   },
+  "chrome.footer.source": {
+    "defaultMessage": "Source code on GitHub",
+    "description": "Accessible name and tooltip of the icon link to the project's GitHub repository, in the footer and the administrator rail. The link shows only the GitHub mark."
+  },
   "chrome.footer.terms": {
     "defaultMessage": "Terms",
     "description": "Footer link to the terms of use."
