@@ -25,14 +25,14 @@ const catalog: PassCatalog = {
   'pass.band.retry': [{ type: 0, value: 'Refresh' }],
   'pass.chip.ariaLabel': [
     { type: 1, value: 'name' },
-    { type: 0, value: ', to collect — show your ticket to collect items' },
+    { type: 0, value: ', collect — show your ticket to collect items' },
   ],
   'pass.chip.name': [
     { type: 1, value: 'item' },
     { type: 0, value: ' · ' },
     { type: 1, value: 'value' },
   ],
-  'pass.chip.pending': [{ type: 0, value: 'to collect' }],
+  'pass.chip.pending': [{ type: 0, value: 'collect' }],
   'pass.chip.redeemed': [{ type: 0, value: 'collected' }],
   'pass.frontTab': [{ type: 0, value: 'Back to ticket' }],
   'pass.hideQr': [{ type: 0, value: 'Back' }],

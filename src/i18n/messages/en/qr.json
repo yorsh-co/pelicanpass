@@ -1,6 +1,6 @@
 {
   "qr.cameraButton": {
-    "defaultMessage": "Turn on camera",
+    "defaultMessage": "Activate camera",
     "description": "Button that starts the camera for QR scanning, on both the check-in and the staff scanners. Names the hardware action, not the product's voice."
   },
   "qr.closeButton": {

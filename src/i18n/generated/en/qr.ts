@@ -3,7 +3,7 @@
 import type { QrCatalog } from '../qr.messages.ts';
 
 const catalog: QrCatalog = {
-  'qr.cameraButton': [{ type: 0, value: 'Turn on camera' }],
+  'qr.cameraButton': [{ type: 0, value: 'Activate camera' }],
   'qr.closeButton': [{ type: 0, value: 'Close camera' }],
   'qr.switchCameraButton': [{ type: 0, value: 'Switch camera' }],
   'qr.torchButton': [{ type: 0, value: 'Flashlight' }],

@@ -47,7 +47,7 @@ const catalog: StaffCatalog = {
   ],
   'staff.redemption.notEntitled': [{ type: 0, value: 'unavailable' }],
   'staff.redemption.otherStation': [{ type: 0, value: 'other station' }],
-  'staff.redemption.pending': [{ type: 0, value: 'to collect' }],
+  'staff.redemption.pending': [{ type: 0, value: 'collect' }],
   'staff.redemption.redeemed': [{ type: 0, value: 'collected' }],
   'staff.review.close': [{ type: 0, value: 'Close' }],
   'staff.review.slideHint': [
