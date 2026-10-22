@@ -52,12 +52,12 @@ PelicanPass was originally created for a one-day youth conference with roughly 5
 At the live event on 17/10/2026, 528 of 558 participants and 119 of 119 volunteers checked in and no request was refused for load. The busiest minute saw 17 check-ins and the busiest 15 minutes saw 92 check-ins. The figures from the real event, as well as the incidents and limitations, are documented in the [event report](docs/reports/event-2026-10-17.md).
 
 <p align="center">
-  <img src="docs/images/screenshots/checkin-ticket.png" alt="The check-in screen asking for a six-character ticket code" width="240">
-  <img src="docs/images/screenshots/pass-front.png" alt="An attendee pass showing the arrival number and entitlements" width="240">
-  <img src="docs/images/screenshots/staff.png" alt="The staff redemption screen listing an attendee's entitlements" width="240">
+  <img src="docs/images/screenshots/en/checkin-ticket.png" alt="The check-in screen asking for a six-character ticket code" width="240">
+  <img src="docs/images/screenshots/en/pass-front.png" alt="An attendee pass showing the arrival number and entitlements" width="240">
+  <img src="docs/images/screenshots/en/staff.png" alt="The staff redemption screen listing an attendee's entitlements" width="240">
 </p>
 
-<p align="center"><em>Screens from the live demo, with fictional data. The screenshots are in Brazilian Portuguese; the demo also offers English.</em></p>
+<p align="center"><em>Screens from the live demo, with fictional data. The screenshots are in English; <a href="docs/images/screenshots/pt-BR/">Brazilian Portuguese versions</a> are in <code>docs/images/screenshots/pt-BR/</code>.</em></p>
 
 The web app's goal was to solve two recurring pain points for the event organizers, as well as maintain the features that their existing solutions already covered:
 
@@ -125,13 +125,13 @@ With `LANDING_ENABLED`, a countdown holds the app until each audience's check-in
 window opens, and check-ins made before it are refused.
 
 <p align="center">
-  <img src="docs/images/screenshots/landing.png" alt="The pre-event countdown that holds the app until check-in opens" width="220">
-  <img src="docs/images/screenshots/checkin-ticket.png" alt="Check-in step one: entering the six-character ticket code" width="220">
+  <img src="docs/images/screenshots/en/landing.png" alt="The pre-event countdown that holds the app until check-in opens" width="220">
+  <img src="docs/images/screenshots/en/checkin-ticket.png" alt="Check-in step one: entering the six-character ticket code" width="220">
 </p>
 
 <p align="center">
-  <img src="docs/images/screenshots/checkin-verification.png" alt="Check-in step two: confirming identity with a masked name and the last four phone digits" width="220">
-  <img src="docs/images/screenshots/checkin-presence.png" alt="Check-in step three: confirming arrival by scanning the venue QR code, with a fallback for an attendee a volunteer has already marked present" width="220">
+  <img src="docs/images/screenshots/en/checkin-verification.png" alt="Check-in step two: confirming identity with a masked name and the last four phone digits" width="220">
+  <img src="docs/images/screenshots/en/checkin-presence.png" alt="Check-in step three: confirming arrival by scanning the venue QR code, with a fallback for an attendee a volunteer has already marked present" width="220">
 </p>
 
 `src/modules/checkin/checkin.flow.ts` · `src/middleware/landing.middleware.ts`
@@ -163,9 +163,9 @@ link is a label and grants nothing, since every admin gate still authenticates
 against `admins` on its own.
 
 <p align="center">
-  <img src="docs/images/screenshots/pass-front.png" alt="Participant pass front with arrival number and entitlement chips" width="220">
-  <img src="docs/images/screenshots/pass-back.png" alt="Participant pass back with QR code and rotating verification word" width="220">
-  <img src="docs/images/screenshots/pass-volunteer.png" alt="Volunteer pass with the access tier chip, the tier-coloured top edge and entitlement chips" width="220">
+  <img src="docs/images/screenshots/en/pass-front.png" alt="Participant pass front with arrival number and entitlement chips" width="220">
+  <img src="docs/images/screenshots/en/pass-back.png" alt="Participant pass back with QR code and rotating verification word" width="220">
+  <img src="docs/images/screenshots/en/pass-volunteer.png" alt="Volunteer pass with the access tier chip, the tier-coloured top edge and entitlement chips" width="220">
 </p>
 
 `src/modules/pass/pass.service.ts` · `src/constants/pass.ts` ·
@@ -189,8 +189,8 @@ Both run on the volunteer's own attendee session, with permissions re-read from
 Postgres on every request, so revoking one takes effect on the next tap.
 
 <p align="center">
-  <img src="docs/images/screenshots/staff.png" alt="Staff redemption screen with entitlements and slide-to-confirm rows" width="220">
-  <img src="docs/images/screenshots/raffle.png" alt="Raffle screen showing a drawn number and the list of numbers already drawn" width="220">
+  <img src="docs/images/screenshots/en/staff.png" alt="Staff redemption screen with entitlements and slide-to-confirm rows" width="220">
+  <img src="docs/images/screenshots/en/raffle.png" alt="Raffle screen showing a drawn number and the list of numbers already drawn" width="220">
 </p>
 
 `src/modules/staff/` · `src/modules/raffle/`
@@ -235,11 +235,11 @@ Nav entries are paired with the same scope their route enforces, so a section
 cannot be shown that will then redirect.
 
 <p align="center">
-  <img src="docs/images/screenshots/admin-redemptions.png" alt="Admin redemptions screen with per-item totals and a searchable list of attendees" width="100%">
+  <img src="docs/images/screenshots/en/admin-redemptions.png" alt="Admin redemptions screen with per-item totals and a searchable list of attendees" width="100%">
 </p>
 
 <p align="center">
-  <img src="docs/images/screenshots/admin-metrics.png" alt="Admin live metrics dashboard with check-ins, redemptions, health, errors and latency" width="100%">
+  <img src="docs/images/screenshots/en/admin-metrics.png" alt="Admin live metrics dashboard with check-ins, redemptions, health, errors and latency" width="100%">
 </p>
 
 `src/modules/admin/` · `src/constants/admin-nav.ts` · `src/constants/admin-scopes.ts` · [`docs/features/admin-scopes.md`](docs/features/admin-scopes.md) · [`docs/features/redemption-options.md`](docs/features/redemption-options.md) · [`docs/operations/deployment.md`](docs/operations/deployment.md#the-ticket-limit)
@@ -255,7 +255,7 @@ and the answers are stored apart from the record of who answered, which
 answers as CSV (`export:read`).
 
 <p align="center">
-  <img src="docs/images/screenshots/pass-survey.png" alt="The experience questionnaire, opened from the pass, with required rating questions on sliders" width="220">
+  <img src="docs/images/screenshots/en/pass-survey.png" alt="The experience questionnaire, opened from the pass, with required rating questions on sliders" width="220">
 </p>
 
 `src/modules/survey/` · [`docs/features/survey.md`](docs/features/survey.md)

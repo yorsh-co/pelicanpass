@@ -2,12 +2,12 @@
  * Captures the README screenshots from the static demo.
  *
  * Serves `dist/demo` on an ephemeral localhost port, drives the real pages in
- * Chromium and writes one compressed PNG per screen to
- * `docs/images/screenshots/`. The demo's attendees are fictional, so nothing
- * here is personal data.
+ * Chromium and writes one compressed PNG per screen and demo locale to
+ * `docs/images/screenshots/<locale>/`. The demo's attendees are fictional, so
+ * nothing here is personal data.
  *
  * Stable output: the clock, time zone, locale (the demo's language choice is
- * pinned to pt-BR) and `Math.random` are fixed, and
+ * pinned to the one being captured) and `Math.random` are fixed, and
  * motion is reduced, and the rotation window's ring is held at one level. The
  * demo banner is hidden; it is not part of the product.
  * Every step waits for the state it expects rather than for a duration,
@@ -18,8 +18,8 @@
  *
  * Usage:
  *   node scripts/docs/screenshots.ts                 writes
- *                                                    docs/images/screenshots
- *   node scripts/docs/screenshots.ts --out <dir>     writes <dir>
+ *                                                    docs/images/screenshots/<locale>
+ *   node scripts/docs/screenshots.ts --out <dir>     writes <dir>/<locale>
  */
 
 import { existsSync } from 'node:fs';
@@ -31,12 +31,16 @@ import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
 import sharp from 'sharp';
 
-import { LOCALE_STORAGE_KEY } from '../../src/web/client/demo/locale-route.ts';
+import {
+  DEMO_LOCALES,
+  LOCALE_STORAGE_KEY,
+} from '../../src/web/client/demo/locale-route.ts';
 import {
   DEMO_TICKET_CODES,
   DEMO_VERIFICATION_CODE,
 } from '../../src/web/client/demo/roster.ts';
 
+import type { DemoLocale } from '../../src/web/client/demo/locale-route.ts';
 import type { Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import type { Browser, BrowserContext, Page } from 'playwright-core';
@@ -192,20 +196,22 @@ const serveDemo = async (): Promise<Server> => {
 const newContext = async (
   browser: Browser,
   baseURL: string,
+  locale: DemoLocale,
   device: typeof MOBILE | typeof DESKTOP,
 ): Promise<BrowserContext> => {
   const context = await browser.newContext({
     ...device,
     baseURL,
-    locale: 'pt-BR',
+    locale,
     timezoneId: TIME_ZONE,
     reducedMotion: 'reduce',
   });
 
   // The demo serves the tree the visitor chose, else the browser's language;
-  // pinning pt-BR keeps the captures the same whatever language this runs in.
+  // pinning the locale keeps the captures the same whatever language this runs
+  // in, and sends `/checkin` and the rest to the matching tree.
   await context.addInitScript({
-    content: `try { localStorage.setItem(${JSON.stringify(LOCALE_STORAGE_KEY)}, 'pt-BR'); } catch {}`,
+    content: `try { localStorage.setItem(${JSON.stringify(LOCALE_STORAGE_KEY)}, ${JSON.stringify(locale)}); } catch {}`,
   });
   await context.addInitScript(SEED_RANDOM);
   await context.addInitScript({ content: HIDE_BANNER });
@@ -275,6 +281,150 @@ const writePng = async (
 };
 
 /**
+ * Captures every screen in one locale.
+ *
+ * @param browser - Browser to open the contexts in.
+ * @param baseURL - Origin the demo is served from.
+ * @param locale - Demo language to pin.
+ * @param dir - Directory to write into; created as needed.
+ */
+const captureLocale = async (
+  browser: Browser,
+  baseURL: string,
+  locale: DemoLocale,
+  dir: string,
+): Promise<void> => {
+  await mkdir(dir, { recursive: true });
+
+  const shoot = async (page: Page, name: string) => {
+    await settle(page);
+    await writePng(dir, name, await page.screenshot());
+  };
+
+  // A participant, through the whole check-in flow.
+  const participantContext = await newContext(browser, baseURL, locale, MOBILE);
+  const participant = await newPage(participantContext);
+
+  // The countdown measures from `Date.now()`, which the fixed clock holds, so
+  // it reads the fixture's own time to opening on every run.
+  await participant.goto('/landing');
+  await participant.locator('.landing-digit-strip').first().waitFor();
+  await shoot(participant, 'landing');
+
+  await participant.goto('/checkin');
+  await participant
+    .locator('[data-checkin="ticket-step"]:not(.skeleton)')
+    .waitFor();
+  await waitForHint(participant, 'ticket');
+  await shoot(participant, 'checkin-ticket');
+
+  await submitCode(
+    participant,
+    '[data-checkin="ticket-code-input"]',
+    PARTICIPANT_CODE,
+  );
+  await participant
+    .locator('[data-checkin="verification-step"]:not(.skeleton)')
+    .waitFor();
+  await participant
+    .locator('[data-checkin="verification-name"]:not(:has-text("•"))')
+    .waitFor();
+  await waitForHint(participant, 'verification');
+  await shoot(participant, 'checkin-verification');
+
+  await submitCode(
+    participant,
+    '[data-checkin="verification-code-input"]',
+    DEMO_VERIFICATION_CODE,
+  );
+  await participant
+    .locator('[data-checkin="qr-step"]:not(.skeleton)')
+    .waitFor();
+  await participant.locator('[data-checkin="qr-presence-btn"]:enabled').waitFor();
+  await waitForHint(participant, 'qr');
+  await shoot(participant, 'checkin-presence');
+
+  await participant.locator('[data-checkin="qr-presence-btn"]').click();
+
+  await participant.waitForURL('**/pass');
+  await participant.locator('[data-pass="pass"]:not(.skeleton)').waitFor();
+  await participant
+    .locator('[data-pass="checkinNumber"]:text-matches("#[0-9]+")')
+    .waitFor();
+  await shoot(participant, 'pass-front');
+
+  // The demo opens the questionnaire to every attendee, so the chip is shown.
+  await participant.locator('[data-pass="surveyChip"]').click();
+  await participant.locator('dialog[data-pass="survey"][open]').waitFor();
+  await shoot(participant, 'pass-survey');
+  await participant.locator('[data-survey="close"]').click();
+  await participant
+    .locator('dialog[data-pass="survey"]')
+    .waitFor({ state: 'hidden' });
+
+  await participant.locator('[data-pass="showQr"]').click();
+  await participant.locator('[data-pass="faceBack"]').waitFor();
+  await participant
+    .locator('[data-pass="passBand"]:text-matches("[A-Za-z0-9]")')
+    .waitFor();
+  await shoot(participant, 'pass-back');
+  await participantContext.close();
+
+  // A volunteer, in a fresh context so the sessions do not mix.
+  const volunteerContext = await newContext(browser, baseURL, locale, MOBILE);
+  const volunteer = await newPage(volunteerContext);
+
+  await volunteer.goto('/checkin');
+  await submitCode(
+    volunteer,
+    '[data-checkin="ticket-code-input"]',
+    VOLUNTEER_CODE,
+  );
+  await submitCode(
+    volunteer,
+    '[data-checkin="verification-code-input"]',
+    DEMO_VERIFICATION_CODE,
+  );
+  await volunteer.locator('[data-checkin="qr-presence-btn"]').click();
+
+  await volunteer.waitForURL('**/pass');
+  await volunteer.locator('[data-pass="accessTab"]:not([hidden])').waitFor();
+  await volunteer.locator('[data-pass="pass"]:not(.skeleton)').waitFor();
+  await shoot(volunteer, 'pass-volunteer');
+
+  await volunteer.goto('/staff');
+  await volunteer.locator('[data-staff="lookup"] summary').click();
+  await submitCode(
+    volunteer,
+    '[data-staff="lookupInput"]',
+    CHECKED_IN_CODE,
+  );
+  await volunteer
+    .locator('[data-staff="review"]:not([hidden]) [data-staff="slideHint"]:not([hidden])')
+    .waitFor();
+  await shoot(volunteer, 'staff');
+
+  await volunteer.goto('/raffle');
+  await volunteer.locator('[data-raffle="drawButton"]:enabled').click();
+  await volunteer
+    .locator('[data-raffle="announce"]:text-matches("[A-Za-z0-9]")')
+    .waitFor({ state: 'attached' });
+  await shoot(volunteer, 'raffle');
+  await volunteerContext.close();
+
+  // The admin pages are read-only fixtures, so a fresh desktop context will do.
+  const adminContext = await newContext(browser, baseURL, locale, DESKTOP);
+  const admin = await newPage(adminContext);
+
+  await admin.goto('/admin/redemptions');
+  await shoot(admin, 'admin-redemptions');
+
+  await admin.goto('/admin/metrics');
+  await shoot(admin, 'admin-metrics');
+  await adminContext.close();
+};
+
+/**
  * Captures every README screenshot.
  *
  * @param outDir - Directory to write into; created as needed.
@@ -286,139 +436,14 @@ export const captureScreenshots = async (outDir: string): Promise<void> => {
     );
   }
 
-  await mkdir(outDir, { recursive: true });
-
   const server = await serveDemo();
   const baseURL = `http://127.0.0.1:${String((server.address() as AddressInfo).port)}`;
   const browser = await chromium.launch();
 
-  const shoot = async (page: Page, name: string) => {
-    await settle(page);
-    await writePng(outDir, name, await page.screenshot());
-  };
-
   try {
-    // A participant, through the whole check-in flow.
-    const participantContext = await newContext(browser, baseURL, MOBILE);
-    const participant = await newPage(participantContext);
-
-    // The countdown measures from `Date.now()`, which the fixed clock holds, so
-    // it reads the fixture's own time to opening on every run.
-    await participant.goto('/landing');
-    await participant.locator('.landing-digit-strip').first().waitFor();
-    await shoot(participant, 'landing');
-
-    await participant.goto('/checkin');
-    await participant
-      .locator('[data-checkin="ticket-step"]:not(.skeleton)')
-      .waitFor();
-    await waitForHint(participant, 'ticket');
-    await shoot(participant, 'checkin-ticket');
-
-    await submitCode(
-      participant,
-      '[data-checkin="ticket-code-input"]',
-      PARTICIPANT_CODE,
-    );
-    await participant
-      .locator('[data-checkin="verification-step"]:not(.skeleton)')
-      .waitFor();
-    await participant
-      .locator('[data-checkin="verification-name"]:not(:has-text("•"))')
-      .waitFor();
-    await waitForHint(participant, 'verification');
-    await shoot(participant, 'checkin-verification');
-
-    await submitCode(
-      participant,
-      '[data-checkin="verification-code-input"]',
-      DEMO_VERIFICATION_CODE,
-    );
-    await participant
-      .locator('[data-checkin="qr-step"]:not(.skeleton)')
-      .waitFor();
-    await participant.locator('[data-checkin="qr-presence-btn"]:enabled').waitFor();
-    await waitForHint(participant, 'qr');
-    await shoot(participant, 'checkin-presence');
-
-    await participant.locator('[data-checkin="qr-presence-btn"]').click();
-
-    await participant.waitForURL('**/pass');
-    await participant.locator('[data-pass="pass"]:not(.skeleton)').waitFor();
-    await participant
-      .locator('[data-pass="checkinNumber"]:text-matches("#[0-9]+")')
-      .waitFor();
-    await shoot(participant, 'pass-front');
-
-    // The demo opens the questionnaire to every attendee, so the chip is shown.
-    await participant.locator('[data-pass="surveyChip"]').click();
-    await participant.locator('dialog[data-pass="survey"][open]').waitFor();
-    await shoot(participant, 'pass-survey');
-    await participant.locator('[data-survey="close"]').click();
-    await participant
-      .locator('dialog[data-pass="survey"]')
-      .waitFor({ state: 'hidden' });
-
-    await participant.locator('[data-pass="showQr"]').click();
-    await participant.locator('[data-pass="faceBack"]').waitFor();
-    await participant
-      .locator('[data-pass="passBand"]:text-matches("[A-Za-z0-9]")')
-      .waitFor();
-    await shoot(participant, 'pass-back');
-    await participantContext.close();
-
-    // A volunteer, in a fresh context so the sessions do not mix.
-    const volunteerContext = await newContext(browser, baseURL, MOBILE);
-    const volunteer = await newPage(volunteerContext);
-
-    await volunteer.goto('/checkin');
-    await submitCode(
-      volunteer,
-      '[data-checkin="ticket-code-input"]',
-      VOLUNTEER_CODE,
-    );
-    await submitCode(
-      volunteer,
-      '[data-checkin="verification-code-input"]',
-      DEMO_VERIFICATION_CODE,
-    );
-    await volunteer.locator('[data-checkin="qr-presence-btn"]').click();
-
-    await volunteer.waitForURL('**/pass');
-    await volunteer.locator('[data-pass="accessTab"]:not([hidden])').waitFor();
-    await volunteer.locator('[data-pass="pass"]:not(.skeleton)').waitFor();
-    await shoot(volunteer, 'pass-volunteer');
-
-    await volunteer.goto('/staff');
-    await volunteer.locator('[data-staff="lookup"] summary').click();
-    await submitCode(
-      volunteer,
-      '[data-staff="lookupInput"]',
-      CHECKED_IN_CODE,
-    );
-    await volunteer
-      .locator('[data-staff="review"]:not([hidden]) [data-staff="slideHint"]:not([hidden])')
-      .waitFor();
-    await shoot(volunteer, 'staff');
-
-    await volunteer.goto('/raffle');
-    await volunteer.locator('[data-raffle="drawButton"]:enabled').click();
-    await volunteer
-      .locator('[data-raffle="announce"]:text-matches("[A-Za-z0-9]")')
-      .waitFor({ state: 'attached' });
-    await shoot(volunteer, 'raffle');
-    await volunteerContext.close();
-
-    // The admin pages are read-only fixtures, so a fresh desktop context will do.
-    const adminContext = await newContext(browser, baseURL, DESKTOP);
-    const admin = await newPage(adminContext);
-
-    await admin.goto('/admin/redemptions');
-    await shoot(admin, 'admin-redemptions');
-
-    await admin.goto('/admin/metrics');
-    await shoot(admin, 'admin-metrics');
-    await adminContext.close();
+    for (const locale of DEMO_LOCALES) {
+      await captureLocale(browser, baseURL, locale, path.join(outDir, locale));
+    }
   } finally {
     await browser.close();
     server.close();
