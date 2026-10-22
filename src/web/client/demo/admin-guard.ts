@@ -5,21 +5,42 @@
  * mutate through the API the mock already refuses. This module covers the
  * first half: it cancels a form submission before any page script sees it and
  * tells the visitor why, except for the forms that only open a record, which
- * navigate to the page that stands for it.
+ * navigate to the page that stands for it. It works in both language trees:
+ * the paths it classifies are the plain ones, and a navigation stays in the
+ * tree the page is in.
  */
+
+import { localizedPath, stripTree } from './locale-route.ts';
+
+import type { DemoLocale } from './locale-route.ts';
 
 /** Which of the two demo notices to show. */
 export type NoticeKey = 'disabled' | 'unavailable';
 
 /* eslint-disable no-restricted-syntax -- demo-only copy, not in the app's catalogs */
 
-/** Demo-only copy, in the language the app ships in. */
-export const NOTICES: Record<NoticeKey, string> = {
-  disabled: 'Alterações estão desativadas na demonstração.',
-  unavailable: 'Esta ação não está disponível na demonstração.',
+/** Demo-only copy, in each language the demo is served in. */
+export const NOTICES: Record<DemoLocale, Record<NoticeKey, string>> = {
+  'pt-BR': {
+    disabled: 'Alterações estão desativadas na demonstração.',
+    unavailable: 'Esta ação não está disponível na demonstração.',
+  },
+  en: {
+    disabled: 'Changes are disabled in the demo.',
+    unavailable: 'This action is not available in the demo.',
+  },
 };
 
 /* eslint-enable no-restricted-syntax */
+
+/**
+ * The language a page's notices are written in.
+ *
+ * @param lang - `document.documentElement.lang`. English for `en` and its
+ *   regional forms, pt-BR for anything else.
+ */
+export const noticeLocale = (lang: string): DemoLocale =>
+  lang.toLowerCase().split('-')[0] === 'en' ? 'en' : 'pt-BR';
 
 /** What to do with a submitted form. */
 export type FormVerdict =
@@ -29,7 +50,10 @@ export type FormVerdict =
 
 /** The parts of a submission the verdict depends on. */
 export interface FormSubmission {
-  /** Pathname the form posts to, resolved against the page. */
+  /**
+   * Pathname the form posts to, resolved against the page and without the
+   * English tree's `/en` prefix.
+   */
   path: string;
 
   /** Submission method, any case. */
@@ -66,7 +90,8 @@ const UNSHIPPED_PATHS: ReadonlySet<string> = new Set([
  * navigation and a public page's form belongs to the mock API. Everything else
  * under `/admin` is a mutation, or a search the static pages cannot answer.
  *
- * @param submission - The form's resolved target and identity.
+ * @param submission - The form's resolved target, in the plain tree, and its
+ *   identity.
  * @returns Whether to leave it alone, navigate, or cancel it with a notice.
  */
 export const classifyForm = ({
@@ -104,7 +129,9 @@ export const classifyForm = ({
 export const showNotice = async (notice: NoticeKey): Promise<void> => {
   const { default: toast } = await import('../modules/ui/toast.ts');
 
-  await toast.info(NOTICES[notice]);
+  await toast.info(
+    NOTICES[noticeLocale(document.documentElement.lang)][notice],
+  );
 };
 
 /** The form and submitter attributes that decide where and how it posts. */
@@ -138,7 +165,11 @@ export const installAdminGuard = (): void => {
 
       if (url.origin !== window.location.origin) return;
 
-      const verdict = classifyForm({ path: url.pathname, method, id });
+      const verdict = classifyForm({
+        path: stripTree(url.pathname),
+        method,
+        id,
+      });
 
       if (verdict.kind === 'ignore') return;
 
@@ -146,7 +177,9 @@ export const installAdminGuard = (): void => {
       event.stopImmediatePropagation();
 
       if (verdict.kind === 'navigate') {
-        window.location.assign(verdict.to);
+        window.location.assign(
+          localizedPath(window.location.pathname, verdict.to),
+        );
       } else {
         void showNotice(verdict.notice);
       }

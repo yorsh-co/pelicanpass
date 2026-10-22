@@ -13,13 +13,17 @@
  * `sessionStorage`, one event per tab, with an in-memory copy for when storage
  * is unavailable.
  *
+ * Before any of that it settles which language tree the page belongs in, and
+ * leaves the page if it is the wrong one; see `./locale-route.ts`.
+ *
  * Bundled by `scripts/demo/build.ts` as a classic script; production never
  * includes it.
  */
 
 import { installAdminGuard, showNotice } from './admin-guard.ts';
-import { applyBannerLanguage, bindBannerLanguage } from './banner-language.ts';
 import { applyBannerState, bindBannerToggle } from './banner-state.ts';
+import { applyLocaleRoute } from './apply-locale-route.ts';
+import { localizedPath, stripTree, treeOf, urlInTree } from './locale-route.ts';
 import { metricsSnapshot } from './metrics-snapshot.ts';
 import { findRoute } from './routes.ts';
 import {
@@ -298,7 +302,29 @@ const installBeacon = (): void => {
   });
 };
 
-/** Where each page of an attendee session lives. */
+/**
+ * Keeps the page's URL in its tree when the app tidies it. The check-in and
+ * pass pages call `history.replaceState` with `/checkin` and `/pass`, which
+ * would otherwise move an English page's address into the pt-BR tree.
+ */
+const installHistory = (): void => {
+  const original = window.history.replaceState.bind(window.history);
+
+  window.history.replaceState = (state, unused, url) => {
+    original(
+      state,
+      unused,
+      typeof url === 'string'
+        ? urlInTree(url, treeOf(window.location.pathname))
+        : url,
+    );
+  };
+};
+
+/**
+ * Where each page of an attendee session lives, in the pt-BR tree; the English
+ * tree prefixes them with `/en`.
+ */
 const PASS_PATHS = {
   participant: '/pass',
   volunteer: '/pass-volunteer',
@@ -311,7 +337,8 @@ const PASS_PATHS = {
  * volunteer's team line on the server.
  */
 const routeSession = (): void => {
-  const path = window.location.pathname.replace(/(?:\.html)?\/?$/, '') || '/';
+  const path =
+    stripTree(window.location.pathname).replace(/(?:\.html)?\/?$/, '') || '/';
   const role = sessionRole(load());
   const home = role === null ? '/checkin' : PASS_PATHS[role];
   const passes: string[] = Object.values(PASS_PATHS);
@@ -319,7 +346,7 @@ const routeSession = (): void => {
   if (
     path === '/checkin' ? role !== null : passes.includes(path) && path !== home
   ) {
-    window.location.replace(home);
+    window.location.replace(localizedPath(window.location.pathname, home));
   }
 };
 
@@ -339,8 +366,9 @@ const seedPage = (): void => {
 };
 
 /**
- * Binds the banner's reset buttons, which the build renders hidden, one per
- * language. The language choice lives in `localStorage`, so it survives a reset.
+ * Binds the banner's reset button, which the build renders hidden. The language
+ * choice lives in `localStorage`, so it survives a reset, which starts again at
+ * check-in in the page's own tree.
  */
 const bindReset = (): void => {
   for (const button of document.querySelectorAll<HTMLButtonElement>(
@@ -349,31 +377,39 @@ const bindReset = (): void => {
     button.hidden = false;
     button.addEventListener('click', () => {
       clear();
-      window.location.assign('/checkin');
+      window.location.assign(
+        localizedPath(window.location.pathname, '/checkin'),
+      );
     });
   }
 };
 
-installFetch();
-installBeacon();
-installAdminGuard();
-applyBannerLanguage();
-applyBannerState();
-routeSession();
+/** Everything the mock does once the page is known to be in the right tree. */
+const install = (): void => {
+  installFetch();
+  installBeacon();
+  installHistory();
+  installAdminGuard();
+  applyBannerState();
+  routeSession();
 
-// `interactive` is announced before deferred and module scripts run, which is
-// the last moment the page's data tags can be replaced.
-const onReady = (): void => {
-  seedPage();
-  bindReset();
-  bindBannerLanguage();
-  bindBannerToggle();
+  // `interactive` is announced before deferred and module scripts run, which is
+  // the last moment the page's data tags can be replaced.
+  const onReady = (): void => {
+    seedPage();
+    bindReset();
+    bindBannerToggle();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('readystatechange', () => {
+      if (document.readyState === 'interactive') onReady();
+    });
+  } else {
+    onReady();
+  }
 };
 
-if (document.readyState === 'loading') {
-  document.addEventListener('readystatechange', () => {
-    if (document.readyState === 'interactive') onReady();
-  });
-} else {
-  onReady();
-}
+// First, before paint: a page in the wrong tree is left before anything else
+// can read it or navigate away from it.
+if (!applyLocaleRoute()) install();

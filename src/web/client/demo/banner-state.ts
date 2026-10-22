@@ -56,9 +56,8 @@ export const applyBannerState = (): void => {
 };
 
 /**
- * Shows the banner's toggle buttons, which the build renders hidden, one per
- * language, and makes each flip the banner and save the choice. Both buttons
- * keep `aria-expanded` in step, as either copy may be the one on screen.
+ * Shows the banner's toggle button, which the build renders hidden, and makes
+ * it flip the banner and save the choice, keeping `aria-expanded` in step.
  */
 export const bindBannerToggle = (): void => {
   const buttons = document.querySelectorAll<HTMLButtonElement>(
