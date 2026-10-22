@@ -73,6 +73,7 @@ Tailscale e Cloudflare Access. Visão completa: [`README.md`](../README.md).
 | `src/server.ts`             | Boot: espera dependências, inicia telemetria, _shutdown_ gracioso.                         |                                                       |
 | `src/app.ts`                | Helmet/CSP com _nonce_, cache estático, `/healthz` e `/readyz` (só pela tailnet), `loadShed`, gate do Cloudflare Access. | Segurança — **leitura obrigatória**                   |
 | `src/api/index.ts`          | Router `/api/v1`; a ordem dos _middlewares_ é carga estrutural.                            | Segurança — **leitura obrigatória**                   |
+| `src/config/csp.ts`         | Diretivas da CSP do Helmet, compartilhadas por `src/app.ts`, pela suíte de _snapshots_ e pelos builds estáticos. Recebe a fonte do _nonce_ por callback, para cada resposta ter o seu. | Segurança — **leitura obrigatória**                   |
 | `src/config/env.ts`         | Toda variável de ambiente, validada no boot; configuração incompleta impede o boot.        | Segredos                                              |
 | `src/middleware/`           | 22 preocupações transversais (rate limit, same-origin, content-type, captcha, auth…).      | Segurança                                             |
 | `src/modules/<domínio>/`    | Um módulo por funcionalidade (ver anatomia abaixo).                                        |                                                       |
@@ -85,7 +86,9 @@ Tailscale e Cloudflare Access. Visão completa: [`README.md`](../README.md).
 | `scripts/compose/`          | Testes estáticos que guardam os arquivos compose (`env-scope`, `hardening`, `image-pins`, `network-egress`, `prod-cli-placement`, `source-ownership`). | Infra — mudança aqui é ponto de revisão |
 | `scripts/qr/`, `scripts/telemetry/`, `scripts/whatsapp/` | CLIs que carregam `src/config/env.ts`; únicas pastas de `scripts/` copiadas para a imagem `prod` (§4.2). | Infra |
 | `scripts/support/`          | `strip-log.sh`: remove identificadores de trechos de log antes de colá-los numa sessão de suporte. | Privacidade |
-| `scripts/docs/`             | `links.test.ts`: os links relativos entre documentos precisam resolver.                    |                                                       |
+| `scripts/docs/`             | `links.test.ts`: os links relativos entre documentos precisam resolver. `screenshots.ts` (`npm run docs:screenshots`) captura as telas da demo em `docs/images/screenshots/`. |                                                       |
+| `scripts/static/`, `scripts/demo/` | _Builds_ estáticos para o Cloudflare Pages: a página de encerramento e a demo pública. Ver [`static-site.md`](./operations/static-site.md) e [`demo-site.md`](./operations/demo-site.md). | Segurança — o _build_ troca os _nonces_ por _hashes_ dos scripts inline que o navegador executa (blocos `type="application/json"` não entram); o da demo falha se a política passar de 2.000 caracteres (limite do valor de cabeçalho do Cloudflare) |
+| `src/web/client/demo/`      | Mock, no navegador, da API de participante, staff e sorteio; usado só pelo _build_ da demo. | Não pode entrar no _bundle_ de produção: nenhum ponto de entrada de `scripts/build-client.ts` o importa, e `scripts/demo/build.test.ts` confere que `js/demo` não existe no webroot |
 | `src/fallback/`             | Servidor de contingência (estágio `fallback`, §4.9); sem banco, cache nem segredo.         | Infra                                                 |
 | `scripts/standby/`          | _Warm standby_ em um segundo host: snapshot de Postgres e Redis a cada minuto por chave SSH com _forced command_, mais recuperação de lacuna (`recover-gap.sh`). Ver [`standby.md`](./operations/standby.md). | Infra + dados pessoais                  |
 | `docs/`                     | O raciocínio por trás das decisões. Ver [índice](#10-índice-de-documentos).                |                                                       |
@@ -484,12 +487,18 @@ ficam acima do _shedding_, então continuam respondendo sob sobrecarga.
 A CSP é a do Helmet com três ajustes: `script-src 'self'` + Turnstile + _nonce_; `style-src 'self'`
 + _nonce_, **sem `'unsafe-inline'`**; `font-src 'self'`. `frame-ancestors` é o padrão do Helmet,
 `'self'` (com `X-Frame-Options: SAMEORIGIN`), **não** `'none'`: a página pode ser emoldurada por ela
-mesma. O teste `src/app.csp.test.ts` guarda as diretivas.
+mesma. As diretivas ficam em `src/config/csp.ts`; o teste `src/app.csp.test.ts` guarda a política
+servida por `src/app.ts`.
 
 O router web (`src/web/routes/web.routes.ts`) tem cadeia própria — limiter, `localeMiddleware`,
 `rejectNulInput`, `closingGate`, `resolveSessions`, `landingGate` — e é onde ficam os únicos
 formulários HTML com `POST` (continuar o check-in, ações do admin). Todos usam `formBody`:
 same-origin, `urlencoded` de 1 kb sem `inflate` e `rejectNulInput`.
+
+Em produção o app serve pt-BR e `en` (inglês); `en-XA` só existe fora dela. O `localeMiddleware` escolhe
+o idioma por `?lang=` (que grava o cookie `locale` e redireciona sem o parâmetro), depois pelo cookie,
+depois por `Accept-Language`, e por fim pelo pt-BR; o seletor de idioma oferece a troca. Como a
+resposta passa a depender do cookie e de `Accept-Language`, ambos entram no `Vary`.
 
 **O que verificar:** qualquer PR que mova uma linha nesse arquivo. Um parser acima do webhook quebra a
 verificação de assinatura; uma rota acima de `resolveSessions` roda sem sessão; uma rota admin nova
@@ -831,4 +840,12 @@ Todos em inglês, exceto este guia.
 | [`copy-management.md`](./development/copy-management.md)                            | Como os textos da interface são guardados, checados e traduzidos.                  |
 | [`copy-inventory.md`](./development/copy-inventory.md)                              | Toda mensagem pt-BR com sua justificativa (gerado).                                |
 | [`typescript-conventions.md`](./development/typescript-conventions.md)              | Quatro regras que existem porque a alternativa quebra em runtime.                  |
+| [`demo-site.md`](./operations/demo-site.md)                                        | Demo pública em arquivos estáticos no Cloudflare Pages: o que serve, a API simulada no navegador, build, ensaio, domínio próprio. |
+| [`static-site.md`](./operations/static-site.md)                                    | Página de encerramento em arquivos estáticos no Cloudflare Pages: build, ensaio, virada, regras da zona depois, desativação. |
+| [`event-report.md`](./operations/event-report.md)                                  | Relatório pós-evento a partir das exportações do _teardown_: entradas, as duas formas de gerá-lo, abas, definições das métricas, privacidade. |
+| [`brand.md`](./design/brand.md)                                                    | A marca PelicanPass: símbolo, logotipos, cores com contraste, fundo, tipografia e arquivos de ícone. |
+| [`roadmap.md`](./development/roadmap.md)                                           | Eventos configuráveis: ajustes por evento no `/admin`, marca, modelos do WhatsApp, códigos de país, filtros da lista. |
+| [`admin-export-plan.md`](./development/admin-export-plan.md)                       | Proposta, ainda não implementada: exportações em `/admin/exports`, CSV compartilhado, variantes anônima e pseudonimizada, auditoria de download. |
+| [`admin-import-plan.md`](./development/admin-import-plan.md)                       | Proposta, ainda não implementada: importação de lista e permissões em `/admin/import`, prévia e depois confirmação, caminhos web e CLI. |
+| [`qr-scanner-speed-plan.md`](./development/qr-scanner-speed-plan.md)               | Proposta, ainda não implementada: leitura de QR mais rápida, onde o tempo vai, detector nativo com _fallback_ WebAssembly, foco. |
 | [`event-2026-10-17.md`](./reports/event-2026-10-17.md)                              | Relatório do evento de 17/10/2026: resultados, incidentes e lacunas nos dados.     |
