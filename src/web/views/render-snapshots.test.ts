@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { after, before, describe, it, mock } from 'node:test';
 
+import { LOCALE_COOKIE } from '../../constants/cookie-names.ts';
+
 import { CASES, NOW, RELEASE } from './fixtures.ts';
 import { createViewApp } from './render-app.ts';
 
@@ -95,4 +97,19 @@ describe('view snapshots', () => {
       );
     });
   }
+});
+
+describe('date locale attribute', () => {
+  it("carries the request's date locale on <html> for browser code", async () => {
+    const response = await fetch(`http://127.0.0.1:${String(port)}/privacy`, {
+      headers: {
+        'Accept-Language': 'en-US',
+        Cookie: `${LOCALE_COOKIE}=en`,
+      },
+    });
+    const html = await response.text();
+
+    assert.equal(response.status, 200, html);
+    assert.match(html, /<html lang="en" data-date-locale="en-US-u-hc-h23"/);
+  });
 });

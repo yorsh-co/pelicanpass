@@ -99,7 +99,8 @@ declare module 'express-serve-static-core' {
     /**
      * The locale dates and times are formatted in: {@link locale}, with
      * English following the visitor's English region. See `dateTimeLocale`.
-     * Set alongside it.
+     * Set alongside it. Also rendered as `<html data-date-locale>`, where
+     * browser code reads it.
      */
     dateLocale: string;
 

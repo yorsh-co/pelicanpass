@@ -84,7 +84,8 @@ const preferredEnglishRegion = (preferred: readonly string[]) => {
  *
  * @param locale - A BCP 47 tag, typically the page's or response's locale.
  * @param preferred - The visitor's languages in preference order, such as
- *   `navigator.languages` or `req.acceptsLanguages()`.
+ *   `req.acceptsLanguages()`. Browser code does not call this: it reads the
+ *   server's result from `<html data-date-locale>`.
  * @returns Any non-English tag unchanged; for English,
  *   `en-<REGION>-u-hc-h23`.
  */

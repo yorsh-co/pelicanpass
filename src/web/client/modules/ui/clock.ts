@@ -1,5 +1,3 @@
-import { dateTimeLocale } from '../../../../i18n/locales.ts';
-
 /**
  * The wall clock, in one format.
  *
@@ -10,10 +8,11 @@ import { dateTimeLocale } from '../../../../i18n/locales.ts';
  *
  * Built once at module scope: it is called twice a second across those two
  * screens, and constructing the formatter is the expensive half of the work.
- * The page's `lang` is fixed for its lifetime, so reading it once is enough.
+ * The page's date locale, rendered by the server on `<html data-date-locale>`,
+ * is fixed for its lifetime, so reading it once is enough.
  */
 const format = new Intl.DateTimeFormat(
-  dateTimeLocale(document.documentElement.lang, navigator.languages),
+  document.documentElement.dataset.dateLocale,
   {
     hour: '2-digit',
     minute: '2-digit',

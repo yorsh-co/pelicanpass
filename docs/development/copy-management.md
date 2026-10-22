@@ -276,9 +276,10 @@ already set). A shared cache must never serve one visitor's language to another.
 - **WhatsApp is not localised.** The send path carries no locale, and a locale with no
   `META_LANGUAGE` entry has no approved template, so `en` attendees receive the pt_BR one.
 - **`Intl` formatting** (dates, times) goes through `dateTimeLocale` on the server
-  (`res.locals.dateLocale`) and in the browser. pt-BR is formatted as itself; English
-  orders dates by the visitor's first English region in `Accept-Language` or
-  `navigator.languages` (British when none) and always writes the time on the 24-hour clock.
+  (`res.locals.dateLocale`), which every layout renders as `<html data-date-locale>` for
+  browser code to read. pt-BR is formatted as itself; English orders dates by the
+  visitor's first English region in `Accept-Language` (British when none) and always
+  writes the time on the 24-hour clock.
 
 ## 6. Recipes
 

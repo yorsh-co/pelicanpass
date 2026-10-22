@@ -1,7 +1,6 @@
 import { qsOptional } from '../../../../layouts/main/dom.ts';
 import { renderClock as renderClockInto } from '../../../../modules/ui/clock.ts';
 import { renderWindowProgress } from '../../../../modules/ui/window-progress.ts';
-import { dateTimeLocale } from '../../../../../../i18n/locales.ts';
 import { checkinAtOptions } from './checkin-at.ts';
 import { PASS_COPY } from './messages.ts';
 import { displayTicketCode } from '../../../../../../constants/ticket.ts';
@@ -58,7 +57,7 @@ const formatCheckinAt = (value: string | Date | null | undefined): string => {
   const lang = document.documentElement.lang;
 
   return new Intl.DateTimeFormat(
-    dateTimeLocale(lang, navigator.languages),
+    document.documentElement.dataset.dateLocale,
     checkinAtOptions(lang),
   ).format(date);
 };

@@ -297,6 +297,24 @@ describe(
       for (const file of EN_PAGE_FILES) {
         assert.match(await read(file), /<html lang="en"/, file);
       }
+    });
+
+    it('bakes the date locale the browser reads into each page', async () => {
+      for (const file of PT_PAGE_FILES) {
+        assert.match(
+          await read(file),
+          /<html [^>]*data-date-locale="pt-BR"/,
+          file,
+        );
+      }
+
+      for (const file of EN_PAGE_FILES) {
+        assert.match(
+          await read(file),
+          /<html [^>]*data-date-locale="en-GB-u-hc-h23"/,
+          file,
+        );
+      }
 
       assert.ok(
         files.every((file) => !file.startsWith('en-XA/')),

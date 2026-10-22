@@ -22,7 +22,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 
 ### Changed
 
-- English dates follow the browser's English region (`en-US` month-first, `en-GB` day-first), British day-first when it names none, and English times are always 24-hour, through `dateTimeLocale` in `src/i18n/locales.ts`; pt-BR is unchanged
+- English dates follow the browser's English region (`en-US` month-first, `en-GB` day-first), British day-first when it names none, and English times are always 24-hour, through `dateTimeLocale` in `src/i18n/locales.ts`; browser code reads the server's resolution from `<html data-date-locale>`; pt-BR is unchanged
 - The footer credits Yorsh, linking to the repository, from a fixed `CREDIT` constant (`src/constants/credit.ts`) rather than `COPY_DEFAULTS`, so a per-event copy setting cannot replace the authorship credit; the copyright line still names the event
 - `npm run docs:screenshots` captures every screen in each demo locale, into `docs/images/screenshots/en/` and `docs/images/screenshots/pt-BR/`; `README.md` shows the English ones
 - The language switcher labels English `EN` rather than `US`: it shows the locale's own region, or its language when it names none
