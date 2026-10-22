@@ -609,7 +609,7 @@ src/
 ├─ config/env.ts    the whole env surface, validated at boot
 ├─ constants/       single sources of truth shared by server, client and migrations
 ├─ i18n/           message catalogs, locale resolution
-├─ middleware/      20 cross-cutting concerns, explicitly ordered
+├─ middleware/      22 cross-cutting concerns, explicitly ordered
 ├─ modules/         admin · attendee · captcha · checkin · client-error · metrics
 │                   pass · qr · raffle · session · staff · survey · whatsapp
 ├─ shared/          db · errors · logger · telemetry · utils
@@ -622,10 +622,11 @@ src/
    │                read from Markdown at boot
    └─ public/       webroot: css, assets, and the built js/ bundle
 
-migrations/         001–037, node-pg-migrate, TypeScript
+migrations/         001–039, node-pg-migrate, TypeScript
 scripts/            client build · admin CLI · SQL helpers · seed · egress filter
                     i18n · survey · redemption · telemetry · whatsapp · qr · standby
-                    load-test tooling
+                    load-test tooling · static closing page · public demo · docs
+                    screenshots · brand assets · event report
 loadtest/           k6 event-day load test (TypeScript); see docs/performance/load-testing.md
 docs/               documentation by area — index in docs/README.md
 ```
