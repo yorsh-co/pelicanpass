@@ -113,3 +113,42 @@ describe('date locale attribute', () => {
     assert.match(html, /<html lang="en" data-date-locale="en-US-u-hc-h23"/);
   });
 });
+
+describe('authorship credit and source link', () => {
+  const get = async (path: string): Promise<string> => {
+    const response = await fetch(`http://127.0.0.1:${String(port)}/${path}`, {
+      headers: { Cookie: `${LOCALE_COOKIE}=en` },
+    });
+    const html = await response.text();
+
+    assert.equal(response.status, 200, html);
+    return html;
+  };
+
+  /** Matches the repository link, however its attributes are ordered. */
+  const sourceLinks = (html: string): string[] =>
+    html.match(
+      /<a[^>]*href="https:\/\/github\.com\/yorsh-co\/pelicanpass"[^>]*>/g,
+    ) ?? [];
+
+  it('links the credit to the author site', async () => {
+    const html = await get('privacy');
+
+    assert.match(
+      html,
+      /<a href="https:\/\/yorsh\.co\/" target="_blank">Yorsh<\/a>/,
+    );
+  });
+
+  for (const [surface, path] of [
+    ['public footer', 'privacy'],
+    ['admin rail', 'admin-home'],
+  ] as const) {
+    it(`carries exactly one labelled repository link in the ${surface}`, async () => {
+      const links = sourceLinks(await get(path));
+
+      assert.equal(links.length, 1);
+      assert.match(links[0] ?? '', /aria-label="Source code on GitHub"/);
+    });
+  }
+});

@@ -33,6 +33,16 @@
     </span>
     <% } %>
     <span class="dot">•</span>
+    <a
+      class="footer-source"
+      href="<%= credit.sourceUrl %>"
+      target="_blank"
+      aria-label="<%= chrome.footerSource() %>"
+      title="<%= chrome.footerSource() %>"
+    >
+      <%- include('github-mark') %>
+    </a>
+    <span class="dot">•</span>
     <!--
       The icon and the label name the theme the tap will switch *to*, not the
       one in effect. `client/theme/theme.ts` rewrites both on load from the

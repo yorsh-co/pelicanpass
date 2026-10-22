@@ -86,6 +86,16 @@ const currentKey = locals.navKey || '';
         <span class="material-symbols-outlined" aria-hidden="true">logout</span>
       </button>
 
+      <a
+        class="footer-source"
+        href="<%= credit.sourceUrl %>"
+        target="_blank"
+        aria-label="<%= chrome.footerSource() %>"
+        title="<%= chrome.footerSource() %>"
+      >
+        <%- include('github-mark') %>
+      </a>
+
       <!--
         The icon and the label name the theme the tap will switch *to*, not the
         one in effect. `client/theme/theme.ts` rewrites both on load, so the
