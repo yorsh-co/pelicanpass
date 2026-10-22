@@ -26,6 +26,8 @@ import {
 import {
   BAND_COLOURS,
   BAND_WORDS,
+  DEFAULT_BAND_LANGUAGE,
+  isBandLanguage,
   PASS_TOKEN_WINDOWS,
   PASS_WINDOW_MS,
   REDEEMABLE_ITEMS,
@@ -736,8 +738,21 @@ const signedIn = (
 export const sessionRole = (state: DemoState): RosterEntry['role'] | null =>
   signedIn(state)?.person.role ?? null;
 
-/** The band for a window. A hash of the index, since there is no secret to derive from. */
-const bandOf = (window: number): { colour: string; word: string } => {
+/**
+ * The band for a window. A hash of the index, since there is no secret to
+ * derive from.
+ *
+ * The word follows the page language where the band has a list for it, standing
+ * in for the deployment's `PASS_BAND_LANGUAGE` so each demo tree is consistent
+ * with itself. A locale without a list of its own falls back to the default.
+ */
+const bandOf = (
+  window: number,
+  locale: DemoLocale,
+): { colour: string; word: string } => {
+  const words =
+    BAND_WORDS[isBandLanguage(locale) ? locale : DEFAULT_BAND_LANGUAGE];
+
   let h = Math.imul(window + 0x9e3779b9, 0x85ebca6b);
 
   h ^= h >>> 13;
@@ -746,7 +761,7 @@ const bandOf = (window: number): { colour: string; word: string } => {
 
   return {
     colour: BAND_COLOURS[h & 7] ?? BAND_COLOURS[0],
-    word: BAND_WORDS[(h >>> 3) & 31] ?? BAND_WORDS[0],
+    word: words[(h >>> 3) & 31] ?? words[0],
   };
 };
 
@@ -780,11 +795,12 @@ const passOf = (
   person: RosterEntry,
   record: AttendeeRecord,
   now: number,
+  locale: DemoLocale,
 ): AttendeePass => {
   const token = `demo.${person.code}.${String(windowOf(now))}`;
 
   return {
-    band: bandOf(windowOf(now)),
+    band: bandOf(windowOf(now), locale),
     token,
     qr: passQr(token),
     expiresInMs: expiresInMs(now),
@@ -851,7 +867,7 @@ export const passPageData = (
   return {
     data: {
       profile: profileOf(person, record, locale),
-      pass: passOf(person, record, now),
+      pass: passOf(person, record, now, locale),
     },
   };
 };
@@ -864,7 +880,12 @@ export const getPass: Handler = (state, req) => {
     ? success(
         state,
         'PASS_ISSUED',
-        passOf(entryIn(current.person, req.locale), current.record, req.now),
+        passOf(
+          entryIn(current.person, req.locale),
+          current.record,
+          req.now,
+          req.locale,
+        ),
       )
     : unauthorized(state);
 };
@@ -956,7 +977,7 @@ export const submitSurvey: Handler = (state, req) => {
 /** `GET /api/v1/staff/band` */
 export const getStaffBand: Handler = (state, req) => {
   const data: StaffBand = {
-    band: bandOf(windowOf(req.now)),
+    band: bandOf(windowOf(req.now), req.locale),
     expiresInMs: expiresInMs(req.now),
   };
 

@@ -66,7 +66,7 @@
  * The word and the clock, stacked in the middle of the arc.
  *
  * Held clear of the stroke by the width rather than by padding, so the longest
- * word in `BAND_WORDS` cannot reach it. `SORVETE` is the one to measure
+ * word in any `BAND_WORDS` list cannot reach it. `SORVETE` is the one to measure
  * against; `overflow-wrap` on `.band` is the backstop if it ever does.
  */
 .window-ring-face {

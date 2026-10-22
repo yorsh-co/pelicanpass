@@ -74,7 +74,9 @@ export const currentWindow = (): number =>
  *
  * Identical for every attendee in that window, which is what lets a volunteer
  * check a pass without knowing whose it is. Keyed by the event so two
- * deployments sharing a secret would still not share a band.
+ * deployments sharing a secret would still not share a band. The word comes
+ * from the list for `PASS_BAND_LANGUAGE`; the digest bytes, and so the band's
+ * position in the list, do not depend on it.
  *
  * @param window - Window index, from {@link currentWindow}.
  * @returns The colour and word for that window.
@@ -85,12 +87,14 @@ export const deriveBand = (window: number): PassBand => {
     .update(`band|${env.eventId}|${String(window)}`)
     .digest();
 
-  // The masks cannot exceed either list's bounds, both being powers of two, so
-  // the fallbacks are unreachable. They are here because
-  // `noUncheckedIndexedAccess` has no way to see that.
+  const words = BAND_WORDS[env.passBandLanguage];
+
+  // The masks cannot exceed either list's bounds, both being powers of two and
+  // every language's list the same length, so the fallbacks are unreachable.
+  // They are here because `noUncheckedIndexedAccess` has no way to see that.
   return {
     colour: BAND_COLOURS[digest.readUInt8(0) & 7] ?? BAND_COLOURS[0],
-    word: BAND_WORDS[digest.readUInt8(1) & 31] ?? BAND_WORDS[0],
+    word: words[digest.readUInt8(1) & 31] ?? words[0],
   };
 };
 
