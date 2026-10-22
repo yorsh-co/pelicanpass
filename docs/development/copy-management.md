@@ -268,9 +268,9 @@ already set). A shared cache must never serve one visitor's language to another.
 - **The language switcher** renders in the public footer and in the admin rail when more
   than one locale is offered: pt-BR and English in production, plus `en-XA` in development.
   Both are the same native `<details>` menu, placed after the theme toggle:
-  the toggle shows the current locale's two-letter region code (`Intl.Locale#maximize`),
-  and the panel lists each locale as that code and its name in its own language, through
-  `Intl.DisplayNames`.
+  the toggle shows the current locale's code, which is the tag's own region or, when it
+  names none, its language (BR, EN), and the panel lists each locale as that code and its
+  name in its own language, through `Intl.DisplayNames`.
 - **Long-form pages** read `src/web/content/<locale>/*.md` at boot; a locale without its
   own file is served the pt-BR text.
 - **WhatsApp is not localised.** The send path carries no locale, and a locale with no
