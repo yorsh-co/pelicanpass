@@ -150,7 +150,7 @@ export const createAdminShellMessages = (
     /** Heading of the admin arrival screen. */
     homeTitle: (): string => format('admin-shell.home.title'),
 
-    /** Sign-out button at the foot of the rail. */
+    /** Accessible name and tooltip of the icon-only sign-out button at the foot of the admin rail. */
     logout: (): string => format('admin-shell.logout'),
 
     /** Accessible name of the rail's menu button while the drawer is open. Pair of admin-shell.menu.open. */

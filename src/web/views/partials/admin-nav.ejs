@@ -76,9 +76,14 @@ const currentKey = locals.navKey || '';
     <div class="admin-rail__actions">
       <%# Sign-out is a POST through api.admin.logout(), so it needs the shell
           bundle. That was already true of the page it moved from. -%>
-      <button class="ghost admin-rail__logout" data-admin-shell="logout" type="button">
+      <button
+        class="ghost admin-rail__logout"
+        data-admin-shell="logout"
+        type="button"
+        aria-label="<%= shell.logout() %>"
+        title="<%= shell.logout() %>"
+      >
         <span class="material-symbols-outlined" aria-hidden="true">logout</span>
-        <span class="btn-label"><%= shell.logout() %></span>
       </button>
 
       <!--

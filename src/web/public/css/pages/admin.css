@@ -316,14 +316,19 @@ a.admin-rail__link:hover {
   gap: var(--space-2);
 }
 
-/* Sized to its label rather than the full-width default every button takes. */
-.admin-rail__logout {
-  width: auto;
-  padding: var(--space-2) var(--space-4);
+/* An icon-only square the size of the theme toggle beside it, rather than the
+   full-width default every button takes. Scoped to the row so `min-height`
+   outranks `button.ghost`. */
+.admin-rail__actions .admin-rail__logout {
+  width: 2.25rem;
+  height: 2.25rem;
+  min-height: 0;
+  padding: 0;
+  border-radius: var(--radius-full);
 }
 
-.admin-rail__logout .material-symbols-outlined {
-  font-size: 20px;
+.admin-rail__actions .admin-rail__logout .material-symbols-outlined {
+  font-size: 1.25rem;
 }
 
 /* ------------------------------------------------------------------ drawer */
