@@ -713,7 +713,7 @@ const readNotice = (locale: Locale, file: string): string => {
 Markdown. A link or image is rendered only when its address is relative or uses `http`,
 `https` or `mailto`; any other link shows its text alone and any other image its alt text.
 
-The Markdown files, notices and questionnaires alike, may name the event or its organiser with a
+The Markdown files, notices and questionnaires alike, may name the event with a
 `{name}` placeholder such as `{eventName}`. It is filled from `COPY_DEFAULTS`
 (`src/constants/copy-defaults.ts`) before the file is rendered or parsed, and an unknown name
 fails the boot. Square-bracket markers such as `[RAZÃO SOCIAL]` are not placeholders: they are

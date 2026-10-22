@@ -103,7 +103,7 @@ export const createChromeMessages = (
     footerCopyright: (values: { eventName: string; year: number }): string =>
       format('chrome.footer.copyright', values),
 
-    /** Word before the organiser's name in the footer credit, which is a link reading the organiser's name. */
+    /** Word before the author's name in the footer credit, which is a link reading the author's name. */
     footerCreditPrefix: (): string => format('chrome.footer.creditPrefix'),
 
     /** Accessible name of the footer's language list. The languages themselves are named in their own language and are not translated here. */

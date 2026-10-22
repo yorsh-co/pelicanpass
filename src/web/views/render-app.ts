@@ -6,6 +6,7 @@ import expressLayouts from 'express-ejs-layouts';
 
 import { ADMIN_NAV } from '../../constants/admin-nav.ts';
 import { COPY_DEFAULTS } from '../../constants/copy-defaults.ts';
+import { CREDIT } from '../../constants/credit.ts';
 import { localeMiddleware } from '../../i18n/server.ts';
 
 import { adminMessages } from './fixtures.ts';
@@ -67,6 +68,7 @@ export const createViewApp = ({
     res.locals.cspNonce = nonce();
     res.locals.releaseId = releaseId;
     res.locals.copyDefaults = COPY_DEFAULTS;
+    res.locals.credit = CREDIT;
     next();
   });
   app.use(localeMiddleware);

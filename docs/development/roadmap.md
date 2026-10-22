@@ -22,7 +22,7 @@ once settings exist, the banner shows while any legal field is unset.
 | Survey windows, enablement, questions and options                                      | Postgres, Redis, Cloudflare Access, tunnel, Tailscale                 |
 | Item redemption options (`docs/features/redemption-options.md`)                        | Rate limits, load shedding, alerting, logging, telemetry              |
 | WhatsApp template list, door templates, default country code, budget                   | `EVENT_ID`, `APP_URL`, `SITE_HOST`                                    |
-| Copy placeholders (defaults in `COPY_DEFAULTS`, `src/constants/copy-defaults.ts`): event name, organiser, with PelicanPass defaults; legal name, CNPJ, contact and site, with no default |                                                                       |
+| Copy placeholders (defaults in `COPY_DEFAULTS`, `src/constants/copy-defaults.ts`): event name, with a PelicanPass default; legal name, CNPJ, contact and site, with no default |                                                                       |
 | Organisation details; its full privacy policy, which the `/privacy` notice references  |                                                                       |
 | The editable parts of `/privacy` and `/terms`; other event- or organisation-specific copy |                                                                    |
 | `APP_TITLE`, landing and pass welcome toggles                                          |                                                                       |

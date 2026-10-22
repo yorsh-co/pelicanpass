@@ -122,7 +122,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 > por
 
-- **Why:** Word before the organiser's name in the footer credit, which is a link reading the organiser's name.
+- **Why:** Word before the author's name in the footer credit, which is a link reading the author's name.
 - **Ref:** `chrome.footer.creditPrefix`
 - **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
