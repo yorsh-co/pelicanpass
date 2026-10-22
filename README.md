@@ -2,7 +2,7 @@
 
 <h1><img src="docs/images/banner.svg" alt="PelicanPass" width="640"></h1>
 
-**In-person conference experience web app with participant-initiated check-in, attendee passes and volunteer tooling.**
+**Self-service check-in, live attendee passes and volunteer tools for in-person conferences.**
 
 [![Node][node-badge]][node-url]
 [![TypeScript][ts-badge]][ts-url]

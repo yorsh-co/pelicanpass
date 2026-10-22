@@ -360,7 +360,7 @@ To bump one:
    ```
 
 3. Replace the tag and digest together in every file that names the image (`grep -rn 'caddy:' compose*.yml Dockerfile`).
-   The five `FROM` lines in the `Dockerfile` share one Node digest. Postgres, Redis and Caddy are
+   The six `FROM` lines in the `Dockerfile` share one Node digest. Postgres, Redis and Caddy are
    also named in `scripts/standby/lib.sh`, `scripts/db/export-results.test.ts` and
    `scripts/caddyfile.test.ts`; keep them on the same reference as Compose.
 4. Rebuild (`docker compose build`) and recreate (`docker compose up -d`), then re-run the
