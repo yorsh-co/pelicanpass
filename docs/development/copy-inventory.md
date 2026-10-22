@@ -6,7 +6,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 ## Contents
 
-- [chrome](#chrome) — 31 messages
+- [chrome](#chrome) — 32 messages
 - [landing](#landing) — 10 messages
 - [errors](#errors) — 18 messages
 - [checkin](#checkin) — 70 messages
@@ -149,6 +149,15 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 - **Why:** Footer link to the privacy notice.
 - **Ref:** `chrome.footer.privacy`
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
+
+### chrome · footer · source
+
+> Código-fonte no GitHub
+
+- **Why:** Accessible name and tooltip of the icon link to the project's GitHub repository, in the footer and the administrator rail.
+  The link shows only the GitHub mark.
+- **Ref:** `chrome.footer.source`
 - **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 
 ### chrome · footer · terms

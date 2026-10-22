@@ -26,7 +26,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 ### Changed
 
 - The admin rail's sign-out is an icon button, named and titled by `admin-shell.logout`, so the label no longer wraps in English
-- The footer credits Yorsh, linking to the repository, from a fixed `CREDIT` constant (`src/constants/credit.ts`) rather than `COPY_DEFAULTS`, so a per-event copy setting cannot replace the authorship credit; the copyright line still names the event
+- The footer credits Yorsh, linking to yorsh.co, from a fixed `CREDIT` constant (`src/constants/credit.ts`) rather than `COPY_DEFAULTS`, so a per-event copy setting cannot replace the authorship credit; the copyright line still names the event; the footer and the admin rail also carry a GitHub icon linking to the repository (`CREDIT.sourceUrl`)
 - `scripts/static/build.ts` hashes only the inline scripts a browser executes: `type="application/json"` data blocks are data, so they no longer count toward the policy's length
 - The volunteer pass shows its tier as a chip with a chevron, in place of the tab, plus a tier-coloured edge along the card's top; the five tier colours are one family at a shared lightness and chroma beside Harbour, and the actions face keeps the brand backdrop
 - The boot screen shows the mark at the centre of the viewport with the two-tone wordmark pinned to the bottom, replacing the one-line lockup and the three star and ring motifs; the landing and closing pages open on the same mark and wordmark so the hand-off between them reads as one surface
