@@ -42,6 +42,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 
 ### Fixed
 
+- The pass shows the check-in moment with an abbreviated month in English, and every time on the pass in 24-hour format, so the footer line no longer wraps on the volunteer pass
 - `npm run docs:screenshots` captured the check-in ticket step before its hint was shown, so `checkin-ticket.png` changed from run to run; both check-in captures now wait for the hint to finish fading in
 - `npm run docs:screenshots` drew the rotation window's ring at whatever level it had drained to by the time of the capture, so `pass-back.png` and `staff.png` changed from run to run; the ring is now held at three quarters
 - `npm run docs:screenshots` could capture a page before its delayed animations ran, so the footer, which fades in 0.4s after load, was missing from some screenshots and present in others; every capture now waits for running animations to finish
