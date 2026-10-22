@@ -28,6 +28,7 @@ import { surveyFor } from '../../modules/survey/survey.definition.ts';
 import { metricsLabels } from '../../modules/metrics/metrics.labels.ts';
 import { closingView, landingView } from '../landing/landing-view.ts';
 import { NOTICES } from '../content/notices.ts';
+import { copyFor } from '../errors/render-error-page.ts';
 
 import type { MessagesOf } from '../../i18n/generated/registry.ts';
 import type { Locale } from '../../i18n/locales.ts';
@@ -1191,8 +1192,8 @@ const healthyMetrics = (locals: Locals): Locals => ({
 /**
  * Cases only the demo build renders; the snapshot suite does not assert them.
  *
- * `not-found` is the 404 with plain copy, where `error-with-action` carries an
- * escaping test string.
+ * `not-found` is the 404 as the app renders it, with the copy from the `errors`
+ * catalog, where `error-with-action` carries an escaping test string.
  */
 export const DEMO_CASES: ViewCase[] = [
   demoVariant('admin-metrics-full', 'admin-metrics-healthy', healthyMetrics),
@@ -1201,13 +1202,20 @@ export const DEMO_CASES: ViewCase[] = [
   {
     name: 'not-found',
     view: 'pages/error',
-    locals: () => ({
-      layout: 'layouts/plain',
-      title: 'Página não encontrada',
-      heading: '404',
-      subtitle: 'Página não encontrada',
-      message: 'O endereço pode ter mudado ou nunca ter existido.',
-      action: ERROR_ACTION,
-    }),
+    locals: ({ locale }) => {
+      const copy = copyFor(404, locale, undefined, '/');
+
+      return {
+        layout: 'layouts/plain',
+        title: getMessages(locale, 'errors').title({
+          subtitle: copy.subtitle,
+          appTitle: env.appTitle,
+        }),
+        heading: copy.heading,
+        subtitle: copy.subtitle,
+        message: copy.message,
+        action: copy.action,
+      };
+    },
   },
 ];

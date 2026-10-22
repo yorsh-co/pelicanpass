@@ -16,6 +16,7 @@ import {
 } from './build.ts';
 
 import { isValidTicketCode } from '../../src/constants/ticket.ts';
+import { getMessages } from '../../src/i18n/server.ts';
 import {
   DEMO_ROSTER,
   DEMO_TICKET_CODES,
@@ -366,6 +367,20 @@ describe(
 
         assert.ok(html.includes('href="?lang=en"'), file);
         assert.ok(html.includes('href="?lang=pt-BR"'), file);
+      }
+    });
+
+    it('renders the not-found copy of the errors catalog in each tree', async () => {
+      for (const [file, locale] of [
+        ['404.html', 'pt-BR'],
+        ['en/404.html', 'en'],
+      ] as const) {
+        const html = await read(file);
+        const m = getMessages(locale, 'errors');
+
+        assert.ok(html.includes(m.notFoundSubtitle()), file);
+        assert.ok(html.includes(m.notFoundMessage()), file);
+        assert.ok(html.includes(m.homeAction()), file);
       }
     });
 
