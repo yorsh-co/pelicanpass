@@ -8733,7 +8733,8 @@ Client files: literals that carry an accent or start with a capitalised word, ig
 | File | Strings |
 | --- | ---: |
 | `pages/admin/attendees/form/deferred-toast.test.ts` | 4 |
-| **Total** | **4** |
+| `pages/attendee/pass/ui/checkin-at.test.ts` | 1 |
+| **Total** | **5** |
 
 ## Appendix E — External: WhatsApp templates
 
