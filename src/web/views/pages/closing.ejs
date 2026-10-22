@@ -7,16 +7,18 @@
     all: there is nothing left to count down or open. %>
 <main class="landing">
   <div class="landing-content">
-    <div class="logo">
-      <img
-        class="boot-wordmark"
-        src="/assets/images/logo/wordmark-primary.svg"
-        alt="<%= chrome.wordmarkAlt() %>"
-      />
-    </div>
+    <img class="landing-mark" src="/assets/images/logo/mark.svg" alt="" />
     <h1 class="landing-title"><%= copy.closedTitle() %></h1>
     <p class="landing-lede"><%= copy.closedBody() %></p>
   </div>
+
+  <%# The boot screen's lettering, at the boot screen's size, in flow as on
+      pages/landing.ejs. %>
+  <img
+    class="boot-lettering"
+    src="/assets/images/logo/wordmark-two-tone.svg"
+    alt="<%= chrome.wordmarkAlt() %>"
+  />
 </main>
 
 <%# Asset block last, for the reason spelled out in pages/error.ejs. %>

@@ -99,6 +99,11 @@ const catalog: ChromeCatalog = {
     { type: 0, value: 'Ƥřīṽȧȧƈīḓȧȧḓḗḗ' },
     { type: 0, value: ']' },
   ],
+  'chrome.footer.source': [
+    { type: 0, value: '[' },
+    { type: 0, value: 'Ƈóḓīɠǿǿ-ƒǿǿƞŧḗḗ ƞǿǿ ƓīŧĦŭŭƀ' },
+    { type: 0, value: ']' },
+  ],
   'chrome.footer.terms': [
     { type: 0, value: '[' },
     { type: 0, value: 'Ŧḗḗřḿǿǿş' },

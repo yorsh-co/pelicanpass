@@ -9,7 +9,7 @@ import type { MessagesOf } from '../i18n/generated/registry.ts';
 import type { AdminSession } from '../types/session.ts';
 
 /** Each section's label, total so a new section cannot ship unnamed. */
-const NAV_LABELS: Record<
+export const NAV_LABELS: Record<
   AdminNavKey,
   (shell: MessagesOf['admin-shell']) => string
 > = {

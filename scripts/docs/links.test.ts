@@ -23,6 +23,9 @@ const DOC_PATH = /(?<![\w./:-])docs\/[\w./-]+\.(?:md|json)(?![\w-])/g;
 /** An inline markdown link target, up to the closing parenthesis. */
 const LINK = /\]\(([^)\s]+)[^)]*\)/g;
 
+/** The `src` of an inline HTML image, which `LINK` does not see. */
+const IMG = /<img\s[^>]*?src="([^"]+)"/g;
+
 /** Targets that are not files: URLs, anchors and site-absolute routes. */
 const NOT_A_FILE = /^(?:https?:|mailto:|#|\/)/;
 
@@ -93,6 +96,19 @@ describe('doc references', () => {
             decodeURIComponent(target.split('#')[0] ?? ''),
           ])
           .filter(([, target]) => target !== '')
+          .filter(([, target]) => !existsSync(resolve(ROOT, dirname(path), target)))
+          .map(([line, target]) => `${path}:${String(line)} → ${target}`),
+      );
+
+    assert.deepEqual(failures, []);
+  });
+
+  it('resolves every relative HTML image in markdown', () => {
+    const failures = tracked
+      .filter((path) => path.endsWith('.md'))
+      .flatMap((path) =>
+        matches(stripFences(readText(path) ?? ''), IMG)
+          .filter(([, target]) => !NOT_A_FILE.test(target))
           .filter(([, target]) => !existsSync(resolve(ROOT, dirname(path), target)))
           .map(([line, target]) => `${path}:${String(line)} → ${target}`),
       );

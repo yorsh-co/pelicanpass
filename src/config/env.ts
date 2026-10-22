@@ -3,6 +3,11 @@ import { existsSync, readFileSync } from 'node:fs';
 import 'dotenv/config';
 
 import { MIN_PASSWORD_LENGTH, WEAK_PASSWORDS } from '../constants/password.ts';
+import {
+  BAND_LANGUAGES,
+  DEFAULT_BAND_LANGUAGE,
+  isBandLanguage,
+} from '../constants/pass.ts';
 import { QR_TOKEN_PATTERN } from '../constants/qr-token.ts';
 import {
   boolean,
@@ -253,6 +258,19 @@ if (passSecret === adminPasswordPepper) {
   );
 }
 
+/**
+ * Both band screens must show the same word, so the language is one value for
+ * the deployment. A typo would boot cleanly and then show a vocabulary nobody
+ * chose, which is only noticed when two screens disagree at the door.
+ */
+const passBandLanguage = optional('PASS_BAND_LANGUAGE', DEFAULT_BAND_LANGUAGE);
+
+if (!isBandLanguage(passBandLanguage)) {
+  throw new Error(
+    `Environment variable PASS_BAND_LANGUAGE must be one of ${BAND_LANGUAGES.map((language) => `"${language}"`).join(', ')}, received "${passBandLanguage}"`,
+  );
+}
+
 export const env = {
   port: numeric('PORT', 3000),
   nodeEnv: optional('NODE_ENV', 'production'),
@@ -400,6 +418,17 @@ export const env = {
    * Defaults to on, so no environment loses the control by forgetting to set it.
    */
   passBandEnabled: boolean('PASS_BAND_ENABLED', true),
+
+  /**
+   * The language of the band's word, for every pass and staff screen in the
+   * deployment.
+   *
+   * One value rather than the page language: a volunteer compares the two
+   * screens by eye, and an attendee reading in English beside a volunteer
+   * reading in Portuguese would see two different words for the same band.
+   * Defaults to `pt-BR`, the vocabulary the band shipped with.
+   */
+  passBandLanguage,
 
   /**
    * When the welcome line under the attendee's name switches text, in order.

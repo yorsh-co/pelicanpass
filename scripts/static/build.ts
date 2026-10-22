@@ -199,8 +199,31 @@ const INLINE_ELEMENT = /<(script|style)\b([^>]*)>([\s\S]*?)<\/\1>/gi;
 const NONCE_ATTRIBUTE = /\s+nonce="[^"]*"/gi;
 
 /**
+ * Reports whether a `<script>` runs, so that CSP applies to it.
+ *
+ * A script with no `type`, an empty one, a JavaScript MIME type or `module` is
+ * executed. Any other type, such as `application/json`, makes it a data block,
+ * which the HTML spec never prepares for execution, so CSP's inline check does
+ * not reach it and it needs no hash.
+ *
+ * @param attributes - The text between `<script` and `>`.
+ */
+const isExecutable = (attributes: string): boolean => {
+  const type = /\stype\s*=\s*"([^"]*)"/i.exec(attributes)?.[1];
+
+  return (
+    type === undefined ||
+    ['', 'module', 'text/javascript', 'application/javascript'].includes(
+      type.trim().toLowerCase(),
+    )
+  );
+};
+
+/**
  * Removes every `nonce` attribute and returns the CSP hashes of the inline
- * scripts and styles the document carries.
+ * scripts and styles the document carries. Inline data blocks, such as
+ * `type="application/json"`, lose their nonce but are not hashed: see
+ * {@link isExecutable}.
  *
  * @param html - A rendered page.
  */
@@ -212,8 +235,9 @@ export const stripNonces = (
 
   for (const [, tag, attributes, body] of html.matchAll(INLINE_ELEMENT)) {
     if (tag === undefined || body === undefined) continue;
-    if (tag.toLowerCase() === 'script' && /\ssrc\s*=/i.test(attributes ?? '')) {
-      continue;
+    if (tag.toLowerCase() === 'script') {
+      if (/\ssrc\s*=/i.test(attributes ?? '')) continue;
+      if (!isExecutable(attributes ?? '')) continue;
     }
 
     (tag.toLowerCase() === 'script' ? scripts : styles).push(cspHash(body));
@@ -231,7 +255,7 @@ export const stripNonces = (
  * @param header - `Content-Security-Policy` as the fallback sent it.
  * @param hashes - Script and style hashes to authorise in place of nonces.
  */
-const hashPolicy = (
+export const hashPolicy = (
   header: string,
   hashes: { scripts: string[]; styles: string[] },
 ): string =>
@@ -250,8 +274,21 @@ const hashPolicy = (
     })
     .join('; ');
 
-const headersFile = (policy: string): string =>
-  `/*
+/**
+ * Builds the Cloudflare Pages `_headers` file.
+ *
+ * @param policy - `Content-Security-Policy` value to send on every route.
+ * @param extra - Further headers to send on every route, by name.
+ */
+export const headersFile = (
+  policy: string,
+  extra: Readonly<Record<string, string>> = {},
+): string => {
+  const added = Object.entries(extra)
+    .map(([name, value]) => `  ${name}: ${value}\n`)
+    .join('');
+
+  return `/*
   Content-Security-Policy: ${policy}
   Permissions-Policy: ${PERMISSIONS_POLICY}
   Referrer-Policy: no-referrer
@@ -259,9 +296,60 @@ const headersFile = (policy: string): string =>
   X-Frame-Options: SAMEORIGIN
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
-/site.webmanifest
+${added}/site.webmanifest
   Content-Type: application/manifest+json
 `;
+};
+
+/**
+ * Copies the files under `src/web/public` that `seeds` reference, following
+ * references inside copied CSS and JS, so only assets in use are shipped.
+ *
+ * @param outDir - Directory to copy into.
+ * @param seeds - Root-absolute paths to start from.
+ * @param skip - Root-absolute paths that are pages, not assets.
+ * @returns The size in bytes of each file written, keyed by its path relative
+ *   to `outDir`.
+ * @throws {Error} If a referenced file is not in `src/web/public`.
+ */
+export const copyReferencedAssets = async (
+  outDir: string,
+  seeds: readonly string[],
+  skip: ReadonlySet<string> = NOT_ASSETS,
+): Promise<Map<string, number>> => {
+  const queue = [...seeds];
+  const copied = new Set<string>();
+  const written = new Map<string, number>();
+
+  for (let target = queue.pop(); target !== undefined; target = queue.pop()) {
+    if (skip.has(target) || copied.has(target)) continue;
+
+    copied.add(target);
+
+    const source = path.join(PUBLIC_DIR, target);
+    const inside = path.relative(PUBLIC_DIR, source);
+
+    if (
+      inside.startsWith('..') ||
+      !existsSync(source) ||
+      !(await stat(source)).isFile()
+    ) {
+      throw new Error(`${target} is referenced but not in src/web/public`);
+    }
+
+    const destination = path.join(outDir, target);
+
+    await mkdir(path.dirname(destination), { recursive: true });
+    await cp(source, destination);
+    written.set(target.slice(1), (await stat(source)).size);
+
+    if (/\.(css|js)$/.test(target)) {
+      queue.push(...referencesOf(target, await readFile(source, 'utf8')));
+    }
+  }
+
+  return written;
+};
 
 /** Starts the fallback closed for good and hands its pages to `use`. */
 const withClosedFallback = async <T>(
@@ -376,41 +464,15 @@ export const buildStaticSite = async ({
 
   await write('site.webmanifest', JSON.stringify(manifest));
 
-  const queue = [
+  const assets = await copyReferencedAssets(outDir, [
     '/favicon.ico',
     ...manifest.icons.map((icon) => icon.src),
     ...PAGES.flatMap(({ file }) =>
       referencesOf(`/${file}`, pages.get(file) ?? ''),
     ),
-  ];
-  const copied = new Set<string>();
+  ]);
 
-  for (let target = queue.pop(); target !== undefined; target = queue.pop()) {
-    if (NOT_ASSETS.has(target) || copied.has(target)) continue;
-
-    copied.add(target);
-
-    const source = path.join(PUBLIC_DIR, target);
-    const inside = path.relative(PUBLIC_DIR, source);
-
-    if (
-      inside.startsWith('..') ||
-      !existsSync(source) ||
-      !(await stat(source)).isFile()
-    ) {
-      throw new Error(`${target} is referenced but not in src/web/public`);
-    }
-
-    const destination = path.join(outDir, target);
-
-    await mkdir(path.dirname(destination), { recursive: true });
-    await cp(source, destination);
-    written.set(target.slice(1), (await stat(source)).size);
-
-    if (/\.(css|js)$/.test(target)) {
-      queue.push(...referencesOf(target, await readFile(source, 'utf8')));
-    }
-  }
+  assets.forEach((size, file) => written.set(file, size));
 
   const policy = hashPolicy(fallbackPolicy, {
     scripts: [...hashes.scripts],

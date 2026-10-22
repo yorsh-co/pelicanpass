@@ -1,4 +1,4 @@
-import { PALETTE, TILE_RADIUS } from './palette.ts';
+import { MARK_SCALE, PALETTE, TILE_RADIUS } from './palette.ts';
 
 /** A point on the 100-unit design grid. */
 export interface Point {
@@ -40,8 +40,13 @@ const el = (tag: string, attributes: Record<string, string | number>): string =>
     .map(([name, value]) => `${name}="${String(value)}"`)
     .join(' ')}/>`;
 
-/** Moves the glyph's optical centre onto the grid's centre. */
-const CENTRE = { x: 57, y: 49 } as const;
+/**
+ * The construction point placed on the grid's centre. The bounding box is
+ * centred at x 57 but the area centroid sits near x 47, because the neck and
+ * head are heavy and the beak is a thin triangle; 52 splits the difference so
+ * the mark reads as centred without drifting right.
+ */
+const CENTRE = { x: 52, y: 49 } as const;
 
 /**
  * The mark's shapes in paint order: the head covers the root of the beak.
@@ -173,3 +178,11 @@ export const tileIcon = (options: IconOptions): string => icon(true, options);
  */
 export const fullBleedIcon = (options: IconOptions): string =>
   icon(false, options);
+
+/**
+ * The mark alone on a transparent ground, for surfaces that supply their own.
+ *
+ * @returns The SVG document, 100 × 100, in the on-Harbour colourway.
+ */
+export const standaloneMark = (): string =>
+  svg(100, markGroup(MARK_SCALE.standalone));

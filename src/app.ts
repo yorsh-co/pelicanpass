@@ -7,9 +7,11 @@ import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import crypto from 'crypto';
 
+import { cspDirectives } from './config/csp.ts';
 import { env } from './config/env.ts';
 import { COPY_DEFAULTS } from './constants/copy-defaults.ts';
-import { BASE_LOCALE } from './i18n/locales.ts';
+import { CREDIT } from './constants/credit.ts';
+import { BASE_LOCALE, dateTimeLocale } from './i18n/locales.ts';
 import { getMessages } from './i18n/server.ts';
 import apiRoutes from './api/index.ts';
 import webRoutes from './web/routes/web.routes.ts';
@@ -59,8 +61,10 @@ app.use((_req, res, next) => {
   // error, say — which still render a layout. `localeMiddleware` resolves the
   // real value for every web route.
   res.locals.locale = BASE_LOCALE;
+  res.locals.dateLocale = dateTimeLocale(BASE_LOCALE);
   res.locals.chrome = getMessages(BASE_LOCALE, 'chrome');
   res.locals.copyDefaults = COPY_DEFAULTS;
+  res.locals.credit = CREDIT;
   res.locals.localeLinks = [];
 
   next();
@@ -69,29 +73,12 @@ app.use((_req, res, next) => {
 app.use(
   helmet({
     contentSecurityPolicy: {
-      directives: {
-        scriptSrc: [
-          "'self'",
-          'https://challenges.cloudflare.com',
-          // helmet types directive callbacks against Node's ServerResponse,
-          // which carries no `locals`; the downcast holds because helmet only
-          // ever runs mounted on an Express app.
-          (_req, res) => `'nonce-${String((res as Response).locals.cspNonce)}'`,
-        ],
-        // Narrowed from helmet's `'self' https:` default, which allows any
-        // HTTPS origin. Styles and fonts are all first-party since the fonts
-        // were vendored, so no external origin is permitted for either. Views
-        // carry no inline `style` attribute; the one `<style>` block, in the
-        // `<noscript>` of the main layout, takes the response nonce.
-        styleSrc: [
-          "'self'",
-          (_req, res) => `'nonce-${String((res as Response).locals.cspNonce)}'`,
-        ],
-        // Fonts are vendored under /assets/fonts. No CSS declares a `data:`
-        // font, so that source is gone with the Google origins.
-        fontSrc: ["'self'"],
-        frameSrc: ["'self'", 'https://challenges.cloudflare.com'],
-      },
+      directives: cspDirectives(
+        // helmet types directive callbacks against Node's ServerResponse,
+        // which carries no `locals`; the downcast holds because helmet only
+        // ever runs mounted on an Express app.
+        (_req, res) => `'nonce-${String((res as Response).locals.cspNonce)}'`,
+      ),
     },
   }),
 );

@@ -5,15 +5,17 @@
  * the boot screen, the check-in success card and the pass — and the scarcity is
  * deliberate. This joins them rather than diluting them: it is the entry before
  * the entry, the first thing anyone opening the link sees for days, and it
- * hands straight over to the boot screen on the same backdrop with a wordmark
- * in the same place — the secondary here, the primary there. Everything between
- * that pair and the pass is still neutral canvas, which is what lets the pass
- * read as the reward.
+ * hands straight over to the boot screen on the same backdrop. Everything
+ * between that pair and the pass is still neutral canvas, which is what lets
+ * the pass read as the reward.
  *
- * The layout deliberately mirrors components/boot-screen.css: one centred
- * column, wordmark on top, on-brand ink. A visitor who watches the countdown
- * run out should see the page they were already looking at continue, not a
- * second design.
+ * The two share one composition, built from the same two files: the mark, and
+ * the two-tone lettering at the foot of the page. The lettering is the same
+ * element at the same size — `.boot-lettering` in components/boot-screen.css is
+ * used here as it stands. The mark heads the content column here and sits at
+ * the centre there, and the lettering sits above the footer here and at the
+ * viewport edge there. A visitor who watches the clock run out should see the
+ * page they were already looking at continue, not a second design.
  */
 
 /*
@@ -34,20 +36,19 @@ body {
 }
 
 .landing {
-  /* .plain-wrapper is the flex column; this claims its free height so the
-     column sits in the optical centre rather than at the top. */
+  /* .plain-wrapper is the flex column; this claims its free height, which the
+     content column and the lettering below it share. */
   flex: 1;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
 /*
- * The counterpart of `.boot-content`: one centred column on the gradient, no
- * card. The card this replaced painted `--surface` and a shadow, which on the
- * gradient read as a panel floating over the brand rather than as the brand.
+ * One centred column on the gradient, no card. The card this replaced painted
+ * `--surface` and a shadow, which on the gradient read as a panel floating over
+ * the brand rather than as the brand.
  */
 .landing-content {
   width: 100%;
@@ -59,18 +60,46 @@ body {
 
   text-align: center;
 
+  /* Auto margins on both sides split the free height evenly, which centres the
+     column in the space above the lettering and leaves the lettering at the
+     foot of `.landing`. */
+  margin-block: auto;
+
   animation: fadeIn var(--duration-slow) var(--ease-out) forwards;
 }
 
 /*
- * The wordmark takes on-brand ink here because the surface under it is the
- * brand backdrop rather than canvas — sizing stays in partials/header.css,
- * which styles `.wordmark` wherever it appears.
+ * The distance below the lettering matches components/boot-screen.css. Here it
+ * is measured to the footer rather than to the viewport edge, which is the one
+ * place the two surfaces differ.
+ */
+.landing .boot-lettering {
+  margin-bottom: var(--space-8);
+}
+
+/*
+ * The mark at the head of the column, 6rem against the boot screen's 8rem: the
+ * countdown has to fit under it at a 320px viewport, and the boot screen has
+ * nothing else to share the space with.
  *
  * `pop` is the boot screen's entrance, reused so the two surfaces open the same
  * way. Both are one-shot and `forwards`, so the reduced-motion cap in
  * base/reset.css lands them on their final frame rather than parking them
  * mid-flight.
+ */
+.landing-mark {
+  display: block;
+  width: 6rem;
+  height: auto;
+  margin-bottom: var(--space-6);
+
+  animation: pop var(--duration-slow) var(--ease-spring) forwards;
+}
+
+/*
+ * The one-line lockup, on the check-in continue page only, which shares this
+ * sheet and has no lettering of its own to hand over. It opens the same way the
+ * mark does.
  */
 .landing .logo {
   animation: pop var(--duration-slow) var(--ease-spring) forwards;
@@ -412,7 +441,12 @@ footer .small-print a:hover {
   color: var(--text-on-brand-muted);
 }
 
-.theme-toggle:hover {
+.footer-source {
+  color: var(--text-on-brand-muted);
+}
+
+.theme-toggle:hover,
+.footer-source:hover {
   background: var(--camera-control-bg);
   color: var(--text-on-brand);
 }

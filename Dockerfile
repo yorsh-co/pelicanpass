@@ -1,5 +1,5 @@
 # Node 24: runs .ts sources directly via native type stripping, no build step.
-FROM node:24.21.0-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1 AS dev
+FROM node:24.22.1-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 AS dev
 
 WORKDIR /usr/src/app
 
@@ -21,7 +21,7 @@ CMD ["npm", "run", "dev:app"]
 # esbuild is a devDependency, so the bundle has to be built while dev
 # dependencies are still installed. Only the output crosses into `prod`, which
 # is why that stage can prune without losing the bundle.
-FROM node:24.21.0-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1 AS build
+FROM node:24.22.1-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 AS build
 
 WORKDIR /usr/src/app
 
@@ -53,7 +53,7 @@ CMD ["npm", "run", "migrate"]
 #
 # No `release` stamp: this image is run from a checkout of the same tag
 # production runs, and nothing it serves reports a release.
-FROM node:24.21.0-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1 AS fallback
+FROM node:24.22.1-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 AS fallback
 
 WORKDIR /usr/src/app
 
@@ -91,7 +91,7 @@ CMD ["node", "src/fallback/server.ts"]
 # every tracked file the allow-list leaves out, so its pathspec is limited to the
 # paths .dockerignore admits. Keep the two lists in step, or every build reports
 # dirty.
-FROM node:24.21.0-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1 AS release
+FROM node:24.22.1-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 AS release
 
 RUN apk add --no-cache git
 
@@ -113,7 +113,7 @@ RUN --mount=type=bind,target=/src,rw \
 # Not part of any runtime image: build it on its own with `npm run
 # check:docker-context`. It guards .dockerignore against regressing to a
 # deny-list that lets local secrets, logs and tooling state into `COPY` steps.
-FROM node:24.21.0-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1 AS context-check
+FROM node:24.22.1-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 AS context-check
 
 RUN --mount=type=bind,target=/ctx \
     leaked="$(find /ctx \( \
@@ -129,7 +129,7 @@ RUN --mount=type=bind,target=/ctx \
 # -----------------------------------------------------------------------------
 # prod — runtime image
 # -----------------------------------------------------------------------------
-FROM node:24.21.0-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1 AS prod
+FROM node:24.22.1-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 AS prod
 
 WORKDIR /usr/src/app
 

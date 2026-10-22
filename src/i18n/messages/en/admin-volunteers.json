@@ -1,0 +1,230 @@
+{
+  "admin-volunteers.error.failed": {
+    "defaultMessage": "Could not save. Try again.",
+    "description": "Error line when a save failed for a reason the server did not explain."
+  },
+  "admin-volunteers.error.forbidden": {
+    "defaultMessage": "You no longer have permission to edit volunteers.",
+    "description": "Error line when the operator's volunteers:write permission was withdrawn while the record was open."
+  },
+  "admin-volunteers.error.notFound": {
+    "defaultMessage": "This volunteer was not found in this event.",
+    "description": "Error line when the volunteer no longer exists in the event."
+  },
+  "admin-volunteers.filter.search": {
+    "defaultMessage": "Search",
+    "description": "Label of the search box above the list."
+  },
+  "admin-volunteers.filter.searchPlaceholder": {
+    "defaultMessage": "Name, nickname or code",
+    "description": "Placeholder of the search box above the volunteer list: the three things it matches."
+  },
+  "admin-volunteers.filter.team": {
+    "defaultMessage": "Team",
+    "description": "Label of the team choice above the list."
+  },
+  "admin-volunteers.filter.teamAll": {
+    "defaultMessage": "All",
+    "description": "Team choice value: volunteers of every team."
+  },
+  "admin-volunteers.filter.teamNone": {
+    "defaultMessage": "No team",
+    "description": "Team choice value: volunteers with no team set."
+  },
+  "admin-volunteers.filter.tierAll": {
+    "defaultMessage": "All",
+    "description": "First access chip above the list: no filter on access."
+  },
+  "admin-volunteers.filter.tierChip": {
+    "defaultMessage": "{label} ({count, number})",
+    "description": "Access chip above the list. {label} is the access name, as admin-volunteers.tier writes it, and {count} how many volunteers hold it."
+  },
+  "admin-volunteers.filter.tierLabel": {
+    "defaultMessage": "Access",
+    "description": "Label of the access chips above the volunteer list."
+  },
+  "admin-volunteers.history.by": {
+    "defaultMessage": "by {name}",
+    "description": "After the time of a change. {name} is the administrator who made it."
+  },
+  "admin-volunteers.history.change": {
+    "defaultMessage": "{before} → {after}",
+    "description": "One history line's old and new value. {before} and {after} are written by the other history messages."
+  },
+  "admin-volunteers.history.empty": {
+    "defaultMessage": "No changes made from this screen.",
+    "description": "Shown when the volunteer's permissions were never changed from this screen."
+  },
+  "admin-volunteers.history.field": {
+    "defaultMessage": "{field, select, canRedeem {Pickups} redeemScopes {Stations} canDraw {Number generator} showAdminLink {Admin link} team {Team} teamRole {Role} checkinTime {Check-in time} other {}}",
+    "description": "Name of the permission a history line changed. N° is the abbreviation of número. other is only a fallback."
+  },
+  "admin-volunteers.history.heading": {
+    "defaultMessage": "History",
+    "description": "Heading of the volunteer's list of past changes."
+  },
+  "admin-volunteers.history.no": {
+    "defaultMessage": "No",
+    "description": "A switch's value in a history line: off."
+  },
+  "admin-volunteers.history.removedAdmin": {
+    "defaultMessage": "account removed",
+    "description": "Stands for the name in admin-volunteers.history.by when the administrator's account has since been deleted. Lowercase."
+  },
+  "admin-volunteers.history.yes": {
+    "defaultMessage": "Yes",
+    "description": "A switch's value in a history line: on."
+  },
+  "admin-volunteers.legend.access": {
+    "defaultMessage": "{tier, select, edit {Registers and edits attendees} lookup {Looks up attendees and marks check-in} tshirt {Hands over T-shirts at the T-shirt desk} redeem {Hands over items at their station} raffle {Generates the raffle numbers} none {None of the above; at most lookup without marking check-in, or the link to /admin} other {None of the above}}",
+    "description": "Legend entry above the volunteer list: what a volunteer with this access can do, beside the access chip. tier is the access, as admin-volunteers.tier names it: edit registers and edits attendees on the roster, lookup searches attendees and marks them present, tshirt hands out T-shirts at the T-shirt desk, redeem hands out items (T-shirt, lunch and the like) at the station the volunteer works, raffle runs the number draw. none is the plain volunteer: none of the above, at most a lookup that cannot mark anyone present, or the link to the /admin area, which is written as is. other is only a fallback. A sentence fragment with no final period, as the entries are short lines."
+  },
+  "admin-volunteers.legend.grant": {
+    "defaultMessage": "{tier, select, edit {Linked admin account with attendees:read and attendees:write} lookup {Linked admin account with attendees:read and checkin:write} tshirt {Linked admin account with tshirt:redeem} redeem {can_redeem with at least one station} raffle {can_draw} none {Any other volunteer} other {Any other volunteer}}",
+    "description": "Legend entry above the volunteer list, in a muted second line under what the access allows: what grants this access to a volunteer. tier is the access, as admin-volunteers.tier names it. edit, lookup and tshirt come from the administrator account linked to the volunteer (the admin_username column), which must be active and hold the permissions named. redeem is the can_redeem flag with at least one valid station. raffle is the can_draw flag. none is any volunteer that fits no other row. attendees:read, attendees:write, checkin:write, tshirt:redeem, can_redeem and can_draw are permission and column identifiers: keep them exactly as written, untranslated. other is only a fallback. A sentence fragment with no final period."
+  },
+  "admin-volunteers.legend.heading": {
+    "defaultMessage": "Access levels",
+    "description": "Heading of the legend above the volunteer list, which explains each access chip: what it lets a volunteer do and what grants it."
+  },
+  "admin-volunteers.legend.lede": {
+    "defaultMessage": "The chip shows the highest level that applies to the volunteer; they may also hold the levels below it.",
+    "description": "One line under the legend heading. The chip on a volunteer shows only the highest access that applies, in the order listed (the first row wins), while the volunteer may also hold the accesses listed after it, so someone who can both look up and redeem shows lookup. The chip is the colored access label on each row."
+  },
+  "admin-volunteers.list.adminLink": {
+    "defaultMessage": "Admin link",
+    "description": "Small mark on a volunteer card: their pass shows the link to the administrator screen."
+  },
+  "admin-volunteers.list.clear": {
+    "defaultMessage": "Clear filters",
+    "description": "Button in the no-match message that removes every filter."
+  },
+  "admin-volunteers.list.code": {
+    "defaultMessage": "Code",
+    "description": "Label of the ticket code on a volunteer card."
+  },
+  "admin-volunteers.list.count": {
+    "defaultMessage": "{count, plural, =0 {No volunteers} =1 {# volunteer} other {# volunteers}}",
+    "description": "Line above the list, read aloud when a filter changes. {count} is how many volunteers are showing."
+  },
+  "admin-volunteers.list.empty": {
+    "defaultMessage": "No volunteers registered for this event.",
+    "description": "Shown instead of the list when the event has no volunteers."
+  },
+  "admin-volunteers.list.heading": {
+    "defaultMessage": "Event volunteers",
+    "description": "Visually hidden heading of the volunteer list."
+  },
+  "admin-volunteers.list.noMatches": {
+    "defaultMessage": "No volunteers match the filters.",
+    "description": "Shown when the access, team and search filters leave nobody."
+  },
+  "admin-volunteers.list.noTeam": {
+    "defaultMessage": "No team",
+    "description": "Where a volunteer's team would be, when they have none."
+  },
+  "admin-volunteers.list.raffle": {
+    "defaultMessage": "Number generator",
+    "description": "Small mark on a volunteer card: they may use the number generator. N° is the abbreviation of número."
+  },
+  "admin-volunteers.list.stations": {
+    "defaultMessage": "Stations",
+    "description": "Label of the stations a volunteer may record collections at, on a volunteer card."
+  },
+  "admin-volunteers.page.lede": {
+    "defaultMessage": "What each volunteer can do and which team they belong to. Every change is recorded in the history.",
+    "description": "Line under the heading of the volunteer permissions screen. It says what the screen edits and that changes are recorded."
+  },
+  "admin-volunteers.page.title": {
+    "defaultMessage": "Volunteers",
+    "description": "Heading of the volunteer permissions screen."
+  },
+  "admin-volunteers.record.accountDisabled": {
+    "defaultMessage": "disabled",
+    "description": "Tag after the linked account's username when the account is switched off. Lowercase."
+  },
+  "admin-volunteers.record.accountHeading": {
+    "defaultMessage": "Admin account",
+    "description": "Heading of the read-only block about the administrator account linked to the volunteer."
+  },
+  "admin-volunteers.record.accountNone": {
+    "defaultMessage": "No account linked.",
+    "description": "Shown when the volunteer is linked to no administrator account."
+  },
+  "admin-volunteers.record.accountNote": {
+    "defaultMessage": "This link cannot be changed here: it is made by the volunteer permissions import.",
+    "description": "Note under the linked account: the account is read-only on this screen and changes through the volunteer permissions import."
+  },
+  "admin-volunteers.record.accountUser": {
+    "defaultMessage": "User: {username}",
+    "description": "Line naming the linked administrator account. {username} is the account's username."
+  },
+  "admin-volunteers.record.canDraw": {
+    "defaultMessage": "Can use the number generator",
+    "description": "Switch: the volunteer may draw numbers at the raffle."
+  },
+  "admin-volunteers.record.canRedeem": {
+    "defaultMessage": "Can record pickups",
+    "description": "Switch: the volunteer may record collections at the counters."
+  },
+  "admin-volunteers.record.checkinTime": {
+    "defaultMessage": "Check-in time",
+    "description": "Label of the time of day the volunteer is expected on event day."
+  },
+  "admin-volunteers.record.close": {
+    "defaultMessage": "Back to list",
+    "description": "Accessible name of the icon that leaves a volunteer's record for the list."
+  },
+  "admin-volunteers.record.otherHeading": {
+    "defaultMessage": "Other access",
+    "description": "Heading of the group of controls about the raffle and the admin link."
+  },
+  "admin-volunteers.record.redeemHeading": {
+    "defaultMessage": "Pickups",
+    "description": "Heading of the group of controls about collecting items."
+  },
+  "admin-volunteers.record.save": {
+    "defaultMessage": "Save",
+    "description": "Button that saves the volunteer's permissions."
+  },
+  "admin-volunteers.record.showAdminLink": {
+    "defaultMessage": "Show the admin link on the pass",
+    "description": "Switch: the volunteer's pass links to the administrator screen. A link only: that screen still asks for its own login."
+  },
+  "admin-volunteers.record.stations": {
+    "defaultMessage": "Stations",
+    "description": "Legend of the stations the volunteer may record collections for. Each is an item, named as chrome.item* does."
+  },
+  "admin-volunteers.record.stationsEmpty": {
+    "defaultMessage": "Without stations, they cannot record pickups.",
+    "description": "Hint under the stations when the volunteer may record collections but no station is ticked: the permission grants nothing until one is."
+  },
+  "admin-volunteers.record.stationsOff": {
+    "defaultMessage": "Turn on \"Can record pickups\" to choose stations.",
+    "description": "Hint under the stations while the collections switch is off, which disables them. The ticks are kept, so switching it back on restores them. The quoted text must match admin-volunteers.record.canRedeem."
+  },
+  "admin-volunteers.record.team": {
+    "defaultMessage": "Team",
+    "description": "Label of the volunteer's team, free text."
+  },
+  "admin-volunteers.record.teamHeading": {
+    "defaultMessage": "Team",
+    "description": "Heading of the group with the volunteer's team and role."
+  },
+  "admin-volunteers.record.teamRole": {
+    "defaultMessage": "Role",
+    "description": "Label of the volunteer's role within the team, free text."
+  },
+  "admin-volunteers.tier": {
+    "defaultMessage": "{tier, select, edit {Register} raffle {Numbers} lookup {Lookup} tshirt {T-shirts} redeem {Pickups} none {Volunteer} other {Volunteer}}",
+    "description": "Chip naming a volunteer's access, beside their name on the list and on their record. MUST match pass.accessBadge word for word: it is the same chip that appears on the volunteer's own pass, in the same colours, so an administrator reads what the volunteer will see. tier is the highest access the volunteer holds: edit is the registration screen, raffle the number generator, redeem the collection of items, lookup the attendee search, tshirt the T-shirt desk. A volunteer who can both look up and redeem shows lookup. none is the plain volunteer with none of these, which the pass shows as its other fallback; other is only a fallback. Shown in capital letters by the stylesheet. N° is the abbreviation of número."
+  },
+  "admin-volunteers.toast.saved": {
+    "defaultMessage": "Permissions saved.",
+    "description": "Green confirmation after the volunteer's permissions were saved."
+  },
+  "admin-volunteers.toast.unchanged": {
+    "defaultMessage": "Nothing changed: the permissions were already set this way.",
+    "description": "Green confirmation after a save that matched what was already stored, so nothing was written and no history entry was added."
+  }
+}

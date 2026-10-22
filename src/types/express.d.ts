@@ -1,6 +1,7 @@
 import type { LabelledAdminNavItem } from '../constants/admin-nav.ts';
 import type { AdminScope } from '../constants/admin-scopes.ts';
 import type { CopyDefaults } from '../constants/copy-defaults.ts';
+import type { Credit } from '../constants/credit.ts';
 import type { RedemptionItem } from '../constants/pass.ts';
 import type { MessagesOf } from '../i18n/generated/registry.ts';
 import type { LocaleLink } from '../i18n/server.ts';
@@ -96,6 +97,14 @@ declare module 'express-serve-static-core' {
     locale: Locale;
 
     /**
+     * The locale dates and times are formatted in: {@link locale}, with
+     * English following the visitor's English region. See `dateTimeLocale`.
+     * Set alongside it. Also rendered as `<html data-date-locale>`, where
+     * browser code reads it.
+     */
+    dateLocale: string;
+
+    /**
      * The shared chrome's messages in {@link locale}, for the header, footer and
      * other partials every page includes. Set alongside `locale`.
      */
@@ -103,9 +112,15 @@ declare module 'express-serve-static-core' {
 
     /**
      * The values filled into the copy placeholders, for the views that name
-     * the event or its organiser. Set on every response in `app.ts`.
+     * the event. Set on every response in `app.ts`.
      */
     copyDefaults: CopyDefaults;
+
+    /**
+     * The software's authorship credit, shown in the footer. Fixed, so unlike
+     * {@link copyDefaults} no event setting overrides it. Set alongside it.
+     */
+    credit: Credit;
 
     /**
      * The language switcher in the public footer and the admin rail, set

@@ -1,0 +1,117 @@
+/* Demo-only banner, copied to /css/demo.css by scripts/demo/build.ts. */
+
+.demo-banner {
+  box-sizing: border-box;
+  /* Pages centre <body>'s flex children; a collapsed line would otherwise size
+     the banner to its unwrapped width. */
+  align-self: stretch;
+  padding: 0.5rem max(1rem, env(safe-area-inset-right)) 0.5rem
+    max(1rem, env(safe-area-inset-left));
+  border-bottom: 1px solid var(--border-strong);
+  background: var(--accent-soft);
+  color: var(--text);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+/* The admin shell is a grid; a banner in the first cell would take the rail's
+   column, so it spans the row above the rail and <main>. */
+.admin-page > .demo-banner {
+  grid-column: 1 / -1;
+}
+
+.demo-banner p {
+  margin: 0;
+}
+
+/* The summary takes the slack so the buttons sit at the end of the line, and
+   wrap to the end of their own line when the sentence leaves no room. */
+.demo-banner-lead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}
+
+.demo-banner-summary {
+  flex: 1 1 auto;
+}
+
+.demo-banner p + p {
+  margin-top: 0.25rem;
+  color: var(--text-muted);
+}
+
+.demo-banner code {
+  padding: 0 0.25rem;
+  border-radius: 0.25rem;
+  background: var(--surface);
+  color: var(--text);
+  font-family: ui-monospace, monospace;
+  letter-spacing: 0.05em;
+}
+
+.demo-banner a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.demo-banner-button {
+  display: inline-block;
+  flex: none;
+  width: auto;
+  min-height: 0;
+  padding: 0.125rem 0.625rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 0.375rem;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* The language button is a link to the same page in the other tree. */
+.demo-banner a.demo-banner-button {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.demo-banner-button[hidden] {
+  display: none;
+}
+
+/* Collapsed, set on <html> by the mock script before first paint: the banner
+   is one line, its sentence cut short so the buttons stay whole. The reset
+   button is too wide to share a phone's line and waits in the expanded banner. */
+html[data-demo-banner='collapsed'] .demo-banner-details,
+html[data-demo-banner='collapsed'] .demo-banner-lead [data-demo-reset] {
+  display: none;
+}
+
+html[data-demo-banner='collapsed'] .demo-banner-lead {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+html[data-demo-banner='collapsed'] .demo-banner-summary {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.demo-banner-toggle::after {
+  content: '';
+  display: inline-block;
+  width: 0.375em;
+  height: 0.375em;
+  margin-inline-start: 0.375em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-0.15em) rotate(-135deg);
+}
+
+.demo-banner-toggle[aria-expanded='false']::after {
+  transform: translateY(-0.3em) rotate(45deg);
+}

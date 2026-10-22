@@ -1,0 +1,190 @@
+{
+  "admin-errors.attendeeArchived": {
+    "defaultMessage": "This attendee is archived and the ticket cannot be used for check-in.",
+    "description": "The attendee is archived, so they cannot be checked in."
+  },
+  "admin-errors.attendeeNotFound": {
+    "defaultMessage": "Attendee not found.",
+    "description": "The attendee no longer exists, for example because another operator removed the record."
+  },
+  "admin-errors.audienceInvalid": {
+    "defaultMessage": "Invalid audience.",
+    "description": "The WhatsApp audience sent is not participants or volunteers. Only a tampered or outdated form reaches this."
+  },
+  "admin-errors.invalidAttendee": {
+    "defaultMessage": "Invalid attendee.",
+    "description": "The request did not name a valid attendee. Only a tampered or outdated page reaches this."
+  },
+  "admin-errors.itemAlreadyRedeemed": {
+    "defaultMessage": "Cannot remove {item, select, meal {snack} drink {drink} tshirt {T-shirt} tshirt_volunteer {volunteer T-shirt} lunch {lunch} other {item}}: it has already been collected.",
+    "description": "Refuses clearing an entitlement the attendee has already collected. {item} is the item, lowercase, as it reads mid-sentence; other is only a fallback."
+  },
+  "admin-errors.itemNotEntitled": {
+    "defaultMessage": "This attendee is not entitled to {item, select, meal {snack} drink {drink} tshirt {T-shirt} tshirt_volunteer {volunteer T-shirt} lunch {lunch} other {item}}.",
+    "description": "Refuses marking an item as collected when the attendee is not entitled to it. {item} is the item, lowercase, as it reads mid-sentence; other is only a fallback."
+  },
+  "admin-errors.itemNotRedeemed": {
+    "defaultMessage": "{item, select, meal {The snack} drink {The drink} tshirt {The T-shirt} tshirt_volunteer {The volunteer T-shirt} lunch {The lunch} other {The item}} has not been collected yet.",
+    "description": "Refuses undoing a collection that is not recorded. {item} is the item, capitalised at the start of the sentence; other is only a fallback."
+  },
+  "admin-errors.leaveNotConfirmed": {
+    "defaultMessage": "Action canceled. Tap again to leave.",
+    "description": "Warning toast shown when an armed two-press control cancels a click on a link or form that would leave the page, so the pending action is not lost silently. The next click leaves normally."
+  },
+  "admin-errors.listChanged": {
+    "defaultMessage": "The list has changed. Review it before sending.",
+    "description": "The recipients changed between preview and send; the operator must preview again."
+  },
+  "admin-errors.nameInvalid": {
+    "defaultMessage": "Enter the full name, up to 120 characters.",
+    "description": "The attendee's name is empty, has no letters, or is longer than the 120-character limit."
+  },
+  "admin-errors.optionNotAllowed": {
+    "defaultMessage": "Choose an option from the list for {item, select, meal {snack} drink {drink} tshirt {T-shirt} tshirt_volunteer {volunteer T-shirt} lunch {lunch} other {item}}.",
+    "description": "An entitlement value (meal option, drink option, t-shirt size, volunteer t-shirt size, lunch) is not on the approved list and is not the value already stored. {item} names the field, lowercase; other is only a fallback."
+  },
+  "admin-errors.pauseBeforeRetry": {
+    "defaultMessage": "Pause the run before resending interrupted messages.",
+    "description": "Retrying interrupted sends is only allowed while the run is paused."
+  },
+  "admin-errors.phoneInvalid": {
+    "defaultMessage": "Enter the phone number with area code, 10 to 11 digits.",
+    "description": "The attendee's phone has too few or too many digits. The last four digits are the check-in verification code."
+  },
+  "admin-errors.phoneMissing": {
+    "defaultMessage": "Enter the phone number.",
+    "description": "The WhatsApp test send was submitted without a phone number."
+  },
+  "admin-errors.previewExpired": {
+    "defaultMessage": "The preview has expired. Generate a new one.",
+    "description": "The preview token expired before the operator confirmed the send."
+  },
+  "admin-errors.previewMissing": {
+    "defaultMessage": "Generate a preview before sending.",
+    "description": "A send was requested without a preview. Only an outdated page reaches this."
+  },
+  "admin-errors.reasonInvalid": {
+    "defaultMessage": "Choose a reason from the list.",
+    "description": "A correction arrived without a reason, or with one not allowed for that correction."
+  },
+  "admin-errors.redemptionChanged": {
+    "defaultMessage": "The pickup status changed while the page was open. Check it and try again.",
+    "description": "Refuses an undo because the collection was recorded again after the page was opened; the operator must look again."
+  },
+  "admin-errors.requestInProgress": {
+    "defaultMessage": "Still processing the previous request. Try again in a few moments.",
+    "description": "The same save is still running from an earlier tap, typically one whose answer timed out. Trying again once it finishes shows its result rather than repeating it."
+  },
+  "admin-errors.roleInvalid": {
+    "defaultMessage": "Choose between \"participant\" and \"volunteer\".",
+    "description": "The attendee's role is neither participant nor volunteer."
+  },
+  "admin-errors.roleLocked": {
+    "defaultMessage": "The ticket type cannot be changed after check-in is complete.",
+    "description": "The role cannot change once the attendee has checked in: their arrival number counts for the raffle."
+  },
+  "admin-errors.runFinished": {
+    "defaultMessage": "This run has already finished.",
+    "description": "The run cannot be cancelled because it has already ended."
+  },
+  "admin-errors.runInProgress": {
+    "defaultMessage": "A run is already in progress.",
+    "description": "Only one WhatsApp run may be active at a time."
+  },
+  "admin-errors.runInvalid": {
+    "defaultMessage": "Invalid run.",
+    "description": "The request did not name a valid run. Only a tampered or outdated page reaches this."
+  },
+  "admin-errors.runNotFound": {
+    "defaultMessage": "Run not found.",
+    "description": "The run named no longer exists for this event."
+  },
+  "admin-errors.runNotPaused": {
+    "defaultMessage": "This run is not paused.",
+    "description": "Resume was pressed on a run that is not paused, usually because another operator already resumed it."
+  },
+  "admin-errors.runNotRunning": {
+    "defaultMessage": "This run is not in progress.",
+    "description": "Stop was pressed on a run that is not running, usually because it already finished or was paused."
+  },
+  "admin-errors.scheduleChanged": {
+    "defaultMessage": "Another administrator changed the schedule while the page was open. Reload to see the current version.",
+    "description": "Refuses a save of the pass welcome schedule because someone else saved it after this page was opened. Nothing was changed; the operator must reload and redo their edit."
+  },
+  "admin-errors.scheduleDuplicateTime": {
+    "defaultMessage": "Two lines are set for the same time. Each switch needs a different time.",
+    "description": "Refuses a pass welcome schedule in which two entries start at the same date and time."
+  },
+  "admin-errors.scheduleInvalid": {
+    "defaultMessage": "The submitted schedule is invalid. Reload the page and try again.",
+    "description": "Refuses a pass welcome schedule whose shape is wrong, such as an unknown phase. Only a tampered or outdated page reaches this."
+  },
+  "admin-errors.scheduleTextMissing": {
+    "defaultMessage": "Text fields cannot be empty.",
+    "description": "Refuses a pass welcome schedule in which a custom entry has no text, or only spaces and invisible characters."
+  },
+  "admin-errors.scheduleTextTooLong": {
+    "defaultMessage": "Custom text can be at most {max, number} characters.",
+    "description": "Refuses a pass welcome schedule in which a custom entry's text is longer than the limit. {max} is the limit, a number."
+  },
+  "admin-errors.scheduleTimeInvalid": {
+    "defaultMessage": "One of the dates is invalid or falls outside the event schedule.",
+    "description": "Refuses a pass welcome schedule entry whose date and time is malformed, or falls in a daylight-saving gap or overlap of the event's time zone."
+  },
+  "admin-errors.scheduleTooLong": {
+    "defaultMessage": "Line limit exceeded. Remove some and try again.",
+    "description": "Refuses a pass welcome schedule with more entries than the server accepts."
+  },
+  "admin-errors.sendingDisabled": {
+    "defaultMessage": "WhatsApp sending is disabled on this server.",
+    "description": "Starting, resuming and test sends are refused while WHATSAPP_ENABLED is off on this server."
+  },
+  "admin-errors.templateAudienceMismatch": {
+    "defaultMessage": "This template cannot be sent to this audience.",
+    "description": "The chosen template is not approved for the chosen audience."
+  },
+  "admin-errors.templateInvalid": {
+    "defaultMessage": "Invalid template.",
+    "description": "The template sent is not a registered one. Only a tampered or outdated form reaches this."
+  },
+  "admin-errors.testPhoneInvalid": {
+    "defaultMessage": "Invalid phone number: enter area code and number.",
+    "description": "The test send's phone number could not be read."
+  },
+  "admin-errors.ticketCodeFormat": {
+    "defaultMessage": "The code must be six letters or numbers.",
+    "description": "A typed ticket code has the wrong shape."
+  },
+  "admin-errors.ticketCodePrefix": {
+    "defaultMessage": "The code prefix does not match the ticket type.",
+    "description": "A typed ticket code's prefix (v for volunteers) does not match the chosen role."
+  },
+  "admin-errors.ticketCodeTaken": {
+    "defaultMessage": "This ticket code is already in use.",
+    "description": "A typed ticket code already belongs to another attendee."
+  },
+  "admin-errors.ticketLimitCap": {
+    "defaultMessage": "The limit must be a whole number between {min, number} and {max, number}.",
+    "description": "The ticket limit's cap is not a whole number in range. {min} and {max} are the smallest and largest cap, numbers."
+  },
+  "admin-errors.ticketLimitMode": {
+    "defaultMessage": "Choose what happens when the limit is reached: block or warn only.",
+    "description": "The ticket limit's mode is missing or is neither hard (refuses the ticket) nor warn (only warns)."
+  },
+  "admin-errors.ticketLimitReached": {
+    "defaultMessage": "The ticket limit has been reached.",
+    "description": "A participant could not be created or restored because the hard ticket limit has no room left. The message carries no figures; the form's banner shows them."
+  },
+  "admin-errors.ticketLimitScope": {
+    "defaultMessage": "Choose what the limit counts: off, all participants or only tickets created at the door.",
+    "description": "The ticket limit's scope is missing or is none of off, total (every participant) or door (only tickets created in the editor)."
+  },
+  "admin-errors.volunteerOnlyItem": {
+    "defaultMessage": "Only volunteers can be entitled to {item, select, meal {snack} drink {drink} tshirt {T-shirt} tshirt_volunteer {volunteer T-shirt} lunch {lunch} other {this item}}.",
+    "description": "A volunteer-only item was set on a participant. {item} is the item, lowercase, as it reads mid-sentence; other is only a fallback. To change a volunteer holding one to a participant, clear the item first."
+  },
+  "admin-errors.whatsappDoorLocked": {
+    "defaultMessage": "Sending tickets by WhatsApp is disabled in the server settings.",
+    "description": "The door WhatsApp switch cannot be changed because WHATSAPP_DOOR_ENABLED or WHATSAPP_ENABLED is false in .env."
+  }
+}

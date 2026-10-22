@@ -13,13 +13,7 @@
 
 <main class="landing">
   <div class="landing-content">
-    <div class="logo">
-        <img
-        class="boot-wordmark"
-        src="/assets/images/logo/wordmark-primary.svg"
-        alt="<%= chrome.wordmarkAlt() %>"
-        />
-    </div>
+    <img class="landing-mark" src="/assets/images/logo/mark.svg" alt="" />
     <p class="landing-lede"><%= copy.lede() %></p>
 
     <%# The information on the page. The clock below it is the drama, which is
@@ -87,6 +81,15 @@
       <%= copy.action() %>
     </a>
   </div>
+
+  <%# The boot screen's lettering, at the boot screen's size. In flow rather
+      than fixed: on a short viewport it moves down the page instead of
+      covering the countdown. %>
+  <img
+    class="boot-lettering"
+    src="/assets/images/logo/wordmark-two-tone.svg"
+    alt="<%= chrome.wordmarkAlt() %>"
+  />
 </main>
 
 <%# Asset block last, for the reason spelled out in pages/error.ejs: moved to

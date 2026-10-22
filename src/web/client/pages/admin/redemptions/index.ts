@@ -43,7 +43,9 @@ const formatTime = (iso: string): string => {
   const zone = root?.dataset.timezone;
   const timeZone = zone === '' ? undefined : zone;
 
-  return new Intl.DateTimeFormat(document.documentElement.lang || undefined, {
+  const dateLocale = document.documentElement.dataset.dateLocale;
+
+  return new Intl.DateTimeFormat(dateLocale, {
     timeStyle: 'medium',
     timeZone,
   }).format(new Date(iso));

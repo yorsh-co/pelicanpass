@@ -42,6 +42,30 @@ describe('stripNonces', () => {
     assert.deepEqual(result.styles, []);
   });
 
+  it('hashes classic and module inline scripts', () => {
+    const result = stripNonces(
+      '<script nonce="a">a()</script><script type="module" nonce="b">b()</script><script type="text/javascript" nonce="c">c()</script>',
+    );
+
+    assert.deepEqual(result.scripts, [
+      cspHash('a()'),
+      cspHash('b()'),
+      cspHash('c()'),
+    ]);
+  });
+
+  it('drops the nonce of a data block without hashing it', () => {
+    const result = stripNonces(
+      '<script type="application/json" data-i18n="chrome" nonce="abc">{"a":1}</script>',
+    );
+
+    assert.equal(
+      result.html,
+      '<script type="application/json" data-i18n="chrome">{"a":1}</script>',
+    );
+    assert.deepEqual(result.scripts, []);
+  });
+
   it('hashes inline styles apart from scripts', () => {
     const result = stripNonces('<style nonce="abc">a{}</style>');
 

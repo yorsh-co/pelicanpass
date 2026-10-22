@@ -22,6 +22,7 @@ export type ChromeMessageId =
   | 'chrome.footer.languages'
   | 'chrome.footer.logout'
   | 'chrome.footer.privacy'
+  | 'chrome.footer.source'
   | 'chrome.footer.terms'
   | 'chrome.footer.themeToDark'
   | 'chrome.footer.themeToLight'
@@ -103,7 +104,7 @@ export const createChromeMessages = (
     footerCopyright: (values: { eventName: string; year: number }): string =>
       format('chrome.footer.copyright', values),
 
-    /** Word before the organiser's name in the footer credit, which is a link reading the organiser's name. */
+    /** Word before the author's name in the footer credit, which is a link reading the author's name. */
     footerCreditPrefix: (): string => format('chrome.footer.creditPrefix'),
 
     /** Accessible name of the footer's language list. The languages themselves are named in their own language and are not translated here. */
@@ -114,6 +115,9 @@ export const createChromeMessages = (
 
     /** Footer link to the privacy notice. */
     footerPrivacy: (): string => format('chrome.footer.privacy'),
+
+    /** Accessible name and tooltip of the icon link to the project's GitHub repository, in the footer and the administrator rail. The link shows only the GitHub mark. */
+    footerSource: (): string => format('chrome.footer.source'),
 
     /** Footer link to the terms of use. */
     footerTerms: (): string => format('chrome.footer.terms'),

@@ -9,6 +9,7 @@ import { getMessages } from './catalogs.ts';
 import {
   BASE_LOCALE,
   PSEUDO_LOCALE,
+  dateTimeLocale,
   isLocale,
   supportedLocales,
 } from './locales.ts';
@@ -33,8 +34,11 @@ export interface LocaleLink {
   locale: Locale;
   /** The language's name in that language, as switchers usually show it. */
   label: string;
-  /** The two-letter region code the footer shows in place of the label. */
-  region: string;
+  /**
+   * The code the switcher shows in place of the label: the tag's region, or
+   * its language when it names none.
+   */
+  code: string;
   /** The current path and query with `lang` set. */
   href: string;
   current: boolean;
@@ -47,11 +51,12 @@ const LANGUAGE_NAMES = new Map(
   ]),
 );
 
-const LOCALE_REGIONS = new Map(
-  SUPPORTED.map((locale) => [
-    locale,
-    new Intl.Locale(locale).maximize().region ?? locale,
-  ]),
+const LOCALE_CODES = new Map(
+  SUPPORTED.map((locale) => {
+    const { language, region } = new Intl.Locale(locale);
+
+    return [locale, region ?? language.toUpperCase()];
+  }),
 );
 
 /**
@@ -67,7 +72,7 @@ const localeLinks = (originalUrl: string, current: Locale): LocaleLink[] =>
     : SUPPORTED.map((locale) => ({
         locale,
         label: LANGUAGE_NAMES.get(locale) ?? locale,
-        region: LOCALE_REGIONS.get(locale) ?? locale,
+        code: LOCALE_CODES.get(locale) ?? locale,
         href: withQueryParam(originalUrl, 'lang', locale),
         current: locale === current,
       }));
@@ -169,6 +174,7 @@ export const localeMiddleware: RequestHandler = (req, res, next) => {
   const locale = resolveLocale(req);
 
   res.locals.locale = locale;
+  res.locals.dateLocale = dateTimeLocale(locale, req.acceptsLanguages());
   res.locals.chrome = getMessages(locale, 'chrome');
   res.locals.localeLinks = localeLinks(req.originalUrl, locale);
   res.setHeader('Content-Language', locale);

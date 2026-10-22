@@ -1,12 +1,12 @@
 /*
  * The second half of the entry that carries `--brand-backdrop`, with the pass as
- * the exit. `pages/landing.css` is the first half — it opens on this same
- * backdrop with a wordmark in this same place, so the hand-off reads as one
- * surface continuing rather than as two.
- *
- * The marks themselves differ, and deliberately: this is the only surface that
- * carries the primary, and the landing page hands over to it from the
- * secondary. The backdrop and the placement are what carry the continuity.
+ * the exit. `pages/landing.css` is the first half, and the two are one
+ * composition: the mark on the backdrop with the two-tone lettering at the
+ * foot, at the same width. The landing page lifts the mark to the head of its
+ * content column to make room for the countdown and keeps the lettering above
+ * its footer; the boot screen drops the mark to the centre and the lettering to
+ * the viewport edge, so the hand-off reads as one surface continuing rather
+ * than as two.
  *
  * Everything between that entry and the pass is neutral canvas, which is what
  * makes the pass read as a reward rather than as more chrome.
@@ -38,74 +38,78 @@
   visibility: visible;
 }
 
-.boot-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-4);
-  height: 100%;
-  width: 100%;
+/*
+ * The mark is the boot screen, and it sits at the true centre of the viewport:
+ * the flex centring above acts on the whole box, not on the space left over
+ * above the lettering. The artwork is already optically centred inside its own
+ * 100 x 100 box (see assets/images/logo/mark.svg), so nothing here offsets it.
+ *
+ * `min()` rather than a fixed width so a 320px viewport keeps its margins.
+ */
+.boot-mark {
+  display: block;
+  width: min(36vw, 8rem);
+  height: auto;
 }
 
-.app-boot .logo {
-  margin-top: auto;
-  margin-bottom: var(--space-8);
-  width: 50%;
-  min-width: 10rem;
+/*
+ * The two-tone lettering, shared with pages/landing.css, which takes the size
+ * from here so the two surfaces cannot drift apart. It ships as an <img>
+ * painting its own colours — white and Shallows are deliberate tones that a
+ * mask would flatten — so nothing here sets `color`.
+ *
+ * `both` so it is invisible until its delay has run: it follows the mark in
+ * rather than arriving with it.
+ */
+.boot-lettering {
+  display: block;
+  width: min(60vw, 14rem);
+  height: auto;
 
-  display: flex;
-  justify-content: center;
+  animation: pop var(--duration-slow) var(--ease-spring) 0.15s both;
 }
 
-/*.app-boot.show .logo {
+/*
+ * Pinned to the bottom of the fixed overlay, which is the whole viewport, so
+ * the offset holds on any aspect ratio and under any mobile browser chrome —
+ * unlike the viewport-unit offsets this replaced. Out of flow, so the mark's
+ * centring is unaffected by it.
+ */
+.app-boot .boot-lettering {
+  position: absolute;
+  inset-inline: 0;
+  bottom: var(--space-8);
+  margin-inline: auto;
+}
+
+.app-boot.show .boot-mark {
   animation: pop var(--duration-slow) var(--ease-spring) forwards;
 }
 
-.app-boot:not(.show) .logo {
-  animation: fadeOut var(--duration-base) var(--ease-out) forwards;
-}*/
-
-.boot-content .motif {
-  height: 100%;
-}
-
-#boot-motif-right {
-  height: 4rem;
-  position: absolute;
-  top: 7dvh;
-  left: 70dvw;
-}
-
-#boot-motif-left {
-  height: 3rem;
-  position: absolute;
-  top: 25dvh;
-  left: 10dvw;
-}
-
-#boot-motif-centre {
-  height: 13rem;
-  position: absolute;
-  bottom: 35dvh;
-
-  margin: 0 var(--space-8);
-}
-
-.app-boot.show .motif {
-  animation: pop var(--duration-slow) var(--ease-spring) forwards;
-}
-
-.app-boot:not(.show) .motif {
+.app-boot:not(.show) .boot-mark,
+.app-boot:not(.show) .boot-lettering {
   animation: fadeOut var(--duration-base) var(--ease-out) forwards;
 }
 
 /*
- * The primary wordmark, and the only surface that carries it — every other one
- * takes the secondary mark through `.wordmark` in partials/header.css.
+ * base/reset.css caps `animation-duration` under reduced motion but not the
+ * delay, which would leave the lettering invisible for its length before
+ * jumping to the final frame.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .boot-lettering {
+    animation-delay: 0s;
+  }
+}
+
+/*
+ * The one-line lockup, mark and wordmark in one piece — the primary. Only the
+ * check-in continue page carries it now; the boot screen, the landing page and
+ * the closing page take the mark and the lettering above as separate pieces.
  *
- * Sized rather than masked, and the reason is in components/boot-screen.ejs:
- * the artwork is two-tone, so it ships as an <img> painting its own colours.
- * Nothing here sets `color`, because nothing here inherits one.
+ * Sized rather than masked, and the reason is in pages/attendee/checkin/
+ * continue.ejs: the artwork is two-tone, so it ships as an <img> painting its
+ * own colours. Nothing here sets `color`, because nothing here inherits one.
  *
  * `min()` rather than a fixed height: this lockup is a single line, mark and
  * wordmark, and much wider than the secondary; 20rem at a 320px viewport

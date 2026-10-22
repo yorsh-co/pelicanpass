@@ -62,6 +62,7 @@ import {
   WELCOME_TEXT_MAX_LENGTH,
 } from '../../constants/pass.ts';
 import { TICKET_INPUT_PATTERN } from '../../constants/ticket.ts';
+import { VENUE_MAP_SRC } from '../../constants/venue-map.ts';
 import {
   NICKNAME_INPUT_PATTERN,
   NICKNAME_MAX_LENGTH,
@@ -751,7 +752,7 @@ router.get(
       const m = adminMessages(res);
       const overview = await new SurveyAdminService(req).overview();
 
-      const when = new Intl.DateTimeFormat(res.locals.locale, {
+      const when = new Intl.DateTimeFormat(res.locals.dateLocale, {
         dateStyle: 'short',
         timeStyle: 'short',
         timeZone: env.landing.timezone,
@@ -831,7 +832,7 @@ router.get(
       const overview = await new PassAdminService(req).overview();
       const timeZone = env.landing.timezone;
 
-      const when = new Intl.DateTimeFormat(res.locals.locale, {
+      const when = new Intl.DateTimeFormat(res.locals.dateLocale, {
         dateStyle: 'short',
         timeStyle: 'short',
         timeZone,
@@ -1048,7 +1049,7 @@ router.post(
           checkinAt:
             row.checkin_at === null
               ? null
-              : eventClock(res.locals.locale, 'dateTime').format(
+              : eventClock(res.locals.dateLocale, 'dateTime').format(
                   row.checkin_at,
                 ),
           archived: row.archived_at !== null,
@@ -1313,12 +1314,12 @@ const reasonLabelsOf = (
 /**
  * Formats a moment as the event's clock shows it.
  *
- * @param locale - The response's locale.
+ * @param dateLocale - The response's date locale, `res.locals.dateLocale`.
  * @param style - `dateTime` for a record's timestamps, `time` for the
  *   summary's last refresh.
  */
-const eventClock = (locale: string, style: 'dateTime' | 'time') =>
-  new Intl.DateTimeFormat(locale, {
+const eventClock = (dateLocale: string, style: 'dateTime' | 'time') =>
+  new Intl.DateTimeFormat(dateLocale, {
     ...(style === 'dateTime'
       ? { dateStyle: 'short', timeStyle: 'short' }
       : { timeStyle: 'medium' }),
@@ -1347,9 +1348,9 @@ const renderRedemptions: RequestHandler = async (req, res, next) => {
     ]);
 
     const m = adminMessages(res);
-    const { locale } = res.locals;
+    const { locale, dateLocale } = res.locals;
     const labels = itemLabelsOf(res.locals.chrome);
-    const when = eventClock(locale, 'dateTime');
+    const when = eventClock(dateLocale, 'dateTime');
 
     res.render('pages/admin/redemptions/index', {
       layout: 'layouts/admin',
@@ -1373,7 +1374,7 @@ const renderRedemptions: RequestHandler = async (req, res, next) => {
       pageCount: Math.max(1, Math.ceil(total / PAGE_SIZE)),
 
       summary: {
-        updatedAt: eventClock(locale, 'time').format(summary.generatedAt),
+        updatedAt: eventClock(dateLocale, 'time').format(summary.generatedAt),
         items: summary.items.map((entry) => ({
           ...entry,
           label: labels[entry.item],
@@ -1450,7 +1451,7 @@ router.post(
       const m = adminMessages(res);
       const labels = itemLabelsOf(res.locals.chrome);
       const reasonLabels = reasonLabelsOf(m.redemptions);
-      const when = eventClock(res.locals.locale, 'dateTime');
+      const when = eventClock(res.locals.dateLocale, 'dateTime');
 
       res.render('pages/admin/redemptions/detail', {
         layout: 'layouts/admin',
@@ -1567,7 +1568,7 @@ const renderTshirts: RequestHandler = async (req, res, next) => {
       : { rows: [], total: 0 };
 
     const m = adminMessages(res);
-    const when = eventClock(res.locals.locale, 'dateTime');
+    const when = eventClock(res.locals.dateLocale, 'dateTime');
 
     res.render('pages/admin/tshirts/search', {
       layout: 'layouts/admin',
@@ -1644,7 +1645,7 @@ router.post(
       if (!row?.tshirt_size) return res.redirect('/admin/tshirts');
 
       const m = adminMessages(res);
-      const when = eventClock(res.locals.locale, 'dateTime');
+      const when = eventClock(res.locals.dateLocale, 'dateTime');
       const redeemedAt = row.tshirt_redeemed_at;
 
       res.render('pages/admin/tshirts/detail', {
@@ -1794,9 +1795,9 @@ router.post(
       }
 
       const m = adminMessages(res);
-      const { locale } = res.locals;
+      const { locale, dateLocale } = res.locals;
       const labels = itemLabelsOf(res.locals.chrome);
-      const when = eventClock(locale, 'dateTime');
+      const when = eventClock(dateLocale, 'dateTime');
       const tier = volunteer.tier ?? 'none';
 
       const text = (value: string | null) => value ?? '';
@@ -1964,6 +1965,7 @@ router.get(
           'survey',
         ]),
         copy: getCopy(res.locals.locale, ['pass', 'survey']),
+        venueMapSrc: VENUE_MAP_SRC[res.locals.locale],
         survey: surveyView(
           profile.attendeeRole,
           res.locals.locale,

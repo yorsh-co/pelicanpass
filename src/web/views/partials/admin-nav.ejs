@@ -76,10 +76,25 @@ const currentKey = locals.navKey || '';
     <div class="admin-rail__actions">
       <%# Sign-out is a POST through api.admin.logout(), so it needs the shell
           bundle. That was already true of the page it moved from. -%>
-      <button class="ghost admin-rail__logout" data-admin-shell="logout" type="button">
+      <button
+        class="ghost admin-rail__logout"
+        data-admin-shell="logout"
+        type="button"
+        aria-label="<%= shell.logout() %>"
+        title="<%= shell.logout() %>"
+      >
         <span class="material-symbols-outlined" aria-hidden="true">logout</span>
-        <span class="btn-label"><%= shell.logout() %></span>
       </button>
+
+      <a
+        class="footer-source"
+        href="<%= credit.sourceUrl %>"
+        target="_blank"
+        aria-label="<%= chrome.footerSource() %>"
+        title="<%= chrome.footerSource() %>"
+      >
+        <%- include('github-mark') %>
+      </a>
 
       <!--
         The icon and the label name the theme the tap will switch *to*, not the
@@ -106,7 +121,7 @@ const currentKey = locals.navKey || '';
       <% const currentLocale = locals.localeLinks.find((link) => link.current); %>
       <details class="footer-locales small-print" aria-label="<%= chrome.footerLanguages() %>">
         <summary lang="<%= currentLocale.locale %>">
-          <%= currentLocale.region %><span class="visually-hidden"> <%= currentLocale.label %></span>
+          <%= currentLocale.code %><span class="visually-hidden"> <%= currentLocale.label %></span>
           <span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span>
         </summary>
         <ul class="footer-locales-menu">
@@ -118,7 +133,7 @@ const currentKey = locals.navKey || '';
               lang="<%= link.locale %>"
               <% if (link.current) { %>aria-current="true"<% } %>
             >
-              <span class="footer-locales-code"><%= link.region %></span>
+              <span class="footer-locales-code"><%= link.code %></span>
               <span class="footer-locales-name"><%= link.label %></span>
               <% if (link.current) { %>
               <span class="material-symbols-outlined" aria-hidden="true">check</span>

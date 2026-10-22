@@ -1,6 +1,7 @@
 import { qsOptional } from '../../../../layouts/main/dom.ts';
 import { renderClock as renderClockInto } from '../../../../modules/ui/clock.ts';
 import { renderWindowProgress } from '../../../../modules/ui/window-progress.ts';
+import { checkinAtOptions } from './checkin-at.ts';
 import { PASS_COPY } from './messages.ts';
 import { displayTicketCode } from '../../../../../../constants/ticket.ts';
 import {
@@ -37,7 +38,8 @@ interface Chip {
 const slot = (name: string) => qsOptional(`[data-pass="${name}"]`);
 
 /**
- * Formats the check-in moment in the page's locale.
+ * Formats the check-in moment in the page's locale: 24-hour time, with an
+ * abbreviated month in English and the full month name elsewhere.
  *
  * `checkinAt` arrives as a JSON string rather than a `Date` — it was serialised
  * into the page by the server — so it is parsed here rather than assumed.
@@ -52,12 +54,12 @@ const formatCheckinAt = (value: string | Date | null | undefined): string => {
   const date = value instanceof Date ? value : new Date(value);
   if (Number.isNaN(date.getTime())) return '';
 
-  return new Intl.DateTimeFormat(document.documentElement.lang, {
-    day: '2-digit',
-    month: 'long',
-    hour: '2-digit',
-    minute: '2-digit',
-  }).format(date);
+  const lang = document.documentElement.lang;
+
+  return new Intl.DateTimeFormat(
+    document.documentElement.dataset.dateLocale,
+    checkinAtOptions(lang),
+  ).format(date);
 };
 
 /**

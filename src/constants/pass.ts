@@ -137,10 +137,20 @@ export const BAND_COLOURS = [
 ] as const;
 
 /**
- * The band's word half.
+ * The band's word half, one list per language.
  *
- * Concrete, short, and separable when said out loud across a busy room.
- * Near-rhymes are avoided.
+ * A deployment shows a single language (`PASS_BAND_LANGUAGE`), whatever the
+ * page language: the attendee's pass and the volunteer's screen are compared by
+ * eye, so both must draw from the same list. This is a fixed vocabulary, not
+ * catalog copy, and is not translated through the message catalogs.
+ *
+ * Every list follows the same rules. Words are concrete, short, and separable
+ * when said out loud across a busy room. Near-rhymes are avoided.
+ *
+ * Position `n` is the same concept in every list where the language allowed
+ * it (`BARCO` and `BOAT`, `LUA` and `MOON`); where a literal translation would
+ * rhyme with another word or run long, a substitute stands in (`CAJU` is
+ * `PEACH`, `SORVETE` is `GELATO`).
  *
  * 256 combinations when combining 32 words with eight colors:
  * a screenshot from ten minutes ago matches the live band with probability
@@ -148,42 +158,91 @@ export const BAND_COLOURS = [
  *
  * **The length is a power of two and must stay one**, for the same reason as
  * {@link BAND_COLOURS}: a thirty-third word would be unreachable, not an
- * addition.
+ * addition. Every list must have the same length.
  */
-export const BAND_WORDS = [
-  'BARCO',
-  'BOLO',
-  'CAJU',
-  'CAMPO',
-  'CANOA',
-  'CHUVA',
-  'DADO',
-  'FESTA',
-  'FLOR',
-  'FOGO',
-  'FOLHA',
-  'GATO',
-  'ILHA',
-  'JANELA',
-  'LAGO',
-  'LIVRO',
-  'LUA',
-  'MANGA',
-  'MEL',
-  'MORRO',
-  'NUVEM',
-  'PEDRA',
-  'PEIXE',
-  'PONTE',
-  'PORTA',
-  'RAIO',
-  'SINO',
-  'SORVETE',
-  'TORRE',
-  'TREM',
-  'VELA',
-  'VENTO',
-] as const;
+export const BAND_WORDS = {
+  'pt-BR': [
+    'BARCO',
+    'BOLO',
+    'CAJU',
+    'CAMPO',
+    'CANOA',
+    'CHUVA',
+    'DADO',
+    'FESTA',
+    'FLOR',
+    'FOGO',
+    'FOLHA',
+    'GATO',
+    'ILHA',
+    'JANELA',
+    'LAGO',
+    'LIVRO',
+    'LUA',
+    'MANGA',
+    'MEL',
+    'MORRO',
+    'NUVEM',
+    'PEDRA',
+    'PEIXE',
+    'PONTE',
+    'PORTA',
+    'RAIO',
+    'SINO',
+    'SORVETE',
+    'TORRE',
+    'TREM',
+    'VELA',
+    'VENTO',
+  ],
+  en: [
+    'BOAT',
+    'CAKE',
+    'PEACH',
+    'FIELD',
+    'CANOE',
+    'RAIN',
+    'DICE',
+    'PARTY',
+    'ROSE',
+    'FIRE',
+    'LEAF',
+    'CAT',
+    'ISLAND',
+    'WINDOW',
+    'POND',
+    'BOOK',
+    'MOON',
+    'MANGO',
+    'HONEY',
+    'HILL',
+    'CLOUD',
+    'STONE',
+    'FISH',
+    'BRIDGE',
+    'DOOR',
+    'BOLT',
+    'BELL',
+    'GELATO',
+    'TOWER',
+    'TRAM',
+    'CANDLE',
+    'BREEZE',
+  ],
+} as const;
+
+/** A language the band's words are available in. */
+export type BandLanguage = keyof typeof BAND_WORDS;
+
+/** The band languages, for validating an unchecked string. */
+export const BAND_LANGUAGES = Object.keys(BAND_WORDS) as BandLanguage[];
+
+/** The band language used where none is configured. */
+export const DEFAULT_BAND_LANGUAGE: BandLanguage = 'pt-BR';
+
+/** Narrows an unchecked string to a band language. */
+export const isBandLanguage = (value: string): value is BandLanguage =>
+  Object.hasOwn(BAND_WORDS, value);
 
 /**
  * The welcome line's phases, one per case of the `pass.welcome` message.

@@ -167,13 +167,11 @@ const open = (viewBox: { width: number; height: number }): string =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${String(viewBox.width)} ${String(viewBox.height)}">`;
 
 /**
- * The secondary wordmark: "PelicanPass" outlined in one colour.
+ * Lays out the lettering alone, fitted to the secondary viewBox.
  *
- * It is drawn as a CSS mask, so only its alpha matters.
- *
- * @returns The SVG document, 341 × 75.
+ * @returns Each word as an outlined path, in the order they are drawn.
  */
-export const secondaryWordmark = (): string => {
+const letteringPaths = (): { pelican: string; pass: string } => {
   const { pelican, pass } = layoutWordmark();
   const a = wordBounds(pelican);
   const b = wordBounds(pass);
@@ -188,10 +186,38 @@ export const secondaryWordmark = (): string => {
     { ...box, minY: -box.maxY, maxY: -box.minY },
     SECONDARY_VIEWBOX,
   );
-  const d = [pelican, pass]
-    .map((word) => wordPath(word, scale, dx, dy))
-    .join('');
-  return `${open(SECONDARY_VIEWBOX)}<path d="${d}" fill="${PALETTE.white}"/></svg>`;
+  return {
+    pelican: wordPath(pelican, scale, dx, dy),
+    pass: wordPath(pass, scale, dx, dy),
+  };
+};
+
+/**
+ * The secondary wordmark: "PelicanPass" outlined in one colour.
+ *
+ * It is drawn as a CSS mask, so only its alpha matters.
+ *
+ * @returns The SVG document, 341 × 75.
+ */
+export const secondaryWordmark = (): string => {
+  const { pelican, pass } = letteringPaths();
+  return `${open(SECONDARY_VIEWBOX)}<path d="${pelican}${pass}" fill="${PALETTE.white}"/></svg>`;
+};
+
+/**
+ * The two-tone wordmark: the secondary's lettering, coloured as the primary
+ * colours it, for dark grounds where a mask is not needed.
+ *
+ * @returns The SVG document, 341 × 75, with no ground.
+ */
+export const twoToneWordmark = (): string => {
+  const { pelican, pass } = letteringPaths();
+  return (
+    open(SECONDARY_VIEWBOX) +
+    `<path d="${pelican}" fill="${PALETTE.white}"/>` +
+    `<path d="${pass}" fill="${PALETTE.shallows}"/>` +
+    '</svg>'
+  );
 };
 
 /**

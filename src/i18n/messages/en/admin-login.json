@@ -1,0 +1,54 @@
+{
+  "admin-login.error.blocked": {
+    "defaultMessage": "Too many attempts. Wait a few minutes.",
+    "description": "Too many attempts for this username, when the server did not say how long to wait."
+  },
+  "admin-login.error.blockedFor": {
+    "defaultMessage": "Too many attempts. Try again in {minutes, number, ::group-off} min.",
+    "description": "Too many attempts for this username. {minutes} is the wait, rounded up to whole minutes. Safe to show: the budget is keyed on the username the caller typed."
+  },
+  "admin-login.error.captchaRequired": {
+    "defaultMessage": "Security check not completed. Try again.",
+    "description": "The sign-in was refused because the Turnstile check on the form was missing or not accepted. The widget is reset when this shows, so a second attempt has a fresh challenge."
+  },
+  "admin-login.error.failed": {
+    "defaultMessage": "Invalid username or password.",
+    "description": "Sign-in refused, or a field left empty. The server refuses an unknown user, a wrong password and a deactivated account identically, so this must not tell them apart."
+  },
+  "admin-login.error.offline": {
+    "defaultMessage": "Could not complete the sign-in. Check your connection and try again.",
+    "description": "Any other sign-in failure, including a lost connection."
+  },
+  "admin-login.heading": {
+    "defaultMessage": "Administration",
+    "description": "Heading of the administrator sign-in page."
+  },
+  "admin-login.lede": {
+    "defaultMessage": "Staff access only.",
+    "description": "Line under the sign-in heading. The page is reachable only over the team's private network."
+  },
+  "admin-login.noscript": {
+    "defaultMessage": "This page requires JavaScript.",
+    "description": "Shown with JavaScript disabled: signing in is an API call the page's script makes."
+  },
+  "admin-login.password": {
+    "defaultMessage": "Password",
+    "description": "Label of the password field."
+  },
+  "admin-login.reveal": {
+    "defaultMessage": "Show password",
+    "description": "Accessible name of the icon button that shows the typed password. Fixed: whether the password is shown is announced through aria-pressed, so this must not change to \"hide\"."
+  },
+  "admin-login.submit": {
+    "defaultMessage": "Sign in",
+    "description": "Sign-in button."
+  },
+  "admin-login.title": {
+    "defaultMessage": "Sign in | {appTitle}",
+    "description": "Browser tab title of the administrator sign-in page. {appTitle} is the application's name."
+  },
+  "admin-login.username": {
+    "defaultMessage": "Username or email",
+    "description": "Label of the username field. An administrator's username is either a plain handle or an email address."
+  }
+}

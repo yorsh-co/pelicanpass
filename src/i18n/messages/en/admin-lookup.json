@@ -1,0 +1,110 @@
+{
+  "admin-lookup.record.absent": {
+    "defaultMessage": "Not checked in yet",
+    "description": "Presence of an attendee who has not checked in."
+  },
+  "admin-lookup.record.archived": {
+    "defaultMessage": "This attendee is archived and the ticket cannot be used for check-in.",
+    "description": "Banner on an archived attendee's record."
+  },
+  "admin-lookup.record.checkedInContinue": {
+    "defaultMessage": "If the attendee is still on the QR code step, ask them to tap “Already checked in with a volunteer? Tap to continue”.",
+    "description": "Shown on a checked-in record, before the re-entry note. Quotes the label of the check-in page's button (checkin.scanner.presence.button) verbatim, so it must be translated identically to that label."
+  },
+  "admin-lookup.record.checkedInNote.after": {
+    "defaultMessage": "and enter the ticket code and the four verification digits — the arrival step (QR code) is skipped automatically.",
+    "description": "Second half of the note on a checked-in record, after the path /checkin. See admin-lookup.record.checkedInNote.before."
+  },
+  "admin-lookup.record.checkedInNote.before": {
+    "defaultMessage": "Check-in is already complete. Tell the attendee to open their ticket on their phone at",
+    "description": "First half of the note on a checked-in record, before the path /checkin, which is rendered in bold between the halves. See admin-lookup.record.checkedInNote.after."
+  },
+  "admin-lookup.record.close": {
+    "defaultMessage": "Back to search",
+    "description": "Accessible name of the record's close button. Returns to an empty search."
+  },
+  "admin-lookup.record.codeHint": {
+    "defaultMessage": "Same as the last four digits of the registered phone number.",
+    "description": "Explains the verification code under it."
+  },
+  "admin-lookup.record.confirm": {
+    "defaultMessage": "Confirm?",
+    "description": "Label of the armed confirm button: a second press checks the attendee in and draws an arrival number that cannot be taken back. Reverts after a few seconds."
+  },
+  "admin-lookup.record.failed": {
+    "defaultMessage": "Could not confirm. Try again.",
+    "description": "Error line when confirming failed for a reason the server did not explain."
+  },
+  "admin-lookup.record.forbidden": {
+    "defaultMessage": "You no longer have permission to confirm check-in.",
+    "description": "Toast when the volunteer's check-in permission was withdrawn while the record was open."
+  },
+  "admin-lookup.record.mark": {
+    "defaultMessage": "Confirm check-in (only if the QR code cannot be scanned)",
+    "description": "Button that checks the attendee in without the QR. The first press arms it and admin-lookup.record.confirm replaces this label."
+  },
+  "admin-lookup.record.markHint": {
+    "defaultMessage": "Confirm check-in, skipping the arrival step (QR code). Use this button only if you are with the attendee and they cannot scan the QR code. The attendee will still need to open their ticket on their own phone.",
+    "description": "Hint under the confirm button."
+  },
+  "admin-lookup.record.marked": {
+    "defaultMessage": "Check-in confirmed.",
+    "description": "Toast on the record's page after the volunteer confirmed the attendee's presence by hand."
+  },
+  "admin-lookup.record.notOpen": {
+    "defaultMessage": "Check-in has not opened yet for this audience.",
+    "description": "Error line when check-in has not opened yet for the attendee's audience."
+  },
+  "admin-lookup.record.presentNumber": {
+    "defaultMessage": "Checked in · #{number, number, ::group-off}",
+    "description": "Presence of an attendee who checked in and holds arrival number {number}."
+  },
+  "admin-lookup.record.readOnly": {
+    "defaultMessage": "You can look up attendees but not confirm check-in.",
+    "description": "Replaces the confirm button for a volunteer without the check-in permission."
+  },
+  "admin-lookup.record.showCode": {
+    "defaultMessage": "Show verification code",
+    "description": "Summary of the collapsed panel holding the attendee's verification code. Kept closed until asked for: the code is the check-in's only shared secret."
+  },
+  "admin-lookup.search.absent": {
+    "defaultMessage": "not checked in",
+    "description": "Tag on a result card for somebody who has not checked in. Lowercase: it trails the role badge."
+  },
+  "admin-lookup.search.count": {
+    "defaultMessage": "{total, plural, =1 {{total, number, ::group-off} result} other {{total, number, ::group-off} results}}",
+    "description": "Number of matching attendees above the results."
+  },
+  "admin-lookup.search.idle": {
+    "defaultMessage": "Type a name to start.",
+    "description": "Shown before anything was searched."
+  },
+  "admin-lookup.search.lede": {
+    "defaultMessage": "Search by attendee name to see the ticket code, the verification code and, if needed, confirm check-in.",
+    "description": "Line under the lookup heading."
+  },
+  "admin-lookup.search.miss": {
+    "defaultMessage": "No registration found for “{query}”.",
+    "description": "No result. {query} is the search as typed, trimmed and lowercased."
+  },
+  "admin-lookup.search.missHint": {
+    "defaultMessage": "Try searching by name or ticket code.",
+    "description": "Suggestion after a search with no result."
+  },
+  "admin-lookup.search.missScope": {
+    "defaultMessage": "The search is limited to {scope}.",
+    "description": "After admin-lookup.search.miss when a role filter is set, so a volunteer reads the filter before concluding the person was never registered. {scope} is the filter's label, from admin-shell.filter.role.*."
+  },
+  "admin-lookup.search.roles": {
+    "defaultMessage": "Ticket type",
+    "description": "Legend of the role choice (participants, everyone, volunteers). The choice applies on the next search."
+  },
+  "admin-lookup.search.scope": {
+    "defaultMessage": "Searching in: {scope}.",
+    "description": "Under admin-lookup.search.idle. {scope} is the selected role filter's label, from admin-shell.filter.role.*."
+  },
+  "admin-lookup.search.title": {
+    "defaultMessage": "Lookup",
+    "description": "Heading of the volunteer lookup, used at the door on a phone."
+  }
+}

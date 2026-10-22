@@ -29,6 +29,7 @@ export const BACKDROP_STOPS = [
 /** The mark's scale `S` for each use. */
 export const MARK_SCALE = {
   lockup: 0.92,
+  standalone: 1.1,
   appIcon: 0.72,
   favicon32: 0.78,
   favicon16: 0.82,

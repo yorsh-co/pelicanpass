@@ -6,6 +6,7 @@ import {
   markGroup,
   markOutline,
   placeOnGrid,
+  standaloneMark,
   tileIcon,
 } from './mark.ts';
 import { MARK_SCALE } from './palette.ts';
@@ -38,7 +39,7 @@ describe('markGroup', () => {
   it('uses the construction transform', () => {
     assert.match(
       markGroup(0.72),
-      /^<g transform="translate\(50 50\) scale\(0\.72\) translate\(-57 -49\)">/,
+      /^<g transform="translate\(50 50\) scale\(0\.72\) translate\(-52 -49\)">/,
     );
   });
 
@@ -54,6 +55,24 @@ describe('maskable icon', () => {
 
   it('would leave the safe zone at the tile scale', () => {
     assert.ok(farthestFromCentre(0.92) > SAFE_ZONE_RADIUS);
+  });
+});
+
+describe('standalone mark', () => {
+  it('keeps the whole glyph inside the 100 grid', () => {
+    for (const point of markOutline()) {
+      const { x, y } = placeOnGrid(point, MARK_SCALE.standalone);
+
+      assert.ok(x >= 0 && x <= 100 && y >= 0 && y <= 100);
+    }
+  });
+
+  it('has no ground and draws the eye', () => {
+    const svg = standaloneMark();
+
+    assert.match(svg, /viewBox="0 0 100 100"/);
+    assert.doesNotMatch(svg, /<rect width=/);
+    assert.match(svg, /<circle cx="46"/);
   });
 });
 

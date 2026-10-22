@@ -218,6 +218,7 @@ Edit `.env`. Beyond the values it documents, production specifically needs:
 | `PASS_SECRET`       | `openssl rand -hex 32`            | Signs the rotating band and every pass token. Enforced at boot in **every** environment, not just production |
 | `ADMIN_PASSWORD_PEPPER` | `openssl rand -hex 32`, **its own** | Mixed into every admin password before hashing. Enforced in every environment, and boot refuses if it equals `PASS_SECRET` |
 | `PASS_BAND_ENABLED` | `true`                            | Whether the pass carries the rotating band. Defaults to `true`. Scanning is unaffected either way — a scanned pass stands on its signed token. `false` drops the eyes-only comparison, which is the only freshness check on the broken-camera `/lookup` path, and leaves both screens showing a clock |
+| `PASS_BAND_LANGUAGE` | `pt-BR`                          | Language of the band's word, `pt-BR` or `en`; any other value stops the boot. One value for the whole deployment, whatever the page language, because the attendee's pass and the volunteer's screen are compared by eye and must show the same word. Defaults to `pt-BR` |
 | `LANDING_ENABLED`   | `true`                            | Stands the pre-event landing page in front of the app until check-in opens. Defaults to `false` |
 | `EVENT_START_AT`    | ISO-8601 **with offset**          | Both check-in windows are measured back from it. Required when `LANDING_ENABLED=true` |
 | `EVENT_CLOSES_AT`   | ISO-8601 **with offset**          | From this instant the public pages show the closing page and the attendee API answers `410 EVENT_CLOSED`; `/admin` stays open. Optional, independent of `LANDING_ENABLED`. Boot refuses it before `SURVEY_CLOSES_AT` or at/before `EVENT_START_AT`. Copy the same line to the fallback's `.env` |
@@ -359,7 +360,7 @@ To bump one:
    ```
 
 3. Replace the tag and digest together in every file that names the image (`grep -rn 'caddy:' compose*.yml Dockerfile`).
-   The five `FROM` lines in the `Dockerfile` share one Node digest. Postgres, Redis and Caddy are
+   The six `FROM` lines in the `Dockerfile` share one Node digest. Postgres, Redis and Caddy are
    also named in `scripts/standby/lib.sh`, `scripts/db/export-results.test.ts` and
    `scripts/caddyfile.test.ts`; keep them on the same reference as Compose.
 4. Rebuild (`docker compose build`) and recreate (`docker compose up -d`), then re-run the

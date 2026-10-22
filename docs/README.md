@@ -11,6 +11,7 @@ Runbooks for the event: deploying, the day itself, failover and support.
 | [`deployment.md`](./operations/deployment.md)               | Production runbook: first deploy, the 16-step verification, rehearsals, the day itself, updates, rollback, teardown             |
 | [`fallback.md`](./operations/fallback.md)                   | Standalone server that keeps the public hostname answering while the stack restarts: what it serves, cut-over, the closing page |
 | [`static-site.md`](./operations/static-site.md)             | The closing page as static files on Cloudflare Pages: build, rehearsal, cut-over, zone rules afterwards, decommission           |
+| [`demo-site.md`](./operations/demo-site.md) | The public demo as static files on Cloudflare Pages: what it serves, the in-browser mock API, build, rehearsal, custom domain |
 | [`standby.md`](./operations/standby.md)                     | Warm standby on a second host: the per-minute snapshot, failover, cut-back and what a failover can lose                         |
 | [`event-day-support.md`](./operations/event-day-support.md) | Event-day support session on dev-server: what it can do, the data-controller sign-off, log stripping, rehearsal, teardown           |
 | [`db-cheatsheet.md`](./operations/db-cheatsheet.md)         | psql access, seeding, which role for what                                                                                       |
@@ -80,7 +81,7 @@ The visual identity.
 
 | Document                       | What it covers                                                                                 |
 | ------------------------------ | ---------------------------------------------------------------------------------------------- |
-| [`brand.md`](./design/brand.md) | The PelicanPass mark, wordmarks, colours with contrast, backdrop, motifs, type and icon files |
+| [`brand.md`](./design/brand.md) | The PelicanPass mark, wordmarks, colours with contrast, backdrop, type and icon files |
 
 ## Reports
 

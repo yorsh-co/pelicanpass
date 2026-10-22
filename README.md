@@ -1,8 +1,8 @@
 <div align="center">
 
-# PelicanPass
+<h1><img src="docs/images/banner.svg" alt="PelicanPass" width="640"></h1>
 
-**In-person conference experience web app with participant-initiated check-in, attendee passes and volunteer tooling.**
+**Self-service check-in, live attendee passes and volunteer tools for in-person conferences.**
 
 [![Node][node-badge]][node-url]
 [![TypeScript][ts-badge]][ts-url]
@@ -12,7 +12,7 @@
 [![Docker][docker-badge]][docker-url]
 [![License: MIT][license-badge]](#license)
 
-[About](#about-the-project) · [Engineering
+[Live demo](https://pelicanpass.demos.yorsh.co) · [About](#about-the-project) · [Engineering
 highlights](#engineering-highlights) · [Getting
 started](#getting-started) · [Documentation](#documentation)
 
@@ -29,7 +29,7 @@ started](#getting-started) · [Documentation](#documentation)
 - [Architecture](#architecture)
 - [Getting started](#getting-started)
   - [Prerequisites](#prerequisites)
-  - [Installation — Docker Compose](#installation--docker-compose)
+  - [Installation — development stack](#installation--development-stack)
   - [Development stack](#development-stack)
   - [Environment](#environment)
 - [Usage](#usage)
@@ -47,9 +47,17 @@ started](#getting-started) · [Documentation](#documentation)
 
 ## About the project
 
-PelicanPass was originally created for a one-day youth conference with roughly 500 participants and 200 volunteers. Load-tested before the event, the host it ran on carried seven times that participant count comfortably on its busiest phase ([Capacity](#capacity)). It is a portfolio project, provided as is: see the [Disclaimer](#disclaimer).
+PelicanPass was originally created for a one-day youth conference with roughly 500 participants and 200 volunteers. Load-tested before the event, the host it ran on carried seven times that participant count comfortably on its busiest phase ([Capacity](#capacity)). It is a portfolio project, provided as is: see the [Disclaimer](#disclaimer). A [live demo](https://pelicanpass.demos.yorsh.co) with fictional data runs entirely in the browser; [`docs/operations/demo-site.md`](docs/operations/demo-site.md) describes how it is built and deployed.
 
-At the live event on 17/10/2026, 528 of 558 participants and 119 of 119 volunteers checked in and no request was refused for load. The busiest minute saw 17 check-ins and the busiest 15 minutes 92. The [event report](docs/reports/event-2026-10-17.md) has the figures, the incidents and what the data cannot show.
+At the live event on 17/10/2026, 528 of 558 participants and 119 of 119 volunteers checked in and no request was refused for load. The busiest minute saw 17 check-ins and the busiest 15 minutes saw 92 check-ins. The figures from the real event, as well as the incidents and limitations, are documented in the [event report](docs/reports/event-2026-10-17.md).
+
+<p align="center">
+  <img src="docs/images/screenshots/en/checkin-ticket.png" alt="The check-in screen asking for a six-character ticket code" width="240">
+  <img src="docs/images/screenshots/en/pass-front.png" alt="An attendee pass showing the arrival number and entitlements" width="240">
+  <img src="docs/images/screenshots/en/staff.png" alt="The staff redemption screen listing an attendee's entitlements" width="240">
+</p>
+
+<p align="center"><em>Screens from the live demo, with fictional data. The screenshots are in English; <a href="docs/images/screenshots/pt-BR/">Brazilian Portuguese versions</a> are in <code>docs/images/screenshots/pt-BR/</code>.</em></p>
 
 The web app's goal was to solve two recurring pain points for the event organizers, as well as maintain the features that their existing solutions already covered:
 
@@ -61,13 +69,13 @@ The web app's goal was to solve two recurring pain points for the event organize
 - Time specific features.
 - In app venue map.
 - A live admin interface allowing for adding new participants at the door.
-- Every screen reads its copy from message catalogs; pt-BR is the only locale shipped.
+- Every screen reads its copy from message catalogs; pt-BR and English are shipped.
 - Does not include the ticket and item purchase process, that was covered separately.
 
 Specific constraints drove a number of decisions:
 
 - Shared wi-fi and venue NAT as well as carrier NAT required rate limits sized for hundreds of people sharing one IP.
-- Telemetry is self-hosted because attendee data may not leave the host.
+- Telemetry is self-hosted so that attendee data does not leave the host.
 - The host machine had limited memory available, so status and tracking was built from scratch rather than using an existing tool.
 - Application degrades rather than fails, in specific, chosen ways.
 
@@ -88,17 +96,18 @@ Specific constraints drove a number of decisions:
 
 ## What it does
 
-One Express app, three session types — check-in, attendee and admin — each with
-its own cookie and lifetime.
+The solution is a single Express app with three session types — check-in,
+attendee and admin — each with its own cookie and lifetime.
 
 ### Check-in
 
 A resumable state machine — `ticket → verification → qr → success` — persisted
-server-side, so progress survives a reload. A completed check-in follows the
-attendee to a new device, and checking in on a second device ends the session on
-the first. Three entry paths converge on one session: a typed code, a personal
-link whose token is consumed into the session and then `303`'d out of the URL so
-it never lands in browser history, and the venue poster QR.
+server-side, so that the user's progress through the check-in steps survives a
+reload. A completed check-in can be recovered on a new device, and checking in
+on a second device ends the session on the first. Three entry paths converge on
+one session: a typed code, a personal link whose token is consumed into the
+session and then `303`'d out of the URL so it never lands in browser history,
+and the venue poster QR.
 
 Participants and volunteers each have their own ticket code format, copy and
 pass. Every ticket code is six characters: a one-character key and five
@@ -107,44 +116,57 @@ alphanumerics. Volunteer codes use the key
 alongside the sign-up system's. Identity is confirmed
 by the last four digits of the registered phone, against a masked-name preview;
 repeated failures escalate to a Turnstile challenge, and a global failure budget
-switches it on for everyone. The in-browser scanner handles torch control and
-permission failure, and is imported dynamically so the library lands in its own
-chunk. Completion assigns participants a sequential arrival number atomically
-from a Postgres sequence; volunteers do not draw one.
+switches it on for everyone. The in-browser QR Code scanner handles torch
+control and permission failure, and is imported dynamically so the library lands
+in its own chunk. Check-in completion assigns participants a sequential arrival
+number atomically from a Postgres sequence.
 
 With `LANDING_ENABLED`, a countdown holds the app until each audience's check-in
 window opens, and check-ins made before it are refused.
+
+<p align="center">
+  <img src="docs/images/screenshots/en/landing.png" alt="The pre-event countdown that holds the app until check-in opens" width="220">
+  <img src="docs/images/screenshots/en/checkin-ticket.png" alt="Check-in step one: entering the six-character ticket code" width="220">
+</p>
+
+<p align="center">
+  <img src="docs/images/screenshots/en/checkin-verification.png" alt="Check-in step two: confirming identity with a masked name and the last four phone digits" width="220">
+  <img src="docs/images/screenshots/en/checkin-presence.png" alt="Check-in step three: confirming arrival by scanning the venue QR code, with a fallback for an attendee a volunteer has already marked present" width="220">
+</p>
 
 `src/modules/checkin/checkin.flow.ts` · `src/middleware/landing.middleware.ts`
 
 ### Attendee pass
 
-A flip card carrying the arrival number, entitlement chips (a collected one
-leaves the pass an hour after redemption), a display name the
-attendee can set, a venue map and a rotating verification band
-(`PASS_BAND_ENABLED=false` drops the band for a plain clock). Pass tokens are
+A flip card carrying the arrival number, entitlement chips, a display name the
+attendee can set, a venue map and a rotating verification band. Pass tokens are
 single-use (Redis `SET NX` on a hash of the signature), version-tagged,
 event-scoped and constant-time compared. The refresh loop syncs to the server's
 remaining-window time rather than the device clock.
 
 The welcome line under the name changes text over the event:
 `PASS_WELCOME_SCHEDULE` sets when each phase of the `pass.welcome` message
-starts, and open passes switch within 30 seconds. Volunteers with a team see
-their team there instead. `/admin/pass` (`pass:write`) edits the schedule
-without a shell: a saved schedule replaces the `.env` one until it is handed
-back. It can also schedule a _Personalizado_ line, written on the row itself
-(up to 100 characters), which every pass shows as written and untranslated,
-whatever the attendee's questionnaire. `.env` cannot set one. A build older
-than this feature reads a saved schedule holding one as invalid and follows
-`.env` until it is saved again.
+starts, and open passes update within 30 seconds. Volunteers with a team see
+their team and role there instead. `/admin/pass` (`pass:write`) edits the
+schedule without a shell: a saved schedule replaces the `.env` one until it is
+handed back. It can also schedule a custom (_Personalizado_) line, written on
+the row itself (up to 100 characters), which every pass shows as written and
+untranslated, whatever the attendee's questionnaire.
 
-A volunteer's pass shows what they can do: a tab beside the logo in the tier's
-colour, with a chip — `CADASTRO`, `CONSULTA`, `CAMISETAS`, `RETIRADAS` or
-`GERADOR DE N°`, highest first. The highest tier that applies wins. Tapping the
-tab opens the volunteer's actions — the staff, raffle and admin links, which no
-longer sit on the pass front. A volunteer can be linked to an administrator
-account through `attendees.admin_username`; that link is a label and grants
-nothing, since every admin gate still authenticates against `admins` on its own.
+A volunteer's pass shows what they can do: a chip beside the logo in the tier's
+colour, matched by an edge along the card's top — `CADASTRO`, `CONSULTA`,
+`CAMISETAS`, `RETIRADAS` or `GERADOR DE N°`, highest first. The highest tier
+that applies wins. Tapping the chip opens the volunteer's actions — the staff,
+raffle and admin links, which no longer sit on the pass front. A volunteer can
+be linked to an administrator account through `attendees.admin_username`; that
+link is a label and grants nothing, since every admin gate still authenticates
+against `admins` on its own.
+
+<p align="center">
+  <img src="docs/images/screenshots/en/pass-front.png" alt="Participant pass front with arrival number and entitlement chips" width="220">
+  <img src="docs/images/screenshots/en/pass-back.png" alt="Participant pass back with QR code and rotating verification word" width="220">
+  <img src="docs/images/screenshots/en/pass-volunteer.png" alt="Volunteer pass with the access tier chip, the tier-coloured top edge and entitlement chips" width="220">
+</p>
 
 `src/modules/pass/pass.service.ts` · `src/constants/pass.ts` ·
 `src/config/pass-welcome.ts` · `src/modules/pass/pass.welcome.ts` ·
@@ -166,15 +188,20 @@ predicate as redemption.
 Both run on the volunteer's own attendee session, with permissions re-read from
 Postgres on every request, so revoking one takes effect on the next tap.
 
+<p align="center">
+  <img src="docs/images/screenshots/en/staff.png" alt="Staff redemption screen with entitlements and slide-to-confirm rows" width="220">
+  <img src="docs/images/screenshots/en/raffle.png" alt="Raffle screen showing a drawn number and the list of numbers already drawn" width="220">
+</p>
+
 `src/modules/staff/` · `src/modules/raffle/`
 
 ### Admin
 
-Reachable two ways: over the tailnet through a Tailscale sidecar, or on the
-public hostname behind Cloudflare Access, whose signed assertion the origin
-verifies again rather than trusting the edge
-(`src/middleware/access-jwt.middleware.ts`). Password login with a Turnstile
-challenge, then scope-gated screens:
+The admin interface is reachable over the tailnet through a Tailscale sidecar,
+or on the public hostname behind Cloudflare Access, whose signed assertion the
+origin verifies again rather than trusting the edge
+(`src/middleware/access-jwt.middleware.ts`). The interface requires password
+login with a Turnstile challenge before displaying scope-gated screens:
 
 - a roster editor, searching accent-folded names and nicknames, exact ticket
   codes and phone digits, whose item dropdowns offer only the options approved
@@ -191,8 +218,7 @@ challenge, then scope-gated screens:
   table, who is entitled to each item, and per attendee the counter's full
   history and an audited _undo_ or _mark collected_, each with a reason code;
 - a T-shirt desk for a separate team: search for an attendee who bought a
-  shirt and record the hand-over with a two-press button, under one scope
-  that needs no other;
+  shirt and record the hand-over with a two-press button, under a single scope;
 - a ticket limit on the roster: a cap on participant tickets, counting every
   one (`total`) or only codes generated at the door (`door`), that either
   refuses a new or restored participant at the cap (`hard`) or lets it through
@@ -208,6 +234,14 @@ challenge, then scope-gated screens:
 Nav entries are paired with the same scope their route enforces, so a section
 cannot be shown that will then redirect.
 
+<p align="center">
+  <img src="docs/images/screenshots/en/admin-redemptions.png" alt="Admin redemptions screen with per-item totals and a searchable list of attendees" width="100%">
+</p>
+
+<p align="center">
+  <img src="docs/images/screenshots/en/admin-metrics.png" alt="Admin live metrics dashboard with check-ins, redemptions, health, errors and latency" width="100%">
+</p>
+
 `src/modules/admin/` · `src/constants/admin-nav.ts` · `src/constants/admin-scopes.ts` · [`docs/features/admin-scopes.md`](docs/features/admin-scopes.md) · [`docs/features/redemption-options.md`](docs/features/redemption-options.md) · [`docs/operations/deployment.md`](docs/operations/deployment.md#the-ticket-limit)
 
 ### Questionnaire
@@ -219,6 +253,10 @@ and the answers are stored apart from the record of who answered, which
 `purge-attendees.sql` deletes before the final report. The release window comes from `SURVEY_*`, and
 `/admin/survey` can override it (`survey:write`) and download each audience's
 answers as CSV (`export:read`).
+
+<p align="center">
+  <img src="docs/images/screenshots/en/pass-survey.png" alt="The experience questionnaire, opened from the pass, with required rating questions on sliders" width="220">
+</p>
 
 `src/modules/survey/` · [`docs/features/survey.md`](docs/features/survey.md)
 
@@ -254,7 +292,7 @@ secret, so the public hostname answers while the stack restarts.
 
 The warm standby is a full copy of the app on a second host. A systemd timer
 pulls a validated snapshot of Postgres and Redis every minute over a
-forced-command SSH key, so a failover keeps check-ins and signed-in phones.
+forced-command SSH key, so a failover keeps check-ins and signed-in sessions.
 Restore reserves 500 check-in numbers, so one issued after the last snapshot is
 never issued twice; cut-back hands production back. On 18/10 the standby served real traffic for about 40 minutes while the production host was offline ([event report](docs/reports/event-2026-10-17.md#the-1810-standby-episode)).
 
@@ -263,8 +301,8 @@ never issued twice; cut-back hands production back. On 18/10 the standby served 
 ### Languages
 
 Every screen, the admin included, reads its copy from ICU message catalogs, with
-the locale resolved per request. pt-BR is the only locale offered, and draft
-locales never render in production. Catalogs round-trip to a translation
+the locale resolved per request. pt-BR and English are offered, and
+draft locales never render in production. Catalogs round-trip to a translation
 management system as XLIFF (`npm run i18n:export`, `npm run i18n:import`).
 
 `src/i18n/` · [`docs/development/copy-management.md`](docs/development/copy-management.md)
@@ -273,7 +311,7 @@ management system as XLIFF (`npm run i18n:export`, `npm run i18n:import`).
 
 ## Engineering highlights
 
-### 1. A pass that detects its own screenshot, with zero coordination
+### 1. A pass that gives its own screenshot away
 
 Every 30 seconds, the attendee's pass and the volunteer's screen each show the
 same colour-and-word band, derived from `HMAC(secret, event | window)`. The
@@ -325,7 +363,7 @@ the database host.
 
 `scripts/db/init/01-roles.sh` · `migrations/005_app-role-grants.ts` · [`docs/operations/db-cheatsheet.md`](docs/operations/db-cheatsheet.md)
 
-### 5. A self-hosted telemetry stack, because none of it may leave the host
+### 5. A self-hosted telemetry stack, so that data stays on the host
 
 Privacy rules out Sentry and Grafana Cloud, so observability is built in:
 
@@ -370,7 +408,7 @@ route to Postgres.
 
 `compose.prod.yml` · `Caddyfile` · [`docs/operations/deployment.md`](docs/operations/deployment.md) · [`docs/infrastructure/cloudflare-rules.md`](docs/infrastructure/cloudflare-rules.md) · [`docs/infrastructure/container-containment.md`](docs/infrastructure/container-containment.md)
 
-### 8. No backend build step — and the consequence owned
+### 8. No backend build step
 
 `.ts` runs directly on Node 24 via native type stripping, so import specifiers
 must name the file on disk. The trap is that a stale `./foo.js` **type-checks
@@ -571,7 +609,7 @@ src/
 ├─ config/env.ts    the whole env surface, validated at boot
 ├─ constants/       single sources of truth shared by server, client and migrations
 ├─ i18n/           message catalogs, locale resolution
-├─ middleware/      20 cross-cutting concerns, explicitly ordered
+├─ middleware/      22 cross-cutting concerns, explicitly ordered
 ├─ modules/         admin · attendee · captcha · checkin · client-error · metrics
 │                   pass · qr · raffle · session · staff · survey · whatsapp
 ├─ shared/          db · errors · logger · telemetry · utils
@@ -584,10 +622,11 @@ src/
    │                read from Markdown at boot
    └─ public/       webroot: css, assets, and the built js/ bundle
 
-migrations/         001–037, node-pg-migrate, TypeScript
+migrations/         001–039, node-pg-migrate, TypeScript
 scripts/            client build · admin CLI · SQL helpers · seed · egress filter
                     i18n · survey · redemption · telemetry · whatsapp · qr · standby
-                    load-test tooling
+                    load-test tooling · static closing page · public demo · docs
+                    screenshots · brand assets · event report
 loadtest/           k6 event-day load test (TypeScript); see docs/performance/load-testing.md
 docs/               documentation by area — index in docs/README.md
 ```
@@ -598,9 +637,8 @@ docs/               documentation by area — index in docs/README.md
 
 ### Prerequisites
 
-- **Node ≥ 24** — load-bearing, not a preference. There is no backend build step;
-  the server runs `.ts` through Node's native type stripping. There is no
-  `.nvmrc`.
+- **Node ≥ 24** — required: the server runs `.ts` through Node's native type
+  stripping.
 - **npm** (the lockfile is `package-lock.json`)
 - **Docker** and **Docker Compose**
 - **`openssl`**, to generate secrets
@@ -614,7 +652,7 @@ fetches its signing keys from `<team>.cloudflareaccess.com`). All three are
 covered in [`docs/operations/deployment.md`](docs/operations/deployment.md) and
 [`docs/infrastructure/cloudflare-rules.md`](docs/infrastructure/cloudflare-rules.md).
 
-### Installation — Docker Compose
+### Installation — development stack
 
 ```bash
 git clone <repository-url> pelicanpass
@@ -654,6 +692,10 @@ does not resolve from the host and a bare `npm run migrate` will hang:
 ```bash
 docker compose run --rm app npm run dev:migrate
 ```
+
+In production, migrations run in the `migrate` service instead:
+`docker compose -f compose.prod.yml --profile tools run --rm --build migrate` —
+see [`docs/operations/deployment.md`](docs/operations/deployment.md).
 
 This step is not optional. `01-roles.sh` deliberately grants nothing on
 `attendees` — the column-level grants live in `migrations/005_app-role-grants.ts`,
@@ -948,10 +990,10 @@ Joshua Porter — [joshuaporter.dev@outlook.com](mailto:joshuaporter.dev@outlook
 ## Acknowledgments
 
 - [Claude Code](https://claude.com/claude-code) — the author designed the
-  check-in flow, chose the infrastructure and planned how every feature behaves.
-  Claude Code wrote and tested most of the code for those features, in phases
-  the author planned and reviewed, designed the UI apart from the branding, and
-  helped research the choice between approaches.
+  business logic, infrastructure and features, and wrote the first prototype.
+  Claude Opus 5, Opus 5.5 and Sonnet 5.5 were then used to plan, write and test
+  most of the code, with the author reviewing each phase. Opus 5.5 designed the
+  PelicanPass branding.
 - [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 - [Libre Franklin](https://github.com/impallari/Libre-Franklin) and
   [Material Symbols](https://github.com/google/material-design-icons), both

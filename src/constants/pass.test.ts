@@ -2,8 +2,11 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
 import {
+  BAND_LANGUAGES,
+  BAND_WORDS,
   REDEEMED_CHIP_VISIBLE_MS,
   WELCOME_CUSTOM_PHASE,
+  isBandLanguage,
   isChipShown,
   isWelcomeLinePhase,
   normaliseWelcomeText,
@@ -80,5 +83,44 @@ describe('normaliseWelcomeText', () => {
 
   it('composes decomposed accents', () => {
     assert.equal(normaliseWelcomeText('pátio'), 'pátio');
+  });
+});
+
+describe('BAND_WORDS', () => {
+  const reference = BAND_WORDS['pt-BR'];
+
+  for (const language of BAND_LANGUAGES) {
+    describe(language, () => {
+      const words: readonly string[] = BAND_WORDS[language];
+
+      it('has the same length as the reference list, a power of two', () => {
+        assert.equal(words.length, reference.length);
+        assert.equal(words.length, 32);
+      });
+
+      it('has no repeated word', () => {
+        assert.equal(new Set(words).size, words.length);
+      });
+
+      it('is upper-case A-Z, at most seven characters', () => {
+        for (const word of words) {
+          assert.match(word, /^[A-Z]{1,7}$/, word);
+        }
+      });
+    });
+  }
+});
+
+describe('isBandLanguage', () => {
+  it('accepts exactly the languages that have a list', () => {
+    assert.deepEqual([...BAND_LANGUAGES].sort(), ['en', 'pt-BR']);
+    assert.equal(isBandLanguage('en'), true);
+    assert.equal(isBandLanguage('pt-BR'), true);
+  });
+
+  it('refuses anything else, including inherited property names', () => {
+    for (const value of ['fr', 'EN', 'pt', '', 'toString']) {
+      assert.equal(isBandLanguage(value), false, value);
+    }
   });
 });
