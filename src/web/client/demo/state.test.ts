@@ -168,10 +168,10 @@ describe('sample data language', () => {
     assert.equal(profile.teamRole, 'Líder');
     assert.equal(profile.mealOption, 'Sem restrição');
     assert.equal(profile.drinkOption, 'Água');
-    assert.equal(profile.lunchOption, 'Onívoro');
+    assert.equal(profile.lunchOption, 'Frango');
     assert.deepEqual(
       pass.items.map((item) => item.value),
-      ['M', 'Onívoro', null, 'Sem restrição', 'Água'],
+      ['M', 'Frango', null, 'Sem restrição', 'Água'],
     );
   });
 
@@ -182,7 +182,7 @@ describe('sample data language', () => {
     assert.equal(profile.teamRole, 'Lead');
     assert.equal(profile.mealOption, 'No restrictions');
     assert.equal(profile.drinkOption, 'Water');
-    assert.equal(profile.lunchOption, 'Omnivore');
+    assert.equal(profile.lunchOption, 'Chicken');
     assert.equal(profileIn(PARTICIPANT, 'en').profile.mealOption, 'Vegetarian');
     assert.equal(
       profileIn(PARTICIPANT, 'en').profile.drinkOption,

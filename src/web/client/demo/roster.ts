@@ -56,7 +56,7 @@ const ENGLISH_OPTIONS: Readonly<Record<string, string>> = {
   'Sem restrição': 'No restrictions',
   'Sem lactose': 'Lactose-free',
   'Sem glúten': 'Gluten-free',
-  Onívoro: 'Omnivore',
+  Frango: 'Chicken',
   'Suco de laranja': 'Orange juice',
   Água: 'Water',
   Café: 'Coffee',
@@ -160,7 +160,7 @@ const volunteer = (
   phone: `${phoneStart}65${DEMO_VERIFICATION_CODE}`,
   mealOption: 'Sem restrição',
   drinkOption: 'Água',
-  lunchOption: 'Onívoro',
+  lunchOption: 'Frango',
   tshirtSize: null,
   ...options,
 });

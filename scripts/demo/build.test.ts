@@ -555,7 +555,7 @@ describe(
 
     it('shows English sample data on the English pages only', async () => {
       const samples =
-        /Vegetariano|Sem restrição|Suco de laranja|Onívoro|Recepção|Líder|operadora|Fila de check-in/;
+        /Vegetariano|Sem restrição|Suco de laranja|Frango|Recepção|Líder|operadora|Fila de check-in/;
       const pages = files.filter((file) => file.endsWith('.html'));
       const textOf = async (tree: string[]): Promise<string> =>
         (await Promise.all(tree.map(read))).join('\n');
