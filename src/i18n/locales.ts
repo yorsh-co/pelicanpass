@@ -57,3 +57,13 @@ export const supportedLocales = (nodeEnv: string): readonly Locale[] =>
         (locale) => locale !== PSEUDO_LOCALE && !DRAFT_LOCALES.includes(locale),
       )
     : LOCALES;
+
+/**
+ * The locale dates and times are formatted in. English uses British
+ * conventions — day-first dates and the 24-hour clock — to match pt-BR.
+ *
+ * @param locale - A BCP 47 tag, typically the page's or response's locale.
+ * @returns `en-GB` for any English tag, otherwise the tag unchanged.
+ */
+export const dateTimeLocale = (locale: string): string =>
+  new Intl.Locale(locale).language === 'en' ? 'en-GB' : locale;

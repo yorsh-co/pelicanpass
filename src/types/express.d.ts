@@ -97,6 +97,12 @@ declare module 'express-serve-static-core' {
     locale: Locale;
 
     /**
+     * The locale dates and times in {@link locale} are formatted in: see
+     * `dateTimeLocale`. Set alongside it.
+     */
+    dateLocale: string;
+
+    /**
      * The shared chrome's messages in {@link locale}, for the header, footer and
      * other partials every page includes. Set alongside `locale`.
      */

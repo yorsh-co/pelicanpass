@@ -11,7 +11,7 @@ import { cspDirectives } from './config/csp.ts';
 import { env } from './config/env.ts';
 import { COPY_DEFAULTS } from './constants/copy-defaults.ts';
 import { CREDIT } from './constants/credit.ts';
-import { BASE_LOCALE } from './i18n/locales.ts';
+import { BASE_LOCALE, dateTimeLocale } from './i18n/locales.ts';
 import { getMessages } from './i18n/server.ts';
 import apiRoutes from './api/index.ts';
 import webRoutes from './web/routes/web.routes.ts';
@@ -61,6 +61,7 @@ app.use((_req, res, next) => {
   // error, say — which still render a layout. `localeMiddleware` resolves the
   // real value for every web route.
   res.locals.locale = BASE_LOCALE;
+  res.locals.dateLocale = dateTimeLocale(BASE_LOCALE);
   res.locals.chrome = getMessages(BASE_LOCALE, 'chrome');
   res.locals.copyDefaults = COPY_DEFAULTS;
   res.locals.credit = CREDIT;

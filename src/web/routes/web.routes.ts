@@ -11,6 +11,7 @@ import type { RedemptionCorrectionReason } from '../../constants/redemptions.ts'
 import type { TicketLimitOverview } from '../../types/ticket-limit.ts';
 
 import { env } from '../../config/env.ts';
+import { dateTimeLocale } from '../../i18n/locales.ts';
 import { surveyCoverage } from '../../constants/survey-coverage.ts';
 import { redisOutageToUnavailable } from '../../middleware/redis-outage.middleware.ts';
 import { normaliseBodyParserError } from '../../middleware/body-parser-error.middleware.ts';
@@ -751,7 +752,7 @@ router.get(
       const m = adminMessages(res);
       const overview = await new SurveyAdminService(req).overview();
 
-      const when = new Intl.DateTimeFormat(res.locals.locale, {
+      const when = new Intl.DateTimeFormat(dateTimeLocale(res.locals.locale), {
         dateStyle: 'short',
         timeStyle: 'short',
         timeZone: env.landing.timezone,
@@ -831,7 +832,7 @@ router.get(
       const overview = await new PassAdminService(req).overview();
       const timeZone = env.landing.timezone;
 
-      const when = new Intl.DateTimeFormat(res.locals.locale, {
+      const when = new Intl.DateTimeFormat(dateTimeLocale(res.locals.locale), {
         dateStyle: 'short',
         timeStyle: 'short',
         timeZone,
@@ -1318,7 +1319,7 @@ const reasonLabelsOf = (
  *   summary's last refresh.
  */
 const eventClock = (locale: string, style: 'dateTime' | 'time') =>
-  new Intl.DateTimeFormat(locale, {
+  new Intl.DateTimeFormat(dateTimeLocale(locale), {
     ...(style === 'dateTime'
       ? { dateStyle: 'short', timeStyle: 'short' }
       : { timeStyle: 'medium' }),

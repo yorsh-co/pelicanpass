@@ -13,7 +13,7 @@ import { COPY_DEFAULTS } from '../constants/copy-defaults.ts';
 import { CREDIT } from '../constants/credit.ts';
 import { toAudienceRole } from '../constants/audience.ts';
 import { getMessages } from '../i18n/catalogs.ts';
-import { BASE_LOCALE } from '../i18n/locales.ts';
+import { BASE_LOCALE, dateTimeLocale } from '../i18n/locales.ts';
 import { permissionsPolicy } from '../middleware/permissions-policy.middleware.ts';
 import { REDACT_PATHS } from '../shared/logger/redact-paths.ts';
 import { NOTICES } from '../web/content/notices.ts';
@@ -101,6 +101,7 @@ export const createFallbackApp = (config: FallbackConfig): Express => {
   app.use((_req, res, next) => {
     res.locals.cspNonce = crypto.randomBytes(16).toString('base64');
     res.locals.locale = BASE_LOCALE;
+    res.locals.dateLocale = dateTimeLocale(BASE_LOCALE);
     res.locals.chrome = chrome;
     res.locals.copyDefaults = COPY_DEFAULTS;
     res.locals.credit = CREDIT;

@@ -1,3 +1,5 @@
+import { dateTimeLocale } from '../../../../i18n/locales.ts';
+
 /**
  * The wall clock, in one format.
  *
@@ -10,12 +12,15 @@
  * screens, and constructing the formatter is the expensive half of the work.
  * The page's `lang` is fixed for its lifetime, so reading it once is enough.
  */
-const format = new Intl.DateTimeFormat(document.documentElement.lang, {
-  hour: '2-digit',
-  minute: '2-digit',
-  second: '2-digit',
-  hourCycle: 'h23',
-});
+const format = new Intl.DateTimeFormat(
+  dateTimeLocale(document.documentElement.lang),
+  {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hourCycle: 'h23',
+  },
+);
 
 /**
  * Writes the device's current time into an element.

@@ -9,6 +9,7 @@ import { getMessages } from './catalogs.ts';
 import {
   BASE_LOCALE,
   PSEUDO_LOCALE,
+  dateTimeLocale,
   isLocale,
   supportedLocales,
 } from './locales.ts';
@@ -173,6 +174,7 @@ export const localeMiddleware: RequestHandler = (req, res, next) => {
   const locale = resolveLocale(req);
 
   res.locals.locale = locale;
+  res.locals.dateLocale = dateTimeLocale(locale);
   res.locals.chrome = getMessages(locale, 'chrome');
   res.locals.localeLinks = localeLinks(req.originalUrl, locale);
   res.setHeader('Content-Language', locale);

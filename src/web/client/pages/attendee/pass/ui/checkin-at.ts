@@ -1,7 +1,8 @@
 /**
  * Formatting options for the check-in moment on the pass.
  *
- * Time is always 24-hour. The month is abbreviated in English, where the
+ * Formatted with `dateTimeLocale`, so English is day-first like pt-BR; the
+ * time is always 24-hour. The month is abbreviated in English, where the
  * footer line is otherwise too long for the volunteer pass, and written out in
  * full elsewhere.
  *

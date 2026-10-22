@@ -1,3 +1,4 @@
+import { dateTimeLocale } from '../../../../../i18n/locales.ts';
 import api from '../../../core/api/index.ts';
 import { startPollLoop } from '../../../modules/ui/poll-loop.ts';
 import { SUMMARY_COPY } from './messages.ts';
@@ -43,7 +44,9 @@ const formatTime = (iso: string): string => {
   const zone = root?.dataset.timezone;
   const timeZone = zone === '' ? undefined : zone;
 
-  return new Intl.DateTimeFormat(document.documentElement.lang || undefined, {
+  const lang = document.documentElement.lang;
+
+  return new Intl.DateTimeFormat(lang ? dateTimeLocale(lang) : undefined, {
     timeStyle: 'medium',
     timeZone,
   }).format(new Date(iso));

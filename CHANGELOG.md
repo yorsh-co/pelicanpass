@@ -22,6 +22,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 
 ### Changed
 
+- English dates and times are day-first and 24-hour throughout, formatted with British conventions (`dateTimeLocale` in `src/i18n/locales.ts`), like pt-BR
 - The footer credits Yorsh, linking to the repository, from a fixed `CREDIT` constant (`src/constants/credit.ts`) rather than `COPY_DEFAULTS`, so a per-event copy setting cannot replace the authorship credit; the copyright line still names the event
 - `npm run docs:screenshots` captures every screen in each demo locale, into `docs/images/screenshots/en/` and `docs/images/screenshots/pt-BR/`; `README.md` shows the English ones
 - The language switcher labels English `EN` rather than `US`: it shows the locale's own region, or its language when it names none
@@ -42,6 +43,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 
 ### Fixed
 
+- The landing page showed the check-in opening time in English as "10h30 AM": the pt-BR `h` separator was applied in every language; it now applies to pt-BR only and English reads "10:30"
 - The pass shows the check-in moment with an abbreviated month in English, and every time on the pass in 24-hour format, so the footer line no longer wraps on the volunteer pass
 - `npm run docs:screenshots` captured the check-in ticket step before its hint was shown, so `checkin-ticket.png` changed from run to run; both check-in captures now wait for the hint to finish fading in
 - `npm run docs:screenshots` drew the rotation window's ring at whatever level it had drained to by the time of the capture, so `pass-back.png` and `staff.png` changed from run to run; the ring is now held at three quarters

@@ -1,3 +1,4 @@
+import { dateTimeLocale } from '../../../../../i18n/locales.ts';
 import api from '../../../core/api/index.ts';
 import { startPollLoop } from '../../../modules/ui/poll-loop.ts';
 
@@ -210,7 +211,7 @@ const render = (snapshot: MetricsSnapshot): void => {
   setText(
     'generated',
     new Date(snapshot.generatedAt).toLocaleString(
-      document.documentElement.lang,
+      dateTimeLocale(document.documentElement.lang),
     ),
   );
   setText(

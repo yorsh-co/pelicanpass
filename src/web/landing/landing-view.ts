@@ -1,5 +1,6 @@
 import { splitCountdown } from '../../constants/countdown.ts';
 import { getCopy, getMessages, inlineCatalogs } from '../../i18n/catalogs.ts';
+import { dateTimeLocale } from '../../i18n/locales.ts';
 
 import type { Locale } from '../../i18n/locales.ts';
 import type { AttendeeRole } from '../../types/attendee.ts';
@@ -43,17 +44,18 @@ const formatters = new Map<
  */
 const formattersFor = (locale: Locale, timezone: string) => {
   const key = `${locale}:${timezone}`;
+  const formatLocale = dateTimeLocale(locale);
   let entry = formatters.get(key);
 
   if (!entry) {
     entry = {
-      date: new Intl.DateTimeFormat(locale, {
+      date: new Intl.DateTimeFormat(formatLocale, {
         timeZone: timezone,
         weekday: 'long',
         day: '2-digit',
         month: '2-digit',
       }),
-      time: new Intl.DateTimeFormat(locale, {
+      time: new Intl.DateTimeFormat(formatLocale, {
         timeZone: timezone,
         hour: '2-digit',
         minute: '2-digit',
@@ -75,9 +77,10 @@ const formattersFor = (locale: Locale, timezone: string) => {
  * @param opensAt - Epoch milliseconds the window opens at.
  * @param locale - The response's locale.
  * @param timezone - The event's IANA timezone.
- * @returns Something like `sábado, 13/09, às 18h30`.
+ * @returns Something like `sábado, 13/09, às 18h30` in pt-BR, or
+ *   `Saturday 13/09, at 18:30` in English.
  */
-const formatOpensAt = (
+export const formatOpensAt = (
   opensAt: number,
   locale: Locale,
   timezone: string,
@@ -85,11 +88,16 @@ const formatOpensAt = (
   const at = new Date(opensAt);
   const { date, time } = formattersFor(locale, timezone);
 
+  const clockTime = time.format(at);
+
   // pt-BR writes a time of day with an `h`, not a colon; the colon belongs to
   // the clock format next to it, which is counting rather than telling time.
   return getMessages(locale, 'landing').opensAt({
     date: date.format(at),
-    time: time.format(at).replace(':', 'h'),
+    time:
+      new Intl.Locale(locale).language === 'pt'
+        ? clockTime.replace(':', 'h')
+        : clockTime,
   });
 };
 

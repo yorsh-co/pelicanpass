@@ -1,4 +1,5 @@
 import { surveyCoverage } from '../../../../../constants/survey-coverage.ts';
+import { dateTimeLocale } from '../../../../../i18n/locales.ts';
 import { paintLimitMeter } from '../shared/limit-meter.ts';
 import { LIMIT_COPY, METRICS_COPY } from './messages.ts';
 
@@ -186,11 +187,12 @@ export const renderSurvey = (
 
   const closes = cell(host, 'closes');
   const zone = host.dataset.timezone;
+  const lang = document.documentElement.lang;
 
   if (closes) {
     const closing =
       overview.state.open && overview.closesAt !== null
-        ? new Intl.DateTimeFormat(document.documentElement.lang || undefined, {
+        ? new Intl.DateTimeFormat(lang ? dateTimeLocale(lang) : undefined, {
             dateStyle: 'short',
             timeStyle: 'short',
             // An empty attribute means the route had no zone to give.
