@@ -4,7 +4,7 @@
  * Imported by browser code as well as the server, so nothing here may read the
  * environment: which locales are offered is decided by the caller.
  */
-export const LOCALES = ['pt-BR', 'en-XA'] as const;
+export const LOCALES = ['pt-BR', 'en', 'en-XA'] as const;
 
 export type Locale = (typeof LOCALES)[number];
 

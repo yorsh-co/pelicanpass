@@ -22,6 +22,8 @@ misspelled message name or a missing argument fails `tsc` instead of rendering
 - **Every namespace is translatable, admin screens included.** A locale is published only
   when all of them are translated, so staff and attendees get the same language.
   `translatable: false` still exists for a surface that must stay pt-BR; none uses it.
+- **`en` is published.** Production offers it beside pt-BR; the privacy notice and terms
+  are courtesy translations, and pt-BR is authoritative.
 - **`en-XA` is a pseudo-locale.** It is pt-BR with accents, padding and brackets, for
   spotting text that escaped the catalogs. It exists only outside production.
 
@@ -32,8 +34,8 @@ Deliberate exceptions:
 | JSON API `error` strings                    | Inline English: they are for developers; clients branch on `code` and, for admin refusals, `details.reason` |
 | Meta's failure titles on the WhatsApp panel | Shown as Meta sends them (English); codes this app writes are named from `admin-whatsapp` |
 | Alert titles on the metrics panel           | English, as sent to Discord                                               |
-| WhatsApp message bodies                     | Approved by Meta and edited in WhatsApp Manager, never in this repo       |
-| Privacy notice and terms                    | Markdown in `src/web/content/<locale>/`, owned by whoever owns the policy |
+| WhatsApp message bodies                     | Approved by Meta and edited in WhatsApp Manager, never in this repo. Only pt_BR is approved, so every locale sends it |
+| Privacy notice and terms                    | Markdown in `src/web/content/<locale>/`, owned by whoever owns the policy. pt-BR is authoritative; other locales are courtesy translations |
 | Questionnaire questions                     | Markdown in `src/web/content/<locale>/survey-participant.md` and the optional `survey-volunteer.md`, validated by `survey:check`. The card's own copy is the `survey` namespace |
 | Brand names, icon ligatures, code literals  | Inline, since they are not copy: "PelicanPass", `check`, `dXXXXX`         |
 
@@ -260,16 +262,19 @@ It sets `res.locals.locale`, `chrome` and `localeLinks`, plus `Content-Language`
 already set). A shared cache must never serve one visitor's language to another.
 
 - **Offered locales:** `supportedLocales(NODE_ENV)`. In production that is `LOCALES`
-  minus the pseudo-locale and minus `DRAFT_LOCALES`; in development it is everything.
+  minus the pseudo-locale and minus `DRAFT_LOCALES`, which today is pt-BR and `en`; in
+  development it is everything.
 - **Admin pages follow the same locale** as the public ones, `/admin/login` included.
 - **The language switcher** renders in the public footer and in the admin rail when more
-  than one locale is offered, so today it shows in development (pt-BR and `en-XA`) and not
-  in production. Both are the same native `<details>` menu, placed after the theme toggle:
+  than one locale is offered: pt-BR and English in production, plus `en-XA` in development.
+  Both are the same native `<details>` menu, placed after the theme toggle:
   the toggle shows the current locale's two-letter region code (`Intl.Locale#maximize`),
   and the panel lists each locale as that code and its name in its own language, through
   `Intl.DisplayNames`.
 - **Long-form pages** read `src/web/content/<locale>/*.md` at boot; a locale without its
   own file is served the pt-BR text.
+- **WhatsApp is not localised.** The send path carries no locale, and a locale with no
+  `META_LANGUAGE` entry has no approved template, so `en` attendees receive the pt_BR one.
 - **`Intl` formatting** (dates, times) uses the resolved locale on the server and
   `<html lang>` in the browser.
 
@@ -688,8 +693,9 @@ out of the diagnostics.
 ### Edit the privacy notice or the terms
 
 Edit `src/web/content/pt-BR/privacy-notice.md` or `terms-of-use.md`, then restart: the
-files are parsed at boot. A locale is served its own file only if one exists, which is
-why an unreviewed translation must never be added:
+files are parsed at boot. pt-BR is authoritative: each translation opens with a note saying
+so, linked to the pt-BR text, and follows a change to it. A locale is served its own file
+only if one exists, which is why an unreviewed translation must never be added:
 
 ```ts
 // web.routes.ts
@@ -929,8 +935,9 @@ i18n: pt-BR left unchanged
 2. **Export and translate.** Upload the XLIFF files as above and translate in Tolgee.
 3. **Import.** Export the language from Tolgee as flat JSON, then
    `npm run i18n:import -- --locale <tag> --format simple <dir>`.
-   - **It needs one `<dir>/<ns>.json` per namespace.** A one-keyspace Tolgee project
-     exports a single file per language, so this step is blocked until that changes.
+   - **It needs one `<dir>/<ns>.json` per namespace.** `en` was imported this way, with no
+     Tolgee round. A one-keyspace Tolgee project exports a single file per language, so
+     this step is blocked for it until that changes.
    - **It refuses, before writing anything,** the base or pseudo locale, a locale not in
      `LOCALES`, a file for an unknown or untranslatable namespace, an ID the source does
      not have, and invalid ICU.
@@ -946,16 +953,17 @@ i18n: pt-BR left unchanged
    build error, so `npm run check` passes only for a complete locale.
 6. **Legal.** pt-BR remains authoritative. Add
    `src/web/content/<tag>/{privacy-notice,terms-of-use}.md` only once a translation is
-   signed off; until then the pt-BR notices are served.
+   signed off; until then the pt-BR notices are served. Open each with a note that the
+   translation is a courtesy and the pt-BR text prevails, linked to it, as `en` does.
 7. **WhatsApp.** Get the template approved by Meta in the new language, add it to
    `WHATSAPP_TEMPLATES` under `name:language`, and add the locale's code to
-   `META_LANGUAGE`.
+   `META_LANGUAGE`. Until then the locale sends the pt_BR template, as `en` does.
 
 The whole round, for a hypothetical Spanish locale:
 
 ```ts
 // src/i18n/locales.ts
-export const LOCALES = ['pt-BR', 'en-XA', 'es'] as const;
+export const LOCALES = ['pt-BR', 'en', 'en-XA', 'es'] as const;
 export const DRAFT_LOCALES: readonly Locale[] = ['es'];
 ```
 
@@ -1013,7 +1021,7 @@ message looks like this:
 
 - **Why:** Replaces the band word when it stops refreshing. …
 - **Ref:** `staff.band.retry`
-- **Locales:** pt-BR ✓ · en-XA (pseudo)
+- **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 ```
 
 - **The quote** is the exact text shown. Parts in braces are filled in by the app:
@@ -1056,6 +1064,54 @@ A developer applies them exactly. If a sentence should change for one audience o
 
 The privacy notice and the terms of use are edited by their owner, not through this
 document.
+
+### English terminology
+
+The terms the `en` catalogs and notices use, so a new message reads like the rest. pt-BR is
+the source: change the English only to follow it.
+
+| pt-BR | English | Note |
+| --- | --- | --- |
+| check-in | check-in (noun, adjective), check in (verb) | The number an attendee gets is the "check-in number". |
+| ingresso | ticket | Never "pass". |
+| código do ingresso | ticket code | |
+| código de checkin (voluntário) | check-in code | Volunteer variant of the ticket code. |
+| cadastro (voluntário) | registration | What a volunteer looks up on the check-in screen. |
+| participante (role) | participant | Contrasted with volunteer: role labels, filters, audiences, the participant-only ticket limit. Addressed as "you". |
+| participante (roster entry), pessoa | attendee | Anyone on the roster, volunteers included: admin roster, records, archive, lookup. Never for participants alone. |
+| voluntário | volunteer | Tier chips: Register, Numbers, Lookup, T-shirts, Pickups. |
+| staff, equipe | staff | A volunteer at a station is "staff". |
+| mesa de suporte | support desk | |
+| estação | station | A staff post that serves certain items. |
+| verificação (captcha) | verification | The bot challenge. "Security check" only for the expired state. |
+| identidade | identity | Second check-in step: confirming the code is the person's own. |
+| presença | arrival | Third check-in step. "Confirm your arrival." |
+| QR Code | QR code | Lower-case "code". |
+| apelido | nickname | Shown on screen as "how your name appears". |
+| chapelaria | cloakroom | |
+| retirada, retirar | pickup, collect | Verb for an attendee is "collect"; the staff screen is "Pickups". |
+| resgate | redemption | Code and descriptions only; the copy says "pickup" on every screen, admin included. |
+| gerador de números, gerador de N° | raffle, number generator | Draw: "generate a number". "Drawn" for the list. |
+| interações | raffle | Label beside the check-in number. |
+| devolver (aos restantes) | return to the pool | |
+| camiseta | T-shirt | |
+| palavra chave | keyword | The rotating word on a volunteer pass. |
+| questionário, feedback | survey, feedback | "Survey" for the form, "feedback" for the invitation. |
+| painel admin | admin panel | |
+| Entrar, Sair | Sign in, Sign out | |
+| envio (WhatsApp batch) | run | One message is a "message"; the verb is "send". |
+| modelo (WhatsApp) | template | |
+| público | audience | |
+| prévia, pré-visualizar | preview | |
+| entregues, lidos, enviados, na fila, adiados, ignorados | delivered, read, sent, queued, deferred, skipped | WhatsApp run counts. |
+| entrega, entregar (camiseta) | hand-over, hand over | T-shirt desk. |
+| horário de chegada | check-in time | |
+| situação | status | |
+| acesso, níveis de acesso | access, access levels | Volunteer tiers. |
+| frase (do ingresso), frase programada | line, scheduled line | The welcome line on a ticket. |
+| zona de risco | danger zone | |
+| limitador, cota, pico, recusadas | limiter, quota, peak, refused | Metrics. |
+| bloqueio, somente aviso | block, warn only | Ticket-limit modes. |
 
 ## 11. History
 

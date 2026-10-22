@@ -1,0 +1,286 @@
+{
+  "admin-shell.filter.archived.active": {
+    "defaultMessage": "Active",
+    "description": "Archive filter option on the roster: records that are not archived. The default."
+  },
+  "admin-shell.filter.archived.all": {
+    "defaultMessage": "All",
+    "description": "Archive filter option on the roster: archived or not."
+  },
+  "admin-shell.filter.archived.only": {
+    "defaultMessage": "Archived",
+    "description": "Archive filter option on the roster: archived records only."
+  },
+  "admin-shell.filter.checkin.any": {
+    "defaultMessage": "All",
+    "description": "Presence filter option on the roster: checked in or not."
+  },
+  "admin-shell.filter.checkin.no": {
+    "defaultMessage": "Check-in pending",
+    "description": "Presence filter option on the roster: not checked in yet."
+  },
+  "admin-shell.filter.checkin.yes": {
+    "defaultMessage": "Checked in",
+    "description": "Presence filter option on the roster: checked in."
+  },
+  "admin-shell.filter.role.all": {
+    "defaultMessage": "Participants + volunteers",
+    "description": "Role filter option on the roster and the lookup: everyone."
+  },
+  "admin-shell.filter.role.participant": {
+    "defaultMessage": "Participants",
+    "description": "Role filter option on the roster and the lookup: participants only. The default."
+  },
+  "admin-shell.filter.role.volunteer": {
+    "defaultMessage": "Volunteers",
+    "description": "Role filter option on the roster and the lookup: volunteers only."
+  },
+  "admin-shell.home.empty": {
+    "defaultMessage": "No permissions assigned. Contact whoever administers the system.",
+    "description": "Shown on the arrival screen to an administrator who holds no scope, so no section is listed."
+  },
+  "admin-shell.home.title": {
+    "defaultMessage": "Administration",
+    "description": "Heading of the admin arrival screen."
+  },
+  "admin-shell.logout": {
+    "defaultMessage": "Sign out",
+    "description": "Sign-out button at the foot of the rail."
+  },
+  "admin-shell.menu.close": {
+    "defaultMessage": "Close menu",
+    "description": "Accessible name of the rail's menu button while the drawer is open. Pair of admin-shell.menu.open."
+  },
+  "admin-shell.menu.open": {
+    "defaultMessage": "Open menu",
+    "description": "Accessible name of the rail's menu button while the drawer is closed, on narrow screens. Names what the tap does."
+  },
+  "admin-shell.nav.admins": {
+    "defaultMessage": "Administrators",
+    "description": "Section name: managing administrator accounts. Planned."
+  },
+  "admin-shell.nav.attendees": {
+    "defaultMessage": "Attendees",
+    "description": "Section name: the attendee roster and editor."
+  },
+  "admin-shell.nav.exports": {
+    "defaultMessage": "Exports",
+    "description": "Section name: result exports. Planned."
+  },
+  "admin-shell.nav.import": {
+    "defaultMessage": "Import",
+    "description": "Section name: attendee import. Planned. An imperative, like a menu command."
+  },
+  "admin-shell.nav.label": {
+    "defaultMessage": "Tools",
+    "description": "Accessible name of the rail's navigation landmark."
+  },
+  "admin-shell.nav.lookup": {
+    "defaultMessage": "Lookup",
+    "description": "Section name: the volunteer quick lookup, used at the door to find somebody by name."
+  },
+  "admin-shell.nav.metrics": {
+    "defaultMessage": "Status",
+    "description": "Section name: the live operations dashboard."
+  },
+  "admin-shell.nav.pass": {
+    "defaultMessage": "Pass",
+    "description": "Section name: when the welcome line on the attendee's pass changes text."
+  },
+  "admin-shell.nav.redemptions": {
+    "defaultMessage": "Pickups",
+    "description": "Section name: redemptions of t-shirts (participants' and volunteers'), meals, drinks and lunch."
+  },
+  "admin-shell.nav.soon": {
+    "defaultMessage": "soon",
+    "description": "Tag beside a section that is planned but not built yet, on the rail and the arrival screen. Lowercase: it trails the section's name."
+  },
+  "admin-shell.nav.survey": {
+    "defaultMessage": "Feedback",
+    "description": "Section name: the experience questionnaire's state, override and answer downloads."
+  },
+  "admin-shell.nav.tshirts": {
+    "defaultMessage": "T-shirts",
+    "description": "Section name: the T-shirt desk, where a purchased T-shirt is looked up and handed over."
+  },
+  "admin-shell.nav.volunteers": {
+    "defaultMessage": "Volunteers",
+    "description": "Section name: each volunteer's access (retiradas, gerador de números, link do admin) and team, with the history of changes."
+  },
+  "admin-shell.nav.whatsapp": {
+    "defaultMessage": "Messages",
+    "description": "Section name: the WhatsApp sender."
+  },
+  "admin-shell.pager.backToFirst": {
+    "defaultMessage": "Back to the first page",
+    "description": "Button after admin-shell.pager.outOfRange that runs the same search from page one."
+  },
+  "admin-shell.pager.label": {
+    "defaultMessage": "Pages",
+    "description": "Accessible name of the pager landmark under a result list."
+  },
+  "admin-shell.pager.next": {
+    "defaultMessage": "Next",
+    "description": "Pager button: the next page of results. Feminine, agreeing with página."
+  },
+  "admin-shell.pager.outOfRange": {
+    "defaultMessage": "This page is out of range.",
+    "description": "Shown when the requested page is past the last one, for example after records were archived. Followed by admin-shell.pager.backToFirst."
+  },
+  "admin-shell.pager.position": {
+    "defaultMessage": "Page {page, number, ::group-off} of {count, number, ::group-off}",
+    "description": "Where the pager is: {page} is the current page and {count} the number of pages."
+  },
+  "admin-shell.pager.previous": {
+    "defaultMessage": "Previous",
+    "description": "Pager button: the previous page of results."
+  },
+  "admin-shell.presence": {
+    "defaultMessage": "Check-in",
+    "description": "Label of an attendee's check-in state: a column, a filter and a record field."
+  },
+  "admin-shell.present": {
+    "defaultMessage": "Checked in",
+    "description": "Marks an attendee who has checked in but holds no arrival number, which is the case for volunteers."
+  },
+  "admin-shell.role": {
+    "defaultMessage": "{role, select, volunteer {Volunteer} participant {Participant} other {Participant}}",
+    "description": "An attendee's role, on the role badge and in the role select. other is only a fallback."
+  },
+  "admin-shell.scope.adminsWrite": {
+    "defaultMessage": "Manage administrators",
+    "description": "What the admins:write permission allows."
+  },
+  "admin-shell.scope.attendeesImport": {
+    "defaultMessage": "Import attendees",
+    "description": "What the attendees:import permission allows."
+  },
+  "admin-shell.scope.attendeesLimit": {
+    "defaultMessage": "Set the ticket limit",
+    "description": "What the attendees:limit permission allows: setting how many participant tickets the attendees editor may issue, and whether reaching the cap refuses the ticket or only warns."
+  },
+  "admin-shell.scope.attendeesRead": {
+    "defaultMessage": "View attendees",
+    "description": "What the attendees:read permission allows. Returned by the admin identity endpoint; the scope key itself is fixed by the database."
+  },
+  "admin-shell.scope.attendeesWrite": {
+    "defaultMessage": "Edit attendees",
+    "description": "What the attendees:write permission allows."
+  },
+  "admin-shell.scope.checkinWrite": {
+    "defaultMessage": "Confirm check-in manually",
+    "description": "What the checkin:write permission allows: confirming an arrival without the QR."
+  },
+  "admin-shell.scope.exportRead": {
+    "defaultMessage": "Export results",
+    "description": "What the export:read permission allows."
+  },
+  "admin-shell.scope.metricsRead": {
+    "defaultMessage": "View the status panel",
+    "description": "What the metrics:read permission allows."
+  },
+  "admin-shell.scope.passWrite": {
+    "defaultMessage": "Schedule the pass message",
+    "description": "What the pass:write permission allows: rescheduling when the welcome line on every attendee's pass changes text."
+  },
+  "admin-shell.scope.raffleRead": {
+    "defaultMessage": "View the number generator",
+    "description": "What the raffle:read permission allows."
+  },
+  "admin-shell.scope.raffleWrite": {
+    "defaultMessage": "Use the number generator",
+    "description": "What the raffle:write permission allows."
+  },
+  "admin-shell.scope.redemptionsRead": {
+    "defaultMessage": "View pickups",
+    "description": "What the redemptions:read permission allows."
+  },
+  "admin-shell.scope.redemptionsWrite": {
+    "defaultMessage": "Record pickups",
+    "description": "What the redemptions:write permission allows."
+  },
+  "admin-shell.scope.surveyWrite": {
+    "defaultMessage": "Open and close feedback",
+    "description": "What the survey:write permission allows."
+  },
+  "admin-shell.scope.tshirtRedeem": {
+    "defaultMessage": "Hand over purchased T-shirts",
+    "description": "What the tshirt:redeem permission allows: handing over a purchased T-shirt at the T-shirt desk. The record page shows the attendee's verification code."
+  },
+  "admin-shell.scope.volunteersWrite": {
+    "defaultMessage": "Edit volunteer permissions",
+    "description": "What the volunteers:write permission allows: changing which counters a volunteer may redeem at, whether they may draw the raffle, the admin link on their pass, and their team and role."
+  },
+  "admin-shell.scope.whatsappSend": {
+    "defaultMessage": "Send tickets via WhatsApp",
+    "description": "What the whatsapp:send permission allows."
+  },
+  "admin-shell.search.label": {
+    "defaultMessage": "Search",
+    "description": "Label of the search box on the roster and the lookup."
+  },
+  "admin-shell.search.placeholder": {
+    "defaultMessage": "Name, nickname, code or phone",
+    "description": "Placeholder of the search box: every field the search matches."
+  },
+  "admin-shell.search.submit": {
+    "defaultMessage": "Search",
+    "description": "Button that runs the search and applies the filters."
+  },
+  "admin-shell.skipLink": {
+    "defaultMessage": "Skip to content",
+    "description": "First link on every admin page, visible on keyboard focus. Jumps past the rail to the screen's content."
+  },
+  "admin-shell.ticketCode": {
+    "defaultMessage": "Ticket code",
+    "description": "Label of an attendee's ticket code, on the record form and the lookup record."
+  },
+  "admin-shell.title.attendee": {
+    "defaultMessage": "Attendee | {appTitle}",
+    "description": "Browser tab title of one attendee's record. Never names the attendee: a history entry stores the title, and this keeps the name off the operator's device."
+  },
+  "admin-shell.title.attendeeNew": {
+    "defaultMessage": "New attendee | {appTitle}",
+    "description": "Browser tab title of the blank attendee form. {appTitle} is the application's name."
+  },
+  "admin-shell.title.attendees": {
+    "defaultMessage": "Attendees | {appTitle}",
+    "description": "Browser tab title of the attendee roster. {appTitle} is the application's name."
+  },
+  "admin-shell.title.home": {
+    "defaultMessage": "Admin | {appTitle}",
+    "description": "Browser tab title of the admin arrival screen. {appTitle} is the application's name."
+  },
+  "admin-shell.title.lookup": {
+    "defaultMessage": "Lookup | {appTitle}",
+    "description": "Browser tab title of the volunteer lookup, for both the search and one attendee's record. Never names the attendee: a history entry stores the title."
+  },
+  "admin-shell.title.metrics": {
+    "defaultMessage": "Status | {appTitle}",
+    "description": "Browser tab title of the live operations dashboard. {appTitle} is the application's name."
+  },
+  "admin-shell.title.pass": {
+    "defaultMessage": "Pass | {appTitle}",
+    "description": "Browser tab title of the pass welcome schedule screen. {appTitle} is the application's name."
+  },
+  "admin-shell.title.redemptions": {
+    "defaultMessage": "Pickups | {appTitle}",
+    "description": "Browser tab title of the redemptions screen and of one attendee's redemption record. Never names the attendee. {appTitle} is the application's name."
+  },
+  "admin-shell.title.survey": {
+    "defaultMessage": "Feedback | {appTitle}",
+    "description": "Browser tab title of the questionnaire screen. {appTitle} is the application's name."
+  },
+  "admin-shell.title.tshirts": {
+    "defaultMessage": "T-shirts | {appTitle}",
+    "description": "Browser tab title of the t-shirt desk, for both the search and one attendee's record. Never names the attendee: a history entry stores the title. {appTitle} is the application's name."
+  },
+  "admin-shell.title.volunteers": {
+    "defaultMessage": "Volunteers | {appTitle}",
+    "description": "Browser tab title of the volunteer permissions screen and of one volunteer's record. Never names the volunteer. {appTitle} is the application's name."
+  },
+  "admin-shell.title.whatsapp": {
+    "defaultMessage": "Messages | {appTitle}",
+    "description": "Browser tab title of the WhatsApp sender. {appTitle} is the application's name."
+  }
+}

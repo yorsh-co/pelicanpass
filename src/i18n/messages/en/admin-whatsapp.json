@@ -1,0 +1,338 @@
+{
+  "admin-whatsapp.audience": {
+    "defaultMessage": "Audience",
+    "description": "Label of the audience picker."
+  },
+  "admin-whatsapp.audience.participant": {
+    "defaultMessage": "Participants",
+    "description": "Audience option: participants. A run is aimed at one audience."
+  },
+  "admin-whatsapp.audience.volunteer": {
+    "defaultMessage": "Volunteers",
+    "description": "Audience option: volunteers."
+  },
+  "admin-whatsapp.disabled.after": {
+    "defaultMessage": "is turned on.",
+    "description": "Ends the disabled notice after the setting name WHATSAPP_ENABLED. See admin-whatsapp.disabled.before."
+  },
+  "admin-whatsapp.disabled.before": {
+    "defaultMessage": "Previews and controls for an existing run still work; starting, resuming and testing are refused until",
+    "description": "Continues the disabled notice up to the setting name WHATSAPP_ENABLED, which is rendered as code; admin-whatsapp.disabled.after follows it."
+  },
+  "admin-whatsapp.disabled.lead": {
+    "defaultMessage": "Sending is disabled on this server.",
+    "description": "Bold opening of the notice shown when sending is switched off on this server."
+  },
+  "admin-whatsapp.failure.alreadySent": {
+    "defaultMessage": "Had already received this template",
+    "description": "Failure reason row: the recipient had already been sent this template, so the send was skipped."
+  },
+  "admin-whatsapp.failure.interrupted": {
+    "defaultMessage": "Interrupted",
+    "description": "Failure reason row: the send was cut off, usually by a restart, and its outcome is unknown."
+  },
+  "admin-whatsapp.failure.invalidPhone": {
+    "defaultMessage": "{reason, select, empty {No phone} length {Phone with invalid length} unqualified {Phone from another country without + and country code} ddd {Invalid area code (DDD)} other {Invalid phone}}",
+    "description": "Failure reason row: the recipient's phone could not be turned into a WhatsApp number, so they were skipped. other is only a fallback."
+  },
+  "admin-whatsapp.failure.meta": {
+    "defaultMessage": "Refused by Meta (code {code})",
+    "description": "Failure reason row for a refusal Meta reported only by code. {code} is Meta's numeric error code. Refusals Meta names itself show Meta's English title instead."
+  },
+  "admin-whatsapp.failure.noResponse": {
+    "defaultMessage": "No response from Meta",
+    "description": "Failure reason row: Meta did not answer, even after retries."
+  },
+  "admin-whatsapp.failures.count": {
+    "defaultMessage": "Count",
+    "description": "Failure table column: how many sends failed for that reason."
+  },
+  "admin-whatsapp.failures.heading": {
+    "defaultMessage": "Failures by reason",
+    "description": "Heading of the run's failure breakdown."
+  },
+  "admin-whatsapp.failures.none": {
+    "defaultMessage": "No failures recorded.",
+    "description": "Shown when the run has no failure."
+  },
+  "admin-whatsapp.failures.reason": {
+    "defaultMessage": "Reason",
+    "description": "Failure table column: Meta's error title."
+  },
+  "admin-whatsapp.lede": {
+    "defaultMessage": "Sends the template approved by Meta to participants or volunteers, one at a time.",
+    "description": "Line under the sender's heading."
+  },
+  "admin-whatsapp.note.read.lead": {
+    "defaultMessage": "“Read” always shows fewer than the real number",
+    "description": "Bold opening of the second half of the delivery note, continued by admin-whatsapp.note.read.rest."
+  },
+  "admin-whatsapp.note.read.rest": {
+    "defaultMessage": ": a read receipt only arrives from people who keep them turned on on their device. And a completed run keeps receiving receipts for minutes or hours, so these two numbers still move after the screen says “completed”.",
+    "description": "Continues admin-whatsapp.note.read.lead, hence the leading colon. Read receipts arrive only from people who keep them on, and receipts keep arriving after a run completes."
+  },
+  "admin-whatsapp.note.sent.lead": {
+    "defaultMessage": "“Sent” means Meta accepted the message",
+    "description": "Bold opening of the delivery note, continued by admin-whatsapp.note.sent.rest. Required on this screen: it explains the gap between sent and delivered."
+  },
+  "admin-whatsapp.note.sent.rest": {
+    "defaultMessage": ", not that anyone received it. “Delivered” and “read” arrive later, as confirmations from Meta.",
+    "description": "Continues admin-whatsapp.note.sent.lead in the same sentence, hence the leading comma."
+  },
+  "admin-whatsapp.preview.confirm": {
+    "defaultMessage": "Send",
+    "description": "Start button before a preview exists. Replaced by admin-whatsapp.preview.confirmTo."
+  },
+  "admin-whatsapp.preview.confirmTo": {
+    "defaultMessage": "Send \"{template}\" to {count, number, ::group-off} recipient(s)",
+    "description": "Start button after a preview. {template} is the template's label and {count} the new recipients. Not inflected for a count of one."
+  },
+  "admin-whatsapp.preview.cost": {
+    "defaultMessage": "Estimated cost: up to {cost, number, ::currency/USD .00##}",
+    "description": "Estimated Meta charge for the new recipients of a preview, in US dollars. An upper bound: Meta bills only delivered messages, and utility messages inside an open conversation are free. Shows 2 to 4 decimals because a single message costs less than a cent."
+  },
+  "admin-whatsapp.preview.counts": {
+    "defaultMessage": "New recipients: {newRecipients, number, ::group-off} · Already received: {alreadySent, number, ::group-off} · No valid number: {invalidPhone, number, ::group-off}",
+    "description": "Summary of a preview: who would be sent to, who already received this template, and who has no valid number. Not inflected for a count of one."
+  },
+  "admin-whatsapp.preview.failed": {
+    "defaultMessage": "Could not generate the preview.",
+    "description": "Error line when a preview failed for a reason the server did not explain."
+  },
+  "admin-whatsapp.preview.heading": {
+    "defaultMessage": "1 · Preview",
+    "description": "Heading of the first panel: previewing who a run would reach."
+  },
+  "admin-whatsapp.preview.more": {
+    "defaultMessage": "Showing {shown, number, ::group-off} of {total, number, ::group-off}.",
+    "description": "Under a preview list that is cut short: {shown} rows of {total}."
+  },
+  "admin-whatsapp.preview.submit": {
+    "defaultMessage": "Preview",
+    "description": "Button that builds the preview."
+  },
+  "admin-whatsapp.run.cancel": {
+    "defaultMessage": "Cancel run",
+    "description": "Ends the run for good."
+  },
+  "admin-whatsapp.run.count.deferred": {
+    "defaultMessage": "Deferred",
+    "description": "Run figure: sends postponed for a later attempt."
+  },
+  "admin-whatsapp.run.count.delivered": {
+    "defaultMessage": "Delivered",
+    "description": "Run figure: messages Meta reported delivered."
+  },
+  "admin-whatsapp.run.count.failed": {
+    "defaultMessage": "Failed",
+    "description": "Run figure: messages that failed."
+  },
+  "admin-whatsapp.run.count.interrupted": {
+    "defaultMessage": "Interrupted",
+    "description": "Run figure: sends cut off when the run stopped; admin-whatsapp.run.retryInterrupted requeues them."
+  },
+  "admin-whatsapp.run.count.pending": {
+    "defaultMessage": "Queued",
+    "description": "Run figure: sends still waiting."
+  },
+  "admin-whatsapp.run.count.read": {
+    "defaultMessage": "Read",
+    "description": "Run figure: messages Meta reported read. Undercounts; see admin-whatsapp.note.read.lead."
+  },
+  "admin-whatsapp.run.count.sent": {
+    "defaultMessage": "Sent",
+    "description": "Run figure: messages Meta accepted."
+  },
+  "admin-whatsapp.run.count.skipped": {
+    "defaultMessage": "Skipped",
+    "description": "Run figure: recipients skipped, for example for an invalid number."
+  },
+  "admin-whatsapp.run.done": {
+    "defaultMessage": "Run completed.",
+    "description": "Toast when the watched run completed."
+  },
+  "admin-whatsapp.run.failed": {
+    "defaultMessage": "Could not complete. Try again.",
+    "description": "Error line when a run control failed for a reason the server did not explain."
+  },
+  "admin-whatsapp.run.forbidden": {
+    "defaultMessage": "You no longer have permission to send messages.",
+    "description": "Error line when the operator's send permission was withdrawn while the page was open."
+  },
+  "admin-whatsapp.run.heading": {
+    "defaultMessage": "3 · Run",
+    "description": "Heading of the third panel: the run in progress."
+  },
+  "admin-whatsapp.run.noneRequeued": {
+    "defaultMessage": "No interrupted sends to requeue.",
+    "description": "Toast after admin-whatsapp.run.retryInterrupted when nothing was cut off."
+  },
+  "admin-whatsapp.run.reason.awaitingInterrupted": {
+    "defaultMessage": "interrupted sends are waiting for review",
+    "description": "Why a run is paused: every other recipient was handled, and interrupted sends are waiting for the operator to retry or leave them. Follows the status, lowercase."
+  },
+  "admin-whatsapp.run.reason.circuitBreaker": {
+    "defaultMessage": "too many refusals in a row from Meta",
+    "description": "Why a run stopped: several recipients in a row were refused, which usually means the template or the numbers are wrong. Follows the status, lowercase."
+  },
+  "admin-whatsapp.run.reason.fatal": {
+    "defaultMessage": "Meta refused every send (code {code})",
+    "description": "Why a run stopped: Meta refused in a way every remaining send would repeat, such as an expired token or a template mismatch. {code} is Meta's error code, or UNKNOWN. Follows the status, lowercase."
+  },
+  "admin-whatsapp.run.reason.operator": {
+    "defaultMessage": "at staff's request",
+    "description": "Why a run is paused: an operator pressed Stop. Follows the status in \"Pausado · …\", so it starts lowercase."
+  },
+  "admin-whatsapp.run.reason.operatorCancelled": {
+    "defaultMessage": "canceled by staff",
+    "description": "Why a run ended: an operator cancelled it. Follows the status, lowercase."
+  },
+  "admin-whatsapp.run.reason.restart": {
+    "defaultMessage": "the server restarted",
+    "description": "Why a run is paused: the server restarted mid-run, and sends in flight were marked interrupted. Follows the status, lowercase."
+  },
+  "admin-whatsapp.run.reason.unknownTemplate": {
+    "defaultMessage": "template unknown in this version",
+    "description": "Why a run stopped: it names a template this release no longer has. Nothing was sent for it. Follows the status, lowercase."
+  },
+  "admin-whatsapp.run.recipients": {
+    "defaultMessage": "recipients",
+    "description": "Trails the run's recipient total, which the page refreshes in place: \"Em andamento · 12 destinatários\"."
+  },
+  "admin-whatsapp.run.requeued": {
+    "defaultMessage": "Messages requeued: {count, number, ::group-off}.",
+    "description": "Toast after admin-whatsapp.run.retryInterrupted. {count} is at least one. Not inflected: it keeps the (s) form."
+  },
+  "admin-whatsapp.run.resume": {
+    "defaultMessage": "Resume",
+    "description": "Resumes a paused run."
+  },
+  "admin-whatsapp.run.retryInterrupted": {
+    "defaultMessage": "Retry interrupted",
+    "description": "Requeues the sends that were cut off."
+  },
+  "admin-whatsapp.run.spent": {
+    "defaultMessage": "Spent: {cost, number, ::currency/USD .00##}",
+    "description": "Meta charges so far for this run, in US dollars: delivered messages times the template category's current rate. Shows 2 to 4 decimals because a single message costs less than a cent."
+  },
+  "admin-whatsapp.run.startFailed": {
+    "defaultMessage": "Could not start the run.",
+    "description": "Error line when starting the run failed for a reason the server did not explain."
+  },
+  "admin-whatsapp.run.started": {
+    "defaultMessage": "Run started.",
+    "description": "Toast after a run started."
+  },
+  "admin-whatsapp.run.status": {
+    "defaultMessage": "{status, select, running {In progress} paused {Paused} done {Completed} failed {Stopped} other {Unknown}}",
+    "description": "A run's status. other is only a fallback for a status the server does not send today."
+  },
+  "admin-whatsapp.run.statusWithReason": {
+    "defaultMessage": "{status} · {reason}",
+    "description": "A run's status with the reason it stopped. {status} is admin-whatsapp.run.status; {reason} is the server's own stop reason."
+  },
+  "admin-whatsapp.run.stop": {
+    "defaultMessage": "Stop",
+    "description": "Pauses the run."
+  },
+  "admin-whatsapp.run.stopped": {
+    "defaultMessage": "The run stopped before finishing.",
+    "description": "Toast when the watched run ended without completing."
+  },
+  "admin-whatsapp.slots.button": {
+    "defaultMessage": "Button",
+    "description": "Marks the variable that fills the template's link button, in place of a {{n}} position."
+  },
+  "admin-whatsapp.slots.heading": {
+    "defaultMessage": "What each template carries",
+    "description": "Heading of the panel listing each template's variables in order."
+  },
+  "admin-whatsapp.slots.hint": {
+    "defaultMessage": "Check this order against the template approved in WhatsApp Manager. A swapped order causes no visible error here: Meta refuses the entire run with code 132000.",
+    "description": "Why the variable order matters: a mismatch fails silently here and Meta refuses the whole run."
+  },
+  "admin-whatsapp.slots.price": {
+    "defaultMessage": "{cost, number, ::currency/USD .00##} per delivered message",
+    "description": "Under a template's key in the slots panel: what Meta charges for one delivered message of that template's category, in US dollars."
+  },
+  "admin-whatsapp.template": {
+    "defaultMessage": "Template",
+    "description": "Label of the template picker, in the preview and the test panel."
+  },
+  "admin-whatsapp.test.failed": {
+    "defaultMessage": "Could not send the test.",
+    "description": "Error line when the test send failed for a reason the server did not explain."
+  },
+  "admin-whatsapp.test.heading": {
+    "defaultMessage": "2 · Test send",
+    "description": "Heading of the second panel: sending one message to a typed number."
+  },
+  "admin-whatsapp.test.hint.after": {
+    "defaultMessage": ") — the ticket link opens nothing. It is for checking the template and delivery, and it writes nothing to the run's record.",
+    "description": "Last piece of the test hint, after teste-envio, hence the closing parenthesis. See admin-whatsapp.test.hint.before."
+  },
+  "admin-whatsapp.test.hint.before": {
+    "defaultMessage": "Sends a message to a typed number, with sample values (",
+    "description": "First of three pieces of the test hint, around the sample values Teste and teste-envio, which are rendered as code: \"… valores de exemplo (Teste e teste-envio) — o link do ingresso não abre nada. …\""
+  },
+  "admin-whatsapp.test.hint.between": {
+    "defaultMessage": "and",
+    "description": "Second piece of the test hint, between the sample values Teste and teste-envio. See admin-whatsapp.test.hint.before."
+  },
+  "admin-whatsapp.test.phone": {
+    "defaultMessage": "Phone",
+    "description": "Label of the test number field."
+  },
+  "admin-whatsapp.test.phoneHint": {
+    "defaultMessage": "Include the area code. The number does not appear in the address or in logs.",
+    "description": "Hint under the test number: it is never put in a URL or logged."
+  },
+  "admin-whatsapp.test.refused": {
+    "defaultMessage": "Meta refused: {title}.",
+    "description": "Test result when Meta refused the message. {title} is Meta's own error title, in English."
+  },
+  "admin-whatsapp.test.refusedWithCode": {
+    "defaultMessage": "Meta refused: {title} ({code}).",
+    "description": "As admin-whatsapp.test.refused, with Meta's numeric error {code}."
+  },
+  "admin-whatsapp.test.sentNormalized": {
+    "defaultMessage": "Sent. Meta normalized the number to {waId} — check that it arrived.",
+    "description": "Test result when Meta accepted the message but rewrote the number to {waId}, the WhatsApp ID it delivered to."
+  },
+  "admin-whatsapp.test.sentUnchanged": {
+    "defaultMessage": "Sent, number unchanged.",
+    "description": "Test result when Meta accepted the message for the number as typed."
+  },
+  "admin-whatsapp.test.submit": {
+    "defaultMessage": "Send test",
+    "description": "Button that sends the test message."
+  },
+  "admin-whatsapp.title": {
+    "defaultMessage": "Messages",
+    "description": "Heading of the WhatsApp sender."
+  },
+  "admin-whatsapp.variable.checkinTime": {
+    "defaultMessage": "Check-in time",
+    "description": "A template variable: the volunteer's check-in time. Volunteer-only; templates using it can be sent to volunteers only."
+  },
+  "admin-whatsapp.variable.entryLinkToken": {
+    "defaultMessage": "Entry link token",
+    "description": "A template variable: the token that completes the attendee's entry link button. A credential; never shown in the preview."
+  },
+  "admin-whatsapp.variable.firstName": {
+    "defaultMessage": "First name",
+    "description": "A template variable: the attendee's first name. The keys are fixed by the published privacy notice; only this label is copy."
+  },
+  "admin-whatsapp.variable.lunchOption": {
+    "defaultMessage": "Lunch",
+    "description": "A template variable: the volunteer's lunch slot, or a hyphen when they have none. Volunteer-only; templates using it can be sent to volunteers only."
+  },
+  "admin-whatsapp.variable.team": {
+    "defaultMessage": "Team",
+    "description": "A template variable: the volunteer's team. Volunteer-only; templates using it can be sent to volunteers only."
+  },
+  "admin-whatsapp.variable.ticketCode": {
+    "defaultMessage": "Ticket code",
+    "description": "A template variable: the attendee's ticket code."
+  }
+}

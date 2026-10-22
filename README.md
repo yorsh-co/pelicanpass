@@ -57,7 +57,7 @@ At the live event on 17/10/2026, 528 of 558 participants and 119 of 119 voluntee
   <img src="docs/images/screenshots/staff.png" alt="The staff redemption screen listing an attendee's entitlements" width="240">
 </p>
 
-<p align="center"><em>Screens from the live demo, with fictional data. The interface is in Brazilian Portuguese.</em></p>
+<p align="center"><em>Screens from the live demo, with fictional data. The screenshots are in Brazilian Portuguese; the demo also offers English.</em></p>
 
 The web app's goal was to solve two recurring pain points for the event organizers, as well as maintain the features that their existing solutions already covered:
 
@@ -69,7 +69,7 @@ The web app's goal was to solve two recurring pain points for the event organize
 - Time specific features.
 - In app venue map.
 - A live admin interface allowing for adding new participants at the door.
-- Every screen reads its copy from message catalogs; pt-BR is the only locale shipped.
+- Every screen reads its copy from message catalogs; pt-BR and English are shipped.
 - Does not include the ticket and item purchase process, that was covered separately.
 
 Specific constraints drove a number of decisions:
@@ -301,7 +301,7 @@ never issued twice; cut-back hands production back. On 18/10 the standby served 
 ### Languages
 
 Every screen, the admin included, reads its copy from ICU message catalogs, with
-the locale resolved per request. pt-BR is the only locale currently offered, and
+the locale resolved per request. pt-BR and English are offered, and
 draft locales never render in production. Catalogs round-trip to a translation
 management system as XLIFF (`npm run i18n:export`, `npm run i18n:import`).
 

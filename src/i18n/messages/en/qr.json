@@ -1,0 +1,18 @@
+{
+  "qr.cameraButton": {
+    "defaultMessage": "Turn on camera",
+    "description": "Button that starts the camera for QR scanning, on both the check-in and the staff scanners. Names the hardware action, not the product's voice."
+  },
+  "qr.closeButton": {
+    "defaultMessage": "Close camera",
+    "description": "Button that stops the camera, on both QR scanners."
+  },
+  "qr.switchCameraButton": {
+    "defaultMessage": "Switch camera",
+    "description": "Button that switches between the front and back cameras, on both QR scanners."
+  },
+  "qr.torchButton": {
+    "defaultMessage": "Flashlight",
+    "description": "Button that toggles the phone's flashlight while scanning, on both QR scanners."
+  }
+}

@@ -10,8 +10,15 @@
  * stripped and its hash moved into the generated `_headers`, as the closing
  * site does. Assets are copied by following the pages' references.
  *
- * Every page gets a banner saying the event and its data are fictional. The
- * banner, its stylesheet and the ticket codes it lists are demo-only copy.
+ * Every page is rendered once per offered locale: pt-BR at the path it has in
+ * the app and English under `en/`, each forced through the real locale
+ * middleware. The mock script sends a visitor to the tree they chose (see
+ * `src/web/client/demo/locale-route.ts`); the footer and admin switchers and
+ * the banner link to the matching page of the other tree.
+ *
+ * Every page gets a banner saying the event and its data are fictional, in the
+ * page's language. The banner, its stylesheet and the ticket codes it lists are
+ * demo-only copy.
  *
  * Needs the client build (`npm run build`); `npm run build:demo` does both.
  * Reads no `.env`: `./env.ts` supplies a fixed environment, because the fixtures
@@ -37,9 +44,15 @@ import helmet from 'helmet';
 
 import { NAV_LABELS } from '../../src/middleware/admin-chrome.middleware.ts';
 import { cspDirectives } from '../../src/config/csp.ts';
+import { LOCALE_COOKIE } from '../../src/constants/cookie-names.ts';
 import { displayTicketCode } from '../../src/constants/ticket.ts';
-import { BASE_LOCALE } from '../../src/i18n/locales.ts';
+import { BASE_LOCALE, PSEUDO_LOCALE } from '../../src/i18n/locales.ts';
+import { SUPPORTED } from '../../src/i18n/server.ts';
 import { siteManifest } from '../../src/web/content/site-manifest.ts';
+import {
+  DEMO_LOCALES,
+  inTree,
+} from '../../src/web/client/demo/locale-route.ts';
 import {
   DEMO_TICKET_CODES,
   DEMO_VERIFICATION_CODE,
@@ -57,6 +70,9 @@ import {
 import type { Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import type { Response } from 'express';
+
+import type { LocaleLink } from '../../src/i18n/server.ts';
+import type { DemoLocale } from '../../src/web/client/demo/locale-route.ts';
 
 const ROOT = fileURLToPath(new URL('../..', import.meta.url));
 const PUBLIC_DIR = path.join(ROOT, 'src/web/public');
@@ -80,6 +96,9 @@ interface DemoPage {
   /** Path the file is written to, relative to the output directory. */
   file: string;
 }
+
+/** The fixture of the not-found page, which answers every unknown path. */
+const NOT_FOUND_FIXTURE = 'not-found';
 
 /** Every page the demo ships, including the 404. */
 const PAGES: readonly DemoPage[] = [
@@ -114,8 +133,52 @@ const PAGES: readonly DemoPage[] = [
   { fixture: 'admin-survey', file: 'admin/survey.html' },
   { fixture: 'admin-whatsapp-idle', file: 'admin/whatsapp.html' },
   { fixture: 'admin-pass-demo', file: 'admin/pass.html' },
-  { fixture: 'not-found', file: '404.html' },
+  { fixture: NOT_FOUND_FIXTURE, file: '404.html' },
 ];
+
+/**
+ * The locales the demo renders: the app's offered locales without the
+ * pseudo-locale, which the client script's list must match.
+ *
+ * @throws {Error} If the two lists differ.
+ */
+const offeredLocales = (): readonly DemoLocale[] => {
+  const offered = SUPPORTED.filter((locale) => locale !== PSEUDO_LOCALE);
+
+  if (offered.join() !== DEMO_LOCALES.join()) {
+    throw new Error(
+      `The app offers ${offered.join(', ')} but DEMO_LOCALES lists ${DEMO_LOCALES.join(', ')}`,
+    );
+  }
+
+  return DEMO_LOCALES;
+};
+
+/** The file a page is written to in a locale's tree. */
+const fileIn = (page: DemoPage, locale: DemoLocale): string =>
+  locale === BASE_LOCALE
+    ? page.file
+    : `${inTree('/', locale).slice(1)}${page.file}`;
+
+/**
+ * Where a page is served, as the visitor sees it: `checkin.html` at
+ * `/checkin`, `admin.html` at `/admin`.
+ */
+const servedPath = (page: DemoPage): string =>
+  `/${page.file.replace(/\.html$/, '')}`;
+
+/**
+ * Link to a page's counterpart in another locale's tree, with `?lang=` so that
+ * following it saves the choice without a redirect bounce.
+ *
+ * The not-found page has no path of its own: it answers whatever unknown path
+ * was asked, so its link keeps the current path and lets the mock script move
+ * it to the other tree.
+ */
+const switchHref = (page: DemoPage, locale: DemoLocale): string =>
+  page.fixture === NOT_FOUND_FIXTURE
+    ? `?lang=${locale}`
+    : `${inTree(servedPath(page), locale)}?lang=${locale}`;
 
 /** Release shown in the pages, `v` plus the package version. */
 const RELEASE_ID = `v${(JSON.parse(readFileSync(path.join(ROOT, 'package.json'), 'utf8')) as { version: string }).version}`;
@@ -154,34 +217,77 @@ export interface BuildDemoSiteResult {
   bytes: number;
 }
 
+/** The banner's words in one language. */
+interface BannerCopy {
+  summary: string;
+  reset: string;
+  details: string;
+  /** The other language's name, on the button that links to it. */
+  otherLanguage: string;
+  /** Builds the instructions from the facts they list. */
+  instructions: (facts: BannerFacts) => string;
+}
+
+/** What the banner's instructions list; the same in every language. */
+interface BannerFacts {
+  participants: string;
+  volunteers: string;
+  staffExample: string;
+}
+
+/** The banner's copy by page language. */
+const BANNER_COPY: Record<DemoLocale, BannerCopy> = {
+  'pt-BR': {
+    summary:
+      '<strong>Demonstração.</strong> O evento e todos os dados são fictícios.',
+    reset: 'Reiniciar demonstração',
+    details: 'Detalhes',
+    otherLanguage: 'English',
+    instructions: ({ participants, volunteers, staffExample }) =>
+      `Códigos de ingresso para testar: ${participants} (participante) e ${volunteers} (voluntário). Na verificação, digite <code>${DEMO_VERIFICATION_CODE}</code>; no QR Code, toque em &ldquo;Já fez check-in com um voluntário?&rdquo;. Em <a href="/staff">/staff</a>, digite um código, como <code>${staffExample}</code> ou o seu, em vez de usar a câmera. Em <a href="/admin">/admin</a>, veja o painel administrativo, somente leitura. <a href="${REPOSITORY_URL}" rel="noopener noreferrer">Código-fonte no GitHub</a>.`,
+  },
+  en: {
+    summary: '<strong>Demo.</strong> The event and all data are fictional.',
+    reset: 'Reset demo',
+    details: 'Details',
+    otherLanguage: 'Português',
+    instructions: ({ participants, volunteers, staffExample }) =>
+      `Ticket codes to try: ${participants} (participant) and ${volunteers} (volunteer). At verification, enter <code>${DEMO_VERIFICATION_CODE}</code>; at the QR code step, tap &ldquo;Already checked in with a volunteer?&rdquo;. At <a href="/staff">/staff</a>, enter a code such as <code>${staffExample}</code> or your own instead of using the camera. At <a href="/admin">/admin</a>, browse the read-only admin panel. <a href="${REPOSITORY_URL}" rel="noopener noreferrer">Source code on GitHub</a>.`,
+  },
+};
+
 /**
- * Banner markup inserted straight after `<body>`. Demo copy, in pt-BR with an
- * English copy beside it.
+ * Banner markup inserted straight after `<body>`. Demo copy, in the page's own
+ * language.
  *
- * Both copies are in the markup, built from the same constants so the facts
- * cannot drift; `demo.css` shows the one matching `data-demo-lang` on `<html>`,
- * which the mock script sets before first paint, along with
- * `data-demo-banner`, which collapses the banner to its first line. The reset,
- * language and collapse buttons are rendered hidden: the mock script shows and
- * binds them, and without that script they would do nothing.
+ * The facts are built from the same constants in every language so they cannot
+ * drift. The mock script sets `data-demo-banner` on `<html>` before first
+ * paint, which collapses the banner to its first line. The reset and collapse
+ * buttons are rendered hidden: the mock script shows and binds them, and
+ * without that script they would do nothing. The language button is a plain
+ * link, so it works either way.
+ *
+ * @param locale - The page's language.
+ * @param otherHref - The same page in the other language, with `?lang=`.
+ * @param otherLocale - The other language.
  */
-const bannerHtml = (): string => {
+const bannerHtml = (
+  locale: DemoLocale,
+  otherHref: string,
+  otherLocale: DemoLocale,
+): string => {
   const list = (codes: readonly string[]): string =>
     codes.map((code) => `<code>${displayTicketCode(code)}</code>`).join(' ');
-  const participants = list(DEMO_TICKET_CODES.participant);
-  const volunteers = list(DEMO_TICKET_CODES.volunteer);
-  const staffExample = displayTicketCode(STAFF_EXAMPLE_CODE);
+  const copy = BANNER_COPY[locale];
 
   return `
 <aside class="demo-banner" role="note">
-  <div class="demo-banner-copy" data-demo-copy="pt" lang="pt-BR">
-    <p class="demo-banner-lead"><span class="demo-banner-summary"><strong>Demonstração.</strong> O evento e todos os dados são fictícios.</span> <button type="button" class="demo-banner-button" data-demo-reset hidden>Reiniciar demonstração</button> <button type="button" class="demo-banner-button" data-demo-set-lang="en" hidden>English</button> <button type="button" class="demo-banner-button demo-banner-toggle" data-demo-banner-toggle aria-controls="demo-banner-details-pt" aria-expanded="true" hidden>Detalhes</button></p>
-    <p class="demo-banner-details" id="demo-banner-details-pt">Códigos de ingresso para testar: ${participants} (participante) e ${volunteers} (voluntário). Na verificação, digite <code>${DEMO_VERIFICATION_CODE}</code>; no QR Code, toque em &ldquo;Já fez check-in com um voluntário?&rdquo;. Em <a href="/staff">/staff</a>, digite um código, como <code>${staffExample}</code> ou o seu, em vez de usar a câmera. Em <a href="/admin">/admin</a>, veja o painel administrativo, somente leitura. <a href="${REPOSITORY_URL}" rel="noopener noreferrer">Código-fonte no GitHub</a>.</p>
-  </div>
-  <div class="demo-banner-copy" data-demo-copy="en" lang="en">
-    <p class="demo-banner-lead"><span class="demo-banner-summary"><strong>Demo.</strong> The event and all data are fictional.</span> <button type="button" class="demo-banner-button" data-demo-reset hidden>Reset demo</button> <button type="button" class="demo-banner-button" data-demo-set-lang="pt" hidden>Português</button> <button type="button" class="demo-banner-button demo-banner-toggle" data-demo-banner-toggle aria-controls="demo-banner-details-en" aria-expanded="true" hidden>Details</button></p>
-    <p class="demo-banner-details" id="demo-banner-details-en">Ticket codes to try: ${participants} (participant) and ${volunteers} (volunteer). At verification, enter <code>${DEMO_VERIFICATION_CODE}</code>; at the QR code step, tap &ldquo;Já fez check-in com um voluntário?&rdquo;. At <a href="/staff">/staff</a>, enter a code such as <code>${staffExample}</code> or your own instead of using the camera. At <a href="/admin">/admin</a>, browse the read-only admin panel. <a href="${REPOSITORY_URL}" rel="noopener noreferrer">Source code on GitHub</a>.</p>
-  </div>
+  <p class="demo-banner-lead"><span class="demo-banner-summary">${copy.summary}</span> <button type="button" class="demo-banner-button" data-demo-reset hidden>${copy.reset}</button> <a class="demo-banner-button" href="${otherHref}" hreflang="${otherLocale}" lang="${otherLocale}">${copy.otherLanguage}</a> <button type="button" class="demo-banner-button demo-banner-toggle" data-demo-banner-toggle aria-controls="demo-banner-details" aria-expanded="true" hidden>${copy.details}</button></p>
+  <p class="demo-banner-details" id="demo-banner-details">${copy.instructions({
+    participants: list(DEMO_TICKET_CODES.participant),
+    volunteers: list(DEMO_TICKET_CODES.volunteer),
+    staffExample: displayTicketCode(STAFF_EXAMPLE_CODE),
+  })}</p>
 </aside>
 `;
 };
@@ -214,9 +320,10 @@ const firstScriptAt = (html: string): number => {
  * patches `fetch` before anything else can call it.
  *
  * @param html - A page with its nonces already stripped.
+ * @param banner - The banner markup, from {@link bannerHtml}.
  * @throws {Error} If the page has no `<head>` close or `<body>` open tag.
  */
-const addBanner = (html: string): string => {
+const addBanner = (html: string, banner: string): string => {
   const headEnd = html.search(/<\/head>/i);
   const body = /<body\b[^>]*>/i.exec(html);
 
@@ -231,7 +338,7 @@ const addBanner = (html: string): string => {
 
   // The head, and so the mock, precedes the body tag it shifts.
   const at = body.index + body[0].length + mock.length;
-  const withBanner = `${withMock.slice(0, at)}${bannerHtml()}${withMock.slice(at)}`;
+  const withBanner = `${withMock.slice(0, at)}${banner}${withMock.slice(at)}`;
 
   return withBanner.replace(
     /<\/head>/i,
@@ -239,14 +346,33 @@ const addBanner = (html: string): string => {
   );
 };
 
+/** A page as rendered in one locale, with its nonces still in it. */
+interface RenderedPage {
+  page: DemoPage;
+  locale: DemoLocale;
+
+  /** Where the file is written: `page.file`, under `en/` for English. */
+  file: string;
+
+  html: string;
+}
+
 /**
- * Renders the pages through the real view engine and returns each page's HTML
- * with nonces still in it, with the CSP header the first response carried.
+ * Renders every page in every offered locale through the real view engine,
+ * and returns them with the CSP header the first response carried.
+ *
+ * The locale is forced by sending the locale cookie, which the real locale
+ * middleware reads, so the views have no demo-only path. The middleware's
+ * switcher links point at the fixture's own URL, which is not where the file is
+ * served, so they are replaced with links to the matching page of each tree.
  */
 const renderPages = async (): Promise<{
-  html: Map<string, string>;
+  pages: RenderedPage[];
   policy: string;
 }> => {
+  const locales = offeredLocales();
+  const pageByFixture = new Map(PAGES.map((page) => [page.fixture, page]));
+
   const cases = [...CASES, ...DEMO_CASES].map((entry) =>
     entry.name === 'checkin'
       ? {
@@ -265,6 +391,19 @@ const renderPages = async (): Promise<{
     releaseId: RELEASE_ID,
     navLabel: (item, shell) => NAV_LABELS[item.key](shell),
     use: [
+      (req, res, next) => {
+        const page = pageByFixture.get(req.path.slice(1));
+        const links = res.locals.localeLinks as LocaleLink[];
+
+        if (page) {
+          res.locals.localeLinks = links.map((link) => ({
+            ...link,
+            href: switchHref(page, link.locale as DemoLocale),
+          }));
+        }
+
+        next();
+      },
       helmet({
         contentSecurityPolicy: {
           directives: cspDirectives(
@@ -291,27 +430,30 @@ const renderPages = async (): Promise<{
 
   try {
     const { port } = server.address() as AddressInfo;
-    const html = new Map<string, string>();
+    const pages: RenderedPage[] = [];
     let policy = '';
 
-    for (const { fixture, file } of PAGES) {
-      const response = await fetch(
-        `http://127.0.0.1:${String(port)}/${fixture}`,
-      );
-      const body = await response.text();
-      const type = response.headers.get('content-type') ?? '';
-
-      if (response.status !== 200 || !type.startsWith('text/html')) {
-        throw new Error(
-          `${fixture} answered ${String(response.status)} ${type}, expected 200 text/html:\n${body}`,
+    for (const locale of locales) {
+      for (const page of PAGES) {
+        const response = await fetch(
+          `http://127.0.0.1:${String(port)}/${page.fixture}`,
+          { headers: { cookie: `${LOCALE_COOKIE}=${locale}` } },
         );
-      }
+        const body = await response.text();
+        const type = response.headers.get('content-type') ?? '';
 
-      policy ||= response.headers.get('content-security-policy') ?? '';
-      html.set(file, body);
+        if (response.status !== 200 || !type.startsWith('text/html')) {
+          throw new Error(
+            `${page.fixture} (${locale}) answered ${String(response.status)} ${type}, expected 200 text/html:\n${body}`,
+          );
+        }
+
+        policy ||= response.headers.get('content-security-policy') ?? '';
+        pages.push({ page, locale, file: fileIn(page, locale), html: body });
+      }
     }
 
-    return { html, policy };
+    return { pages, policy };
   } finally {
     mock.timers.reset();
     if (realTz === undefined) delete process.env.TZ;
@@ -395,6 +537,79 @@ const REDIRECTS: readonly Redirect[] = [
 ];
 
 /**
+ * The rules for a locale's tree: the pt-BR rules with every path moved into it.
+ *
+ * The English tree's root is reached both as `/en/` and as `/en`, which the
+ * host does not treat as the same path.
+ */
+const redirectsIn = (locale: DemoLocale): Redirect[] =>
+  REDIRECTS.flatMap(({ from, to, status }) => {
+    const moved = {
+      from: inTree(from, locale),
+      to: inTree(to, locale),
+      status,
+    };
+
+    return from === '/' && moved.from !== from
+      ? [moved, { ...moved, from: moved.from.replace(/\/$/, '') }]
+      : [moved];
+  });
+
+/** Longest value Cloudflare accepts for one response header. */
+export const MAX_HEADER_VALUE = 2000;
+
+/**
+ * Checks that a header value fits what Cloudflare Pages sends.
+ *
+ * The policy is one line holding the hashes of every executable inline script and style of
+ * every page, so a page that adds one can quietly push it past the cap, which
+ * Cloudflare answers by dropping the header or failing the deploy.
+ *
+ * @param name - The header, for the message.
+ * @param value - Its value.
+ * @throws {Error} If the value is longer than {@link MAX_HEADER_VALUE}.
+ */
+export const assertHeaderFits = (name: string, value: string): void => {
+  if (value.length > MAX_HEADER_VALUE) {
+    throw new Error(
+      `${name} is ${String(value.length)} characters, over the ${String(MAX_HEADER_VALUE)} Cloudflare allows in a header value`,
+    );
+  }
+};
+
+/** Root-absolute paths that are not pages, and stay as they are in every tree. */
+const NOT_A_PAGE = /^\/(?:api\/|site\.webmanifest$|robots\.txt$)/;
+
+/** A page-linking attribute with a root-absolute value, as `<a href="/x">`. */
+const PAGE_LINK = /(\s(?:href|action|formaction)\s*=\s*")(\/(?!\/)[^"]*)"/gi;
+
+/**
+ * Points the root-absolute page links and form actions of a page at a locale's
+ * tree.
+ *
+ * Assets, `/api/` paths, the manifest and external links stay as they are, as
+ * do links carrying `lang=`, which are language switchers that already name the
+ * tree they lead to.
+ *
+ * @param html - A page with its nonces stripped.
+ * @param locale - The tree the page is in.
+ */
+export const localizeLinks = (html: string, locale: DemoLocale): string =>
+  locale === BASE_LOCALE
+    ? html
+    : html.replace(PAGE_LINK, (whole, lead: string, target: string) => {
+        const at = target.search(/[?#]/);
+        const pathname = at === -1 ? target : target.slice(0, at);
+        const rest = at === -1 ? '' : target.slice(at);
+
+        return ASSET_ROOT.test(pathname) ||
+          NOT_A_PAGE.test(pathname) ||
+          /(?:[?&]|&amp;)lang=/.test(rest)
+          ? whole
+          : `${lead}${inTree(pathname, locale)}${rest}"`;
+      });
+
+/**
  * Writes the demo site into `outDir`.
  *
  * @param options - See {@link BuildDemoSiteOptions}.
@@ -413,7 +628,7 @@ export const buildDemoSite = async ({
     }
   }
 
-  const { html, policy: rendered } = await renderPages();
+  const { pages, policy: rendered } = await renderPages();
 
   if (rendered === '') {
     throw new Error('The render sent no Content-Security-Policy');
@@ -435,8 +650,8 @@ export const buildDemoSite = async ({
   const hashes = { scripts: new Set<string>(), styles: new Set<string>() };
   const seeds = new Set<string>(['/favicon.ico']);
 
-  for (const [file, page] of html) {
-    const stripped = stripNonces(page);
+  for (const { page, locale, file, html: markup } of pages) {
+    const stripped = stripNonces(markup);
 
     if (stripped.html.includes('nonce=')) {
       throw new Error(`${file} still carries a nonce after stripping`);
@@ -445,9 +660,20 @@ export const buildDemoSite = async ({
     stripped.scripts.forEach((hash) => hashes.scripts.add(hash));
     stripped.styles.forEach((hash) => hashes.styles.add(hash));
 
-    const withBanner = addBanner(stripped.html);
+    const other = DEMO_LOCALES.find((candidate) => candidate !== locale);
 
-    referencesOf(`/${file}`, withBanner)
+    if (other === undefined) throw new Error('The demo offers one locale only');
+
+    // After the banner, so its /staff and /admin links follow the tree too.
+    const localized = localizeLinks(
+      addBanner(
+        stripped.html,
+        bannerHtml(locale, switchHref(page, other), other),
+      ),
+      locale,
+    );
+
+    referencesOf(`/${file}`, localized)
       .filter(
         (ref) =>
           ASSET_ROOT.test(ref) &&
@@ -455,7 +681,7 @@ export const buildDemoSite = async ({
           ref !== MOCK_API_PATH,
       )
       .forEach((ref) => seeds.add(ref));
-    await write(file, withBanner);
+    await write(file, localized);
   }
 
   const manifest = siteManifest(appTitle, BASE_LOCALE);
@@ -482,10 +708,13 @@ export const buildDemoSite = async ({
     throw new Error(`The policy still carries a nonce: ${policy}`);
   }
 
+  assertHeaderFits('Content-Security-Policy', policy);
+
   await write('_headers', headersFile(policy, { 'X-Robots-Tag': 'noindex' }));
   await write(
     '_redirects',
-    REDIRECTS.map(({ from, to, status }) => `${from} ${to} ${String(status)}`)
+    DEMO_LOCALES.flatMap(redirectsIn)
+      .map(({ from, to, status }) => `${from} ${to} ${String(status)}`)
       .concat('')
       .join('\n'),
   );
