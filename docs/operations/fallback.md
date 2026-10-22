@@ -33,7 +33,7 @@ address. A page loaded after zero renders the notice straight away.
 The fallback has no sessions, so an attendee who already checked in sees the curtain too, until the
 live app is back.
 
-Locale is fixed to pt-BR, which is the only locale production offers.
+Locale is fixed to pt-BR. The curtain is not translated, although production also offers English.
 
 There is no application rate limiter. The live app's `webLimiter` exists because every render costs
 a Redis session lookup; here a render touches nothing but memory. A per-IP limit would key on the

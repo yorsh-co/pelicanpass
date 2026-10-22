@@ -30,17 +30,18 @@ For the closing page that replaces the live app after the event, see
 | `/admin/attendees/new`, `/admin/attendees/edit`         | `200` rewrite to `/admin/attendees`                                                      |
 | `/admin/survey/export.csv`                              | `200` rewrite to `/admin/survey`; the CSV itself is not built                            |
 | `/admin/login`                                          | `302` to `/admin`                                                                        |
+| `/en/…`                                                 | Every page above again in English, at the same path under `/en/`, with the same rewrites and redirects |
 | `/robots.txt`                                           | `Disallow: /`                                                                            |
 | `/site.webmanifest`                                     | The app's manifest, served with its content type by `_headers`                           |
 | Static files                                            | Only the stylesheets, bundles, fonts and images the pages reference, plus `css/demo.css` |
 | Every other path                                        | `404.html`, the app's not-found page with a link back to `/`                             |
+| Every other path under `/en/`                           | `en/404.html`, the same page in English                                                  |
 
 Every response carries `X-Robots-Tag: noindex`. Every page opens with a banner that says the event and
 data are fictional, lists the demo codes and links to the read-only `/admin` panel and the repository.
-The banner is in Portuguese or English: it follows the browser's language, and its toggle button saves
-the visitor's choice in `localStorage`, so it holds across pages and resets. The rest of the page stays
-in Portuguese. On a phone the banner starts collapsed to one line; its Details button expands it, and the
-choice is saved the same way.
+The banner is written in the language of its page, and its language button links to the same page in the
+other tree. On a phone the banner starts collapsed to one line; its Details button expands it, and the
+choice is saved in `localStorage`, so it holds across pages.
 
 ## 2. How it works
 
@@ -55,6 +56,16 @@ choice is saved the same way.
   is shared or persisted.
 - **Pages render in the event-open state.** A countdown baked into static files at build time goes
   stale; `/landing` is the one exception, counting from its fixture's clock.
+- **Every page exists in both languages, at build time.** `scripts/demo/build.ts` renders each page once
+  per locale: pt-BR at the paths above, English under `/en/`. Routing is frontend only, with no Pages
+  Function or Worker. A script at the top of every page's `<head>` (`src/web/client/demo/locale-route.ts`
+  and `apply-locale-route.ts`) sends the visitor to the tree they belong in before first paint, which
+  also covers the app's own root-absolute navigations. The tree comes from `?lang=`, then the choice
+  saved in `localStorage` (`pelicanpass-demo-locale:v1`), then the browser's language. The footer, the
+  admin menu and the banner switch it. Links in English pages are rewritten to `/en/…`, and `_redirects`
+  is mirrored under `/en`.
+- **The fixture data is not translated.** Names, items and the event stay as they are in both trees;
+  only the interface is.
 - **Production does not change.** The mock is bundled only by `npm run build:demo` and never ships in
   `npm run build`, so the demo cannot break, or leak into, the app it demonstrates.
 
@@ -64,11 +75,12 @@ choice is saved the same way.
 view engine, the same ones the view snapshot suite asserts, plus the `DEMO_CASES` that only the demo
 renders (the healthy metrics page, the demo roster and pass pages, and the plain 404). Each page is
 rendered with a per-render nonce, which is then stripped; its hash goes into the generated `_headers`.
-The policy is the production CSP from `src/config/csp.ts` with nonces swapped for hashes. Every page
-renders in the event-open state with no countdown, because a countdown baked into static files would go
-stale. The mock bundle (`js/demo/mock-api.js`) is injected as the first script of every page. It is
-built from `src/web/client/demo/`, which no production entry point imports, so `npm run build` never
-ships it.
+The policy is the production CSP from `src/config/csp.ts` with nonces swapped for hashes. Only inline
+scripts a browser executes are hashed, not `application/json` data blocks. Both trees share one header,
+so the build fails if its value passes the 2,000 characters Cloudflare allows. Every page renders in
+the event-open state with no countdown, because a countdown baked into static files would go stale.
+The mock bundle (`js/demo/mock-api.js`) is injected as the first script of every page. It is built from
+`src/web/client/demo/`, which no production entry point imports, so `npm run build` never ships it.
 
 ### The mock API
 
@@ -76,8 +88,8 @@ The mock replaces `window.fetch` for same-origin `/api/v1` requests, and `naviga
 client error reports, which it drops. It adds a short random latency so the pending states show.
 
 - **State is per tab**, in `sessionStorage`, with an in-memory copy when storage is unavailable. The
-  banner's reset button clears it (not the banner's language choice). Nothing is shared between
-  visitors or kept after the tab closes.
+  banner's reset button clears it (not the language choice, which is in `localStorage`). Nothing is
+  shared between visitors or kept after the tab closes.
 - **The roster is fictional**: 15 participants and 5 volunteers. 12 participants are already checked in,
   which gives the raffle a pool and `/staff` people to serve before the visitor does anything.
 - **Demo ticket codes** are `DEMO_TICKET_CODES` in `src/web/client/demo/roster.ts`: `k7m2q9` and
@@ -107,7 +119,9 @@ with a little deterministic movement so it does not look frozen.
 literals, and fails the build when one has neither a mock handler nor an explicit refusal. A client
 change that adds an endpoint therefore breaks `npm test` until the mock covers it. The same suite checks
 that no nonce remains, every inline script and style hash is in the policy, every local reference
-resolves to a file or a `_redirects` rule, and every page carries the banner.
+resolves to a file or a `_redirects` rule, and every page carries the banner. For the English tree it
+checks that every page exists with `lang="en"` and an English banner, that no English page links into
+the pt-BR tree, and that the switchers point at each page's counterpart.
 
 ### What differs from production
 
@@ -119,7 +133,9 @@ resolves to a file or a `_redirects` rule, and every page carries the banner.
 - **Detail pages are single fixtures.** Any `/admin/lookup/record` shows the same person, whatever the
   query string says.
 - **The clock is fixed.** Pages render in the event-open state and show no countdown.
-- **Locale and data.** Only pt-BR, which is what production ships, and only fictional attendees.
+- **Locale.** The language is chosen by the page's path and the visitor's saved choice, not by a
+  cookie or `Accept-Language`.
+- **Data.** Only fictional attendees, whose names and items are not translated.
 - **The `/checkin?t=…` entry token is not checked.** The query keeps working client-side; the server
   handling is skipped.
 - **Analytics and logging.** Nothing is recorded: error reports are dropped.
@@ -133,8 +149,8 @@ npm run build:demo
 ```
 
 `build:demo` runs `npm run build`, then `scripts/demo/build.ts`. The output is `dist/demo/`, which is
-git-ignored: the pages, `admin/`, `404.html`, `_headers`, `_redirects`, `robots.txt`,
-`site.webmanifest`, `css/demo.css`, `js/demo/mock-api.js` and the assets they reference. `--out <dir>`
+git-ignored: the pages, `admin/`, `404.html`, `en/` (the same again in English), `_headers`,
+`_redirects`, `robots.txt`, `site.webmanifest`, `css/demo.css`, `js/demo/mock-api.js` and the assets they reference. `--out <dir>`
 writes elsewhere.
 
 ### Regenerating README screenshots
@@ -177,7 +193,8 @@ The first run creates the project. Open `https://pelicanpass-demo.pages.dev` **o
    redemption at its next poll.
 5. `/raffle` draws a number from the checked-in pool, and its reset clears the draws.
 6. Reset the demo from the banner and check in again with the volunteer code. The volunteer pass opens.
-7. Switch the banner to English, then open another page. The banner stays in English.
+7. Switch the language from the footer, run check-in through to the pass and confirm every page stays
+   under `/en/`, then reload.
 8. The banner opens as one line. Expand it, then open another page. The banner stays expanded.
 9. Press any button or submit any form in `/admin`: it shows the demo notice and changes nothing on
    reload.
@@ -186,6 +203,11 @@ The first run creates the project. Open `https://pelicanpass-demo.pages.dev` **o
    Pages' clean-URL handling of a file and a folder with the same name is the one routing risk.
 12. An unknown path such as `/nope` shows the 404 page.
 13. The theme toggle switches between light and dark.
+14. An unknown `/en/nope` shows the English 404 page. This was not verifiable locally: it relies on
+    Cloudflare serving the nearest `404.html`, here `en/404.html`.
+15. `/?lang=en` keeps its query through the `/` to `/checkin` `302`, so the visitor lands in English. Not
+    verifiable locally either; if Pages drops the query, the language choice is lost on the first visit
+    through `/`.
 
 Nothing is public until the custom domain is added in §5, so this can be done days ahead.
 

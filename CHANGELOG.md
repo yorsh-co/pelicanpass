@@ -33,6 +33,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 ### Removed
 
 - `docs/development/static-demo-plan.md`, the implemented plan for the static demo; its design decisions are now in `docs/operations/demo-site.md`
+- `docs/development/english-locale-plan.md`, the implemented plan for the `en` locale; its glossary is now the "English terminology" section of `docs/development/copy-management.md`, and its design decisions are in that document and `docs/operations/demo-site.md`
 - `src/web/client/demo/banner-language.ts`, its test and its `localStorage` key, replaced by the demo's page-level language choice
 - The `star-sm.svg` and `star-with-discs.svg` motifs, `scripts/brand/motifs.ts` and the motifs section of `docs/design/brand.md`
 
