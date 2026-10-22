@@ -2164,7 +2164,7 @@ To propose a change, quote the Ref and the new wording, for example: `raffle.idl
 
 > Sair
 
-- **Why:** Sign-out button at the foot of the rail.
+- **Why:** Accessible name and tooltip of the icon-only sign-out button at the foot of the admin rail.
 - **Ref:** `admin-shell.logout`
 - **Locales:** pt-BR ✓ · en ✓ · en-XA (pseudo)
 

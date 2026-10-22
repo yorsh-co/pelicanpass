@@ -45,7 +45,7 @@
   },
   "admin-shell.logout": {
     "defaultMessage": "Sign out",
-    "description": "Sign-out button at the foot of the rail."
+    "description": "Accessible name and tooltip of the icon-only sign-out button at the foot of the admin rail."
   },
   "admin-shell.menu.close": {
     "defaultMessage": "Close menu",
