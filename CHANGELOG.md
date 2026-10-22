@@ -22,6 +22,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 
 ### Changed
 
+- The English demo shows English sample data (redemption options, volunteer team, the metrics alert and error, the redemption outcome and the admin username); the pt-BR demo is unchanged
 - The admin rail's sign-out is an icon button, named and titled by `admin-shell.logout`, so the label no longer wraps in English
 - English dates follow the browser's English region (`en-US` month-first, `en-GB` day-first), British day-first when it names none, and English times are always 24-hour, through `dateTimeLocale` in `src/i18n/locales.ts`; browser code reads the server's resolution from `<html data-date-locale>`; pt-BR is unchanged
 - The footer credits Yorsh, linking to the repository, from a fixed `CREDIT` constant (`src/constants/credit.ts`) rather than `COPY_DEFAULTS`, so a per-event copy setting cannot replace the authorship credit; the copyright line still names the event

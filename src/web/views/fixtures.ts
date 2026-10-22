@@ -19,6 +19,7 @@ import {
   REDEMPTION_STATUS_FILTERS,
   parseRedemptionFilters,
 } from '../../constants/redemptions.ts';
+import { DEMO_VOLUNTEER_TEAM } from '../client/demo/roster.ts';
 import { dateTimeLocale } from '../../i18n/locales.ts';
 import { getCopy, getMessages, inlineCatalogs } from '../../i18n/server.ts';
 
@@ -30,6 +31,7 @@ import { NOTICES } from '../content/notices.ts';
 
 import type { MessagesOf } from '../../i18n/generated/registry.ts';
 import type { Locale } from '../../i18n/locales.ts';
+import type { DemoLocale } from '../client/demo/locale-route.ts';
 
 /** Pinned clock the fixtures are written against. */
 export const NOW = Date.UTC(2026, 9, 17, 14, 30, 0);
@@ -108,6 +110,37 @@ const labelled = <V extends string>(
     string
   >;
 
+/** The sample-data language a render's locale falls back to. */
+export const sampleLocale = (locale: Locale): DemoLocale =>
+  locale === 'en' ? 'en' : 'pt-BR';
+
+/** The sample values the fixtures write in the page's language. */
+export const SAMPLE: Record<
+  DemoLocale,
+  {
+    mealOption: string;
+    operator: string;
+    alert: string;
+    failure: string;
+    delivered: string;
+  }
+> = {
+  'pt-BR': {
+    mealOption: 'Vegetariano',
+    operator: 'operadora',
+    alert: 'Fila de check-in <alta>',
+    failure: 'Falha <inesperada> & registrada',
+    delivered: 'Entregue',
+  },
+  en: {
+    mealOption: 'Vegetarian',
+    operator: 'operator',
+    alert: 'Check-in queue <high>',
+    failure: 'Unexpected <failure> & logged',
+    delivered: 'Delivered',
+  },
+};
+
 const ATTENDEE = {
   attendeeId: '5f0c1f0e-2b6a-4a57-9a53-0d2f6a1b7c01',
   ticketCode: 'EV26-0001',
@@ -165,7 +198,7 @@ const itemLabels = (chrome: MessagesOf['chrome']) => ({
   drink: chrome.itemDrink(),
 });
 
-const attendeeItems = (chrome: MessagesOf['chrome']) => [
+const attendeeItems = (chrome: MessagesOf['chrome'], locale: Locale) => [
   {
     name: 'tshirtVolunteerSize',
     item: 'tshirt_volunteer',
@@ -193,7 +226,7 @@ const attendeeItems = (chrome: MessagesOf['chrome']) => [
     name: 'mealOption',
     item: 'meal',
     label: chrome.itemMeal(),
-    value: 'Vegetariano',
+    value: SAMPLE[sampleLocale(locale)].mealOption,
     redeemed: false,
   },
   {
@@ -211,7 +244,7 @@ const messagesOf = (
 ) => inlineCatalogs(locale, namespaces);
 
 /** The profile and pass the attendee pass is seeded with. */
-const passData = (role: 'participant' | 'volunteer') => ({
+const passData = (role: 'participant' | 'volunteer', locale: Locale) => ({
   data: {
     profile: {
       attendeeRole: role,
@@ -219,8 +252,14 @@ const passData = (role: 'participant' | 'volunteer') => ({
       nickname: 'Aninha',
       ticketCode: 'EV26-0001',
       checkinNumber: 42,
-      team: role === 'volunteer' ? 'Recepção' : null,
-      teamRole: role === 'volunteer' ? 'Líder' : null,
+      team:
+        role === 'volunteer'
+          ? DEMO_VOLUNTEER_TEAM[sampleLocale(locale)].team
+          : null,
+      teamRole:
+        role === 'volunteer'
+          ? DEMO_VOLUNTEER_TEAM[sampleLocale(locale)].teamRole
+          : null,
     },
     pass: {
       welcome: 'arrival',
@@ -243,7 +282,7 @@ const passPage = (
   nicknameMinLength: NICKNAME_MIN_LENGTH,
   nicknameMaxLength: NICKNAME_MAX_LENGTH,
   bandEnabled: true,
-  initialData: passData(role),
+  initialData: passData(role, ctx.locale),
   messages: messagesOf(ctx, ['pass', 'chrome', 'survey']),
   copy: getCopy(ctx.locale, ['pass', 'survey']),
   survey: survey
@@ -453,7 +492,9 @@ export const CASES: ViewCase[] = [
           phoneMasked: '(11) *****-1234',
           canRedeem: false,
           canDraw: false,
-          items: attendeeItems(ctx.chrome).filter((i) => i.value !== null),
+          items: attendeeItems(ctx.chrome, ctx.locale).filter(
+            (i) => i.value !== null,
+          ),
         },
         {
           ...ATTENDEE,
@@ -530,7 +571,7 @@ export const CASES: ViewCase[] = [
         canRedeem: false,
         redeemScopes: [],
         canDraw: false,
-        items: attendeeItems(ctx.chrome),
+        items: attendeeItems(ctx.chrome, ctx.locale),
       },
     }),
   },
@@ -643,7 +684,7 @@ export const CASES: ViewCase[] = [
           },
           { role: 'volunteer', opensAt: null, open: true },
         ],
-        lastAlert: { title: 'Fila de check-in <alta>' },
+        lastAlert: { title: SAMPLE[sampleLocale(ctx.locale)].alert },
         series: {
           'checkin.complete': [1, 4, 9, 3],
           'severity.error': [0, 1, 0],
@@ -679,7 +720,7 @@ export const CASES: ViewCase[] = [
             occurrences: 3,
             code: 'INTERNAL_ERROR',
             route: '/api/checkin',
-            message: 'Falha <inesperada> & registrada',
+            message: SAMPLE[sampleLocale(ctx.locale)].failure,
           },
         ],
         redemptions: [
@@ -925,7 +966,7 @@ export const CASES: ViewCase[] = [
         {
           item: 'meal',
           label: ctx.chrome.itemMeal(),
-          option: 'Vegetariano',
+          option: SAMPLE[sampleLocale(ctx.locale)].mealOption,
           redeemedAt: null,
           redeemedAtText: '',
         },
@@ -939,9 +980,9 @@ export const CASES: ViewCase[] = [
           when: '17/10/2026 11:29',
           item: ctx.chrome.itemTshirt(),
           outcome: 'redeemed',
-          outcomeLabel: 'Entregue',
+          outcomeLabel: SAMPLE[sampleLocale(ctx.locale)].delivered,
           reason: null,
-          by: 'operadora',
+          by: SAMPLE[sampleLocale(ctx.locale)].operator,
         },
       ],
       historyLimit: 200,
@@ -1043,8 +1084,8 @@ export const CASES: ViewCase[] = [
         redeemScopes: ['lunch'],
         canDraw: false,
         showAdminLink: false,
-        team: 'Recepção',
-        teamRole: 'Líder',
+        team: DEMO_VOLUNTEER_TEAM[sampleLocale(ctx.locale)].team,
+        teamRole: DEMO_VOLUNTEER_TEAM[sampleLocale(ctx.locale)].teamRole,
         checkinTime: '08:00',
         adminUsername: null,
         adminDisabled: false,
@@ -1058,8 +1099,14 @@ export const CASES: ViewCase[] = [
       history: [
         {
           when: '17/10/2026 09:00',
-          by: 'operadora',
-          diffs: [{ field: 'team', before: '—', after: 'Recepção' }],
+          by: SAMPLE[sampleLocale(ctx.locale)].operator,
+          diffs: [
+            {
+              field: 'team',
+              before: '—',
+              after: DEMO_VOLUNTEER_TEAM[sampleLocale(ctx.locale)].team,
+            },
+          ],
         },
       ],
       labelMaxLength: 40,
@@ -1074,6 +1121,8 @@ export const CASES: ViewCase[] = [
 const PLAIN_TEXT: readonly (readonly [string, string])[] = [
   ['Bruno <Lima>', 'Bruno Lima'],
   ['Fila de check-in <alta>', 'Fila de check-in acima do normal'],
+  ['Check-in queue <high>', 'Check-in queue above normal'],
+  ['Unexpected <failure> & logged', 'Unexpected failure logged'],
   ['Falha <inesperada> & registrada', 'Falha inesperada registrada'],
   ['Bom <evento>', 'Bom evento'],
 ];

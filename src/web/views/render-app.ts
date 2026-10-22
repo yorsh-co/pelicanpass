@@ -9,7 +9,7 @@ import { COPY_DEFAULTS } from '../../constants/copy-defaults.ts';
 import { CREDIT } from '../../constants/credit.ts';
 import { localeMiddleware } from '../../i18n/server.ts';
 
-import { adminMessages } from './fixtures.ts';
+import { SAMPLE, adminMessages, sampleLocale } from './fixtures.ts';
 
 import type { Express, RequestHandler, Response } from 'express';
 
@@ -95,7 +95,7 @@ export const createViewApp = ({
       const shell = ctx.m.shell;
 
       res.locals.shell = shell;
-      res.locals.adminUsername = 'operadora';
+      res.locals.adminUsername = SAMPLE[sampleLocale(locale)].operator;
       res.locals.adminScopes = ADMIN_NAV.map((item) => item.scope);
       res.locals.adminNav = ADMIN_NAV.map((item) => ({
         ...item,
