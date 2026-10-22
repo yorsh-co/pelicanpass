@@ -106,7 +106,7 @@ const fallbackCopy = (m: ErrorMessages, homeHref: string): ErrorPageCopy => ({
 
 /**
  * The page copy for a status in a locale, with the wait folded into the 429
- * message when it is known.
+ * message when it is known. Also used by the demo's 404 fixture.
  *
  * @param statusCode - HTTP status being rendered.
  * @param locale - Locale to render in.
@@ -114,7 +114,7 @@ const fallbackCopy = (m: ErrorMessages, homeHref: string): ErrorPageCopy => ({
  *   details. Rounded up to minutes beyond sixty seconds.
  * @param homeHref - Target of the home button, where the status has one.
  */
-const copyFor = (
+export const copyFor = (
   statusCode: number,
   locale: Locale,
   retryAfterSeconds: number | undefined,
