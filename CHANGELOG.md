@@ -22,6 +22,7 @@ The public history of this project starts at 2.0.0. Earlier versions, up to 1.2.
 
 ### Changed
 
+- `npm run docs:screenshots` captures every screen in each demo locale, into `docs/images/screenshots/en/` and `docs/images/screenshots/pt-BR/`; `README.md` shows the English ones
 - The language switcher labels English `EN` rather than `US`: it shows the locale's own region, or its language when it names none
 - The demo serves every page in pt-BR and in English, the English copies under `/en/`, switched by the footer, the admin menu or the banner; the choice is kept per visitor in `localStorage`, and a first visit follows the browser language. A script at the top of every page sends the visitor to the matching tree, including from the app's own root-absolute links, and `_redirects` is mirrored under `/en`; the banner is written in the page's language only
 - `scripts/static/build.ts` hashes only the inline scripts a browser executes: `type="application/json"` data blocks are data, so the demo's policy shrinks from 1,607 to 419 characters, well inside the 2,000 Cloudflare allows in a header value, and the demo build fails if it grows past that

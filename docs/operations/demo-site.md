@@ -161,12 +161,13 @@ npm run docs:screenshots
 ```
 
 `scripts/docs/screenshots.ts` serves `dist/demo/` on a local port, drives the real pages in Chromium
-and writes eleven compressed PNGs to `docs/images/screenshots/`, the ones `README.md` shows: the
-pre-event countdown, the check-in ticket, verification and presence steps, the participant pass front and back, the volunteer pass, `/staff` after
+and writes twelve compressed PNGs per demo language to `docs/images/screenshots/en/` and
+`docs/images/screenshots/pt-BR/`, the English ones being those `README.md` shows: the
+pre-event countdown, the check-in ticket, verification and presence steps, the participant pass front and back, the experience questionnaire (`pass-survey.png`, opened from the pass), the volunteer pass, `/staff` after
 a typed code, `/raffle` after one draw, and `/admin/redemptions` and `/admin/metrics`. Phone screens
 are 390×844 at 2×, admin screens 1440×900. The demo banner is hidden, and the clock, time zone,
 `Math.random`, motion and the rotation window's ring are fixed, so a rerun writes identical files. `--out <dir>`
-writes elsewhere.
+writes `<dir>/en/` and `<dir>/pt-BR/` instead.
 
 The browser is the one in Playwright's cache (`~/.cache/ms-playwright`), found by `playwright-core`
 at the revision it pins; the script downloads nothing. Where the cache is empty, run
