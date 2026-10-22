@@ -1098,7 +1098,7 @@ the source: change the English only to follow it.
 | interações | raffle | Label beside the check-in number. |
 | devolver (aos restantes) | return to the pool | |
 | camiseta | T-shirt | |
-| palavra chave | keyword | The rotating word on a volunteer pass. |
+| palavra chave | keyword | The label above the rotating word on a pass. The word itself is not catalog copy: the lists are a fixed vocabulary in `src/constants/pass.ts`, one of which a deployment shows on every screen, chosen by `PASS_BAND_LANGUAGE` rather than by page language. |
 | questionário, feedback | survey, feedback | "Survey" for the form, "feedback" for the invitation. |
 | painel admin | admin panel | |
 | Entrar, Sair | Sign in, Sign out | |
