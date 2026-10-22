@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
+import { BAND_WORDS } from '../../../constants/pass.ts';
 import {
   DEMO_QR_TOKEN,
   DEMO_ROSTER,
@@ -661,6 +662,48 @@ describe('staff', () => {
 
     assert.ok(data.band.word && data.band.colour);
     assert.ok(data.expiresInMs > 0);
+  });
+
+  it('draws the band word from the list for the page language', () => {
+    const wordIn = (locale: DemoLocale, now: number): string =>
+      call<StaffBand>(createInitialState(now), 'getStaffBand', undefined, {
+        locale,
+        now,
+      }).body.data.band.word;
+    const pt: readonly string[] = BAND_WORDS['pt-BR'];
+    const en: readonly string[] = BAND_WORDS.en;
+
+    for (let window = 0; window < 64; window += 1) {
+      const now = NOW + window * WINDOW_MS;
+
+      assert.ok(pt.includes(wordIn('pt-BR', now)), 'pt-BR');
+      assert.ok(en.includes(wordIn('en', now)), 'en');
+    }
+  });
+
+  it('shows the same word on the pass and the staff screen of one page', () => {
+    const state = signedIn(PARTICIPANT);
+
+    for (const locale of ['pt-BR', 'en'] as const) {
+      const pass = call<AttendeePass>(state, 'getPass', undefined, { locale });
+      const staff = call<StaffBand>(state, 'getStaffBand', undefined, {
+        locale,
+      });
+
+      assert.deepEqual(pass.body.data.band, staff.body.data.band, locale);
+    }
+  });
+
+  it('keeps the same position in the list across languages', () => {
+    const at = (locale: DemoLocale): string =>
+      call<StaffBand>(createInitialState(NOW), 'getStaffBand', undefined, {
+        locale,
+      }).body.data.band.word;
+
+    const pt: readonly string[] = BAND_WORDS['pt-BR'];
+    const en: readonly string[] = BAND_WORDS.en;
+
+    assert.equal(en.indexOf(at('en')), pt.indexOf(at('pt-BR')));
   });
 });
 

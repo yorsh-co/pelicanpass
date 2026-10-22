@@ -120,3 +120,32 @@ describe('env EVENT_CLOSES_AT', () => {
     assert.match(result.stderr, /must be after EVENT_START_AT/);
   });
 });
+
+describe('env PASS_BAND_LANGUAGE', () => {
+  it('boots with the default when unset', () => {
+    const result = load({});
+
+    assert.equal(result.status, 0, result.stderr);
+  });
+
+  it('boots with each supported language', () => {
+    for (const language of ['pt-BR', 'en']) {
+      const result = load({ PASS_BAND_LANGUAGE: language });
+
+      assert.equal(result.status, 0, `${language}: ${result.stderr}`);
+    }
+  });
+
+  it('refuses a language that has no word list', () => {
+    for (const language of ['fr', 'pt', 'EN']) {
+      const result = load({ PASS_BAND_LANGUAGE: language });
+
+      assert.notEqual(result.status, 0, language);
+      assert.match(
+        result.stderr,
+        /PASS_BAND_LANGUAGE must be one of/,
+        language,
+      );
+    }
+  });
+});
