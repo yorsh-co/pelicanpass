@@ -4,7 +4,7 @@
  * Two screens draw it — the attendee's pass and the volunteer's band block —
  * and they are read side by side across a counter. A drift in options between
  * two copies of this, one 24-hour and one 12-hour, would break the comparison
- * the clocks exist for.
+ * the clocks exist for. Always 24-hour, in every locale.
  *
  * Built once at module scope: it is called twice a second across those two
  * screens, and constructing the formatter is the expensive half of the work.
@@ -14,6 +14,7 @@ const format = new Intl.DateTimeFormat(document.documentElement.lang, {
   hour: '2-digit',
   minute: '2-digit',
   second: '2-digit',
+  hourCycle: 'h23',
 });
 
 /**
